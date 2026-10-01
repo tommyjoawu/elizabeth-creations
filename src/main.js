@@ -1,50 +1,16 @@
-// La entrada del JavaScript de la página: Stimulus, GSAP con ScrollTrigger y
-// Lenis, y nada más.
+// La entrada del JavaScript: casi nada, a propósito.
 //
-// Todo lo que se mueve lo hace un controlador de Stimulus colgado del HTML con
-// `data-controller`. Así el HTML sigue siendo la fuente de verdad —se lee y
-// funciona sin este archivo— y el JavaScript sólo agrega movimiento encima.
-// La hoja NO se importa acá: va con un <link> en el <head>, para que la página
-// tenga estilo aunque este archivo no llegue.
-import { Application } from "@hotwired/stimulus"
-import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
+// El hero se ve entero sin JavaScript (el titular entra con CSS), así que
+// el bundle —Stimulus, GSAP, ScrollTrigger y los controladores— no tiene
+// nada que hacer en el primer pantallazo. Si se pidiera desde el <head>,
+// competiría por la red con las fuentes y las fotos del tendedero, y su
+// arranque, con el primer pintado. Por eso se pide recién DESPUÉS del
+// primer fotograma (`requestAnimationFrame` + `setTimeout`), en `aplicacion.js`.
+// El tope de 500 ms cubre la pestaña abierta en segundo plano, donde no hay
+// fotogramas.
+const despuesDelPintado = () => new Promise((listo) => {
+  requestAnimationFrame(() => setTimeout(listo, 0))
+  setTimeout(listo, 500)
+})
 
-import RevelaController from "./controladores/revela_controller.js"
-import SuaveController from "./controladores/suave_controller.js"
-import IslaController from "./controladores/isla_controller.js"
-import LecturaController from "./controladores/lectura_controller.js"
-import VideoFondoController from "./controladores/video_fondo_controller.js"
-import TendederoController from "./controladores/tendedero_controller.js"
-import TallerController from "./controladores/taller_controller.js"
-import EncargoController from "./controladores/encargo_controller.js"
-import PildoraController from "./controladores/pildora_controller.js"
-import CarrilController from "./controladores/carril_controller.js"
-import PedidoController from "./controladores/pedido_controller.js"
-import GaleriaController from "./controladores/galeria_controller.js"
-import CosturaController from "./controladores/costura_controller.js"
-import VaritasController from "./controladores/varitas_controller.js"
-
-gsap.registerPlugin(ScrollTrigger)
-
-const application = Application.start()
-
-application.register("revela", RevelaController)
-application.register("suave", SuaveController)
-application.register("isla", IslaController)
-application.register("lectura", LecturaController)
-application.register("video-fondo", VideoFondoController)
-application.register("tendedero", TendederoController)
-application.register("taller", TallerController)
-application.register("encargo", EncargoController)
-application.register("pildora", PildoraController)
-application.register("carril", CarrilController)
-application.register("pedido", PedidoController)
-application.register("galeria", GaleriaController)
-application.register("costura", CosturaController)
-application.register("varitas", VaritasController)
-
-// Las fotos cargan tarde (`loading="lazy"`) y cambian la altura de la página
-// después de que ScrollTrigger midió dónde empieza cada escena. Recalcular al
-// terminar de cargar todo evita que las escenas arranquen corridas.
-window.addEventListener("load", () => ScrollTrigger.refresh())
+despuesDelPintado().then(() => import("./aplicacion.js"))

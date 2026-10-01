@@ -79,12 +79,23 @@ Node 22: `python3 generar.py && npx hyperframes check && npx hyperframes render 
 ```
 index.html                  el armazón: <head>, isla, secciones, pie
 vite/plantillas.js          Handlebars: une parciales + datos en index.html
-vite/ayudantes.js           {{imagen}}, {{whatsapp}}, {{whatsappPieza}}, {{icono}}, {{palabras}}…
+vite/ayudantes.js           {{imagen}}, {{whatsapp}}, {{whatsappPieza}}, {{icono}}, {{palabras}},
+                            {{rellenar}}, {{fechaLarga}}, {{esquema}}…
+vite/hechos.js              precios y fechas de los JSON listos para citar: llena las
+                            llaves {set}, {fechaNavidad}… de la descripción y las preguntas
+vite/esquema.js             el JSON-LD (@graph: WebSite, LocalBusiness, WebPage,
+                            OfferCatalog con cada Product, MerchantReturnPolicy, FAQPage)
+vite/buscadores.js          sitemap.xml, robots.txt, llms.txt y manifest.webmanifest,
+                            armados de src/datos en cada build (y servidos en dev)
+vite/hoja-en-linea.js       la hoja de index.html va en un <style> (un viaje menos)
+404.html                    la página de "no existe" (GitHub Pages la sirve sola)
 src/parciales/secciones/    una sección por archivo, en el orden de la página
 src/parciales/piezas/       botón, enlace, isla, pie, píldora, confeti
 src/estilos/main.css        tokens, fuentes y capítulos (colores de rol)
 src/estilos/componentes.css botón, isla, menú, formularios, apariciones
 src/estilos/secciones/      lo propio de cada sección
+src/main.js                 casi nada: pide src/aplicacion.js DESPUÉS del primer pintado
+src/aplicacion.js           Stimulus + GSAP; las escenas de scroll se registran una por tarea
 src/controladores/          Stimulus: revela, suave, isla, lectura, tendedero,
                             taller, encargo, pildora, video-fondo, carril,
                             galeria, pedido, costura, varitas
@@ -94,6 +105,8 @@ src/estilos/motivos.css     los motivos de fondo (ningún capítulo es liso)
 src/estilos/costura.css     el hilo que cose la página
 src/parciales/piezas/logo   el sello de estrella de fieltro (propuesta)
 scripts/procesar-material.sh  fotos y videos de Erika → img/ y video/
+scripts/iconos.mjs          docs/logo/sello-color.svg → public/apple-touch-icon.png e iconos
+scripts/recortar-fuente-mano.py  Shantell Sans recortada a lo que usa la página
 docs/                       brief, investigación, material de Erika, logo,
                             publicidad, motion, fotos de muestra viejas
 ```
@@ -143,6 +156,24 @@ docs/                       brief, investigación, material de Erika, logo,
   "Agregar al pedido" suma al mismo resumen de "Las piezas" (eventos
   `pedido:agregar`/`pedido:quitar`/`pedido:cambio` en `window`). La ficha de
   pedido (`encargo`) toma las piezas y precios de los mismos JSON.
+
+### Buscadores y asistentes (SEO, AEO, GEO)
+
+- **Una sola dirección**: `marca.url` (hoy GitHub Pages). De ahí salen el
+  canonical, Open Graph, el JSON-LD, sitemap.xml, robots.txt, llms.txt y el
+  manifiesto. Con dominio propio se cambia sólo eso (y el `--base` del
+  workflow).
+- `marca.actualizado` (AAAA-MM-DD) va al pie, al sitemap y al JSON-LD:
+  cambiarlo al publicar precios o políticas nuevas.
+- `marca.verificacion.google` / `.bing`: el `content` de Search Console y de
+  Bing Webmaster; vacíos no se publican.
+- Lo pendiente de `marca.pendiente` nunca va al JSON-LD; al ponerlo en
+  `false`, aparecen solos `telephone`, `email` y `sameAs`.
+- Las notas internas (ranuras "Falta que Erika…", "número por confirmar")
+  sólo se ven en `npm run dev`; el build publicado dice "Foto muy pronto".
+  `BORRADOR=1 npm run build` arma una copia de revisión con las notas.
+- Las variantes y la galería llevan `noindex`. Mediciones de Lighthouse
+  (antes y después) en `docs/lighthouse/`.
 
 ### Reglas que no se rompen
 

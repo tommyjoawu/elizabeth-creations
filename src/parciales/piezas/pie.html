@@ -13,12 +13,15 @@
         </p>
         <p class="mt-6 max-w-[40ch] text-tenue">
           {{marca.bajada}} en {{marca.ciudad}}, {{marca.region}}. Se piden por WhatsApp, se pagan por
-          {{marca.politicas.pagos}} y se entregan en {{marca.politicas.entrega}}.
+          {{marca.politicas.pagos}} y se entregan en {{marca.politicas.entrega}}. Pedidos de Navidad hasta el
+          {{fechaLarga marca.politicas.fechaNavidadIso}}.
         </p>
       </div>
 
       <nav class="lg:col-span-3" aria-labelledby="pie-pagina">
-        <h2 id="pie-pagina" class="font-display text-[1.35rem] text-mango">La página</h2>
+        {{!-- Un rótulo y no un <h2>: "La página" no es una sección de
+            contenido, y un titular así no le dice nada a nadie. --}}
+        <p id="pie-pagina" class="font-display text-[1.35rem] text-mango">La página</p>
         <ul class="mt-4 space-y-1" role="list">
           {{#each navegacion}}
             <li>
@@ -34,13 +37,17 @@
 
       <div class="lg:col-span-3">
         <h2 class="font-display text-[1.35rem] text-mango">Escríbeme</h2>
+        {{!-- <address>: los datos de contacto del negocio, dichos como tales. --}}
+        <address class="not-italic">
         <ul class="mt-4 space-y-1" role="list">
           <li>
+            {{!-- Mientras el número sea de marcador no se publica: el enlace
+                dice "WhatsApp". En desarrollo se ve con su aviso. --}}
             <a href="{{whatsapp}}" target="_blank" rel="noopener"
                class="e-cifra inline-flex min-h-11 items-center gap-3 text-lg font-semibold text-texto transition-colors hover:text-mango">
-              {{icono "whatsapp" clase="size-5"}}{{marca.whatsapp}}
+              {{icono "whatsapp" clase="size-5"}}{{#if (pendiente "whatsapp")}}{{#if @root.borrador}}{{marca.whatsapp}}{{else}}WhatsApp{{/if}}{{else}}{{marca.whatsapp}}{{/if}}
             </a>
-            {{#if (pendiente "whatsapp")}}<span class="e-falta">número por confirmar</span>{{/if}}
+            {{#if (and @root.borrador (pendiente "whatsapp"))}}<span class="e-falta">número por confirmar</span>{{/if}}
           </li>
           {{#if (pendiente "instagram")}}
             <li class="inline-flex min-h-11 items-center gap-3 text-lg font-semibold">
@@ -63,6 +70,7 @@
             </li>
           {{/unless}}
         </ul>
+        </address>
       </div>
     </div>
 
@@ -70,6 +78,9 @@
                 text-[0.88rem] text-tenue">
       <p>© <span class="e-cifra">{{anio}}</span> {{marca.nombre}}, {{marca.bajada}}.</p>
       <p>Fotos y videos: {{marca.nombre}}.</p>
+      {{!-- La fecha de la última vez que cambiaron precios o políticas
+          (marca.actualizado): dice que la información está al día. --}}
+      <p>Precios actualizados el <time datetime="{{marca.actualizado}}">{{fechaLarga marca.actualizado}}</time>.</p>
     </div>
 
     {{!-- El nombre a todo el ancho, en mango y cortado por el borde de abajo.

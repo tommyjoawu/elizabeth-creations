@@ -41,7 +41,17 @@
             <span class="e-adorno__tapa"></span>
             <span class="e-adorno__cuerpo e-adorno__cuerpo--roseta">
               <span class="e-adorno__bola e-adorno__bola--roseta">
-                {{imagen this.foto alt="" sizes="(min-width: 1024px) 14rem, 7rem" carga="eager"}}
+                {{!-- Los que se ven en el celular van con prioridad: uno de
+                    ellos es el LCP en todos los anchos. Los `amplio` (sólo
+                    escritorio) van `lazy`: en el celular están en
+                    `display: none` y así no se descargan para nada; en
+                    escritorio están en pantalla y se piden igual de
+                    inmediato. --}}
+                {{#if this.movil}}
+                  {{imagen this.foto alt="" sizes="(min-width: 1024px) 14rem, 7rem" prioridad=true}}
+                {{else}}
+                  {{imagen this.foto alt="" sizes="(min-width: 1024px) 14rem, 7rem"}}
+                {{/if}}
               </span>
             </span>
           </span>
@@ -66,19 +76,24 @@
         resalte"). Va en dos renglones a propósito, "Elizabeth" y
         "Creations", al tamaño más grande de la página; el saludo arriba,
         chico, y lo que hace —adornos de fieltro cosidos a mano— abajo. --}}
+    {{!-- El <h1> lleva el nombre Y lo que hace: "Bienvenidos a Elizabeth
+        Creations · Adornos de fieltro hechos a mano en La Chorrera". Así el
+        titular que lee Google dice qué se vende y dónde, y a la vista no
+        cambia nada: el nombre sigue siendo lo más grande de la página y la
+        bajada va debajo, en display mediano, como siempre. --}}
     <h1 id="titular" class="e-titular w-full font-display">
       <span class="e-renglon e-titular__saludo"><span style="--retraso: 80ms">Bienvenidos a</span></span>
       <span class="e-renglon e-titular__marca"><span style="--retraso: 180ms">Elizabeth</span></span>
-      <span class="e-renglon e-titular__marca"><span style="--retraso: 260ms">Creations</span></span>
+      <span class="e-renglon e-titular__marca"><span style="--retraso: 260ms">Creations<span class="sr-only">:</span></span></span>
+      <span class="e-asoma e-titular__bajada mx-auto mt-5 block font-display sm:mt-6" style="--retraso: 380ms">
+        Adornos de fieltro hechos a mano en {{marca.ciudad}}.
+      </span>
     </h1>
 
-    <p class="e-asoma e-titular__bajada mx-auto mt-5 font-display sm:mt-6" style="--retraso: 380ms">
-      Adornos de fieltro cosidos a mano
-      con amor.
-    </p>
-
+    {{!-- Quién, qué y cómo, en una frase que se entiende sola (la citan tal
+        cual los buscadores y los asistentes de IA). --}}
     <p class="e-asoma mx-auto mt-4 max-w-[38rem] text-entrada text-tenue" style="--retraso: 460ms">
-      Arbolitos, estrellas, galletas de jengibre, figuras del mar y varitas mágicas, decorados con bisutería en {{marca.ciudad}}.
+      Arbolitos, estrellas, galletas de jengibre, figuras del mar y varitas mágicas que Erika cose con amor y decora con bisutería, uno por uno.
     </p>
 
     <div class="e-asoma mt-8 flex w-full flex-col gap-3 sm:mt-7 sm:w-auto sm:flex-row" style="--retraso: 540ms"

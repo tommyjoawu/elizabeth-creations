@@ -1,0 +1,43 @@
+{{!--
+  La página de "no existe". GitHub Pages la sirve para cualquier dirección
+  del sitio que no encuentre (dist/404.html), así que TODO lo de aquí va con
+  ruta absoluta: la hoja y las fuentes con la base del build, y los enlaces
+  con marca.url. Fuera del índice (`noindex`): no es contenido.
+
+  Misma hoja y mismo papel que la página: el sello, el titular en Caprasimo
+  y el botón de siempre. Sin JavaScript, que no le hace falta.
+--}}
+<!DOCTYPE html>
+<html lang="es-PA">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Esta página no existe · {{marca.nombre}}</title>
+    <meta name="robots" content="noindex, follow">
+    <meta name="theme-color" content="#FBF1E1">
+    <meta name="color-scheme" content="only light">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="stylesheet" href="/src/estilos/main.css">
+  </head>
+
+  <body class="e-sitio">
+    <main class="e-papel e-motivo e-motivo--confeti relative isolate grid min-h-[100svh] place-items-center overflow-clip">
+      <div class="e-contenedor flex flex-col items-center py-20 text-center">
+        <a href="{{marca.url}}" class="e-sello text-anil" aria-label="{{marca.nombre}}, ir al inicio">
+          {{> piezas/logo clase="size-24 sm:size-28"}}
+        </a>
+        <p class="mt-8 font-mano text-[clamp(1.35rem,2.4vw,2.1rem)] font-semibold text-acento" style="rotate: -3deg">Error 404</p>
+        <h1 class="mt-3 max-w-[14ch] font-display text-seccion">Esta página se descosió.</h1>
+        <p class="mx-auto mt-6 max-w-[40ch] text-entrada text-tenue">
+          La dirección que buscas no existe o cambió. Los adornos de fieltro de {{marca.nombre}} siguen en la página principal,
+          con sus precios y la ficha para pedir por WhatsApp.
+        </p>
+        <div class="mt-10 flex w-full flex-col justify-center gap-3 sm:w-auto sm:flex-row">
+          {{> piezas/boton texto="Ver los adornos" href=marca.url clase="justify-between"}}
+          {{> piezas/boton texto="Ir a la ficha de pedido" href=(concat marca.url "#ficha-pedido") glifo="whatsapp" variante="fantasma" clase="justify-between"}}
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

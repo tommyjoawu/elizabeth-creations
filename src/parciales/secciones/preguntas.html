@@ -14,8 +14,8 @@
   <div class="e-contenedor e-capitulo grid gap-14 lg:grid-cols-12 lg:gap-10">
     <div class="lg:col-span-5">
       <div class="lg:sticky lg:top-28">
-        <h2 id="titulo-preguntas" class="max-w-[12ch] font-display text-columna">Preguntas frecuentes</h2>
-        <p class="mt-6 max-w-[34ch] text-entrada">Aquí te cuento lo que más me preguntan sobre pagos, abono, tiempos y entregas. Si te queda alguna duda, escríbeme con confianza y con gusto te ayudo.</p>
+        <h2 id="titulo-preguntas" class="max-w-[12ch] font-display text-columna"><span class="e-antetitulo">Adornos de fieltro: precios, pagos, entregas y Navidad</span><span class="sr-only">: </span>Preguntas frecuentes</h2>
+        <p class="mt-6 max-w-[34ch] text-entrada">Aquí te cuento lo que más me preguntan sobre precios, pagos, abono, tiempos y entregas. Si te queda alguna duda, escríbeme con confianza y con gusto te ayudo.</p>
         <p class="mt-8">
           {{> piezas/boton texto="Preguntar por WhatsApp" href=(whatsapp) glifo="whatsapp" externo=true clase="justify-between"}}
         </p>
@@ -40,8 +40,12 @@
           </summary>
 
           <div class="max-w-[58ch] pb-8 text-[1.08rem] leading-relaxed">
-            <p>{{this.respuesta}}</p>
-            {{#if this.pendiente}}
+            {{!-- Las llaves de la respuesta ({set}, {fechaNavidad}…) se llenan
+                con los precios y fechas de los JSON (vite/hechos.js). --}}
+            <p>{{rellenar this.respuesta}}</p>
+            {{!-- Lo que falta confirmar, sólo en desarrollo: publicada, la
+                respuesta ya dice lo que se puede decir. --}}
+            {{#if (and @root.borrador this.pendiente)}}
               <p class="e-hueco mt-5">
                 <span class="e-hueco__titulo">Falta que Erika lo confirme</span>
                 <span class="mt-2 block text-[0.98rem]">{{this.pendiente}}</span>

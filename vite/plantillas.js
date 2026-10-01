@@ -13,6 +13,7 @@ import fs from "node:fs"
 import path from "node:path"
 import Handlebars from "handlebars"
 import { ayudantes } from "./ayudantes.js"
+import { hechos } from "./hechos.js"
 
 const RAIZ = path.resolve(import.meta.dirname, "..")
 const PARCIALES = path.join(RAIZ, "src/parciales")
@@ -41,7 +42,7 @@ function motor() {
 
 // `marca.json` queda en `{{marca.nombre}}`, `productos.json` en
 // `{{#each productos}}`, y así con cada archivo de la carpeta.
-function datos() {
+export function datos() {
   return Object.fromEntries(archivos(DATOS, ".json").map((archivo) => [
     path.basename(archivo, ".json"),
     JSON.parse(fs.readFileSync(archivo, "utf8"))
@@ -49,8 +50,20 @@ function datos() {
 }
 
 export function plantillas() {
+  // `borrador`: las notas internas ("Falta que Erika lo confirme…", el
+  // "número por confirmar") se ven en `npm run dev`, que es donde se revisa
+  // qué falta; en el build publicado no salen nunca: la ranura dice sólo
+  // "Foto muy pronto" y la respuesta, lo que ya se puede decir. Para armar
+  // un build de revisión con las notas: `BORRADOR=1 npm run build`.
+  let borrador = true
+  let base = "/"
   return {
     name: "erika-plantillas",
+
+    configResolved(config) {
+      borrador = config.command === "serve" || process.env.BORRADOR === "1"
+      base = config.base
+    },
 
     transformIndexHtml: {
       order: "pre",
@@ -58,7 +71,13 @@ export function plantillas() {
         const contexto = datos()
         // Sin `strict`: las piezas tienen parámetros opcionales (`variante`,
         // `clase`) y en modo estricto un parámetro no pasado es un error.
-        return motor().compile(html)({ ...contexto, anio: new Date().getFullYear() })
+        return motor().compile(html)({
+          ...contexto,
+          hechos: hechos(contexto),
+          borrador,
+          base,
+          anio: new Date().getFullYear()
+        })
       }
     },
 
@@ -74,6 +93,29 @@ export function plantillas() {
       server.watcher.on("change", recargar)
       server.watcher.on("add", recargar)
       server.watcher.on("unlink", recargar)
+    }
+  }
+}
+
+// Las fotos del JSON-LD (`%RECURSO:src/assets/img/…%`, ver vite/esquema.js)
+// pasan a su URL publicada: la dirección del sitio (marca.url) + el archivo
+// con su hash. En desarrollo, a la ruta que sirve Vite.
+export function recursosEnEsquema() {
+  return {
+    name: "erika-recursos-en-esquema",
+    transformIndexHtml: {
+      order: "post",
+      handler(html, ctx) {
+        if (!html.includes("%RECURSO:")) return html
+        const url = datos().marca.url
+        return html.replace(/%RECURSO:([^%"]+)%/g, (_, ruta) => {
+          if (!ctx.bundle) return `/${ruta}`
+          const archivo = Object.values(ctx.bundle).find((salida) =>
+            salida.type === "asset" && (salida.originalFileNames || []).some((original) => original.replace(/\\/g, "/").endsWith(ruta)))
+          if (!archivo) throw new Error(`El JSON-LD cita ${ruta}, pero no salió en el build (¿la foto se usa en la página?)`)
+          return url + archivo.fileName
+        })
+      }
     }
   }
 }

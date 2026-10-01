@@ -20,7 +20,7 @@
   <div class="e-contenedor e-capitulo">
     <div class="grid items-end gap-8 lg:grid-cols-12">
       <h2 id="titulo-colecciones" class="e-aparece font-display text-seccion lg:col-span-7" data-controller="revela">
-        Para colgar, para regalar, para jugar.
+        <span class="e-antetitulo">Adornos de fieltro, guirnaldas con nombre y tarjetas</span><span class="sr-only">: </span>Para colgar, para regalar, para jugar.
       </h2>
       <p class="e-aparece text-entrada text-tenue lg:col-span-5 lg:pb-3" data-controller="revela" style="--retraso: 120ms">
         Todo es fieltro cosido a mano y decorado con bisutería. Cada tanda sale un poco distinta:
@@ -51,8 +51,15 @@
             {{else}}
               <div class="e-banderin__foto e-banderin__foto--hueco">
                 <p class="e-hueco">
-                  <span class="e-hueco__titulo">{{or this.huecoTitulo "Falta que Erika la mande"}}</span>
-                  <span class="mt-2 block text-[0.98rem]">{{this.pendiente}}</span>
+                  {{!-- Publicado, la ranura dice sólo "Foto muy pronto"; la
+                      nota de lo que falta es para revisar en desarrollo
+                      (`borrador`, ver vite/plantillas.js). --}}
+                  {{#if @root.borrador}}
+                    <span class="e-hueco__titulo">{{or this.huecoTitulo "Falta que Erika la mande"}}</span>
+                    <span class="mt-2 block text-[0.98rem]">{{this.pendiente}}</span>
+                  {{else}}
+                    <span class="e-hueco__titulo">Foto muy pronto</span>
+                  {{/if}}
                 </p>
               </div>
             {{/if}}

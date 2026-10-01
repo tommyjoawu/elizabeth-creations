@@ -58,9 +58,14 @@
             ella, es el primer panel de la fila y deja toda la altura a las
             fotos. --}}
         <div class="e-galeria__cabeza">
-          <h2 id="titulo-temporada" class="font-display text-seccion">Las piezas</h2>
+          {{!-- El antetítulo dice con palabras de búsqueda lo que el titular dice
+              corto (ver .e-antetitulo); el precio sale de productos.json. --}}
+          <h2 id="titulo-temporada" class="font-display text-seccion">
+            <span class="e-antetitulo">Adornos navideños de fieltro: sets de {{hechos.piezasPorSet}} por {{hechos.set}}</span><span class="sr-only">: </span>Las piezas
+          </h2>
           <p class="mt-5 max-w-[36ch] text-entrada text-tenue">
-            Escoge pieza por pieza o pide el set completo. Cada una se hace en {{marca.politicas.tiempo}}.
+            Todos los sets son de {{hechos.piezasPorSet}} piezas y cuestan {{hechos.set}}; por pieza, desde {{hechos.adornoDesde}}.
+            Cada una se hace a mano en {{marca.politicas.tiempo}}.
           </p>
           <p class="e-sello-fecha mt-7">
             <span class="e-sello-fecha__texto">Navidad: pedidos hasta el</span>
@@ -132,7 +137,8 @@
                           que nadie confunde con una foto. --}}
                       <p class="e-hueco e-pieza__hueco">
                         <span class="e-hueco__titulo">Foto muy pronto</span>
-                        <span class="mt-2 block">{{this.pendiente}}</span>
+                        {{!-- La nota interna, sólo en desarrollo (`borrador`). --}}
+                        {{#if @root.borrador}}<span class="mt-2 block">{{this.pendiente}}</span>{{/if}}
                       </p>
                     {{/if}}
                     <span class="e-pieza__check" aria-hidden="true">{{icono "estrella" clase="size-4"}}</span>
@@ -152,7 +158,16 @@
                         {{/if}}
                       </p>
                     </div>
-                    <h3 id="pieza-{{../slug}}-{{this.slug}}" class="mt-1 font-display text-[1.55rem] leading-[1.02]">{{this.nombre}}</h3>
+                    {{!-- La galleta repetida (la de Navidad nevada, `repite`)
+                        no es un titular más: dos <h3> iguales en la misma
+                        página son ruido para un lector de pantalla y para
+                        Google. Se ve igual; su nombre sigue nombrando la
+                        tarjeta (aria-labelledby). --}}
+                    {{#if this.repite}}
+                      <p id="pieza-{{../slug}}-{{this.slug}}" class="mt-1 font-display text-[1.55rem] leading-[1.02]">{{this.nombre}}</p>
+                    {{else}}
+                      <h3 id="pieza-{{../slug}}-{{this.slug}}" class="mt-1 font-display text-[1.55rem] leading-[1.02]">{{this.nombre}}</h3>
+                    {{/if}}
                     <p class="mt-1.5 text-[0.95rem] leading-snug text-tenue">{{this.material}}</p>
                     {{#if this.precioHasta}}
                       <p class="e-pieza__rango mt-1.5">
@@ -213,13 +228,16 @@
 
     {{!-- El resumen del pedido: sólo con JavaScript (sin él, cada pieza y
         cada set ya tienen su enlace). Va DENTRO de la caja fijada, para que
-        se vea mientras la fila avanza. `aria-live` sólo en la cuenta: el
-        nombre de cada pieza ya lo dijo su botón. --}}
+        se vea mientras la fila avanza. `aria-live` sólo en la cuenta y el
+        total: el nombre de cada pieza ya lo dijo su botón. --}}
     <div class="e-contenedor e-resumen__lugar" data-pedido-target="lugar" hidden>
       <div class="e-resumen" data-pedido-target="resumen" data-vacio="true" role="region" aria-label="Tu pedido">
         <div class="min-w-0 flex-1">
-          <p class="e-resumen__cuenta">
-            <strong data-pedido-target="cuenta" aria-live="polite">Tu pedido está vacío</strong>
+          {{!-- `aria-live` en el renglón entero (cuenta Y total) y atómico: un
+              lector de pantalla dice "3 piezas, $15.00" de una vez, no sólo
+              la cuenta. --}}
+          <p class="e-resumen__cuenta" aria-live="polite" aria-atomic="true">
+            <strong data-pedido-target="cuenta">Tu pedido está vacío</strong>
             <span class="e-resumen__total" data-pedido-target="total"></span>
           </p>
           <p class="e-resumen__lista" data-pedido-target="lista">

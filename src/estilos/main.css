@@ -24,6 +24,7 @@
 @import "./costura.css";
 
 @source "../../index.html";
+@source "../../404.html";
 @source "../parciales";
 @source "../controladores";
 @source "../../vite";
@@ -33,7 +34,8 @@
    titular, que es el LCP. Caprasimo (display) y Figtree (texto) se precargan
    desde el <head>; Shantell Sans, la letra de las notas a mano, aparece dos
    veces y más abajo: puede llegar tarde. `swap` en las tres: el texto se
-   pinta de inmediato con la del sistema. */
+   pinta de inmediato con la del sistema. Shantell va recortada a lo que se
+   usa (scripts/recortar-fuente-mano.py). */
 @font-face {
   font-family: "Caprasimo";
   font-style: normal;
@@ -58,9 +60,33 @@
 @font-face {
   font-family: "Shantell Sans";
   font-style: normal;
-  font-weight: 300 800;
+  font-weight: 400 600;
   font-display: swap;
   src: url("../assets/fuentes/shantell-sans-latin-variable.woff2") format("woff2");
+}
+
+/* Los respaldos medidos: mientras llega la fuente de verdad (`swap`), el
+   texto se pinta con una del sistema AJUSTADA a su ancho y a su alto, para
+   que al cambiar no se corra nada (CLS). Medidos en Chrome sobre una frase
+   de la página: Caprasimo es 24.9 % más ancha que Times New Roman; Figtree,
+   0.8 % más angosta que Arial. Los `*-override` son el ascendente y el
+   descendente de cada fuente (hhea) divididos por ese `size-adjust`.
+   Liberation es la gemela métrica de Times/Arial en Linux. */
+@font-face {
+  font-family: "Caprasimo respaldo";
+  src: local("Times New Roman"), local("TimesNewRomanPSMT"), local("Liberation Serif");
+  size-adjust: 124.9%;
+  ascent-override: 73.5%;
+  descent-override: 18.3%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Figtree respaldo";
+  src: local("Arial"), local("ArialMT"), local("Liberation Sans");
+  size-adjust: 99.2%;
+  ascent-override: 95.8%;
+  descent-override: 25.2%;
+  line-gap-override: 0%;
 }
 
 /* ── Los colores de rol ───────────────────────────────────────────────────
@@ -82,9 +108,9 @@
   /* Caprasimo es la voz: rótulo pintado, etiqueta de dulcería. Sólo a 32px
      o más, sin contorno ni sombra —con eso se vuelve infantil—. Figtree lee
      todo lo demás. Shantell Sans es la mano de Erika: una o dos notas. */
-  --font-display: "Caprasimo", ui-serif, Georgia, serif;
-  --font-sans:    "Figtree", ui-sans-serif, system-ui, sans-serif;
-  --font-mano:    "Shantell Sans", "Figtree", ui-sans-serif, sans-serif;
+  --font-display: "Caprasimo", "Caprasimo respaldo", ui-serif, Georgia, serif;
+  --font-sans:    "Figtree", "Figtree respaldo", ui-sans-serif, system-ui, sans-serif;
+  --font-mano:    "Shantell Sans", "Figtree", "Figtree respaldo", ui-sans-serif, sans-serif;
 
   /* La paleta, con nombre de lo que es. Los tonos medios (mola, turquesa,
      papaya) NO llevan texto chico en ningún color que no sea el indicado en

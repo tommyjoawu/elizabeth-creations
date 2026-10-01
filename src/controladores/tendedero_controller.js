@@ -21,11 +21,14 @@ export default class extends Controller {
     this.mm = gsap.matchMedia()
     this.mm.add("(prefers-reduced-motion: no-preference)", () => {
       const capas = this.adornoTargets.map((adorno) => adorno.querySelector(".e-adorno__impulso"))
-      // Cada adorno con su inercia: los de hilo largo se van más lejos.
-      const hacia = capas.map((capa) =>
-        gsap.quickTo(capa, "rotate", { duration: 0.9, ease: "elastic.out(1, 0.35)" }))
+      // Cada adorno con su inercia: los de hilo largo se van más lejos. Los
+      // pesos se leen ANTES de crear los tweens (que escriben estilos): leer
+      // y escribir intercalados obliga a recalcular estilos una vez por
+      // adorno.
       const pesos = this.adornoTargets.map((adorno) =>
         0.6 + parseFloat(getComputedStyle(adorno).getPropertyValue("--largo")) / 14)
+      const hacia = capas.map((capa) =>
+        gsap.quickTo(capa, "rotate", { duration: 0.9, ease: "elastic.out(1, 0.35)" }))
 
       // Mientras la sección esté en pantalla: sirve igual para el hero, que
       // arranca arriba de todo, y para el cordel del cierre.

@@ -23,28 +23,54 @@
     cierre       mola     (Acción)
 --}}
 <!DOCTYPE html>
-<html lang="es">
+{{!-- `es-PA`: español de Panamá. Le dice a Google en qué idioma y para qué
+     país es la página (el mismo `inLanguage` del JSON-LD). --}}
+<html lang="es-PA">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    {{!-- El título y la descripción de los buscadores salen de marca.json; la
+         descripción lleva llaves que se llenan con los precios y la fecha de
+         los JSON (vite/hechos.js). --}}
     <title>{{marca.titulo}}</title>
-    <meta name="description" content="{{marca.descripcion}}">
+    <meta name="description" content="{{rellenar marca.descripcion}}">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
     <meta name="theme-color" content="#FBF1E1">
     {{!-- La paleta ya trae sus capítulos oscuros: el modo oscuro forzado de
         Chrome en Android la invertiría entera. --}}
     <meta name="color-scheme" content="only light">
+    {{!-- La dirección canónica: marca.url, la única del sitio. --}}
     <link rel="canonical" href="{{marca.url}}">
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    {{#if marca.verificacion.google}}<meta name="google-site-verification" content="{{marca.verificacion.google}}">{{/if}}
+    {{#if marca.verificacion.bing}}<meta name="msvalidate.01" content="{{marca.verificacion.bing}}">{{/if}}
 
+    {{!-- Iconos: el SVG para los navegadores, el PNG de 180 para la pantalla
+         de inicio del iPhone (no lee SVG) y el manifiesto (vite/buscadores.js)
+         con los de Android. Los PNG salen de docs/logo/sello-color.svg
+         (scripts/iconos.mjs). --}}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="{{base}}manifest.webmanifest">
+
+    {{!-- Lo que se ve al compartir el link (WhatsApp, Facebook, X). Todo con
+         URL absoluta: quien lee estas etiquetas no conoce la página. --}}
     <meta property="og:type" content="website">
     <meta property="og:locale" content="es_PA">
+    <meta property="og:site_name" content="{{marca.nombre}}">
     <meta property="og:title" content="{{marca.titulo}}">
-    <meta property="og:description" content="{{marca.descripcion}}">
+    <meta property="og:description" content="{{rellenar marca.descripcion}}">
     <meta property="og:url" content="{{marca.url}}">
     <meta property="og:image" content="{{marca.url}}og.jpg">
+    <meta property="og:image:secure_url" content="{{marca.url}}og.jpg">
+    <meta property="og:image:type" content="image/jpeg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="{{marca.imagenSocialAlt}}">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{marca.titulo}}">
+    <meta name="twitter:description" content="{{rellenar marca.descripcion}}">
+    <meta name="twitter:image" content="{{marca.url}}og.jpg">
+    <meta name="twitter:image:alt" content="{{marca.imagenSocialAlt}}">
 
     {{!-- Las dos fuentes del primer pantallazo, precargadas: Caprasimo pinta
          el titular (el LCP) y Figtree todo lo demás. La de las notas a mano
@@ -60,7 +86,9 @@
     <link rel="stylesheet" href="/src/estilos/main.css">
     <script type="module" src="/src/main.js"></script>
 
-    <script type="application/ld+json">{{esquemaTienda}}</script>
+    {{!-- Los datos estructurados: negocio, catálogo con precios y preguntas
+         frecuentes, todo de src/datos (vite/esquema.js). --}}
+    <script type="application/ld+json">{{esquema}}</script>
   </head>
 
   {{!-- `suave`: el scroll con inercia. Va en el <body> porque es de la página

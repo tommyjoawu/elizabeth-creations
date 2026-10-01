@@ -23,6 +23,7 @@ def pieza(carpeta, titulo, tamano, css, cuerpo, fondo=""):
 <html lang="es">
 <head>
 <meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
 <meta name="pieza" content="{tamano}">
 <title>{titulo}</title>
 <link rel="stylesheet" href="../marca/marca.css">

@@ -1,5 +1,4 @@
 import { Controller } from "@hotwired/stimulus"
-import Lenis from "lenis"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 
@@ -17,10 +16,17 @@ import { ScrollTrigger } from "gsap/ScrollTrigger"
 //   2. Puntero grueso (un dedo). El scroll táctil del sistema ya tiene
 //      inercia, y encima de él una segunda se siente como arrastrar algo
 //      mojado.
+//
+// Lenis se pide aparte (`import()`) y sólo cuando corresponde: en un
+// teléfono no se usa nunca, y bajarlo y compilarlo igual era casi la mitad
+// del JavaScript de la página.
 export default class extends Controller {
-  connect() {
+  async connect() {
     if (!this.corresponde()) return
 
+    const { default: Lenis } = await import("lenis")
+    // Pudo desconectarse mientras llegaba el módulo.
+    if (!this.element.isConnected || this.lenis) return
     this.lenis = new Lenis({
       duration: 1.1,
       // Salida exponencial: arranca a la velocidad de la rueda y frena largo.

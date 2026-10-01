@@ -1,0 +1,754 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://tommyjoawu.github.io/elizabeth-creations/#sitio",
+      "url": "https://tommyjoawu.github.io/elizabeth-creations/",
+      "name": "Elizabeth Creations",
+      "inLanguage": "es-PA",
+      "publisher": {
+        "@id": "https://tommyjoawu.github.io/elizabeth-creations/#negocio"
+      }
+    },
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://tommyjoawu.github.io/elizabeth-creations/#negocio",
+      "name": "Elizabeth Creations",
+      "url": "https://tommyjoawu.github.io/elizabeth-creations/",
+      "description": "Adornos navideños de fieltro cosidos a mano en La Chorrera: sets de 3 por $15, varitas mágicas a $2.50 y guirnaldas con nombre. Pide por WhatsApp; Navidad hasta el 15 de noviembre.",
+      "slogan": "Adornos de fieltro hechos a mano",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://tommyjoawu.github.io/elizabeth-creations/icono-512.png",
+        "width": 512,
+        "height": 512
+      },
+      "image": [
+        "https://tommyjoawu.github.io/elizabeth-creations/og.jpg",
+        "https://tommyjoawu.github.io/elizabeth-creations/assets/set-navidad-clasica-cerca-960-CRdBvgd1.jpg",
+        "https://tommyjoawu.github.io/elizabeth-creations/assets/set-navidad-nevada-960-CnoznRak.jpg",
+        "https://tommyjoawu.github.io/elizabeth-creations/assets/set-bajo-el-mar-960-CHWwi-KP.jpg"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "La Chorrera",
+        "addressRegion": "Panamá Oeste",
+        "addressCountry": "PA"
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "La Chorrera"
+        },
+        {
+          "@type": "City",
+          "name": "Ciudad de Panamá"
+        }
+      ],
+      "paymentAccepted": "Yappy, transferencia bancaria",
+      "currenciesAccepted": "USD",
+      "priceRange": "$2.50–$15.00",
+      "knowsLanguage": "es",
+      "hasMerchantReturnPolicy": {
+        "@id": "https://tommyjoawu.github.io/elizabeth-creations/#devoluciones"
+      },
+      "hasOfferCatalog": {
+        "@id": "https://tommyjoawu.github.io/elizabeth-creations/#catalogo"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://tommyjoawu.github.io/elizabeth-creations/#pagina",
+      "url": "https://tommyjoawu.github.io/elizabeth-creations/",
+      "name": "Adornos de fieltro hechos a mano en La Chorrera, Panamá · Elizabeth Creations",
+      "description": "Adornos navideños de fieltro cosidos a mano en La Chorrera: sets de 3 por $15, varitas mágicas a $2.50 y guirnaldas con nombre. Pide por WhatsApp; Navidad hasta el 15 de noviembre.",
+      "inLanguage": "es-PA",
+      "isPartOf": {
+        "@id": "https://tommyjoawu.github.io/elizabeth-creations/#sitio"
+      },
+      "about": {
+        "@id": "https://tommyjoawu.github.io/elizabeth-creations/#negocio"
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://tommyjoawu.github.io/elizabeth-creations/og.jpg",
+        "width": 1200,
+        "height": 630
+      },
+      "dateModified": "2026-10-01",
+      "mainEntity": {
+        "@id": "https://tommyjoawu.github.io/elizabeth-creations/#catalogo"
+      }
+    },
+    {
+      "@type": "OfferCatalog",
+      "@id": "https://tommyjoawu.github.io/elizabeth-creations/#catalogo",
+      "name": "Adornos de fieltro de Elizabeth Creations",
+      "numberOfItems": 15,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@type": "Product",
+            "@id": "https://tommyjoawu.github.io/elizabeth-creations/#producto-set-navidad-clasica",
+            "name": "Set Navidad clásica: 3 adornos de fieltro",
+            "description": "Estrella brillante, Arbolito verde, Galleta de jengibre. Los colores de siempre, con lentejuelas, perlitas y cascabeles.",
+            "image": "https://tommyjoawu.github.io/elizabeth-creations/assets/set-navidad-clasica-cerca-960-CRdBvgd1.jpg",
+            "brand": {
+              "@type": "Brand",
+              "name": "Elizabeth Creations"
+            },
+            "offers": {
+              "@type": "Offer",
+              "price": "15.00",
+              "priceCurrency": "USD",
+              "availability": "https://schema.org/MadeToOrder",
+              "itemCondition": "https://schema.org/NewCondition",
+              "url": "https://tommyjoawu.github.io/elizabeth-creations/#temporada",
+              "seller": {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#negocio"
+              },
+              "hasMerchantReturnPolicy": {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#devoluciones"
+              }
+            },
+            "category": "Adornos navideños de fieltro",
+            "isRelatedTo": [
+              {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#producto-estrella-brillante"
+              },
+              {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#producto-arbolito-verde"
+              },
+              {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#producto-galleta-de-jengibre"
+              }
+            ]
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@type": "Product",
+            "@id": "https://tommyjoawu.github.io/elizabeth-creations/#producto-set-navidad-nevada",
+            "name": "Set Navidad nevada: 3 adornos de fieltro",
+            "description": "Arbolito de nieve, Galleta de jengibre, Estrella blanca. Blanca como la nieve y llena de lentejuelas de colores.",
+            "image": "https://tommyjoawu.github.io/elizabeth-creations/assets/set-navidad-nevada-960-CnoznRak.jpg",
+            "brand": {
+              "@type": "Brand",
+              "name": "Elizabeth Creations"
+            },
+            "offers": {
+              "@type": "Offer",
+              "price": "15.00",
+              "priceCurrency": "USD",
+              "availability": "https://schema.org/MadeToOrder",
+              "itemCondition": "https://schema.org/NewCondition",
+              "url": "https://tommyjoawu.github.io/elizabeth-creations/#temporada",
+              "seller": {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#negocio"
+              },
+              "hasMerchantReturnPolicy": {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#devoluciones"
+              }
+            },
+            "category": "Adornos navideños de fieltro",
+            "isRelatedTo": [
+              {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#producto-arbolito-de-nieve"
+              },
+              {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#producto-galleta-de-jengibre"
+              },
+              {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#producto-estrella-blanca"
+              }
+            ]
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "item": {
+            "@type": "Product",
+            "@id": "https://tommyjoawu.github.io/elizabeth-creations/#producto-set-bajo-el-mar",
+            "name": "Set Bajo el mar: 3 adornos de fieltro",
+            "description": "Sirenita, Pececito, Cangrejito. Con sus caritas bordadas y la cola de lentejuelas de la sirenita.",
+            "image": "https://tommyjoawu.github.io/elizabeth-creations/assets/set-bajo-el-mar-960-CHWwi-KP.jpg",
+            "brand": {
+              "@type": "Brand",
+              "name": "Elizabeth Creations"
+            },
+            "offers": {
+              "@type": "Offer",
+              "price": "15.00",
+              "priceCurrency": "USD",
+              "availability": "https://schema.org/MadeToOrder",
+              "itemCondition": "https://schema.org/NewCondition",
+              "url": "https://tommyjoawu.github.io/elizabeth-creations/#temporada",
+              "seller": {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#negocio"
+              },
+              "hasMerchantReturnPolicy": {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#devoluciones"
+              }
+            },
+            "category": "Adornos navideños de fieltro",
+            "isRelatedTo": [
+              {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#producto-sirenita"
+              },
+              {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#producto-pececito"
+              },
+              {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#producto-cangrejito"
+              }
+            ]
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "item": {
+            "@type": "Product",
+            "@id": "https://tommyjoawu.github.io/elizabeth-creations/#producto-estrella-brillante",
+            "name": "Estrella brillante de fieltro",
+            "description": "Fieltro amarillo, lentejuelas y canutillos. Cosido a mano en La Chorrera, Panamá Oeste.",
+            "image": "https://tommyjoawu.github.io/elizabeth-creations/assets/pieza-estrella-amarilla-1200-Ih8WDrO4.jpg",
+            "material": "Fieltro amarillo, lentejuelas y canutillos",
+            "brand": {
+              "@type": "Brand",
+              "name": "Elizabeth Creations"
+            },
+            "offers": {
+              "@type": "Offer",
+              "price": "6.00",
+              "priceCurrency": "USD",
+              "availability": "https://schema.org/MadeToOrder",
+              "itemCondition": "https://schema.org/NewCondition",
+              "url": "https://tommyjoawu.github.io/elizabeth-creations/#temporada",
+              "seller": {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#negocio"
+              },
+              "hasMerchantReturnPolicy": {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#devoluciones"
+              }
+            },
+            "category": "Adornos navideños de fieltro"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "item": {
+            "@type": "Product",
+            "@id": "https://tommyjoawu.github.io/elizabeth-creations/#producto-arbolito-verde",
+            "name": "Arbolito verde de fieltro",
+            "description": "Fieltro cosido a mano, lentejuelas y perlitas. Cosido a mano en La Chorrera, Panamá Oeste.",
+            "image": "https://tommyjoawu.github.io/elizabeth-creations/assets/pieza-arbol-verde-1200-x802xSvn.jpg",
+            "material": "Fieltro cosido a mano, lentejuelas y perlitas",
+            "brand": {
+              "@type": "Brand",
+              "name": "Elizabeth Creations"
+            },
+            "offers": {
+              "@type": "Offer",
+              "price": "6.00",
+              "priceCurrency": "USD",
+              "availability": "https://schema.org/MadeToOrder",
+              "itemCondition": "https://schema.org/NewCondition",
+              "url": "https://tommyjoawu.github.io/elizabeth-creations/#temporada",
+              "seller": {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#negocio"
+              },
+              "hasMerchantReturnPolicy": {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#devoluciones"
+              }
+            },
+            "category": "Adornos navideños de fieltro"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "item": {
+            "@type": "Product",
+            "@id": "https://tommyjoawu.github.io/elizabeth-creations/#producto-galleta-de-jengibre",
+            "name": "Galleta de jengibre de fieltro",
+            "description": "Fieltro café con glaseado blanco y bisutería. Cosido a mano en La Chorrera, Panamá Oeste.",
+            "image": "https://tommyjoawu.github.io/elizabeth-creations/assets/pieza-galleta-jengibre-1200-W-_kym2R.jpg",
+            "material": "Fieltro café con glaseado blanco y bisutería",
+            "brand": {
+              "@type": "Brand",
+              "name": "Elizabeth Creations"
+            },
+            "offers": {
+              "@type": "Offer",
+              "price": "6.00",
+              "priceCurrency": "USD",
+              "availability": "https://schema.org/MadeToOrder",
+              "itemCondition": "https://schema.org/NewCondition",
+              "url": "https://tommyjoawu.github.io/elizabeth-creations/#temporada",
+              "seller": {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#negocio"
+              },
+              "hasMerchantReturnPolicy": {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#devoluciones"
+              }
+            },
+            "category": "Adornos navideños de fieltro"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 7,
+          "item": {
+            "@type": "Product",
+            "@id": "https://tommyjoawu.github.io/elizabeth-creations/#producto-arbolito-de-nieve",
+            "name": "Arbolito de nieve de fieltro",
+            "description": "Fieltro blanco, estrella rosada y lentejuelas. Cosido a mano en La Chorrera, Panamá Oeste.",
+            "image": "https://tommyjoawu.github.io/elizabeth-creations/assets/pieza-arbol-blanco-1200-DjjHsKbn.jpg",
+            "material": "Fieltro blanco, estrella rosada y lentejuelas",
+            "brand": {
+              "@type": "Brand",
+              "name": "Elizabeth Creations"
+            },
+            "offers": {
+              "@type": "Offer",
+              "price": "6.00",
+              "priceCurrency": "USD",
+              "availability": "https://schema.org/MadeToOrder",
+              "itemCondition": "https://schema.org/NewCondition",
+              "url": "https://tommyjoawu.github.io/elizabeth-creations/#temporada",
+              "seller": {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#negocio"
+              },
+              "hasMerchantReturnPolicy": {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#devoluciones"
+              }
+            },
+            "category": "Adornos navideños de fieltro"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 8,
+          "item": {
+            "@type": "Product",
+            "@id": "https://tommyjoawu.github.io/elizabeth-creations/#producto-estrella-blanca",
+            "name": "Estrella blanca de fieltro",
+            "description": "Fieltro blanco, flor de lentejuelas y canutillos. Cosido a mano en La Chorrera, Panamá Oeste.",
+            "image": "https://tommyjoawu.github.io/elizabeth-creations/assets/pieza-estrella-blanca-1200-B-kWNTeC.jpg",
+            "material": "Fieltro blanco, flor de lentejuelas y canutillos",
+            "brand": {
+              "@type": "Brand",
+              "name": "Elizabeth Creations"
+            },
+            "offers": {
+              "@type": "Offer",
+              "price": "6.00",
+              "priceCurrency": "USD",
+              "availability": "https://schema.org/MadeToOrder",
+              "itemCondition": "https://schema.org/NewCondition",
+              "url": "https://tommyjoawu.github.io/elizabeth-creations/#temporada",
+              "seller": {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#negocio"
+              },
+              "hasMerchantReturnPolicy": {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#devoluciones"
+              }
+            },
+            "category": "Adornos navideños de fieltro"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 9,
+          "item": {
+            "@type": "Product",
+            "@id": "https://tommyjoawu.github.io/elizabeth-creations/#producto-sirenita",
+            "name": "Sirenita de fieltro",
+            "description": "Fieltro, pelo rojo y cola de lentejuelas. Cosido a mano en La Chorrera, Panamá Oeste.",
+            "image": "https://tommyjoawu.github.io/elizabeth-creations/assets/pieza-sirenita-1200-DphljNJj.jpg",
+            "material": "Fieltro, pelo rojo y cola de lentejuelas",
+            "brand": {
+              "@type": "Brand",
+              "name": "Elizabeth Creations"
+            },
+            "offers": {
+              "@type": "Offer",
+              "price": "7.00",
+              "priceCurrency": "USD",
+              "availability": "https://schema.org/MadeToOrder",
+              "itemCondition": "https://schema.org/NewCondition",
+              "url": "https://tommyjoawu.github.io/elizabeth-creations/#temporada",
+              "seller": {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#negocio"
+              },
+              "hasMerchantReturnPolicy": {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#devoluciones"
+              }
+            },
+            "category": "Adornos navideños de fieltro"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 10,
+          "item": {
+            "@type": "Product",
+            "@id": "https://tommyjoawu.github.io/elizabeth-creations/#producto-pececito",
+            "name": "Pececito de fieltro",
+            "description": "Fieltro amarillo, aletas turquesa y perlitas. Cosido a mano en La Chorrera, Panamá Oeste.",
+            "image": "https://tommyjoawu.github.io/elizabeth-creations/assets/pieza-pececito-1200-Br-aN8-m.jpg",
+            "material": "Fieltro amarillo, aletas turquesa y perlitas",
+            "brand": {
+              "@type": "Brand",
+              "name": "Elizabeth Creations"
+            },
+            "offers": {
+              "@type": "Offer",
+              "price": "6.00",
+              "priceCurrency": "USD",
+              "availability": "https://schema.org/MadeToOrder",
+              "itemCondition": "https://schema.org/NewCondition",
+              "url": "https://tommyjoawu.github.io/elizabeth-creations/#temporada",
+              "seller": {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#negocio"
+              },
+              "hasMerchantReturnPolicy": {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#devoluciones"
+              }
+            },
+            "category": "Adornos navideños de fieltro"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 11,
+          "item": {
+            "@type": "Product",
+            "@id": "https://tommyjoawu.github.io/elizabeth-creations/#producto-cangrejito",
+            "name": "Cangrejito de fieltro",
+            "description": "Fieltro rojo, barriga naranja y piedritas. Cosido a mano en La Chorrera, Panamá Oeste.",
+            "image": "https://tommyjoawu.github.io/elizabeth-creations/assets/pieza-cangrejito-1200-CzfTwhYS.jpg",
+            "material": "Fieltro rojo, barriga naranja y piedritas",
+            "brand": {
+              "@type": "Brand",
+              "name": "Elizabeth Creations"
+            },
+            "offers": {
+              "@type": "Offer",
+              "price": "7.00",
+              "priceCurrency": "USD",
+              "availability": "https://schema.org/MadeToOrder",
+              "itemCondition": "https://schema.org/NewCondition",
+              "url": "https://tommyjoawu.github.io/elizabeth-creations/#temporada",
+              "seller": {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#negocio"
+              },
+              "hasMerchantReturnPolicy": {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#devoluciones"
+              }
+            },
+            "category": "Adornos navideños de fieltro"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 12,
+          "item": {
+            "@type": "Product",
+            "@id": "https://tommyjoawu.github.io/elizabeth-creations/#producto-varita-de-luna",
+            "name": "Varita mágica de luna de fieltro",
+            "description": "Fieltro lila, perlitas y cintas, en palito de madera. Cosido a mano en La Chorrera, Panamá Oeste.",
+            "image": "https://tommyjoawu.github.io/elizabeth-creations/assets/pieza-varita-luna-1200-eS4UswMW.jpg",
+            "material": "Fieltro lila, perlitas y cintas, en palito de madera",
+            "brand": {
+              "@type": "Brand",
+              "name": "Elizabeth Creations"
+            },
+            "offers": [
+              {
+                "@type": "Offer",
+                "price": "2.50",
+                "priceCurrency": "USD",
+                "availability": "https://schema.org/MadeToOrder",
+                "itemCondition": "https://schema.org/NewCondition",
+                "url": "https://tommyjoawu.github.io/elizabeth-creations/#temporada",
+                "seller": {
+                  "@id": "https://tommyjoawu.github.io/elizabeth-creations/#negocio"
+                },
+                "hasMerchantReturnPolicy": {
+                  "@id": "https://tommyjoawu.github.io/elizabeth-creations/#devoluciones"
+                }
+              },
+              {
+                "@type": "Offer",
+                "price": "25.00",
+                "priceCurrency": "USD",
+                "availability": "https://schema.org/MadeToOrder",
+                "itemCondition": "https://schema.org/NewCondition",
+                "url": "https://tommyjoawu.github.io/elizabeth-creations/#temporada",
+                "seller": {
+                  "@id": "https://tommyjoawu.github.io/elizabeth-creations/#negocio"
+                },
+                "hasMerchantReturnPolicy": {
+                  "@id": "https://tommyjoawu.github.io/elizabeth-creations/#devoluciones"
+                },
+                "name": "Docena de varitas (12 unidades, un solo estilo y color)",
+                "eligibleQuantity": {
+                  "@type": "QuantitativeValue",
+                  "value": 12
+                }
+              }
+            ],
+            "category": "Varitas mágicas de fieltro"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 13,
+          "item": {
+            "@type": "Product",
+            "@id": "https://tommyjoawu.github.io/elizabeth-creations/#producto-varita-de-estrella",
+            "name": "Varita mágica de estrella de fieltro",
+            "description": "Fieltro blanco con carita bordada, lentejuelas y cinta rosada, en palito de madera. Cosido a mano en La Chorrera, Panamá Oeste.",
+            "image": "https://tommyjoawu.github.io/elizabeth-creations/assets/pieza-varita-estrella-1200-CRgWannB.jpg",
+            "material": "Fieltro blanco con carita bordada, lentejuelas y cinta rosada, en palito de madera",
+            "brand": {
+              "@type": "Brand",
+              "name": "Elizabeth Creations"
+            },
+            "offers": [
+              {
+                "@type": "Offer",
+                "price": "2.50",
+                "priceCurrency": "USD",
+                "availability": "https://schema.org/MadeToOrder",
+                "itemCondition": "https://schema.org/NewCondition",
+                "url": "https://tommyjoawu.github.io/elizabeth-creations/#temporada",
+                "seller": {
+                  "@id": "https://tommyjoawu.github.io/elizabeth-creations/#negocio"
+                },
+                "hasMerchantReturnPolicy": {
+                  "@id": "https://tommyjoawu.github.io/elizabeth-creations/#devoluciones"
+                }
+              },
+              {
+                "@type": "Offer",
+                "price": "25.00",
+                "priceCurrency": "USD",
+                "availability": "https://schema.org/MadeToOrder",
+                "itemCondition": "https://schema.org/NewCondition",
+                "url": "https://tommyjoawu.github.io/elizabeth-creations/#temporada",
+                "seller": {
+                  "@id": "https://tommyjoawu.github.io/elizabeth-creations/#negocio"
+                },
+                "hasMerchantReturnPolicy": {
+                  "@id": "https://tommyjoawu.github.io/elizabeth-creations/#devoluciones"
+                },
+                "name": "Docena de varitas (12 unidades, un solo estilo y color)",
+                "eligibleQuantity": {
+                  "@type": "QuantitativeValue",
+                  "value": 12
+                }
+              }
+            ],
+            "category": "Varitas mágicas de fieltro"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 14,
+          "item": {
+            "@type": "Product",
+            "@id": "https://tommyjoawu.github.io/elizabeth-creations/#producto-guirnalda",
+            "name": "Guirnalda de fieltro",
+            "description": "Fieltro cosido a mano. Cosido a mano en La Chorrera, Panamá Oeste.",
+            "material": "Fieltro cosido a mano",
+            "brand": {
+              "@type": "Brand",
+              "name": "Elizabeth Creations"
+            },
+            "offers": {
+              "@type": "Offer",
+              "price": "5.00",
+              "priceCurrency": "USD",
+              "availability": "https://schema.org/MadeToOrder",
+              "itemCondition": "https://schema.org/NewCondition",
+              "url": "https://tommyjoawu.github.io/elizabeth-creations/#temporada",
+              "seller": {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#negocio"
+              },
+              "hasMerchantReturnPolicy": {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#devoluciones"
+              }
+            },
+            "category": "Guirnaldas de fieltro"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 15,
+          "item": {
+            "@type": "Product",
+            "@id": "https://tommyjoawu.github.io/elizabeth-creations/#producto-guirnalda-con-nombre",
+            "name": "Guirnalda con nombre de fieltro",
+            "description": "Con el nombre que tú escojas. Cosido a mano en La Chorrera, Panamá Oeste.",
+            "material": "Con el nombre que tú escojas",
+            "brand": {
+              "@type": "Brand",
+              "name": "Elizabeth Creations"
+            },
+            "offers": {
+              "@type": "AggregateOffer",
+              "lowPrice": "5.00",
+              "highPrice": "10.00",
+              "priceCurrency": "USD",
+              "offerCount": 1,
+              "availability": "https://schema.org/MadeToOrder",
+              "seller": {
+                "@id": "https://tommyjoawu.github.io/elizabeth-creations/#negocio"
+              }
+            },
+            "category": "Guirnaldas de fieltro"
+          }
+        }
+      ]
+    },
+    {
+      "@type": "MerchantReturnPolicy",
+      "@id": "https://tommyjoawu.github.io/elizabeth-creations/#devoluciones",
+      "applicableCountry": "PA",
+      "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://tommyjoawu.github.io/elizabeth-creations/#preguntas",
+      "url": "https://tommyjoawu.github.io/elizabeth-creations/#preguntas",
+      "inLanguage": "es-PA",
+      "isPartOf": {
+        "@id": "https://tommyjoawu.github.io/elizabeth-creations/#pagina"
+      },
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Dónde comprar adornos navideños hechos a mano en Panamá?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Aquí mismo, en Elizabeth Creations. Soy Erika y hago cada adorno de fieltro a mano en La Chorrera, Panamá Oeste: lo corto, lo coso y lo decoro con bisutería, uno por uno. Me escribes por WhatsApp con la pieza o el set que te gustó y te lo entrego en La Chorrera o en la Ciudad de Panamá."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cómo hago un pedido?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Escríbeme por WhatsApp con la pieza que te gustó: cada botón de la página ya manda su nombre, y la ficha de pedido arma el mensaje por ti. Te confirmo el pedido, te paso los datos para pagar y empiezo."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cuánto cuesta un set de adornos de fieltro?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Cada set de 3 adornos de fieltro cuesta $15.00. Hay tres: Navidad clásica (estrella amarilla, arbolito verde y galleta de jengibre), Navidad nevada (arbolito de nieve, galleta de jengibre y estrella blanca) y Bajo el mar (sirenita, pececito y cangrejito). Por separado, sus piezas sumarían más."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cuánto cuesta un adorno de fieltro hecho a mano?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Cada adorno de fieltro cuesta entre $6.00 y $7.00: la sirenita y el cangrejito, $7.00; las demás piezas, $6.00. Las varitas mágicas cuestan $2.50 cada una, la guirnalda $5.00 y la guirnalda con nombre de $5.00 a $10.00."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Hasta cuándo puedo pedir para Navidad?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Para esta Navidad recibo pedidos hasta el 15 de noviembre de 2026. Así me da tiempo de hacer cada pieza con calma y te llega antes de las fiestas. Si lo quieres para un día en especial, cuéntamelo al escribirme."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cuánto tarda un pedido?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Cada pieza toma de 3 a 5 días, porque la hago a mano de principio a fin. Te aviso por WhatsApp en cuanto esté lista."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cómo se paga?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Por Yappy o por transferencia bancaria. No recibo efectivo."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Tengo que abonar?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí: todo pedido, de una pieza o de un set completo, se separa con un abono del 30 %. Importante: una vez abonado, no se devuelve, porque con él ya empiezo a hacer tu pieza."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Hacen envíos a Ciudad de Panamá?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí. Entrego en La Chorrera y en la Ciudad de Panamá, en un punto de entrega que coordinamos. El punto exacto y si la entrega tiene costo te los confirmo por WhatsApp al hacer tu pedido."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Hacen guirnaldas con nombre en Panamá?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí. La guirnalda con nombre cuesta de $5.00 a $10.00, con $2.50 más por cada color adicional, y la sencilla, $5.00. Me dices el nombre y los colores, y te la hago en fieltro, a mano, para la puerta, la pared o la fiesta."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Venden varitas por docena para recuerdos de cumpleaños?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí, y quedan lindas como recuerdo. La docena cuesta $25.00 si va de un solo estilo y color; si la quieres variada (mezcla de luna y estrella o de colores), son $1.50 más por varita: $43.00. Escríbeme con la fecha de tu fiesta y te confirmo para cuándo te las tengo."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Puedo personalizar mi pedido?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "En las varitas mágicas escoges si llevan luna o estrella, y el color. En la guirnalda con nombre, el nombre. La bisutería va como en la foto. También puedes sumar una tarjeta con un nombre o un mensaje escrito a mano en el centro, por ejemplo para un cumpleaños."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Va a quedar igual a la foto?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Muy parecida, pero no idéntica: se hace a mano, una por una, y cada pieza tiene sus pequeñas diferencias. Si algo tiene que ser exacto, como un nombre o un color, dímelo y lo cuidamos."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cómo guardo mis adornos de fieltro?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "En una caja, lejos de la humedad y del sol directo. Así el fieltro no pierde su color y la bisutería no se despega de un año para otro."
+          }
+        }
+      ]
+    }
+  ]
+}

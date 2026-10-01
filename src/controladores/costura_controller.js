@@ -173,47 +173,99 @@ export default class extends Controller {
     return Q
   }
 
-  trazado(P) {
-    // Curvas con tangente vertical en cada punto: cruza de lado en S y nunca
-    // se sale por los costados.
-    let d = `M${P[0].x.toFixed(1)} ${P[0].y.toFixed(1)}`
+  // Los tramos del hilo como cúbicas [inicio, control 1, control 2, fin].
+  // Curvas con tangente vertical en cada punto: cruza de lado en S y nunca
+  // se sale por los costados.
+  tramos(P) {
+    const T = []
     for (let i = 1; i < P.length; i++) {
       const a = P[i - 1], b = P[i]
       if (b.fin) {
         // El último tramo entra de lado, hacia el botón.
-        d += ` C${a.x.toFixed(1)} ${(a.y + (b.y - a.y) * 0.9).toFixed(1)} ${((a.x + b.x) / 2).toFixed(1)} ${b.y.toFixed(1)} ${b.x.toFixed(1)} ${b.y.toFixed(1)}`
+        T.push([a, { x: a.x, y: a.y + (b.y - a.y) * 0.9 }, { x: (a.x + b.x) / 2, y: b.y }, b])
         continue
       }
       const m = (b.y - a.y) * 0.5
-      d += ` C${a.x.toFixed(1)} ${(a.y + m).toFixed(1)} ${b.x.toFixed(1)} ${(b.y - m).toFixed(1)} ${b.x.toFixed(1)} ${b.y.toFixed(1)}`
+      T.push([a, { x: a.x, y: a.y + m }, { x: b.x, y: b.y - m }, b])
     }
+    return T
+  }
+
+  trazado(T) {
+    const n = (v) => v.toFixed(1)
+    let d = `M${n(T[0][0].x)} ${n(T[0][0].y)}`
+    for (const [, c1, c2, b] of T) d += ` C${n(c1.x)} ${n(c1.y)} ${n(c2.x)} ${n(c2.y)} ${n(b.x)} ${n(b.y)}`
     return d
   }
 
+  // El hilo medido a mano, punto por punto sobre las mismas cúbicas que
+  // dibuja el <path>: [largo, y, x] cada ~4px. Antes se le preguntaba al SVG
+  // (`getPointAtLength` cada 24 unidades de un trazado de 20.000px): en un
+  // teléfono eso eran SEGUNDOS de hilo principal bloqueado en cada refresh.
+  // Con la tabla, medir y pintar son cuentas y una búsqueda binaria.
+  muestrear(T) {
+    const tabla = [[0, T[0][0].y, T[0][0].x]]
+    let largo = 0
+    for (const [a, c1, c2, b] of T) {
+      // Cuántas muestras: por el largo del polígono de control, que nunca es
+      // menor que la curva.
+      const cuerda = Math.hypot(c1.x - a.x, c1.y - a.y) + Math.hypot(c2.x - c1.x, c2.y - c1.y) + Math.hypot(b.x - c2.x, b.y - c2.y)
+      const pasos = Math.max(8, Math.ceil(cuerda / 4))
+      let px = a.x, py = a.y
+      for (let k = 1; k <= pasos; k++) {
+        const t = k / pasos, u = 1 - t
+        const x = u * u * u * a.x + 3 * u * u * t * c1.x + 3 * u * t * t * c2.x + t * t * t * b.x
+        const y = u * u * u * a.y + 3 * u * u * t * c1.y + 3 * u * t * t * c2.y + t * t * t * b.y
+        largo += Math.hypot(x - px, y - py)
+        tabla.push([largo, y, x])
+        px = x; py = y
+      }
+    }
+    return tabla
+  }
+
+  // El punto del hilo a un largo dado, interpolado en la tabla.
+  puntoEn(l) {
+    const t = this.tabla
+    if (l <= 0) return { x: t[0][2], y: t[0][1] }
+    let lo = 0, hi = t.length - 1
+    if (l >= t[hi][0]) return { x: t[hi][2], y: t[hi][1] }
+    while (hi - lo > 1) {
+      const mid = (lo + hi) >> 1
+      if (t[mid][0] < l) lo = mid
+      else hi = mid
+    }
+    const f = (l - t[lo][0]) / Math.max(1e-6, t[hi][0] - t[lo][0])
+    return { x: t[lo][2] + (t[hi][2] - t[lo][2]) * f, y: t[lo][1] + (t[hi][1] - t[lo][1]) * f }
+  }
+
   construir() {
+    // Primero TODAS las lecturas (medidas y posiciones), después todas las
+    // escrituras: si el lienzo cambia de tamaño antes de medir las
+    // secciones, el navegador tiene que recalcular la página entera a mitad
+    // de camino (un "reflow forzado").
     const W = this.element.clientWidth
     const H = this.element.scrollHeight
+    const P = this.puntos()
+
     const svg = this.lienzoTarget
     svg.setAttribute("viewBox", `0 0 ${W} ${H}`)
     svg.setAttribute("width", W)
     svg.setAttribute("height", H)
     svg.style.height = `${H}px`
     this.revela.setAttribute("width", W + 40)
-
-    const P = this.puntos()
     if (P.length < 2) return
-    const d = this.trazado(P)
+    const T = this.tramos(P)
+    const d = this.trazado(T)
     for (const el of [this.tiza, this.borde, this.puntada]) el.setAttribute("d", d)
-    this.largo = this.puntada.getTotalLength()
     const fin = P.at(-1)
     this.nudo.setAttribute("cx", fin.x)
     this.nudo.setAttribute("cy", fin.y)
 
-    // Qué largo de hilo va a qué altura, cada 24 unidades: para que la punta
-    // siga al scroll sin preguntarle al SVG en cada fotograma.
-    this.tabla = []
-    for (let l = 0; l <= this.largo; l += 24) this.tabla.push([l, this.puntada.getPointAtLength(l).y])
-    this.tabla.push([this.largo, fin.y])
+    // Qué largo de hilo va a qué altura: para que la punta siga al scroll
+    // sin preguntarle al SVG en cada fotograma.
+    this.tabla = this.muestrear(T)
+    this.largo = this.tabla.at(-1)[0]
 
     this.pintar(this.quieto ? this.largo : Math.min(this.actual, this.largo))
     if (!this.quieto) this.ir?.(this.objetivo())
@@ -223,11 +275,11 @@ export default class extends Controller {
   pintar(l) {
     this.actual = l
     if (!this.largo) return
-    const p = this.puntada.getPointAtLength(Math.max(l, 0.1))
+    const p = this.puntoEn(Math.max(l, 0.1))
     const terminado = l >= this.largo - 1
     // Hasta la punta (más el grosor del nudo cuando ya llegó al final).
     this.revela.setAttribute("height", (terminado ? p.y + 20 : p.y).toFixed(1))
-    const q = this.puntada.getPointAtLength(Math.max(l - 6, 0))
+    const q = this.puntoEn(Math.max(l - 6, 0))
     const ang = l < 6 ? 90 : Math.atan2(p.y - q.y, p.x - q.x) * 57.2958
     const escala = this.celular ? 0.85 : 1.25
     this.aguja.setAttribute("transform", `translate(${p.x.toFixed(1)} ${p.y.toFixed(1)}) rotate(${ang.toFixed(1)}) scale(${escala})`)

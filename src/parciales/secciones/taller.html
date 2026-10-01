@@ -29,7 +29,7 @@
 
     <div class="mt-24 grid gap-14 sm:mt-32 lg:grid-cols-12 lg:gap-16" data-controller="taller">
       <div class="e-taller__cabecera lg:col-span-5 lg:col-start-8 lg:row-start-1">
-        <h2 id="titulo-taller" class="font-display text-columna">Así nace cada pieza</h2>
+        <h2 id="titulo-taller" class="font-display text-columna"><span class="e-antetitulo">Hechos a mano en {{marca.ciudad}}, paso a paso</span><span class="sr-only">: </span>Así nace cada pieza</h2>
         <p class="mt-6 max-w-[42ch] text-entrada">{{marca.historia.texto}}</p>
         {{!-- La firma: el nombre a mano con un trazo debajo, sin raya delante. --}}
         <p class="e-nota mt-5 inline-flex flex-col text-[1.6rem]" style="rotate: -3deg">
@@ -56,8 +56,8 @@
                 {{imagen this.foto alt="" sizes="45vw"}}
               {{else}}
                 <p class="e-hueco">
-                  <span class="e-hueco__titulo">Falta que Erika la mande</span>
-                  <span class="mt-2 block">{{this.pendiente}}</span>
+                  <span class="e-hueco__titulo">{{#if @root.borrador}}Falta que Erika la mande{{else}}Foto muy pronto{{/if}}</span>
+                  {{#if @root.borrador}}<span class="mt-2 block">{{this.pendiente}}</span>{{/if}}
                 </p>
               {{/if}}
             </div>
@@ -82,8 +82,8 @@
                 {{imagen this.foto alt=this.alt sizes="(min-width: 1024px) 38vw, 92vw"}}
               {{else}}
                 <p class="e-hueco">
-                  <span class="e-hueco__titulo">Falta que Erika la mande</span>
-                  <span class="mt-2 block">{{this.pendiente}}</span>
+                  <span class="e-hueco__titulo">{{#if @root.borrador}}Falta que Erika la mande{{else}}Foto muy pronto{{/if}}</span>
+                  {{#if @root.borrador}}<span class="mt-2 block">{{this.pendiente}}</span>{{/if}}
                 </p>
               {{/if}}
             </div>

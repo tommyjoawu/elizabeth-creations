@@ -5,6 +5,8 @@
 // más de lo que ordena.
 import fs from "node:fs"
 import path from "node:path"
+import { esquema } from "./esquema.js"
+import { fechaLarga, rellenar } from "./hechos.js"
 
 const RAIZ = path.resolve(import.meta.dirname, "..")
 const IMAGENES = path.join(RAIZ, "src/assets/img")
@@ -36,6 +38,17 @@ function medidasWebp(archivo) {
   }
   if (tipo === "VP8 ") return { ancho: b.readUInt16LE(26) & 0x3fff, alto: b.readUInt16LE(28) & 0x3fff }
   return null
+}
+
+// La foto más grande de un slug, en JPEG si existe (la que se puede citar
+// en el JSON-LD: todo buscador entiende JPEG), como ruta desde la raíz del
+// proyecto. `null` si no hay foto.
+export function fotoMayor(slug) {
+  const anchos = anchosDe(slug)
+  if (!anchos.length) return null
+  const mayor = anchos[anchos.length - 1].archivo
+  const jpg = mayor.replace(/\.webp$/, ".jpg")
+  return `src/assets/img/${fs.existsSync(path.join(IMAGENES, jpg)) ? jpg : mayor}`
 }
 
 const escapar = (texto) => String(texto ?? "")
@@ -177,28 +190,20 @@ export function ayudantes(hb) {
     ).join(""))
   })
 
-  // {{esquemaTienda}} → el JSON-LD de la tienda, armado con marca.json y
-  // nada más: lo que no está en los datos no se declara. `</` va escapado
-  // para que un texto de datos no pueda cerrar el <script>.
-  hb.registerHelper("esquemaTienda", (opciones) => {
-    const marca = opciones.data.root.marca
-    const falta = marca.pendiente || {}
-    // Lo pendiente (el número de marcador, un Instagram que aún no existe) NO
-    // se declara: a Google le llegaría como dato real del negocio.
-    const esquema = {
-      "@context": "https://schema.org",
-      "@type": "Store",
-      name: marca.nombre,
-      description: marca.descripcion,
-      url: marca.url,
-      address: { "@type": "PostalAddress", addressLocality: marca.ciudad, addressRegion: marca.region, addressCountry: marca.pais },
-      paymentAccepted: marca.politicas?.pagos,
-      ...(!falta.correo && { email: marca.correo }),
-      ...(!falta.whatsapp && { telephone: String(marca.whatsapp).replace(/[^\d+]/g, "") }),
-      ...(!falta.instagram && { sameAs: [`https://www.instagram.com/${marca.instagram}/`] })
-    }
-    return seguro(JSON.stringify(esquema, null, 2).replace(/</g, "\\u003c"))
-  })
+  // {{esquema}} → el JSON-LD de la página (vite/esquema.js), armado con los
+  // JSON de src/datos y nada más, en un solo renglón (con sangría eran
+  // varios KB más de HTML; para leerlo, cualquier validador lo formatea).
+  // `</` va escapado para que un texto de datos no pueda cerrar el <script>.
+  hb.registerHelper("esquema", (opciones) =>
+    seguro(JSON.stringify(esquema(opciones.data.root, { fotoMayor })).replace(/</g, "\\u003c")))
+
+  // {{rellenar this.respuesta}} → el texto con sus llaves llenas con los
+  // precios y fechas de los JSON (vite/hechos.js): "cuesta {set}" → "cuesta
+  // $15.00". Lo usan la descripción de los buscadores y las preguntas.
+  hb.registerHelper("rellenar", (texto, opciones) => rellenar(texto, opciones.data.root.hechos, "plantilla"))
+
+  // {{fechaLarga "2026-11-15"}} → "15 de noviembre de 2026".
+  hb.registerHelper("fechaLarga", (iso) => fechaLarga(iso))
 
   // {{#if (pendiente "instagram")}} → si ese dato de marca.json todavía es
   // de marcador. Así una plantilla decide si muestra el enlace o el "muy pronto".
@@ -207,6 +212,8 @@ export function ayudantes(hb) {
   // `(or glifo "flecha")`: el primer valor que no esté vacío. El último
   // argumento de un ayudante es siempre el objeto de opciones de Handlebars.
   hb.registerHelper("or", (...valores) => valores.slice(0, -1).find(Boolean))
+  // `(and @root.borrador this.pendiente)`: verdadero si todos lo son.
+  hb.registerHelper("and", (...valores) => valores.slice(0, -1).every(Boolean))
   // {{cortable "@erika.hechoamano"}} → deja cortar el renglón sólo después
   // de un punto: en una baldosa angosta el usuario se partía en
   // "@erika.hechoaman / o", y así se parte en "@erika. / hechoamano".
