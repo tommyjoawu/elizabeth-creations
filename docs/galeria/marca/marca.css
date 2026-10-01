@@ -1,0 +1,99 @@
+/* Marca Elizabeth Creations: tokens compartidos por todas las piezas de
+   publicidad. Colores y tipografía salen de la landing (src/estilos/main.css,
+   paleta "mola caribe"): papel crema, tinta añil y los colores en bloques.
+   Mismo método que el módulo de publicidad de Abastra (abastra-contenido):
+   una pieza por carpeta, tamaño en <meta name="pieza">, render.mjs exporta. */
+@font-face { font-family: "Caprasimo"; src: url("fuentes/caprasimo-latin.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Figtree"; src: url("fuentes/figtree-latin-variable.woff2") format("woff2"); font-weight: 300 900; font-display: block; }
+@font-face { font-family: "Shantell Sans"; src: url("fuentes/shantell-sans-latin-variable.woff2") format("woff2"); font-weight: 300 800; font-display: block; }
+
+:root {
+  --crema: #FBF1E1;
+  --papel: #FFF9EF;
+  --arena: #F3DFC1;
+  --anil: #1E1A3C;
+  --mango: #FFC53D;
+  --papaya: #F2711C;
+  --mola: #D3253C;
+  --turquesa: #12A5A0;
+  --hibisco: #F48FB1;
+  --lila: #CDB9F2;
+  --lila-honda: #B79BE6;
+  --disp: "Caprasimo", Georgia, serif;
+  --text: "Figtree", system-ui, sans-serif;
+  --mano: "Shantell Sans", "Figtree", sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { overflow: hidden; }
+body { font-family: var(--text); color: var(--anil); -webkit-font-smoothing: antialiased; }
+.pieza { position: relative; overflow: hidden; }
+
+/* La zona segura de arriba (180 px): ahí Instagram pone el "Publicidad" y la
+   barra de progreso de las stories. Nada importante entra en ella. */
+.zona-segura { position: absolute; inset: 0 0 auto; height: 180px; pointer-events: none; }
+
+/* El botón de pedido: la píldora de la landing, con su isla y la sombra
+   dura de sticker. */
+.cta {
+  display: inline-flex; align-items: center; gap: 26px;
+  padding: 12px 12px 12px 44px; border-radius: 999px;
+  background: var(--mango); color: var(--anil);
+  font-weight: 800; font-size: 42px; letter-spacing: -0.01em; white-space: nowrap;
+  box-shadow: inset 0 0 0 4px var(--anil), 8px 10px 0 var(--anil);
+}
+.cta .isla { width: 76px; height: 76px; border-radius: 999px; display: grid; place-items: center; background: rgba(30, 26, 60, 0.14); }
+.cta .isla svg { width: 40px; height: 40px; }
+.cta.oscuro { background: var(--anil); color: var(--crema); box-shadow: inset 0 0 0 4px var(--anil), 8px 10px 0 var(--mango); }
+.cta.oscuro .isla { background: rgba(251, 241, 225, 0.16); }
+
+/* La firma: el sello de fieltro + el nombre. */
+.lock { display: inline-flex; align-items: center; gap: 18px; }
+.lock img { width: 92px; height: 92px; }
+.lock b { font-family: var(--disp); font-weight: 400; font-size: 46px; line-height: 0.95; display: block; }
+.lock span { font-family: var(--mano); font-size: 26px; font-weight: 500; display: block; margin-top: 4px; }
+
+/* La foto como objeto: polaroid con cinta. */
+.polaroid { position: absolute; background: var(--papel); padding: 18px 18px 72px; border-radius: 10px;
+  box-shadow: 0 0 0 4px var(--anil), 14px 16px 0 var(--anil); }
+.polaroid .foto { width: 100%; height: 100%; overflow: hidden; border-radius: 4px; }
+.polaroid img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.polaroid figcaption { position: absolute; left: 0; right: 0; bottom: 14px; text-align: center; font-family: var(--mano); font-size: 34px; font-weight: 500; }
+.cinta { position: absolute; width: 170px; height: 46px; background: rgba(255, 197, 61, 0.85);
+  clip-path: polygon(0 12%, 5% 0, 30% 5%, 62% 0, 95% 6%, 100% 0, 97% 50%, 100% 100%, 70% 94%, 35% 100%, 4% 93%, 0 100%, 3% 50%); }
+
+/* El sticker de la fecha: sello de goma rojo, torcido. */
+.sello-fecha { position: absolute; background: var(--mola); color: var(--crema); border-radius: 26px; padding: 22px 34px 26px;
+  box-shadow: inset 0 0 0 5px var(--crema), inset 0 0 0 10px var(--mola), inset 0 0 0 13px rgba(251,241,225,.6), 10px 12px 0 var(--anil); }
+.sello-fecha small { display: block; font-weight: 800; font-size: 28px; letter-spacing: .08em; text-transform: uppercase; }
+.sello-fecha b { display: block; font-family: var(--disp); font-weight: 400; font-size: 64px; line-height: 1; margin-top: 4px; }
+
+/* Fondos con estampado (pedido de Erika: "que no quede solo el fondo de un
+   solo color"). Se ponen en la .pieza junto al color de fondo: el dibujo va en
+   un ::before debajo de todo lo demás, así que basta con la clase. Los
+   mosaicos están en marca/patrones/ (SVG hechos a mano, con puntada).
+     fondo-bolitas      bolitas blancas, para el lila
+     fondo-bombones     bastones, mentas y caramelos, para el añil de Navidad
+     fondo-luces        una tira de luces de Navidad, para el añil
+     fondo-estrellitas  estrellitas blancas, para el mango
+     fondo-florecitas   florecitas blancas, para el turquesa
+     fondo-confeti      flores y bolitas de colores, para el crema
+   Ajusta --patron-opacidad o --patron-tam por pieza si hace falta. */
+[class*="fondo-"]::before { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image: var(--patron); background-size: var(--patron-tam); background-position: var(--patron-pos, 0 0);
+  opacity: var(--patron-opacidad, 1); }
+.fondo-bolitas     { --patron: url("patrones/bolitas.svg");     --patron-tam: 200px 200px; --patron-opacidad: .7; }
+.fondo-bombones    { --patron: url("patrones/bombones.svg");    --patron-tam: 360px 360px; }
+.fondo-luces       { --patron: url("patrones/luces.svg");       --patron-tam: 540px 500px; }
+.fondo-estrellitas { --patron: url("patrones/estrellitas.svg"); --patron-tam: 260px 260px; --patron-opacidad: .6; }
+.fondo-florecitas  { --patron: url("patrones/florecitas.svg");  --patron-tam: 240px 240px; --patron-opacidad: .55; }
+.fondo-confeti     { --patron: url("patrones/confeti.svg");     --patron-tam: 280px 280px; }
+
+/* Placa: un parche liso detrás del texto chico, para que el estampado no le
+   reste lectura. Toma el color de la pieza con --placa y lleva su puntada
+   (el borde punteado, como el fieltro cosido). */
+.placa { background: var(--placa, var(--crema)); border-radius: 30px; padding: 24px 34px;
+  outline: 3px dashed color-mix(in srgb, currentColor 45%, transparent); outline-offset: -11px; }
+
+/* El grano de papel. */
+.grano::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .35; mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='r'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23r)'/%3E%3C/svg%3E"); }

@@ -1,0 +1,18 @@
+{{!--
+  El botón: una píldora con el icono en su propia isla.
+
+    {{> piezas/boton texto="Pedir por WhatsApp" href=(whatsapp) glifo="whatsapp"}}
+    {{> piezas/boton texto="Ver adornos" href="#temporada" variante="fantasma"}}
+
+  `variante` es "primario" (por omisión) o "fantasma"; el color lo pone el
+  capítulo en el que cae, no el botón. `externo` abre en otra pestaña: se usa
+  para WhatsApp e Instagram, que en un computador son otra página y no deben
+  sacar a nadie de esta.
+--}}
+<a href="{{href}}"
+   class="e-boton e-boton--{{#if variante}}{{variante}}{{else}}primario{{/if}}{{#if chico}} e-boton--chico{{/if}} {{clase}}"
+   {{#if externo}}target="_blank" rel="noopener"{{/if}}
+   {{#if etiqueta}}aria-label="{{etiqueta}}"{{/if}}>
+  <span>{{texto}}</span>
+  <span class="e-boton__isla">{{icono (or glifo "flecha") clase=(or tamanoIcono "size-4")}}</span>
+</a>

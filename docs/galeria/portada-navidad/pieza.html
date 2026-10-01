@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="pieza" content="1080x1350">
+<title>Portada · Navidad hecha a mano</title>
+<link rel="stylesheet" href="../marca/marca.css">
+<style>
+  .pieza { width: 1080px; height: 1350px; }
+
+  .pieza { background: var(--papel); --patron-opacidad: .75; }
+  .foto { position: absolute; left: 0; right: 0; top: 430px; bottom: 0; }
+  .foto img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; }
+  .velo { position: absolute; left: 0; right: 0; top: 430px; bottom: 0; background: linear-gradient(to bottom, rgba(30,26,60,0) 0, rgba(30,26,60,0) 38%, rgba(30,26,60,.88) 66%, rgba(30,26,60,.96) 100%); }
+  .cabecera { position: absolute; left: 0; right: 0; top: 182px; text-align: center; font-family: var(--disp); font-weight: 400; font-size: 210px; line-height: .8; letter-spacing: -.035em; color: var(--mola); }
+  .num { position: absolute; left: 60px; right: 60px; top: 368px; display: flex; justify-content: space-between; font-size: 26px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; border-top: 3px solid var(--anil); border-bottom: 3px solid var(--anil); padding: 10px 0; background: var(--papel); }
+  .titular { position: absolute; left: 60px; right: 60px; bottom: 190px; color: var(--crema); }
+  .titular h1 { font-family: var(--disp); font-weight: 400; font-size: 126px; line-height: .9; letter-spacing: -.02em; }
+  .titular h1 em { font-style: normal; color: var(--mango); }
+  .titular p { margin-top: 18px; font-size: 38px; font-weight: 700; }
+  .lineas { position: absolute; left: 60px; right: 60px; bottom: 60px; display: flex; gap: 22px; }
+  .lineas span { flex: 1; color: var(--crema); font-size: 25px; font-weight: 700; line-height: 1.25; border-top: 3px solid var(--mango); padding-top: 12px; }
+  .sello-fecha { right: 50px; top: 470px; rotate: 9deg; }
+  .sello-fecha b { font-size: 56px; }
+
+</style>
+</head>
+<body>
+<div class="pieza grano fondo-bombones">
+
+  <div class="foto"><img src="../marca/img/coleccion-fieltro.jpg" alt=""></div>
+  <div class="velo"></div>
+  <div class="cabecera">Elizabeth</div>
+  <div class="num"><span>Edición de Navidad</span><span>La Chorrera · 2026</span></div>
+  <div class="sello-fecha"><small>Pedidos hasta el</small><b>15 de nov.</b></div>
+  <div class="titular"><h1>Navidad <em>hecha a mano</em></h1><p>Pedidos hasta el 15 de noviembre</p></div>
+  <div class="lineas"><span>Varitas: luna o estrella</span><span>Bajo el mar, en fieltro</span><span>Yappy o transferencia</span></div>
+
+</div>
+</body>
+</html>

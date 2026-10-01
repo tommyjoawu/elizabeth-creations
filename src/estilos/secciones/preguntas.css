@@ -1,0 +1,40 @@
+/* ============================================================================
+   LAS PREGUNTAS — sobre el bloque turquesa
+   ========================================================================== */
+@layer components {
+  /* El más: dos trazos llenos. Punteado se leía como una mira, no como un
+     signo; el aire de costura ya lo dan el botón crema y su sombra dura. */
+  .e-puntada {
+    background: #1E1A3C;
+    border-radius: 2px;
+  }
+
+  /* ── La ranura ─────────────────────────────────────────────────────────
+     La misma regla que `.v-hueco` en la v2: tiene que ser imposible
+     confundirla con contenido. Borde punteado, sin superficie, y lo que
+     falta dicho en claro. En turquesa el texto es añil (5.5:1): la ranura
+     no baja el contraste para "verse más suave". */
+  .e-hueco {
+    display: block;
+    border: 1.5px dashed #1E1A3C;
+    border-radius: 1rem;
+    padding: 1rem 1.15rem;
+  }
+  .e-hueco__titulo {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .e-hueco__titulo::before {
+    content: "";
+    width: 0.55rem;
+    height: 0.55rem;
+    flex: none;
+    border-radius: 999px;
+    border: 1.5px dashed currentColor;
+  }
+}

@@ -1,0 +1,5 @@
+{{!-- El enlace de texto con flecha, para lo que no merece un botón.
+    {{> piezas/enlace texto="Ver en Instagram" href="…" externo=true}} --}}
+<a href="{{href}}" class="e-enlace {{clase}}" {{#if externo}}target="_blank" rel="noopener"{{/if}}>
+  <span class="e-enlace__texto">{{texto}}</span>{{icono "flecha"}}
+</a>

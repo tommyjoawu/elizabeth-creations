@@ -1,0 +1,198 @@
+{{!--
+  Cómo pedir: las reglas del negocio, dichas una vez y en claro.
+
+  A la izquierda, el camino de un pedido en cuatro pasos, con lo que Erika
+  pidió en sus audios: pago por Yappy o transferencia (sin efectivo), el
+  abono del 30 % en TODOS los pedidos y sets (que una vez abonado no se
+  devuelve), 3 a 5 días por pieza y entrega en
+  La Chorrera o la Ciudad de Panamá. Debajo, el AVISO del abono: "esa parte
+  le tienes que dejar bastante clara" (audio 2). Va en un recuadro de tinta
+  con su propio título, no en letra chica.
+
+  A la derecha, la FICHA de pedido, que termina en WhatsApp y no en un
+  servidor que no existe:
+
+    · Sin JavaScript es un <form method="get"> a wa.me con un solo campo,
+      `text`: wa.me lo recibe tal cual y abre el chat con el mensaje escrito.
+    · Con JavaScript (controlador `encargo`) aparecen los campos ordenados
+      —la pieza con su precio, luna o estrella si es varita, la docena
+      variada, el nombre de la guirnalda, color, cantidad, fecha, zona y la
+      tarjeta personalizada— y el mensaje se arma solo, con la cuenta del
+      precio y del abono, y una vista previa como la burbuja que Erika va a
+      recibir.
+--}}
+<section id="encargos" data-costura="izq" class="e-mango e-motivo e-motivo--flores-estrellas e-feston relative isolate overflow-clip" style="--feston: #F3DFC1"
+         aria-labelledby="titulo-encargos">
+  <div class="e-contenedor e-capitulo relative grid gap-14 lg:grid-cols-12 lg:gap-10">
+    <div class="lg:col-span-5">
+      <h2 id="titulo-encargos" class="e-aparece font-display text-columna" data-controller="revela">
+        Así haces tu pedido
+      </h2>
+      <p class="e-aparece mt-6 max-w-[40ch] text-entrada" data-controller="revela" style="--retraso: 100ms">
+        Todo se coordina por WhatsApp. Pagas por {{marca.politicas.pagos}}: no recibo efectivo.
+      </p>
+
+      <ol class="mt-12 space-y-6" role="list">
+        {{#each encargo.pasos}}
+          <li class="e-aparece flex items-start gap-4" data-controller="revela" style="--retraso: calc({{@index}} * 90ms + 150ms)">
+            {{!-- Un número cosido en una pastilla crema: aquí el orden sí
+                importa, primero se abona y después se hace. --}}
+            <span class="e-encargo__numero" aria-hidden="true">{{suma @index 1}}</span>
+            <p class="pt-1"><strong class="font-bold">{{this.titulo}}</strong> {{this.texto}}</p>
+          </li>
+        {{/each}}
+      </ol>
+
+      <div class="e-aparece e-aviso mt-12" data-controller="revela" style="--retraso: 520ms" role="note"
+           aria-labelledby="titulo-abono">
+        <p id="titulo-abono" class="e-aviso__titulo font-display">El abono no se devuelve</p>
+        <p class="mt-2">
+          Todo pedido, de una pieza o de un set completo, se separa con el {{marca.politicas.abonoPorcentaje}} % de abono.
+          Una vez abonado, no se devuelve: con él ya empiezo a hacer tu pieza.
+        </p>
+      </div>
+    </div>
+
+    <div class="lg:col-span-6 lg:col-start-7">
+      <form class="e-ficha" action="{{whatsappBase}}" method="get" target="_blank" rel="noopener"
+            data-controller="encargo" data-action="submit->encargo#enviar input->encargo#componer change->encargo#componer"
+            data-encargo-saludo-value="¡Hola! Quiero hacer un pedido a {{marca.nombre}}."
+            data-encargo-abono-value="{{marca.mensajeAbono}}"
+            data-encargo-porcentaje-value="{{marca.politicas.abonoPorcentaje}}">
+        <p class="e-ficha__encabezado" aria-hidden="true">
+          <span class="font-mano">Ficha de pedido</span>
+          <span class="e-ficha__sello">{{> piezas/logo clase="size-9" fieltro="#FBF1E1"}}</span>
+        </p>
+
+        {{!-- Ocultos hasta que el controlador los muestra: sin JavaScript no
+            llegarían a WhatsApp (wa.me sólo lee `text`) y se perderían. --}}
+        <div class="grid gap-5 sm:grid-cols-2" data-encargo-target="campos" hidden>
+          <div class="sm:col-span-2">
+            <label class="e-rotulo" for="encargo-pieza">¿Qué pieza quieres?</label>
+            {{!-- Las opciones salen de productos.json y varitas.json, con su
+                precio: el mismo número que la galería, nunca otro. `data-tipo`
+                dice qué más preguntar (forma, docena, nombre). --}}
+            <select class="e-campo" id="encargo-pieza" data-encargo-target="campo pieza" data-rotulo="Pieza">
+              <option value="">Escoge una…</option>
+              {{!-- Primero los sets completos (todos de 3 piezas, $15.00), con
+                  sus piezas en el nombre: así el mensaje dice cuáles son.
+                  Después, pieza por pieza; la galleta de jengibre está en
+                  los dos sets de Navidad y se lista una sola vez (la copia
+                  lleva `repite`). --}}
+              <optgroup label="Sets completos de 3 piezas">
+                {{#each productos.sets}}
+                  {{#if this.precio}}
+                    <option value="Set {{this.nombre}} completo ({{#each this.piezas}}{{this.nombre}}{{#unless @last}}, {{/unless}}{{/each}})" data-precio="{{this.precio}}">Set {{this.nombre}} — {{precio this.precio}}</option>
+                  {{/if}}
+                {{/each}}
+              </optgroup>
+              {{#each productos.sets}}
+                <optgroup label="{{this.nombre}}{{#if this.precio}}, por pieza{{/if}}">
+                  {{#each this.piezas}}
+                    {{#unless (or this.personaliza this.repite)}}
+                      <option value="{{this.nombre}}" data-precio="{{this.precio}}"
+                              {{#if this.precioHasta}}data-hasta="{{this.precioHasta}}" data-color-extra="{{this.colorExtra}}" data-tipo="nombre"{{/if}}>
+                        {{this.nombre}} — {{#if this.precioHasta}}desde {{/if}}{{precio this.precio}}
+                      </option>
+                    {{/unless}}
+                  {{/each}}
+                  {{#if (eq this.slug "varitas")}}
+                    <option value="Varita mágica" data-precio="{{../varitas.precios.unidad}}" data-tipo="varita">Varita mágica, luna o estrella — {{precio ../varitas.precios.unidad}}</option>
+                    <option value="Docena de varitas" data-precio="{{../varitas.precios.docena}}" data-tipo="docena"
+                            data-variada="{{../varitas.precios.variadaPorVarita}}" data-por-docena="{{../varitas.precios.porDocena}}">Docena de varitas — {{precio ../varitas.precios.docena}}</option>
+                  {{/if}}
+                </optgroup>
+              {{/each}}
+              <option value="Otra idea">Otra idea</option>
+            </select>
+          </div>
+
+          {{!-- Sólo si es una varita (o una docena de un solo estilo): es lo
+              único que se personaliza, además del nombre de la guirnalda. --}}
+          <fieldset class="sm:col-span-2" data-encargo-target="soloVarita" hidden>
+            <legend class="e-rotulo">¿Luna o estrella?</legend>
+            <div class="grid grid-cols-2 gap-3">
+              {{#each varitas.formas}}
+                <label class="e-eleccion">
+                  {{!-- `form` apunta a un formulario que no existe: las opciones
+                      siguen agrupadas por `name`, pero NO viajan a wa.me
+                      como un parámetro suelto. El controlador las pone en
+                      el mensaje. --}}
+                  <input type="radio" name="forma" form="encargo-sin-envio" value="{{this.nombre}}" data-encargo-target="forma" {{#if @first}}checked{{/if}}>
+                  <span>{{this.nombre}}</span>
+                </label>
+              {{/each}}
+            </div>
+          </fieldset>
+
+          {{!-- Sólo la docena: ¿variada? Suma $1.50 por varita. --}}
+          <div class="sm:col-span-2" data-encargo-target="soloDocena" hidden>
+            <label class="e-eleccion e-eleccion--caja">
+              <input type="checkbox" data-encargo-target="variada">
+              <span>Variada: mezcla de luna y estrella o de colores (+{{precio varitas.precios.variadaPorVarita}} por varita)</span>
+            </label>
+          </div>
+
+          {{!-- Sólo la guirnalda con nombre: el nombre y si lleva un color más. --}}
+          <div class="sm:col-span-2 grid gap-3" data-encargo-target="soloNombre" hidden>
+            <div>
+              <label class="e-rotulo" for="encargo-nombre">Nombre para la guirnalda</label>
+              <input class="e-campo" id="encargo-nombre" type="text" autocomplete="off" maxlength="24"
+                     placeholder="Sofía" data-encargo-target="campo" data-rotulo="Nombre de la guirnalda">
+            </div>
+            <label class="e-eleccion e-eleccion--caja">
+              <input type="checkbox" data-encargo-target="colorExtra">
+              <span>Un color adicional (+<span data-encargo-target="precioColor"></span>)</span>
+            </label>
+          </div>
+
+          {{#each encargo.campos}}
+            <div {{#if this.ancho}}class="sm:col-span-2"{{/if}}>
+              <label class="e-rotulo" for="encargo-{{this.id}}">{{this.etiqueta}}</label>
+              <input class="e-campo" id="encargo-{{this.id}}" type="{{or this.tipo "text"}}" autocomplete="off"
+                     {{#if (eq this.tipo "number")}}min="1" inputmode="numeric"{{/if}}
+                     placeholder="{{this.ejemplo}}" data-encargo-target="campo" data-rotulo="{{this.rotulo}}">
+            </div>
+          {{/each}}
+
+          <div class="sm:col-span-2">
+            <label class="e-eleccion e-eleccion--caja">
+              <input type="checkbox" data-encargo-target="tarjeta">
+              <span>Agregar una tarjeta personalizada, escrita a mano</span>
+            </label>
+          </div>
+          <div class="sm:col-span-2" data-encargo-target="soloTarjeta" hidden>
+            <label class="e-rotulo" for="encargo-tarjeta">Nombre o mensaje para la tarjeta</label>
+            <input class="e-campo" id="encargo-tarjeta" type="text" autocomplete="off"
+                   placeholder="¡Feliz cumpleaños, Sofi!" data-encargo-target="campo" data-rotulo="Tarjeta">
+          </div>
+        </div>
+
+        <div class="mt-5">
+          <label class="e-rotulo" for="encargo-idea" data-encargo-target="rotuloIdea">Cuéntame tu pedido</label>
+          <textarea class="e-campo" id="encargo-idea" name="text" rows="3" required
+                    placeholder="Una varita con luna lila para el cumpleaños de mi hija…"
+                    data-encargo-target="idea"></textarea>
+        </div>
+
+        {{!-- La burbuja: lo que Erika va a recibir, tal cual. Sin `aria-live`:
+            se rearma en cada tecla, y un lector de pantalla repetiría el
+            mensaje entero con cada letra. --}}
+        <div class="e-burbuja" data-encargo-target="vista" hidden>
+          <p class="e-rotulo mb-2">Así le llega a {{marca.nombre}}</p>
+          <p class="e-burbuja__texto" data-encargo-target="texto"></p>
+        </div>
+
+        <div class="mt-7 flex flex-col items-start gap-3">
+          <button type="submit" class="e-boton e-boton--primario w-full justify-between sm:w-auto">
+            <span>Enviar por WhatsApp</span>
+            <span class="e-boton__isla">{{icono "whatsapp"}}</span>
+          </button>
+          <p class="e-ayuda">Se abre WhatsApp con tu mensaje listo. Sólo tienes que enviarlo.</p>
+        </div>
+
+        {{> piezas/confeti}}
+      </form>
+    </div>
+  </div>
+</section>

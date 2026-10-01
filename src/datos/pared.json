@@ -1,0 +1,48 @@
+{
+  "_nota": "La pared del taller: fotos de Erika pegadas con cinta. `forma` decide el tamaño en la grilla; el orden importa, porque la grilla es densa y está calculada para no dejar huecos (ver pared.html). `giro` es fijo a propósito: al azar en JavaScript la pared cambiaría en cada visita. La última baldosa es Instagram, que todavía no existe (marca.pendiente.instagram). La baldosa grande es el recorte cuadrado del reel (docs/motion/reel-cuadrado → public/video/reel-cuadrado.*): un bucle mudo con su póster, que sin JavaScript o con reduced-motion se queda en el póster.",
+  "fotos": [
+    {
+      "video": "/video/reel-cuadrado",
+      "poster": "/video/reel-cuadrado-poster.webp",
+      "forma": "grande",
+      "tono": "#F48FB1",
+      "giro": -1.5,
+      "alt": "Video corto de Elizabeth Creations: la varita de luna girando, piezas de fieltro en la mano y el aviso de pedidos de Navidad hasta el 15 de noviembre."
+    },
+    {
+      "foto": "adorno-estrella-blanca",
+      "forma": "chica",
+      "tono": "#12A5A0",
+      "giro": 2,
+      "alt": "Estrella de fieltro blanco colgada de una cinta, con lentejuelas de colores y canutillos dorados."
+    },
+    {
+      "foto": "varita-luna-ventana",
+      "forma": "alta",
+      "tono": "#FFC53D",
+      "giro": 1.2,
+      "alt": "Varita mágica de luna lila a la luz de la ventana, con su sombra dibujada en la pared."
+    },
+    {
+      "foto": "adorno-pececito",
+      "forma": "chica",
+      "tono": "#F2711C",
+      "giro": -2,
+      "alt": "Pececito de fieltro amarillo con aletas turquesa y ojos bordados con perlitas negras."
+    },
+    {
+      "foto": "adorno-cangrejito",
+      "forma": "chica",
+      "tono": "#D3253C",
+      "giro": 1.6,
+      "alt": "Cangrejito de fieltro rojo con barriga naranja, sonrisa bordada y piedritas en las patas."
+    },
+    {
+      "foto": "coleccion-fieltro",
+      "forma": "ancha",
+      "tono": "#12A5A0",
+      "giro": -0.8,
+      "alt": "Toda la colección de fieltro junta sobre una manta blanca."
+    }
+  ]
+}

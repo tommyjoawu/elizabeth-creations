@@ -1,0 +1,99 @@
+{{!--
+  La obertura: el tendedero.
+
+  Un cordel cruza la pantalla y de él cuelgan las piezas de Elizabeth, cada
+  una en su medallón festoneado, a distintas alturas (docs/research.md §5: la
+  escena propia que ningún competidor tiene). Son las fotos de verdad,
+  recortadas sobre su pared blanca (scripts/procesar-material.sh), y cada una
+  enlaza a donde está esa pieza. Al pasar el puntero —o el foco— por una, el
+  papel del fondo se tiñe de su color: `:has()` en la hoja, sin JavaScript.
+
+  Movimiento en tres capas, cada una con su dueño:
+    · el vaivén de siempre es CSS (sólo sin `reduced-motion`);
+    · el empujón al hacer scroll lo da el controlador `tendedero` con GSAP;
+    · el titular entra con CSS, para no esperar al bundle.
+  Sin JavaScript los adornos se mecen igual; sin movimiento, cuelgan quietos
+  cada uno con su inclinación.
+
+  El titular es el NOMBRE: "Bienvenidos a / Elizabeth / Creations", lo más
+  grande de la página. Debajo, en display mediano, lo que hace, con una
+  píldora con la varita girando (en el celular, la foto del póster).
+
+  La fecha límite de Navidad va en una etiqueta debajo de los botones: es lo
+  único que tiene fecha de vencimiento en toda la página, pero arriba le
+  quitaba el primer lugar al nombre.
+--}}
+<section id="inicio" class="e-papel e-motivo e-motivo--confeti e-obertura relative isolate overflow-clip" aria-labelledby="titular"
+         data-controller="tendedero">
+  <div class="e-tendedero">
+    <svg class="e-tendedero__cordel" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <path d="M-2 20 Q50 140 102 20" fill="none" stroke="currentColor" stroke-width="1.5"
+            vector-effect="non-scaling-stroke" stroke-linecap="round"/>
+    </svg>
+
+    {{#each tendedero.adornos}}
+      <a href="{{this.ancla}}" class="e-adorno e-adorno--esfera{{#unless this.movil}} e-adorno--amplio{{/unless}}"
+         data-tono="{{this.tono}}" data-tendedero-target="adorno"
+         style="--p: {{this.p}}; --px: {{or this.px this.p}}; --largo: {{this.largo}}; --tam: {{this.tam}}; --i: {{@index}}">
+        <span class="e-adorno__impulso">
+          <span class="e-adorno__mecer">
+            <span class="e-adorno__hilo"></span>
+            <span class="e-adorno__tapa"></span>
+            <span class="e-adorno__cuerpo e-adorno__cuerpo--roseta">
+              <span class="e-adorno__bola e-adorno__bola--roseta">
+                {{imagen this.foto alt="" sizes="(min-width: 1024px) 14rem, 7rem" carga="eager"}}
+              </span>
+            </span>
+          </span>
+        </span>
+        <span class="sr-only">{{this.nombre}}</span>
+      </a>
+    {{/each}}
+
+    {{!-- La nota a mano: la única pista de que los adornos se tocan. Sólo en
+        pantallas anchas, donde hay puntero y lugar al costado del cordel. --}}
+    <p class="e-nota e-nota--obertura" aria-hidden="true">
+      <span>tócalos, se mecen</span>
+      <svg viewBox="0 0 80 60" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 8c14 2 30 10 38 22s10 18 20 22"/><path d="M52 46l12 6-4-12"/>
+      </svg>
+    </p>
+  </div>
+
+  <div class="e-contenedor e-obertura__texto relative flex min-h-[100svh] flex-col items-center justify-end text-center">
+    {{!-- El nombre manda (Erika, 01-10-2026: "debe decir el nombre del
+        negocio, tipo bienvenidos a Elizabeth Creations, que el nombre
+        resalte"). Va en dos renglones a propósito, "Elizabeth" y
+        "Creations", al tamaño más grande de la página; el saludo arriba,
+        chico, y lo que hace —adornos de fieltro cosidos a mano— abajo, con
+        la píldora de la varita girando. --}}
+    <h1 id="titular" class="e-titular w-full font-display">
+      <span class="e-renglon e-titular__saludo"><span style="--retraso: 80ms">Bienvenidos a</span></span>
+      <span class="e-renglon e-titular__marca"><span style="--retraso: 180ms">Elizabeth</span></span>
+      <span class="e-renglon e-titular__marca"><span style="--retraso: 260ms">Creations</span></span>
+    </h1>
+
+    <p class="e-asoma e-titular__bajada mx-auto mt-5 font-display sm:mt-6" style="--retraso: 380ms">
+      Adornos de fieltro cosidos a mano
+      <span class="e-pastilla e-pastilla--video" aria-hidden="true" data-controller="video-fondo"
+            data-video-fondo-src-value="/video/varita-luna-gira">
+        <img src="/video/varita-luna-gira-poster.webp" alt="" width="464" height="832" decoding="async">
+      </span>
+      con amor.
+    </p>
+
+    <p class="e-asoma mx-auto mt-4 max-w-[38rem] text-entrada text-tenue" style="--retraso: 460ms">
+      Arbolitos, estrellas, galletas de jengibre, figuras del mar y varitas mágicas, decorados con bisutería en {{marca.ciudad}}.
+    </p>
+
+    <div class="e-asoma mt-8 flex w-full flex-col gap-3 sm:mt-7 sm:w-auto sm:flex-row" style="--retraso: 540ms"
+         data-costura-inicio>
+      {{> piezas/boton texto="Haz tu pedido por WhatsApp" href=(whatsapp) glifo="whatsapp" externo=true clase="justify-between"}}
+      {{> piezas/boton texto="Ver las piezas" href="#temporada" variante="fantasma" clase="justify-between"}}
+    </div>
+    <p class="e-asoma e-fecha mt-7 sm:mt-8" style="--retraso: 620ms">
+      <span class="e-fecha__punto" aria-hidden="true"></span>
+      Pedidos de Navidad hasta el {{marca.politicas.fechaNavidad}}
+    </p>
+  </div>
+</section>

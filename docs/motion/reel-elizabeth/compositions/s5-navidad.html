@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es">
+<head><meta charset="utf-8"></head>
+<body>
+<template>
+<style>
+
+  @font-face { font-family: "Caprasimo"; src: url("assets/fuentes/caprasimo-latin.woff2") format("woff2"); font-display: block; }
+  @font-face { font-family: "Figtree"; src: url("assets/fuentes/figtree-latin-variable.woff2") format("woff2"); font-weight: 300 900; font-display: block; }
+  @font-face { font-family: "Shantell Sans"; src: url("assets/fuentes/shantell-sans-latin-variable.woff2") format("woff2"); font-weight: 300 800; font-display: block; }
+  #root { position: absolute; inset: 0; overflow: hidden; font-family: "Figtree", sans-serif; color: #1E1A3C; }
+  .escena { position: absolute; inset: 0; overflow: hidden; }
+  .grano { position: absolute; inset: 0; opacity: .3; mix-blend-mode: soft-light; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='r'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23r)'/%3E%3C/svg%3E"); }
+  .disp { font-family: "Caprasimo", Georgia, serif; font-weight: 400; letter-spacing: -.02em; }
+  .mano { font-family: "Shantell Sans", sans-serif; font-weight: 600; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  .renglon { display: block; overflow: hidden; padding-bottom: .16em; margin-bottom: -.1em; }
+  .renglon > span { display: block; }
+  .polaroid { position: absolute; background: #FFF9EF; padding: 22px 22px 92px; border-radius: 12px;
+    box-shadow: 0 0 0 5px #1E1A3C, 16px 18px 0 #1E1A3C; }
+  .polaroid .foto { position: relative; width: 100%; height: 100%; overflow: hidden; border-radius: 4px; background: #E9E4EE; }
+  .polaroid img, .polaroid video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .polaroid .pie { position: absolute; left: 0; right: 0; bottom: 20px; text-align: center; font-family: "Shantell Sans", sans-serif; font-weight: 600; font-size: 42px; color: #1E1A3C; }
+  .cinta { position: absolute; z-index: 2; left: 50%; top: -28px; width: 200px; height: 56px; margin-left: -100px; background: rgba(255,197,61,.88);
+    clip-path: polygon(0 12%, 5% 0, 30% 5%, 62% 0, 95% 6%, 100% 0, 97% 50%, 100% 100%, 70% 94%, 35% 100%, 4% 93%, 0 100%, 3% 50%); }
+  .med { position: absolute; transform-origin: 50% 0; }
+  .med .hilo { display: block; width: 4px; margin: 0 auto; background: #1E1A3C; }
+  .med .tapa { display: block; width: 30%; height: 30px; margin: 0 auto; border-radius: 10px 10px 4px 4px; background: #1E1A3C; }
+  .med .cuerpo { position: relative; width: 100%; aspect-ratio: 1; }
+  .med .cuerpo::before, .med .bola { -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%22-1%20-1%202%202%22%3E%3Ccircle%20r%3D%220.82%22/%3E%3Ccircle%20cx%3D%220.800%22%20cy%3D%220.000%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.731%22%20cy%3D%220.325%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.535%22%20cy%3D%220.595%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.247%22%20cy%3D%220.761%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.084%22%20cy%3D%220.796%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.400%22%20cy%3D%220.693%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.647%22%20cy%3D%220.470%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.783%22%20cy%3D%220.166%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.783%22%20cy%3D%22-0.166%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.647%22%20cy%3D%22-0.470%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.400%22%20cy%3D%22-0.693%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.084%22%20cy%3D%22-0.796%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.247%22%20cy%3D%22-0.761%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.535%22%20cy%3D%22-0.595%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.731%22%20cy%3D%22-0.325%22%20r%3D%220.2%22/%3E%3C/svg%3E") center / 100% 100% no-repeat; mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%22-1%20-1%202%202%22%3E%3Ccircle%20r%3D%220.82%22/%3E%3Ccircle%20cx%3D%220.800%22%20cy%3D%220.000%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.731%22%20cy%3D%220.325%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.535%22%20cy%3D%220.595%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.247%22%20cy%3D%220.761%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.084%22%20cy%3D%220.796%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.400%22%20cy%3D%220.693%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.647%22%20cy%3D%220.470%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.783%22%20cy%3D%220.166%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.783%22%20cy%3D%22-0.166%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.647%22%20cy%3D%22-0.470%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.400%22%20cy%3D%22-0.693%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.084%22%20cy%3D%22-0.796%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.247%22%20cy%3D%22-0.761%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.535%22%20cy%3D%22-0.595%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.731%22%20cy%3D%22-0.325%22%20r%3D%220.2%22/%3E%3C/svg%3E") center / 100% 100% no-repeat; }
+  .med .cuerpo::before { content: ""; position: absolute; inset: 0; transform: translate(12px, 14px); background: #1E1A3C; }
+  .med .bola { position: relative; width: 100%; height: 100%; background: var(--tono); }
+  .med .bola img { position: absolute; left: 13%; top: 13%; width: 74%; height: 74%; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 5px #1E1A3C; }
+
+  .escena { background: #1E1A3C; }
+
+  .cordel { position: absolute; left: 0; top: 230px; width: 1080px; height: 200px; overflow: visible; }
+  .luz { position: absolute; width: 34px; height: 50px; margin-left: -17px; border-radius: 48% 48% 50% 50% / 40% 40% 60% 60%; background: var(--c);
+    box-shadow: 0 0 26px 8px var(--c); display: block; }
+  h1 { position: absolute; left: 70px; right: 70px; top: 560px; font-size: 150px; line-height: .9; color: #FBF1E1; }
+  .sello { position: absolute; left: 110px; top: 980px; width: 860px; background: #D3253C; color: #FBF1E1; border-radius: 40px; padding: 40px 50px 50px; text-align: center;
+    box-shadow: inset 0 0 0 7px #FBF1E1, inset 0 0 0 14px #D3253C, inset 0 0 0 18px rgba(251,241,225,.6), 16px 18px 0 #F2711C; }
+  .sello small { display: block; font-size: 46px; line-height: 1.2; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .sello b { display: block; font-size: 120px; line-height: 1.12; margin-top: 18px; }
+  .sub { position: absolute; left: 90px; right: 90px; top: 1560px; text-align: center; font-size: 46px; font-weight: 700; color: #FBF1E1; }
+
+</style>
+<div id="root" data-composition-id="s5-navidad" data-width="1080" data-height="1920">
+  <div class="escena">
+
+    <svg class="cordel" viewBox="0 0 1080 200" fill="none"><path d="M-20 10 Q540 330 1100 10" stroke="rgba(251,241,225,.55)" stroke-width="4"/></svg>
+    <i class="luz" style="left:40px; top:271px; --c:#FFC53D"></i><i class="luz" style="left:120px; top:309px; --c:#F48FB1"></i><i class="luz" style="left:200px; top:340px; --c:#12A5A0"></i><i class="luz" style="left:280px; top:365px; --c:#F2711C"></i><i class="luz" style="left:360px; top:383px; --c:#FFC53D"></i><i class="luz" style="left:440px; top:394px; --c:#F48FB1"></i><i class="luz" style="left:520px; top:399px; --c:#12A5A0"></i><i class="luz" style="left:600px; top:398px; --c:#F2711C"></i><i class="luz" style="left:680px; top:389px; --c:#FFC53D"></i><i class="luz" style="left:760px; top:375px; --c:#F48FB1"></i><i class="luz" style="left:840px; top:353px; --c:#12A5A0"></i><i class="luz" style="left:920px; top:325px; --c:#F2711C"></i><i class="luz" style="left:1000px; top:291px; --c:#FFC53D"></i>
+    <h1 class="disp"><span class="renglon"><span id="s5-l1">Pedidos de</span></span><span class="renglon"><span id="s5-l2" style="color:#FFC53D">Navidad</span></span></h1>
+    <div class="sello" id="s5-sello"><small>hasta el</small><b class="disp">15 de noviembre</b></div>
+    <p class="sub" id="s5-sub">Cada pieza se hace en 3 a 5 días.</p>
+
+    <div class="grano"></div>
+  </div>
+</div>
+<script>
+  (function () {
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo(".escena", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.45, ease: "expo.out" }, 0);
+    
+    // Las luces se encienden una detrás de otra.
+    tl.fromTo(".luz", { opacity: 0.15 }, { opacity: 1, duration: 0.18, ease: "steps(2)", stagger: 0.06 }, 0.2);
+    tl.fromTo("#s5-l1", { yPercent: 110 }, { yPercent: 0, duration: 0.6, ease: "expo.out" }, 0.35);
+    tl.fromTo("#s5-l2", { yPercent: 110 }, { yPercent: 0, duration: 0.6, ease: "expo.out" }, 0.47);
+    // El sello cae de golpe y rebota una vez (kinetic-beat-slam).
+    tl.fromTo("#s5-sello", { scale: 2.4, rotation: 14, opacity: 0 }, { scale: 1, rotation: -4, opacity: 1, duration: 0.35, ease: "power4.in" }, 1.0);
+    tl.to("#s5-sello", { scale: 1.06, duration: 0.12, ease: "power2.out", yoyo: true, repeat: 1 }, 1.35);
+    tl.fromTo("#s5-sub", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 1.7);
+
+    window.__timelines["s5-navidad"] = tl;
+  })();
+</script>
+</template>
+</body>
+</html>

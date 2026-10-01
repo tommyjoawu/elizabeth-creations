@@ -1,0 +1,656 @@
+/* ============================================================================
+   LA TEMPORADA — la noche, las luces y la galería colgada de las piezas
+   ========================================================================== */
+@layer components {
+  /* ── Las luces ─────────────────────────────────────────────────────────
+     El mismo cordel del tendedero (misma curva, misma cuenta: ver
+     obertura.css), con 17 lucecitas repartidas en el tramo. */
+  .e-luces {
+    --alto: 5.5rem;
+    --n: 16;
+    position: absolute;
+    inset: 1.4rem 0 auto;
+    height: var(--alto);
+    color: rgb(251 241 225 / 0.45);
+    pointer-events: none;
+  }
+  @media (min-width: 1024px) { .e-luces { --alto: 8rem; } }
+
+  .e-luces__cordel { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+
+
+  .e-luz {
+    --p: calc(0.03 + 0.94 * var(--i) / var(--n));
+    --color: #FFC53D;
+    position: absolute;
+    left: calc(var(--p) * 100%);
+    top: calc(var(--alto) * (0.2 + 2.4 * var(--p) * (1 - var(--p))));
+    width: 0.95rem;
+    height: 1.4rem;
+    margin-left: -0.475rem;
+    margin-top: 0.3rem;
+    border-radius: 48% 48% 50% 50% / 40% 40% 60% 60%;
+    background: radial-gradient(circle at 38% 30%, rgb(255 255 255 / 0.7) 0 12%, transparent 40%), var(--color);
+    /* Cuelgan torcidas, un poco a cada lado: rectas se ven de plástico. */
+    rotate: calc((var(--i) - 8) * 1.4deg);
+    transform-origin: 50% 0;
+    box-shadow: 0 0 1rem 0.2rem color-mix(in srgb, var(--color) 80%, transparent),
+                0 0 3.2rem 0.6rem color-mix(in srgb, var(--color) 35%, transparent);
+  }
+  /* El casquillo. */
+  .e-luz::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: -0.34rem;
+    width: 0.5rem;
+    height: 0.42rem;
+    margin-left: -0.25rem;
+    border-radius: 0.1rem;
+    background: #3A3566;
+  }
+  .e-luz:nth-child(4n + 2) { --color: #F48FB1; }
+  .e-luz:nth-child(4n + 3) { --color: #12A5A0; }
+  .e-luz:nth-child(4n + 4) { --color: #F2711C; }
+  .e-luz:nth-child(4n + 5) { --color: #FFC53D; }
+
+  /* Apagadas hasta que la tira entra en pantalla, y se encienden una detrás
+     de otra. Sólo con JavaScript (lo marca `revela`) y con movimiento: si
+     no, se ven encendidas desde el principio. */
+  @media (prefers-reduced-motion: no-preference) {
+    .js .e-luces:not([data-visible]) .e-luz { opacity: 0.25; box-shadow: none; }
+    .js .e-luces[data-visible] .e-luz {
+      animation: e-encender 0.5s steps(2, jump-none) both, e-titilar 2.8s ease-in-out infinite alternate;
+      animation-delay: calc(var(--i) * 70ms + 200ms), calc(var(--i) * 70ms + 900ms + var(--i) * 137ms);
+    }
+  }
+  @keyframes e-encender { from { opacity: 0.25; box-shadow: none; } }
+  @keyframes e-titilar  { to { opacity: 0.72; } }
+
+}
+
+/* ── El sello de la fecha ──────────────────────────────────────────────
+   Un sello de goma rojo, torcido, con la fecha en grande: en la noche es
+   lo único rojo, así que se ve primero. Crema sobre mola (4.6:1) y el día
+   en Caprasimo grande, que es texto de 18px para arriba. */
+@layer components {
+  .e-sello-fecha {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+    padding: 0.8rem 1.25rem 0.95rem;
+    border-radius: 0.9rem;
+    background: #D3253C;
+    color: #FBF1E1;
+    rotate: -3deg;
+    box-shadow: inset 0 0 0 2px #FBF1E1, inset 0 0 0 4px #D3253C, inset 0 0 0 5.5px rgb(251 241 225 / 0.6),
+                0.3rem 0.35rem 0 #F2711C;
+  }
+  .e-sello-fecha__texto { font-size: 0.95rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+  .e-sello-fecha__dia { font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 400; line-height: 1; }
+}
+
+/* ============================================================================
+   LAS PIEZAS — la galería colgada (traída de variantes/navidad) y el pedido
+   por sets.
+
+   Dos maneras de verse, y las decide el controlador `galeria`:
+     · Sin clase (sin JavaScript o con reduced-motion): la cabeza arriba y,
+       debajo, una fila que se desliza con el dedo, con su cable y sus pinzas.
+     · `.e-galeria--fija`: la sección ocupa la pantalla y se queda fija; la
+       cabeza pasa a ser el primer panel de la fila y la fila entera avanza de
+       lado con el scroll. Así las fotos se quedan con toda la altura.
+
+   El ancho de una pieza sale de la ALTURA disponible cuando la galería está
+   fija: la foto es 4:5 y el resto de la tarjeta mide unos 14rem, así que lo
+   que sobra de alto, por 0.8, es el ancho que cabe sin cortarse.
+   ========================================================================== */
+@layer components {
+  .e-galeria {
+    --ancho-pieza: min(76vw, 22rem);
+    --ancho-letrero: min(72vw, 19rem);
+    --hueco: clamp(1.4rem, 3vw, 2.6rem);
+    --cable: 1.6rem;
+    --gutter: clamp(1rem, 4vw, 3rem);
+    padding-block: clamp(9rem, 13vw, 12rem) clamp(5rem, 9vw, 7rem);
+  }
+
+  /* ── La cabeza ─────────────────────────────────────────────────────── */
+  .e-galeria__cabeza {
+    width: 100%;
+    max-width: 88rem;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+  .e-galeria__pista-nota { display: none; font-size: 1.15rem; color: #FFC53D; rotate: -3deg; }
+
+  /* ── La fila y su cable ────────────────────────────────────────────── */
+  .e-galeria__tira {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--hueco);
+    margin-top: 3.5rem;
+    padding: var(--cable) var(--gutter) 2.25rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: thin;
+    scrollbar-color: rgb(251 241 225 / 0.4) transparent;
+  }
+  /* El cable: crema apagado, como el de las luces. Es un fondo con
+     `local` y no un `::before`: en la fila deslizable el fondo `local` cubre
+     todo lo que se desliza, y un pseudo de ancho 100% sólo la primera
+     pantalla. */
+  .e-galeria__tira {
+    background:
+      linear-gradient(rgb(251 241 225 / 0.6), rgb(251 241 225 / 0.6)) 0 var(--cable) / 100% 3px no-repeat local,
+      linear-gradient(rgb(8 6 20 / 0.35), rgb(8 6 20 / 0.35)) 0 calc(var(--cable) + 3px) / 100% 2px no-repeat local;
+  }
+
+  /* ── Las pinzas de madera ──────────────────────────────────────────── */
+  .e-pinza {
+    position: absolute;
+    z-index: 3;
+    top: -1.05rem;
+    left: 50%;
+    width: 1.05rem;
+    height: 2.3rem;
+    margin-left: -0.525rem;
+    border-radius: 0.2rem 0.2rem 0.3rem 0.3rem;
+    background:
+      linear-gradient(to bottom, transparent 44%, rgb(30 26 60 / 0.55) 44% 50%, transparent 50%),
+      linear-gradient(90deg, #B98A55, #E2B57C 45%, #C99A62 70%, #A97A47);
+    box-shadow: inset 0 0 0 1px rgb(30 26 60 / 0.45), 0.12rem 0.18rem 0 rgb(8 6 20 / 0.45);
+  }
+  .e-pinza--izq { left: 22%; }
+  .e-pinza--der { left: 78%; }
+
+  /* ── Una pieza ─────────────────────────────────────────────────────────
+     Papel crema con filo de tinta y la sombra dura del color de la pieza
+     (la capa de abajo de una mola). Adentro valen los colores del papel. */
+  .e-pieza, .e-letrero {
+    flex: none;
+    scroll-snap-align: center;
+    transform-origin: 50% 0;
+  }
+  .e-pieza { width: var(--ancho-pieza); }
+  .e-letrero { width: var(--ancho-letrero); }
+  /* Torcidas, cada una a su lado: rectas se ven de vitrina. */
+  .e-galeria__tira > li:nth-child(odd)  { rotate: 1.2deg; }
+  .e-galeria__tira > li:nth-child(even) { rotate: -1.4deg; }
+  .e-galeria__tira > li:nth-child(3n)   { rotate: 0.6deg; }
+
+  .e-pieza[data-tono="mola"],     .e-letrero[data-tono="mola"]     { --tono: #D3253C; }
+  .e-pieza[data-tono="turquesa"], .e-letrero[data-tono="turquesa"] { --tono: #12A5A0; }
+  .e-pieza[data-tono="mango"],    .e-letrero[data-tono="mango"]    { --tono: #FFC53D; }
+  .e-pieza[data-tono="hibisco"],  .e-letrero[data-tono="hibisco"]  { --tono: #F48FB1; }
+
+  .e-pieza__mece, .e-letrero__mece {
+    --fondo: #FFF9EF;
+    --texto: #1E1A3C;
+    --tenue: #3B3557;
+    --linea: rgb(30 26 60 / 0.14);
+    --linea-fuerte: #1E1A3C;
+    --boton: #1E1A3C;
+    --boton-texto: #FBF1E1;
+    --boton-borde: #1E1A3C;
+    --sombra-dura: var(--tono);
+    position: relative;
+    display: block;
+    transform-origin: 50% 0;
+    color: var(--texto);
+  }
+  .e-pieza__mece {
+    padding: 0.7rem 0.7rem 1.15rem;
+    border-radius: 1rem;
+    background: var(--fondo);
+    box-shadow: inset 0 0 0 1.5px #1E1A3C, 0.5rem 0.55rem 0 var(--tono);
+    transition: box-shadow 0.25s var(--ease-salida);
+  }
+  .e-pieza__mece :focus-visible, .e-letrero__mece :focus-visible { outline-color: #1E1A3C; }
+
+  .e-pieza__foto {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: 0.6rem;
+    background: var(--tono);
+    box-shadow: inset 0 0 0 1.5px #1E1A3C;
+  }
+  .e-pieza__foto img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .e-pieza__texto { padding: 0.75rem 0.3rem 0; }
+
+  /* Sin foto todavía (las guirnaldas): la ranura punteada ocupa el lugar
+     de la foto, sobre crema, y la tarjeta es más bajita para dejar sitio
+     al nombre. */
+  .e-pieza--sin-foto .e-pieza__foto {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 16 / 9;
+    padding: 1rem;
+    background: #FFF9EF;
+  }
+  .e-pieza__hueco { width: 100%; font-size: 0.95rem; line-height: 1.35; }
+  .e-pieza__rango { font-size: 0.92rem; font-weight: 700; line-height: 1.3; }
+  .e-pieza__personal { display: grid; gap: 0.45rem; }
+  .e-pieza__rotulo { font-size: 0.8rem; font-weight: 800; letter-spacing: 0.06em; }
+  .e-campo--chico { min-height: 2.75rem; padding: 0.5rem 0.85rem; border-radius: 0.75rem; }
+  .e-pieza__extra { display: flex; align-items: center; gap: 0.55rem; min-height: 2.75rem; font-size: 0.92rem; font-weight: 700; cursor: pointer; }
+  /* La casilla dibujada igual que la de "Agregar al pedido": la nativa,
+     dentro de la tarjeta que se mece, Chrome la pintaba rellena de tinta
+     aun sin marcar. */
+  .e-pieza__extra input {
+    appearance: none;
+    display: grid;
+    place-items: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    flex: none;
+    margin: 0;
+    border-radius: 0.35rem;
+    background: #FFF9EF;
+    box-shadow: inset 0 0 0 1.5px #1E1A3C;
+    cursor: pointer;
+  }
+  .e-pieza__extra input:checked { background: #1E1A3C; }
+  .e-pieza__extra input:checked::after {
+    content: "";
+    width: 0.38rem;
+    height: 0.68rem;
+    margin-top: -0.15rem;
+    border: solid #FFC53D;
+    border-width: 0 2.5px 2.5px 0;
+    rotate: 45deg;
+  }
+  .e-pieza__extra input:focus-visible { outline: 3px solid #1E1A3C; outline-offset: 2px; }
+  .e-pieza__fila { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.25rem 0.6rem; }
+  .e-pieza__grupo { font-size: 0.95rem; font-weight: 600; color: #B21F33; }
+
+  /* El precio. Mientras sea null, la ranura punteada de la página: nadie lo
+     confunde con un precio de verdad. */
+  .e-precio { display: flex; align-items: baseline; gap: 0.4rem; }
+  .e-precio__valor { font-family: var(--font-display); font-size: 1.5rem; font-weight: 400; line-height: 1; }
+  .e-precio__unidad { font-size: 0.85rem; font-weight: 600; color: var(--tenue); }
+  .e-precio__falta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.2rem 0.65rem;
+    border: 1.5px dashed #1E1A3C;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+  }
+  .e-precio__falta::before {
+    content: "";
+    width: 0.5rem;
+    height: 0.5rem;
+    flex: none;
+    border-radius: 999px;
+    border: 1.5px dashed currentColor;
+  }
+
+  /* ── Agregar al pedido ─────────────────────────────────────────────────
+     Un botón que se queda apretado (`aria-pressed`): la casilla se llena de
+     tinta con su visto y la pieza entera se marca con el anillo mango. */
+  .e-agregar {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    min-height: 2.75rem;
+    padding: 0.45rem 1.05rem 0.45rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1E1A3C;
+    box-shadow: inset 0 0 0 1.5px #1E1A3C;
+    cursor: pointer;
+    transition: background-color 0.2s var(--ease-salida), transform 0.16s var(--ease-salida);
+  }
+  .e-agregar:active { transform: scale(0.97); }
+  /* La de las varitas no agrega: lleva a escoger forma y color. */
+  .e-agregar--ir { padding-left: 1.05rem; background: #FFF1C9; }
+  @media (hover: hover) and (pointer: fine) {
+    .e-agregar:hover { background: #FFF1C9; }
+  }
+  .e-agregar__caja {
+    position: relative;
+    width: 1.25rem;
+    height: 1.25rem;
+    flex: none;
+    border-radius: 0.35rem;
+    box-shadow: inset 0 0 0 1.5px #1E1A3C;
+    background: #FFF9EF;
+    transition: background-color 0.2s var(--ease-salida);
+  }
+  .e-agregar__caja::after {
+    content: "";
+    position: absolute;
+    left: 0.42rem;
+    top: 0.18rem;
+    width: 0.38rem;
+    height: 0.68rem;
+    border: solid #FFC53D;
+    border-width: 0 2.5px 2.5px 0;
+    rotate: 45deg;
+    opacity: 0;
+    scale: 0.6;
+    transition: opacity 0.18s var(--ease-salida), scale 0.22s var(--ease-salida);
+  }
+  .e-agregar[aria-pressed="true"] { background: #FFC53D; }
+  .e-agregar[aria-pressed="true"] .e-agregar__caja { background: #1E1A3C; }
+  .e-agregar[aria-pressed="true"] .e-agregar__caja::after { opacity: 1; scale: 1; }
+
+  .e-pieza[data-elegida] .e-pieza__mece {
+    box-shadow: inset 0 0 0 1.5px #1E1A3C, 0 0 0 4px #FFC53D, 0.5rem 0.55rem 0 var(--tono);
+  }
+  .e-pieza__check {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    display: grid;
+    place-items: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 999px;
+    background: #FFC53D;
+    color: #1E1A3C;
+    box-shadow: 0 0 0 1.5px #1E1A3C, 0.12rem 0.15rem 0 #1E1A3C;
+    opacity: 0;
+    scale: 0.8;
+    transition: opacity 0.2s var(--ease-salida), scale 0.25s var(--ease-salida);
+  }
+  .e-pieza[data-elegida] .e-pieza__check { opacity: 1; scale: 1; }
+  .e-pieza__check svg { fill: currentColor; }
+
+  .e-pieza__acciones { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+  .e-pieza__wa {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 2.75rem;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #1E1A3C;
+  }
+  .e-pieza__wa-texto {
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 0.22em;
+    text-decoration-color: #D3253C;
+  }
+  /* Con el pedido armable (lo marca el controlador), el enlace se vuelve un
+     botón redondo junto a "Agregar": deja la altura para la foto. */
+  [data-pedido-listo] .e-pieza__wa {
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 999px;
+    background: #1E1A3C;
+    color: #FBF1E1;
+    box-shadow: 0.12rem 0.15rem 0 var(--tono);
+    transition: transform 0.16s var(--ease-salida);
+  }
+  [data-pedido-listo] .e-pieza__wa:active { transform: scale(0.95); }
+  [data-pedido-listo] .e-pieza__wa-texto {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  [data-pedido-listo] .e-pieza__wa:focus-visible { outline-offset: 3px; }
+
+  /* ── El letrero del set ────────────────────────────────────────────────
+     Kraft, no crema, para que se lea como un rótulo y no como otra pieza;
+     cuelga de dos pinzas y lleva la ceja del color del set. */
+  .e-letrero__mece { padding-top: 0.4rem; }
+  .e-letrero__tela {
+    position: relative;
+    padding: 1.5rem 1.25rem 1.35rem;
+    border-radius: 1rem;
+    background: #F3DFC1;
+    box-shadow: inset 0 0 0 1.5px #1E1A3C, 0.5rem 0.55rem 0 var(--tono);
+  }
+  /* La foto del set (las tres piezas juntas sobre la cobija): apaisada, para
+     que el letrero no crezca más que una pieza; la ceja se monta sobre su
+     borde de abajo, como una etiqueta pegada. */
+  .e-letrero--foto .e-letrero__tela { padding-top: 0.7rem; }
+  .e-letrero__foto {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    margin: 0 -0.55rem;
+    overflow: hidden;
+    border-radius: 0.6rem;
+    background: #FFF9EF;
+    box-shadow: inset 0 0 0 1.5px #1E1A3C;
+  }
+  .e-letrero__foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .e-letrero__foto::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 1.5px #1E1A3C;
+  }
+  .e-letrero__foto + .e-letrero__ceja { position: relative; z-index: 1; margin-top: -0.95rem; margin-left: 0.4rem; }
+  .e-letrero__ceja {
+    display: inline-block;
+    padding: 0.2rem 0.75rem;
+    border-radius: 999px;
+    background: #1E1A3C;
+    color: #FBF1E1;
+    font-size: 0.95rem;
+    font-weight: 600;
+    rotate: -2deg;
+  }
+  .e-letrero__lista { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .e-letrero__lista li {
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    background: #FFF9EF;
+    box-shadow: inset 0 0 0 1px rgb(30 26 60 / 0.35);
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  .e-letrero__tela .e-boton { white-space: normal; text-align: left; line-height: 1.15; }
+  /* El precio del set: grande, y debajo lo que costaría por separado. */
+  .e-letrero__precio { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.1rem 0.5rem; font-weight: 700; }
+  .e-letrero__precio strong { font-size: 2rem; font-weight: 400; line-height: 1; }
+  .e-letrero__antes { flex-basis: 100%; font-size: 0.88rem; font-weight: 600; color: #3B3557; }
+  .e-icono-mas { display: none; }
+  [data-pedido-listo] .e-letrero .e-icono-wa { display: none; }
+  [data-pedido-listo] .e-letrero .e-icono-mas { display: contents; }
+  .e-letrero[data-completo] .e-icono-mas svg { rotate: 45deg; }
+  .e-letrero[data-completo] .e-boton { --boton: #FFC53D; --boton-texto: #1E1A3C; }
+
+  /* ── El resumen del pedido ─────────────────────────────────────────────
+     La ficha de la página en chiquito: papel, filo de tinta y sombra dura
+     mango. En la fila deslizable se pega al borde de abajo mientras se ve
+     la sección; con la galería fija, es la base de la pantalla. */
+  .e-resumen__lugar {
+    position: sticky;
+    z-index: 5;
+    bottom: max(0.75rem, env(safe-area-inset-bottom));
+    margin-top: 1.5rem;
+  }
+  .e-resumen {
+    --texto: #1E1A3C;
+    --linea-fuerte: #1E1A3C;
+    --boton: #1E1A3C;
+    --boton-texto: #FBF1E1;
+    --boton-borde: #1E1A3C;
+    --sombra-dura: #FFC53D;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.3rem 0.9rem;
+    max-width: 64rem;
+    margin-inline: auto;
+    padding: 0.6rem 0.65rem 0.6rem 1.1rem;
+    border-radius: 1.25rem;
+    background: #FFF9EF;
+    color: #1E1A3C;
+    box-shadow: inset 0 0 0 1.5px #1E1A3C, 0.3rem 0.35rem 0 #FFC53D;
+  }
+  .e-resumen :focus-visible { outline-color: #1E1A3C; }
+  .e-resumen__cuenta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.15rem 0.6rem; font-size: 1.02rem; line-height: 1.25; }
+  .e-resumen__total { font-weight: 600; color: #3B3557; }
+  .e-resumen__lista {
+    margin-top: 0.1rem;
+    overflow: hidden;
+    font-size: 0.88rem;
+    line-height: 1.35;
+    color: #3B3557;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .e-resumen__acciones { display: flex; align-items: center; gap: 0.4rem; }
+  .e-resumen__vaciar {
+    min-height: 2.75rem;
+    padding: 0 0.8rem;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #1E1A3C;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    cursor: pointer;
+  }
+  .e-resumen__abono-monto { display: block; font-size: 0.9rem; color: #1E1A3C; }
+  .e-resumen__pista {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0 0.75rem;
+    padding: 0.3rem 0.4rem 0.3rem 0.7rem;
+    border-radius: 0.7rem;
+    background: #FFF1C9;
+    font-size: 0.86rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .e-resumen__pista-corto { display: none; }
+  .e-resumen__pista-boton {
+    min-height: 2.25rem;
+    padding: 0 0.4rem;
+    font-weight: 800;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    cursor: pointer;
+  }
+  .e-resumen__abono {
+    grid-column: 1 / -1;
+    padding-top: 0.35rem;
+    border-top: 1.5px dashed rgb(30 26 60 / 0.3);
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: #3B3557;
+  }
+  /* En pantallas anchas, todo en una fila: la cuenta, la nota del abono y
+     los botones. Deja la altura a las fotos. */
+  @media (min-width: 900px) {
+    .e-resumen { grid-template-columns: minmax(0, 1fr) minmax(0, 17rem) auto; }
+    .e-resumen__abono {
+      grid-column: 2;
+      grid-row: 1;
+      padding: 0.1rem 0 0.1rem 0.9rem;
+      border-top: 0;
+      border-left: 1.5px dashed rgb(30 26 60 / 0.3);
+    }
+    .e-resumen__acciones { grid-column: 3; grid-row: 1; }
+  }
+  /* Un latido cuando cambia: confirma que el toque llegó, aunque el resumen
+     esté lejos de la pieza que se tocó. */
+  @media (prefers-reduced-motion: no-preference) {
+    .e-resumen[data-latido] { animation: e-latido-resumen 0.32s var(--ease-salida); }
+  }
+  @keyframes e-latido-resumen { 40% { scale: 1.025; } }
+
+  @media (max-width: 639.98px) {
+    .e-agregar { padding-right: 0.95rem; gap: 0.5rem; }
+    /* En el teléfono el botón dice "Agregar" a secas: la casilla ya dice a
+       dónde; así cabe en un renglón con el de WhatsApp. */
+    .e-agregar__mas { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+    .e-resumen { padding: 0.6rem 0.55rem 0.6rem 0.9rem; gap: 0.25rem 0.6rem; }
+    .e-resumen__cuenta { font-size: 0.95rem; }
+    .e-resumen .e-boton--chico { padding-left: 0.9rem; gap: 0.45rem; font-size: 0.86rem; }
+    .e-resumen__vaciar { padding: 0 0.45rem; }
+    .e-resumen[data-vacio="true"] .e-resumen__lista { white-space: normal; }
+    /* En el teléfono, con piezas elegidas: la cuenta y el total a la
+       izquierda y "Enviar" a la derecha; la lista, en un renglón cortado,
+       para que se vea que el set va como UN precio. */
+    .e-resumen[data-vacio="false"] .e-resumen__lista { font-size: 0.8rem; }
+    .e-resumen__pre, .e-resumen__largo { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+    .e-resumen__cuenta { flex-direction: column; gap: 0; }
+    /* La pista, en un renglón: "Set completo: $15.00 (+$3.00) · Cambiar al set". */
+    .e-resumen__pista { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; padding-block: 0; }
+    .e-resumen__pista-largo { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+    .e-resumen__pista-corto { display: inline; }
+  }
+
+  /* ══ La galería fija ══════════════════════════════════════════════════
+     Sólo con el controlador `galeria` y con movimiento: la sección mide una
+     pantalla y ScrollTrigger la fija; la pista avanza con `x`. */
+  .e-galeria--fija {
+    --ancho-pieza: clamp(13rem, calc((100svh - 32rem) * 0.8), min(80vw, 27rem));
+    --ancho-letrero: min(74vw, 19rem);
+    padding: 0;
+  }
+  .e-galeria--fija .e-luces { --alto: 4.25rem; inset: 0.6rem 0 auto; }
+  /* La caja fijada lleva el fondo de la sección (color y motivo): mientras
+     está fija, la sección de atrás sigue de largo. */
+  .e-galeria--fija .e-galeria__fijo {
+    position: relative;
+    height: 100svh;
+    background: inherit;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding-top: 5.25rem;
+    padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+  }
+  .e-galeria--fija .e-galeria__ventana { display: flex; flex: 1; align-items: center; min-height: 0; }
+  .e-galeria--fija .e-galeria__pista {
+    display: flex;
+    align-items: center;
+    gap: var(--hueco);
+    width: max-content;
+    padding-inline: var(--gutter);
+    will-change: transform;
+  }
+  .e-galeria--fija .e-galeria__cabeza { flex: none; width: min(84vw, 30rem); padding: 0; margin: 0; }
+  .e-galeria--fija .e-galeria__pista-nota { display: block; }
+  .e-galeria--fija .e-galeria__tira { margin-top: 0; padding: var(--cable) 0 1.25rem; overflow: visible; }
+  .e-galeria--fija .e-resumen__lugar { position: relative; bottom: auto; margin-top: 0.25rem; }
+  @media (min-width: 1024px) {
+    .e-galeria--fija { --ancho-pieza: clamp(15rem, calc((100svh - 27.5rem) * 0.8), 28rem); }
+  }
+  /* Con la foto del set, el letrero es lo más alto de la fila: en el
+     teléfono (y en pantallas bajitas) la foto se aplana y la frase cede su
+     lugar, para que el resumen de abajo quepa entero. El nombre, el precio
+     y las tres piezas siguen. */
+  @media (max-width: 639.98px), (max-height: 760px) {
+    .e-galeria--fija .e-letrero__foto { aspect-ratio: 16 / 10; }
+    .e-galeria--fija .e-letrero--foto .e-letrero__desc { display: none; }
+  }
+  /* En pantallas bajitas el párrafo de la cabeza cede su lugar. */
+  @media (max-height: 760px) {
+    .e-galeria--fija .e-galeria__cabeza .text-entrada { display: none; }
+    .e-galeria--fija .e-galeria__cabeza .e-sello-fecha { margin-top: 1rem; }
+  }
+}

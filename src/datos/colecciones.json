@@ -1,0 +1,48 @@
+{
+  "_nota": "Lo que Erika hace, agrupado como lo muestran sus fotos: todo es fieltro cosido a mano con bisutería. La tarjeta personalizada y las guirnaldas no tienen foto todavía: el banderín lleva la ranura punteada en vez de foto (`pendiente`; `huecoTitulo` cambia su título, p. ej. 'Foto muy pronto'). `precios` es la línea corta de precios de Erika (01-10-2026); sin ella, el banderín no dice precio. El `slug` arma el ancla (#coleccion-…) a la que enlazan los adornos del hero. Navidad y Bajo el mar llevan la foto de un set (las tres piezas juntas, 01-10-2026).",
+  "lista": [
+    {
+      "slug": "navidad",
+      "nombre": "Navidad",
+      "tono": "mola",
+      "foto": "set-navidad-clasica",
+      "alt": "El set Navidad clásica en fila sobre una cobija blanca: una estrella de fieltro amarillo, un arbolito verde y una galleta de jengibre.",
+      "descripcion": "Dos sets de 3 piezas, Navidad clásica y Navidad nevada: arbolitos, estrellas y galleta de jengibre. Pedidos hasta el 15 de noviembre.",
+      "precios": "Set de 3 piezas $15.00 · $6.00 c/u"
+    },
+    {
+      "slug": "bajo-el-mar",
+      "nombre": "Bajo el mar",
+      "tono": "turquesa",
+      "foto": "set-bajo-el-mar",
+      "alt": "El set Bajo el mar sobre una cobija blanca: un cangrejito rojo, un pececito amarillo con aletas turquesa y una sirenita de pelo rojo.",
+      "descripcion": "Una sirenita, un pececito y un cangrejito, con sus caritas bordadas y su cola de lentejuelas.",
+      "precios": "Set de 3 piezas $15.00 · $6.00 a $7.00 c/u"
+    },
+    {
+      "slug": "varitas",
+      "nombre": "Varitas mágicas",
+      "tono": "hibisco",
+      "foto": "varita-luna-ventana",
+      "alt": "Varita mágica: una luna de fieltro lila con perlitas, en un palito de madera con cintas, a la luz de la ventana.",
+      "descripcion": "Con luna o con estrella, del color que tú escojas, en un palito de madera con cintas.",
+      "precios": "$2.50 c/u · docena $25.00"
+    },
+    {
+      "slug": "guirnaldas",
+      "nombre": "Guirnaldas",
+      "tono": "papaya",
+      "huecoTitulo": "Foto muy pronto",
+      "pendiente": "La foto de una guirnalda de Erika.",
+      "precios": "$5.00 · con nombre de $5.00 a $10.00 (+$2.50 por color adicional)",
+      "descripcion": "Una guirnalda de fieltro para la puerta, la pared o la fiesta. También con un nombre, del color que escojas."
+    },
+    {
+      "slug": "tarjetas",
+      "nombre": "Tarjeta con tu mensaje",
+      "tono": "mango",
+      "pendiente": "La foto de una tarjeta personalizada.",
+      "descripcion": "Una tarjeta escrita a mano, con un nombre o un mensaje en el centro. Para un cumpleaños o para acompañar el regalo."
+    }
+  ]
+}

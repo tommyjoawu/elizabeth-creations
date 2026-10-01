@@ -1,0 +1,84 @@
+{{!--
+  El pie. Ordena los enlaces y los datos de contacto, dice lo legal, y
+  cierra con el nombre a todo el ancho, cortado por el borde de abajo: la
+  firma de la página, no un dato. La línea legal va ARRIBA del nombre: si
+  va debajo, el nombre la tapa al sangrar por el borde.
+--}}
+<footer class="e-noche e-motivo e-motivo--cielo e-feston e-feston--picos relative overflow-clip" style="--feston: #D3253C">
+  <div class="e-contenedor pt-24 sm:pt-28">
+    <div class="grid gap-14 lg:grid-cols-12 lg:gap-10">
+      <div class="lg:col-span-6">
+        <p class="max-w-[18ch] font-display text-[clamp(1.9rem,3vw,2.6rem)] leading-[1.08]">
+          Fieltro, hilo y mucho amor. Pieza por pieza.
+        </p>
+        <p class="mt-6 max-w-[40ch] text-tenue">
+          {{marca.bajada}} en {{marca.ciudad}}, {{marca.region}}. Se piden por WhatsApp, se pagan por
+          {{marca.politicas.pagos}} y se entregan en {{marca.politicas.entrega}}.
+        </p>
+      </div>
+
+      <nav class="lg:col-span-3" aria-labelledby="pie-pagina">
+        <h2 id="pie-pagina" class="font-display text-[1.35rem] text-mango">La página</h2>
+        <ul class="mt-4 space-y-1" role="list">
+          {{#each navegacion}}
+            <li>
+              <a href="{{this.ancla}}" class="inline-flex min-h-11 items-center gap-3 text-lg font-semibold text-texto
+                                             transition-colors duration-300 hover:text-mango">
+                <span class="size-2.5 rounded-full" style="background: {{this.color}}" aria-hidden="true"></span>
+                {{this.texto}}
+              </a>
+            </li>
+          {{/each}}
+        </ul>
+      </nav>
+
+      <div class="lg:col-span-3">
+        <h2 class="font-display text-[1.35rem] text-mango">Escríbeme</h2>
+        <ul class="mt-4 space-y-1" role="list">
+          <li>
+            <a href="{{whatsapp}}" target="_blank" rel="noopener"
+               class="e-cifra inline-flex min-h-11 items-center gap-3 text-lg font-semibold text-texto transition-colors hover:text-mango">
+              {{icono "whatsapp" clase="size-5"}}{{marca.whatsapp}}
+            </a>
+            {{#if (pendiente "whatsapp")}}<span class="e-falta">número por confirmar</span>{{/if}}
+          </li>
+          {{#if (pendiente "instagram")}}
+            <li class="inline-flex min-h-11 items-center gap-3 text-lg font-semibold">
+              {{icono "instagram" clase="size-5"}}Instagram, muy pronto
+            </li>
+          {{else}}
+            <li>
+              <a href="https://www.instagram.com/{{marca.instagram}}/" target="_blank" rel="noopener"
+                 class="inline-flex min-h-11 items-center gap-3 text-lg font-semibold break-all text-texto transition-colors hover:text-mango">
+                {{icono "instagram" clase="size-5"}}@{{marca.instagram}}
+              </a>
+            </li>
+          {{/if}}
+          {{#unless (pendiente "correo")}}
+            <li>
+              <a href="mailto:{{marca.correo}}" spellcheck="false"
+                 class="inline-flex min-h-11 items-center gap-3 text-lg font-semibold break-all text-texto transition-colors hover:text-mango">
+                {{icono "correo" clase="size-5"}}{{marca.correo}}
+              </a>
+            </li>
+          {{/unless}}
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-16 flex flex-wrap items-center justify-between gap-x-8 gap-y-3 border-t border-linea pt-6
+                text-[0.88rem] text-tenue">
+      <p>© <span class="e-cifra">{{anio}}</span> {{marca.nombre}}, {{marca.bajada}}.</p>
+      <p>Fotos y videos: {{marca.nombre}}.</p>
+    </div>
+
+    {{!-- El nombre a todo el ancho, en mango y cortado por el borde de abajo.
+        Decorativo: la marca
+        ya está dicha arriba y en la isla. "Elizabeth" tiene nueve letras: a
+        18vw ocupa el ancho entero sin cortarse a los lados. --}}
+    <p class="pointer-events-none mt-10 -mb-[0.24em] flex items-start justify-center font-display text-[clamp(4rem,17.5vw,19rem)]
+              leading-[0.8] text-mango select-none" aria-hidden="true">
+      {{marca.nombreCorto}}
+    </p>
+  </div>
+</footer>

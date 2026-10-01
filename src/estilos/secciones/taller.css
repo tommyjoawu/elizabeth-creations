@@ -1,0 +1,141 @@
+/* ============================================================================
+   EL TALLER — la frase que se enciende y los pasos con su marco fijo
+   ========================================================================== */
+@layer components {
+  /* ── El marco ──────────────────────────────────────────────────────────
+     Dos capas de color corridas abajo a la derecha, cada una con su filo
+     de tinta: el recorte de la mola, en sombras. El color de adelante es el
+     del paso que se está leyendo (`--tono-paso`, lo cambia `taller`); el de
+     atrás es siempre añil, para que la pila tenga un fondo firme. */
+  .e-taller__columna { display: none; }
+  @media (min-width: 1024px) {
+    .js .e-taller__columna { display: block; }
+    /* Sin marco, el texto no se queda solo a la derecha: pasa a la
+       izquierda, con las fotos de cada paso debajo. */
+    html:not(.js) .e-taller__cabecera,
+    html:not(.js) .e-pasos { grid-column: 1 / span 7; }
+  }
+
+  .e-taller__marco {
+    position: sticky;
+    top: 7rem;
+    aspect-ratio: 4 / 4.6;
+    max-height: calc(100svh - 10rem);
+    margin-right: 1.6rem;
+    border-radius: 1.75rem;
+    box-shadow:
+      0 0 0 1.5px #1E1A3C,
+      0.8rem 0.8rem 0 0 var(--tono-paso),
+      0.8rem 0.8rem 0 1.5px #1E1A3C,
+      1.6rem 1.6rem 0 0 #1E1A3C;
+    transition: box-shadow 0.7s var(--ease-fluido);
+  }
+
+  .e-taller__foto {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.7s var(--ease-fluido);
+  }
+  .e-taller__foto[data-activa="true"] { opacity: 1; }
+  .e-taller__foto img,
+  .e-taller__foto video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    scale: 1.06;
+    transition: scale 1.6s var(--ease-fluido);
+  }
+  .e-taller__foto[data-activa="true"] img,
+  .e-taller__foto[data-activa="true"] video { scale: 1; }
+
+  .e-nota--taller {
+    position: absolute;
+    right: -1.25rem;
+    bottom: 2.25rem;
+    z-index: 2;
+    padding: 0.55rem 1rem 0.65rem;
+    border-radius: 0.6rem;
+    background: #FBF1E1;
+    font-size: 1.25rem;
+    rotate: 4deg;
+    box-shadow: 0 0 0 1.5px #1E1A3C, 0.3rem 0.3rem 0 #1E1A3C;
+  }
+
+  /* ── Los pasos ─────────────────────────────────────────────────────────
+     En escritorio cada paso ocupa buena parte de la pantalla, para que el
+     marco fijo tenga tiempo de mostrar su foto antes de que llegue el
+     siguiente. El número va en el color del paso, dibujado grande. */
+  .e-pasos { display: grid; gap: 4.5rem; }
+  .e-paso { position: relative; }
+  @media (min-width: 1024px) {
+    .js .e-pasos { gap: 0; }
+    .js .e-paso { min-height: 54svh; display: flex; flex-direction: column; justify-content: center; }
+    .js .e-paso:last-child { min-height: 46svh; }
+  }
+
+  .e-paso__numero {
+    display: grid;
+    place-items: center;
+    width: 3.4rem;
+    height: 3.4rem;
+    margin-bottom: 1.25rem;
+    border-radius: 999px;
+    background: var(--tono-paso);
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    line-height: 1;
+    color: #1E1A3C;
+    box-shadow: 0 0 0 1.5px #1E1A3C, 0.2rem 0.25rem 0 #1E1A3C;
+  }
+
+  /* La foto de cada paso: siempre en el celular y sin JavaScript; en
+     escritorio con JavaScript la muestra el marco. */
+  .e-paso__foto {
+    position: relative;
+    margin-top: 1.75rem;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: 1.25rem;
+    box-shadow: 0 0 0 1.5px #1E1A3C, 0.45rem 0.45rem 0 var(--tono-paso), 0.45rem 0.45rem 0 1.5px #1E1A3C;
+  }
+  .e-paso__foto img,
+  .e-paso__foto video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  /* Los videos del taller son verticales (464×832): en 4:3 se perdían las
+     manos. En 4:5 el recorte se queda con la mesa y lo que hacen. */
+  .e-paso__foto--video { aspect-ratio: 4 / 5; max-width: 30rem; background: #E9E4EE; }
+  @media (min-width: 1024px) {
+    .js .e-paso__foto { display: none; }
+  }
+
+  /* El paso que se lee lleva su número encendido; los otros, apagado. Sólo
+     el número: bajarle la opacidad al TEXTO dejaba los pasos de al lado en
+     1.7:1, ilegibles para quien los quiera leer antes de llegar. Sólo cuando
+     hay marco (escritorio con JavaScript). */
+  @media (min-width: 1024px) {
+    .js .e-paso__numero { transition: scale 0.6s var(--ease-rebote), filter 0.6s var(--ease-fluido); }
+    .js .e-paso:not([data-activo="true"]) .e-paso__numero { scale: 0.82; filter: grayscale(1) opacity(0.45); }
+  }
+}
+
+/* El paso que todavía no tiene foto: la ranura punteada en el lugar de la
+   foto, centrada sobre crema, en el marco fijo y en el paso. */
+@layer components {
+  .e-taller__foto--hueco,
+  .e-paso__foto--hueco {
+    display: grid;
+    place-items: center;
+    padding: 1.5rem;
+    background: #FFF9EF;
+    color: #1E1A3C;
+  }
+  .e-taller__foto--hueco .e-hueco,
+  .e-paso__foto--hueco .e-hueco { max-width: 22rem; }
+  /* Los videos son verticales y el marco no: cada paso dice dónde están
+     las manos (`encuadre` en taller.json → --encuadre). */
+  .e-taller__foto video, .e-taller__foto img { object-position: var(--encuadre, 50% 50%); }
+}

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Erika — Adornos hechos a mano | Hero Variant A</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&amp;family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&amp;family=Playfair+Display:ital,wght@1,600&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            fucsia: '#C8175F',
+            cream: '#FFF4E4',
+            plum: '#2B1238',
+            mandarina: '#F4661B',
+            girasol: '#FFC21F',
+            turquesa: '#12A89E',
+            ciruela: '#4A1D5C',
+          },
+          fontFamily: {
+            display: ['"Bricolage Grotesque"', 'sans-serif'],
+            sans: ['"DM Sans"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'],
+          },
+          boxShadow: {
+            'folk': '4px 4px 0px #2B1238',
+            'folk-sm': '2px 2px 0px #2B1238',
+            'folk-lg': '6px 6px 0px #2B1238',
+            'folk-cream': '4px 4px 0px #FFF4E4',
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    /* Papel picado cut-paper / scalloped effect */
+    .papel-picado-edge {
+      background-image: radial-gradient(circle at 14px 0px, #FFF4E4 14px, transparent 15px);
+      background-size: 28px 18px;
+      background-repeat: repeat-x;
+    }
+
+    /* Hanging strings with subtle natural sway */
+    @keyframes sway-subtle-1 {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(1.2deg); }
+    }
+    @keyframes sway-subtle-2 {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(-1.4deg); }
+    }
+    @keyframes sway-subtle-3 {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(0.9deg); }
+    }
+    .sway-1 {
+      transform-origin: top center;
+      animation: sway-subtle-1 6s ease-in-out infinite;
+    }
+    .sway-2 {
+      transform-origin: top center;
+      animation: sway-subtle-2 7.5s ease-in-out infinite;
+    }
+    .sway-3 {
+      transform-origin: top center;
+      animation: sway-subtle-3 6.8s ease-in-out infinite;
+    }
+    
+    /* Fine dashed thread pattern */
+    .jute-thread {
+      background-image: repeating-linear-gradient(to bottom, #2B1238, #2B1238 5px, transparent 5px, transparent 8px);
+      width: 1.5px;
+    }
+  </style>
+</head>
+<body class="bg-cream text-plum font-sans antialiased overflow-x-hidden selection:bg-girasol selection:text-plum min-h-screen flex flex-col justify-start">
+<!-- WRAPPER: Fixed desktop 1440px viewport composition (height ~900px) -->
+<div class="w-full max-w-[1440px] mx-auto min-h-[900px] h-[900px] flex flex-col relative bg-cream border-x border-plum/10 shadow-2xl overflow-hidden">
+<!-- TOP HEADER (Height ~84px) -->
+<header class="w-full h-[84px] bg-cream px-10 flex items-center justify-between border-b-2 border-plum relative z-50 shrink-0">
+<!-- Brand Wordmark -->
+<a class="flex items-baseline gap-3 group" href="#">
+<span class="font-display font-extrabold text-[36px] tracking-tight leading-none text-plum transition-transform group-hover:-rotate-1">Erika</span>
+<span class="text-[14px] font-medium tracking-tight text-plum/80 border-l border-plum/30 pl-3 py-0.5">Adornos hechos a mano</span>
+</a>
+<!-- Desktop Nav -->
+<nav class="flex items-center gap-9">
+<a class="text-[15px] font-bold text-plum hover:text-fucsia transition-colors" href="#colecciones">Colecciones</a>
+<a class="text-[15px] font-bold text-plum hover:text-fucsia transition-colors" href="#taller">El taller</a>
+<a class="text-[15px] font-bold text-plum hover:text-fucsia transition-colors relative flex items-center gap-1.5" href="#navidad">
+<span>Navidad</span>
+<span class="w-2 h-2 rounded-full bg-mandarina inline-block"></span>
+</a>
+<a class="text-[15px] font-bold text-plum hover:text-fucsia transition-colors" href="#encargos">Encargos</a>
+<a class="text-[15px] font-bold text-plum hover:text-fucsia transition-colors" href="#preguntas">Preguntas</a>
+</nav>
+<!-- Header Primary WhatsApp CTA -->
+<div class="flex items-center">
+<a class="bg-fucsia text-cream text-[14px] font-bold px-5 py-2.5 rounded-full border-2 border-plum shadow-folk-sm hover:-translate-y-0.5 active:translate-y-0 active:shadow-none transition-all flex items-center gap-2" href="https://wa.me/">
+<span>Pedir por WhatsApp</span>
+<span class="text-xs">→</span>
+</a>
+</div>
+</header>
+<!-- HERO MAIN SECTION (Height ~816px) -->
+<section class="w-full flex-1 flex flex-col relative overflow-hidden">
+<!-- PAPEL-PICADO / CUT-PAPER SCALLOPED TOP EDGE OVERLAY -->
+<div class="absolute top-0 left-0 right-0 h-[16px] z-40 papel-picado-edge pointer-events-none"></div>
+<!-- COLOR BLOCKS CONTAINER (55% / 45% Split) -->
+<div class="w-full h-full flex flex-1 relative">
+<!-- LEFT BLOCK: FUCSIA #C8175F (55% width) -->
+<div class="w-[56%] bg-fucsia h-full pt-16 pb-12 pl-14 pr-12 flex flex-col justify-between relative z-20 border-r-2 border-plum">
+<!-- Subtle folk corner cut-out star / symbol -->
+<div class="absolute top-8 right-8 text-cream/30 pointer-events-none">
+<svg class="w-8 h-8" fill="currentColor" viewbox="0 0 24 24">
+<path d="M12 0L14 9L23 9L15.5 14.5L18.5 23L12 17.5L5.5 23L8.5 14.5L1 9L10 9Z"></path>
+</svg>
+</div>
+<!-- Main Content Flow -->
+<div class="flex flex-col max-w-[660px] pt-4">
+<!-- Massive Headline -->
+<h1 class="font-display font-extrabold text-[106px] leading-[0.92] tracking-[-0.04em] text-cream">
+              Hecho a mano,<br/>
+<span class="inline-block relative">
+                lleno de color.
+                <!-- Warm yellow hand-drawn accent squiggle underneath -->
+<svg class="absolute -bottom-4 left-0 w-full h-4 text-girasol" fill="none" preserveaspectratio="none" viewbox="0 0 450 14">
+<path d="M2 9C50 2 120 12 180 8C240 4 330 11 448 4" stroke="currentColor" stroke-linecap="round" stroke-width="4.5"></path>
+</svg>
+</span>
+</h1>
+<!-- Descriptive Body Copy -->
+<p class="mt-10 font-sans text-[22px] leading-snug font-normal text-cream/95 max-w-[540px]">
+              Adornos pintados, cosidos y armados uno por uno en mi taller en Panamá.
+            </p>
+<!-- Actions Row -->
+<div class="mt-11 flex items-center gap-8">
+<!-- Cream Pill with Plum ink text and hard offset shadow -->
+<a class="bg-cream text-plum font-display font-bold text-[18px] px-8 py-4 rounded-full border-2 border-plum shadow-folk hover:-translate-y-1 hover:shadow-folk-lg active:translate-y-0.5 active:shadow-folk-sm transition-all flex items-center gap-3" href="https://wa.me/">
+<span>Pedir por WhatsApp</span>
+<span class="text-xl font-black">→</span>
+</a>
+<!-- Underlined Cream Instagram Link -->
+<a class="font-sans font-bold text-[17px] text-cream underline underline-offset-8 decoration-2 decoration-cream hover:text-girasol hover:decoration-girasol transition-colors py-2 flex items-center gap-1.5" href="#instagram">
+<span>Ver en Instagram</span>
+<span class="text-sm">↗</span>
+</a>
+</div>
+</div>
+<!-- Bottom Footer Bar in Left Block -->
+</div>
+<!-- RIGHT BLOCK: STACKED GIRASOL (#FFC21F) & TURQUESA (#12A89E) (44% width) -->
+<div class="w-[44%] h-full flex flex-col relative z-10 overflow-hidden">
+<!-- Top Half: Girasol #FFC21F (Height ~48%) -->
+<div class="h-[48%] bg-girasol w-full border-b-2 border-plum relative p-8">
+<!-- Cutout flower star in background -->
+<div class="absolute top-10 right-10 text-plum/10 pointer-events-none">
+<svg class="w-36 h-36" fill="currentColor" viewbox="0 0 100 100">
+<path d="M50 0 L58 35 L95 25 L68 50 L95 75 L58 65 L50 100 L42 65 L5 75 L32 50 L5 25 L42 35 Z"></path>
+</svg>
+</div>
+</div>
+<!-- Bottom Half: Turquesa #12A89E (Height ~52%) -->
+<div class="h-[52%] bg-turquesa w-full relative p-8">
+<!-- Folk sun/circle detail on bottom left -->
+</div>
+<!-- ============================================================== -->
+<!-- HANGING ORNAMENTS LAYER (Dropping from the very top viewport)   -->
+<!-- Real photo cutout ornaments swaying on individual jute strings -->
+<!-- ============================================================== -->
+<div class="absolute inset-0 pointer-events-none z-30"><!-- ORNAMENT 1: Hand-painted wooden bird (Left, mid height) -->
+<div class="absolute left-[40px] top-0 flex flex-col items-center sway-1 pointer-events-auto">
+<div class="jute-thread h-[150px]"></div>
+<div class="w-[150px] h-[150px] -mt-1 relative filter drop-shadow-[5px_8px_0px_rgba(43,18,56,0.85)] hover:scale-105 transition-transform duration-300">
+<img alt="Pájaro de madera pintado a mano" class="w-full h-full object-contain rounded-2xl filter contrast-[1.05]" src="https://lh3.googleusercontent.com/aida/AEtjO1VAVeIc98UaDm5LXOHsA7xpdo7Ycm7_iqNnQ2_wpaAHW-Lto95lKOg6gB-JcqW4Okw3j-CtM_boe9vM2ob3LtgJNUNADtzRrzidamnVIA14SBZdot1TBCgimI7Q3bwunig9hgq48geIucdf43R8GW2WKPIXYJD_AJrziI0d4GRlwbe--KmWE09U_t7vdpDhx2rv7GqPEPnJOaBwG3_1P-vWXcH2Jc-l6H3NE2_yvqaLY-BLiMUkODqo_jLu"/>
+</div>
+</div>
+<!-- ORNAMENT 2: Handcrafted embroidered felt heart (Middle-left, hanging deeper into teal) -->
+<div class="absolute left-[180px] top-0 flex flex-col items-center sway-2 pointer-events-auto">
+<div class="jute-thread h-[330px]"></div>
+<div class="w-[155px] h-[155px] -mt-1 relative filter drop-shadow-[5px_8px_0px_rgba(43,18,56,0.85)] hover:scale-105 transition-transform duration-300">
+<img alt="Corazón de fieltro bordado a mano" class="w-full h-full object-contain rounded-3xl filter contrast-[1.05]" src="https://lh3.googleusercontent.com/aida/AEtjO1WidkNGDHNX5Xebnk-erN2AQr1Rd2nizqw9DsZ_rwEivw6YDbOUCk_UI4PsEaBPOE_FMwhkqvbxtmyOnhf5oLr_BqzNAzj1xMKRvdeeVsF7WaOxC8Ynfl1iesxYDv0Kt1e8IlM9CKWoVbj6_JXBustf4h_IJK0h3dLa8NeCH676rJlQjPYFYZZ8YSbM84veQu0AGqzwhxuss18drBWf30G1LLe8oIuwd_cFreG6vy07HY1DsACYZlUZQo2U"/>
+</div>
+</div>
+<!-- ORNAMENT 3: Hand-painted wooden bauble ornament (Center-right, high in yellow) -->
+<div class="absolute right-[170px] top-0 flex flex-col items-center sway-3 pointer-events-auto">
+<div class="jute-thread h-[110px]"></div>
+<div class="w-[150px] h-[150px] -mt-1 relative filter drop-shadow-[5px_8px_0px_rgba(43,18,56,0.85)] hover:scale-105 transition-transform duration-300">
+<img alt="Esfera de madera pintada a mano con flores folclóricas" class="w-full h-full object-contain rounded-full filter contrast-[1.05]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAEXKZF6Q6cuKgyVJeb0DMIwhjqOHcjeaZt7ZPxYuMfWLGE4nJL0DaWJL2qfC3p9-2dEtTnLUInbtT9gAXQ5xhd5DktPd5sJpLVoSBwBVmMGq71qFpORBPAQ2oGyRfcXTpIg9gW3pJpCTMl2nncGSoXYqcSznk8XoRQjecJqFUtCMrRfpyXCFMGnHeYBcHGA5F8OYdftVIUpYLeYrKp9WFEPO1Mz0h7tHkOhh7IJBEapqAqqcYpPGMnwHuOpSo_FkLLOLpDIgtH1nr"/>
+</div>
+</div>
+<!-- ORNAMENT 4: Embroidered felt star ornament (Far right, staggered mid-low) -->
+<div class="absolute right-[30px] top-0 flex flex-col items-center sway-1 pointer-events-auto">
+<div class="jute-thread h-[240px]"></div>
+<div class="w-[145px] h-[145px] -mt-1 relative filter drop-shadow-[5px_8px_0px_rgba(43,18,56,0.85)] hover:scale-105 transition-transform duration-300">
+<img alt="Estrella de fieltro naranja bordada" class="w-full h-full object-contain rounded-2xl filter contrast-[1.05]" src="https://lh3.googleusercontent.com/aida/AEtjO1XrGgdt2Gzr7oY0nxzJEV8AAoyRK9xNAs7vRKQTxBtXhCdCMI9kYJK7jlI4OLFP62rn_yTOrzPaw2COvClPK7e_eJQZre7TKOUH_eC6yj4nHZudpzLuRyw29MTckfX-Z7y--FmbbjmDAjBoNUtmQ_J-3apSdjfHMOnDWYNqOhVY3ESn46HNxJQ3NQL87iM5xxWjZqr1po7hvI-w-atwN-lCbveynSQaP07St2X08LrPZLG-SYt0kpJrM0Ca"/>
+</div>
+</div></div>
+<!-- ============================================================== -->
+<!-- ROTATED STICKER BADGE: "Encargos de Navidad abiertos"           -->
+<!-- Positioned overlapping the color blocks with mandarina color   -->
+<!-- ============================================================== -->
+<div class="absolute bottom-10 right-10 z-40">
+<div class="w-[160px] h-[160px] rounded-full bg-mandarina text-plum border-3 border-plum shadow-folk-lg flex flex-col items-center justify-center p-4 text-center transform -rotate-8 hover:rotate-0 hover:scale-105 transition-all cursor-pointer select-none">
+<span class="text-plum text-base leading-none mb-1.5 font-black tracking-widest">★ ★ ★</span>
+<span class="font-display font-extrabold text-[17px] leading-[1.15] uppercase tracking-tight text-plum">
+    Encargos de Navidad abiertos
+  </span>
+</div>
+</div>
+<!-- Decorative folk star accent floating in turquesa space -->
+<div class="absolute top-[52%] left-10 z-30 text-girasol pointer-events-none transform rotate-12">
+<svg class="w-8 h-8 filter drop-shadow-[2px_2px_0px_#2B1238]" fill="currentColor" stroke="#2B1238" stroke-width="1.5" viewbox="0 0 24 24">
+<path d="M12 0L14 9L23 9L15.5 14.5L18.5 23L12 17.5L5.5 23L8.5 14.5L1 9L10 9Z"></path>
+</svg>
+</div><!-- Leaf shape confetti in #3E9B45 -->
+<div class="absolute top-[72%] left-[105px] z-30 pointer-events-none transform -rotate-12 filter drop-shadow-[2px_2px_0px_#2B1238]">
+<svg class="w-7 h-7 text-[#3E9B45]" fill="currentColor" stroke="#2B1238" stroke-width="1.5" viewbox="0 0 24 24">
+<path d="M17 8C8 10 5 19 5 19S14 16 16 7C17 2 20 2 20 2S20 7 17 8Z"></path>
+<path d="M5 19C9 15 13 11 17 8" fill="none" stroke="#2B1238" stroke-linecap="round" stroke-width="1.5"></path>
+</svg>
+</div>
+</div>
+</div>
+</section>
+</div>
+</body>
+</html>

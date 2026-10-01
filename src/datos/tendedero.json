@@ -1,0 +1,68 @@
+{
+  "_nota": "Los adornos que cuelgan del cordel del hero: las piezas de Erika, recortadas en cuadrado sobre su pared (scripts/procesar-material.sh). `p` es la posición a lo ancho (0 a 1), `largo` el hilo y `tam` el diámetro, en rem de escritorio (en el celular se escalan). Los hilos LARGOS van en las puntas, donde el titular no llega; los del medio son cortos para dejarle aire. Todos enlazan a su sección. `px` es la posición en el celular, y `movil: false` los saca de la pantalla chica, donde caben tres grandes. Más grandes desde el 01-10-2026 (Erika: 'las fotos más grandecitas'): la foto llena casi todo el medallón.",
+  "adornos": [
+    {
+      "p": 0.06,
+      "largo": 13,
+      "tam": 14,
+      "foto": "adorno-arbol-verde",
+      "tono": "mango",
+      "movil": true,
+      "px": 0.17,
+      "nombre": "Arbolito verde de fieltro",
+      "ancla": "#temporada"
+    },
+    {
+      "p": 0.18,
+      "largo": 5,
+      "tam": 10,
+      "foto": "adorno-galleta-jengibre",
+      "tono": "papaya",
+      "movil": false,
+      "nombre": "Galleta de jengibre de fieltro",
+      "ancla": "#temporada"
+    },
+    {
+      "p": 0.3,
+      "largo": 2,
+      "tam": 8.5,
+      "foto": "adorno-varita-luna",
+      "tono": "hibisco",
+      "movil": false,
+      "nombre": "Varita mágica de luna",
+      "ancla": "#varitas"
+    },
+    {
+      "p": 0.7,
+      "largo": 2.5,
+      "tam": 8.5,
+      "foto": "adorno-sirenita",
+      "tono": "turquesa",
+      "movil": true,
+      "px": 0.5,
+      "nombre": "Sirenita de fieltro",
+      "ancla": "#coleccion-bajo-el-mar"
+    },
+    {
+      "p": 0.82,
+      "largo": 4,
+      "tam": 9.5,
+      "foto": "adorno-estrella-blanca",
+      "tono": "hibisco",
+      "movil": false,
+      "nombre": "Estrella blanca de fieltro",
+      "ancla": "#temporada"
+    },
+    {
+      "p": 0.945,
+      "largo": 12,
+      "tam": 14,
+      "foto": "adorno-estrella-amarilla",
+      "tono": "papaya",
+      "movil": true,
+      "px": 0.83,
+      "nombre": "Estrella amarilla de fieltro",
+      "ancla": "#temporada"
+    }
+  ]
+}

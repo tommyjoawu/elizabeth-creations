@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="es">
+<head><meta charset="utf-8"></head>
+<body>
+<template>
+<style>
+
+  @font-face { font-family: "Caprasimo"; src: url("assets/fuentes/caprasimo-latin.woff2") format("woff2"); font-display: block; }
+  @font-face { font-family: "Figtree"; src: url("assets/fuentes/figtree-latin-variable.woff2") format("woff2"); font-weight: 300 900; font-display: block; }
+  @font-face { font-family: "Shantell Sans"; src: url("assets/fuentes/shantell-sans-latin-variable.woff2") format("woff2"); font-weight: 300 800; font-display: block; }
+  #root { position: absolute; inset: 0; overflow: hidden; font-family: "Figtree", sans-serif; color: #1E1A3C; }
+  .escena { position: absolute; inset: 0; overflow: hidden; }
+  .grano { position: absolute; inset: 0; opacity: .3; mix-blend-mode: soft-light; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='r'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23r)'/%3E%3C/svg%3E"); }
+  .disp { font-family: "Caprasimo", Georgia, serif; font-weight: 400; letter-spacing: -.02em; }
+  .mano { font-family: "Shantell Sans", sans-serif; font-weight: 600; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  .renglon { display: block; overflow: hidden; padding-bottom: .16em; margin-bottom: -.1em; }
+  .renglon > span { display: block; }
+  .polaroid { position: absolute; background: #FFF9EF; padding: 22px 22px 92px; border-radius: 12px;
+    box-shadow: 0 0 0 5px #1E1A3C, 16px 18px 0 #1E1A3C; }
+  .polaroid .foto { position: relative; width: 100%; height: 100%; overflow: hidden; border-radius: 4px; background: #E9E4EE; }
+  .polaroid img, .polaroid video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .polaroid .pie { position: absolute; left: 0; right: 0; bottom: 20px; text-align: center; font-family: "Shantell Sans", sans-serif; font-weight: 600; font-size: 42px; color: #1E1A3C; }
+  .cinta { position: absolute; z-index: 2; left: 50%; top: -28px; width: 200px; height: 56px; margin-left: -100px; background: rgba(255,197,61,.88);
+    clip-path: polygon(0 12%, 5% 0, 30% 5%, 62% 0, 95% 6%, 100% 0, 97% 50%, 100% 100%, 70% 94%, 35% 100%, 4% 93%, 0 100%, 3% 50%); }
+  .med { position: absolute; transform-origin: 50% 0; }
+  .med .hilo { display: block; width: 4px; margin: 0 auto; background: #1E1A3C; }
+  .med .tapa { display: block; width: 30%; height: 30px; margin: 0 auto; border-radius: 10px 10px 4px 4px; background: #1E1A3C; }
+  .med .cuerpo { position: relative; width: 100%; aspect-ratio: 1; }
+  .med .cuerpo::before, .med .bola { -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%22-1%20-1%202%202%22%3E%3Ccircle%20r%3D%220.82%22/%3E%3Ccircle%20cx%3D%220.800%22%20cy%3D%220.000%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.731%22%20cy%3D%220.325%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.535%22%20cy%3D%220.595%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.247%22%20cy%3D%220.761%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.084%22%20cy%3D%220.796%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.400%22%20cy%3D%220.693%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.647%22%20cy%3D%220.470%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.783%22%20cy%3D%220.166%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.783%22%20cy%3D%22-0.166%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.647%22%20cy%3D%22-0.470%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.400%22%20cy%3D%22-0.693%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.084%22%20cy%3D%22-0.796%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.247%22%20cy%3D%22-0.761%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.535%22%20cy%3D%22-0.595%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.731%22%20cy%3D%22-0.325%22%20r%3D%220.2%22/%3E%3C/svg%3E") center / 100% 100% no-repeat; mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%22-1%20-1%202%202%22%3E%3Ccircle%20r%3D%220.82%22/%3E%3Ccircle%20cx%3D%220.800%22%20cy%3D%220.000%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.731%22%20cy%3D%220.325%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.535%22%20cy%3D%220.595%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.247%22%20cy%3D%220.761%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.084%22%20cy%3D%220.796%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.400%22%20cy%3D%220.693%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.647%22%20cy%3D%220.470%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.783%22%20cy%3D%220.166%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.783%22%20cy%3D%22-0.166%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.647%22%20cy%3D%22-0.470%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.400%22%20cy%3D%22-0.693%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.084%22%20cy%3D%22-0.796%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.247%22%20cy%3D%22-0.761%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.535%22%20cy%3D%22-0.595%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.731%22%20cy%3D%22-0.325%22%20r%3D%220.2%22/%3E%3C/svg%3E") center / 100% 100% no-repeat; }
+  .med .cuerpo::before { content: ""; position: absolute; inset: 0; transform: translate(12px, 14px); background: #1E1A3C; }
+  .med .bola { position: relative; width: 100%; height: 100%; background: var(--tono); }
+  .med .bola img { position: absolute; left: 13%; top: 13%; width: 74%; height: 74%; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 5px #1E1A3C; }
+
+  .escena { background: #F48FB1; }
+
+  h1 { position: absolute; left: 70px; right: 70px; top: 270px; font-size: 124px; line-height: .92; }
+  .sub { position: absolute; left: 70px; top: 530px; font-size: 56px; font-weight: 800; }
+  .p { left: 70px; top: 700px; width: 560px; height: 800px; }
+  .op { position: absolute; left: 650px; width: 370px; background: #FFF9EF; border-radius: 40px; padding: 26px 30px; display: flex; align-items: center; gap: 22px;
+    box-shadow: 0 0 0 5px #1E1A3C, 12px 14px 0 #1E1A3C; }
+  .op svg, .op img { width: 92px; height: 92px; flex: none; }
+  .op b { font-size: 54px; line-height: 1.1; }
+  #s4-luna { top: 780px; } #s4-estrella { top: 1010px; }
+  .gotas { position: absolute; left: 650px; top: 1260px; width: 380px; display: flex; flex-wrap: nowrap; gap: 14px; }
+  .gotas i { width: 58px; height: 58px; border-radius: 99px; box-shadow: inset 0 0 0 5px #1E1A3C; outline: 4px dashed #1E1A3C; outline-offset: -13px; display: block; }
+
+</style>
+<div id="root" data-composition-id="s4-escoges" data-width="1080" data-height="1920">
+  <div class="escena">
+
+    <h1 class="disp"><span class="renglon"><span id="s4-l1">¿Luna o</span></span><span class="renglon"><span id="s4-l2">estrella?</span></span></h1>
+    <p class="sub" id="s4-sub">Tú escoges el color.</p>
+    <div class="polaroid p" id="s4-pol"><span class="cinta" style="background: rgba(18,165,160,.82)"></span><div class="foto"><img src="assets/img/pieza-varita-luna.jpg" alt=""></div><p class="pie">su luna, su color</p></div>
+    <div class="op" id="s4-luna"><svg viewBox="0 0 64 64"><path d="M41 8a24 24 0 1 0 15 38A20 20 0 0 1 41 8z" fill="#B79BE6" stroke="#1E1A3C" stroke-width="3" stroke-linejoin="round"/><path d="M38 13a19 19 0 1 0 12 30" fill="none" stroke="#1E1A3C" stroke-width="1.8" stroke-dasharray="3 3"/></svg><b class="disp">Luna</b></div>
+    <div class="op" id="s4-estrella"><img src="assets/sello-color.svg" alt=""><b class="disp">Estrella</b></div>
+    <div class="gotas"><i style="background:#B79BE6"></i><i style="background:#FFC53D"></i><i style="background:#12A5A0"></i><i style="background:#FFF9EF"></i><i style="background:#D3253C"></i></div>
+
+    <div class="grano"></div>
+  </div>
+</div>
+<script>
+  (function () {
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo(".escena", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.45, ease: "expo.out" }, 0);
+    
+    tl.fromTo("#s4-l1", { yPercent: 110 }, { yPercent: 0, duration: 0.6, ease: "expo.out" }, 0.2);
+    tl.fromTo("#s4-l2", { yPercent: 110 }, { yPercent: 0, duration: 0.6, ease: "expo.out" }, 0.32);
+    tl.fromTo("#s4-pol", { x: -700, rotation: -12 }, { x: 0, rotation: -3, duration: 0.75, ease: "power4.out" }, 0.25);
+    // Las dos fichas entran y se "aprietan" una vez, como un botón que se toca
+    // (press-release-spring).
+    tl.fromTo("#s4-luna", { x: 600 }, { x: 0, duration: 0.6, ease: "power3.out" }, 0.55);
+    tl.fromTo("#s4-estrella", { x: 600 }, { x: 0, duration: 0.6, ease: "power3.out" }, 0.7);
+    tl.to("#s4-luna", { scale: 0.92, duration: 0.12, ease: "power1.in", yoyo: true, repeat: 1 }, 1.5);
+    tl.to("#s4-estrella", { scale: 0.92, duration: 0.12, ease: "power1.in", yoyo: true, repeat: 1 }, 1.9);
+    tl.fromTo("#s4-sub", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 0.9);
+    tl.fromTo(".gotas i", { scale: 0 }, { scale: 1, duration: 0.45, ease: "back.out(2.2)", stagger: 0.08 }, 1.1);
+
+    window.__timelines["s4-escoges"] = tl;
+  })();
+</script>
+</template>
+</body>
+</html>

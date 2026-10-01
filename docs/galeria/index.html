@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Elizabeth Creations · Publicidad</title>
+<link rel="stylesheet" href="marca/marca.css">
+<style>
+  html, body { overflow: auto; } body { background: var(--crema); padding: 48px 16px 80px; }
+  main { max-width: 1200px; margin: 0 auto; }
+  h1 { font-family: var(--disp); font-weight: 400; font-size: clamp(36px, 5vw, 60px); line-height: 1; }
+  h2 { font-family: var(--disp); font-weight: 400; font-size: clamp(26px, 3.4vw, 38px); margin-top: 56px; }
+  p.lead { margin-top: 12px; font-size: 18px; max-width: 65ch; }
+  .grid { margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 24px; align-items: start; }
+  .tarjeta { display: block; width: 100%; font: inherit; text-align: left; cursor: zoom-in; color: inherit; text-decoration: none; background: var(--papel); border: 0; border-radius: 18px; padding: 8px; box-shadow: 0 0 0 2px var(--anil), 5px 6px 0 var(--anil); transition: transform .15s ease, box-shadow .15s ease; }
+  .tarjeta:hover { transform: translate(-2px, -2px); box-shadow: 0 0 0 2px var(--anil), 7px 8px 0 var(--anil); }
+  .tarjeta:focus-visible { outline: 3px solid var(--anil); outline-offset: 4px; }
+  .tarjeta img, .tarjeta video { width: 100%; height: auto; display: block; border-radius: 12px; background: #0001; }
+  .tarjeta .pie { display: flex; justify-content: space-between; gap: 8px; padding: 10px 6px 4px; font-size: 15px; }
+  .pie a { color: inherit; }
+  /* Los reels muestran su portada; el video solo se carga al abrirlo */
+  .tarjeta[data-video] { position: relative; }
+  .tarjeta[data-video]::after { content: "▶"; position: absolute; top: 50%; left: 50%; translate: -50% -80%; width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; padding-left: 5px; box-sizing: border-box; font-size: 26px; color: #fff; background: rgb(29 24 48 / .82); }
+
+  /* Variantes de la landing: captura fija (un iframe en vivo cargaba cientos de
+     módulos de Vite y dejaba sin conexiones a los anuncios) */
+  .grid-variantes { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+  .marco { position: relative; aspect-ratio: 390 / 760; overflow: hidden; border-radius: 12px; background: #fff; }
+  .marco img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+
+  /* Visor a pantalla completa */
+  dialog { border: 0; padding: 0; background: transparent; max-width: 100vw; max-height: 100vh; width: 100vw; height: 100vh; }
+  dialog::backdrop { background: rgb(20 16 32 / .92); }
+  .visor { position: relative; width: 100%; height: 100%; display: grid; place-items: center; padding: 56px 64px 72px; box-sizing: border-box; }
+  #medio { width: 100%; height: 100%; min-height: 0; display: grid; place-items: center; }
+  .visor img, .visor video { display: block; max-width: 100%; max-height: calc(100vh - 128px); object-fit: contain; border-radius: 10px; box-shadow: 0 20px 60px #0008; }
+  .visor .titulo { position: absolute; bottom: 20px; left: 0; right: 0; text-align: center; color: #fff; font-size: 16px; }
+  .visor button { position: absolute; background: #fffe; color: #1d1830; border: 0; border-radius: 999px; width: 48px; height: 48px; font-size: 24px; cursor: pointer; }
+  .visor .cerrar { top: 14px; right: 14px; }
+  .visor .ant { left: 10px; top: 50%; translate: 0 -50%; }
+  .visor .sig { right: 10px; top: 50%; translate: 0 -50%; }
+  @media (max-width: 600px) { .visor { padding: 64px 8px 72px; } .visor .ant, .visor .sig { top: auto; bottom: 12px; translate: none; } .visor .titulo { bottom: 80px; } }
+</style></head><body><main>
+<h1>Publicidad de Elizabeth Creations</h1>
+<p class="lead">Piezas hechas con las fotos reales de Erika. Toca cualquiera para verla en grande (flechas ← → para pasar). Cada carpeta tiene su <code>pieza.html</code> (la fuente) y su <code>pieza.png</code>. Para regenerarlas: <code>node docs/galeria/render.mjs</code>.</p>
+
+<h2>Anuncios</h2>
+<div class="grid" id="anuncios">
+  <a class="tarjeta" href="feed-navidad/pieza.png" target="_blank" data-src="feed-navidad/pieza.png"><img src="feed-navidad/miniatura.jpg" width="480" height="600" alt="Feed · Navidad cosida a mano" loading="lazy"><div class="pie"><b>Navidad cosida a mano</b><span>Feed 4:5</span></div></a>
+  <a class="tarjeta" href="feed-varitas/pieza.png" target="_blank" data-src="feed-varitas/pieza.png"><img src="feed-varitas/miniatura.jpg" width="480" height="600" alt="Feed · ¿Luna o estrella? Tú escoges" loading="lazy"><div class="pie"><b>¿Luna o estrella?</b><span>Feed 4:5</span></div></a>
+  <a class="tarjeta" href="feed-la-chorrera/pieza.png" target="_blank" data-src="feed-la-chorrera/pieza.png"><img src="feed-la-chorrera/miniatura.jpg" width="480" height="600" alt="Feed · Hecho a mano en La Chorrera" loading="lazy"><div class="pie"><b>Hecho a mano en La Chorrera</b><span>Feed 4:5</span></div></a>
+  <a class="tarjeta" href="feed-bajo-el-mar/pieza.png" target="_blank" data-src="feed-bajo-el-mar/pieza.png"><img src="feed-bajo-el-mar/miniatura.jpg" width="480" height="600" alt="Feed · Bajo el mar, en fieltro" loading="lazy"><div class="pie"><b>Bajo el mar, en fieltro</b><span>Feed 4:5</span></div></a>
+  <a class="tarjeta" href="story-navidad/pieza.png" target="_blank" data-src="story-navidad/pieza.png"><img src="story-navidad/miniatura.jpg" width="480" height="600" alt="Story · Pide antes del 15 de noviembre" loading="lazy"><div class="pie"><b>Pide antes del 15 de nov.</b><span>Story 9:16</span></div></a>
+  <a class="tarjeta" href="story-como-pedir/pieza.png" target="_blank" data-src="story-como-pedir/pieza.png"><img src="story-como-pedir/miniatura.jpg" width="480" height="600" alt="Story · Así haces tu pedido" loading="lazy"><div class="pie"><b>Así haces tu pedido</b><span>Story 9:16</span></div></a>
+  <a class="tarjeta" href="anatomia-varita/pieza.png" target="_blank" data-src="anatomia-varita/pieza.png"><img src="anatomia-varita/miniatura.jpg" width="480" height="600" alt="Anatomía · La varita mágica" loading="lazy"><div class="pie"><b>La varita mágica</b><span>Anatomía</span></div></a>
+  <a class="tarjeta" href="portada-navidad/pieza.png" target="_blank" data-src="portada-navidad/pieza.png"><img src="portada-navidad/miniatura.jpg" width="480" height="600" alt="Portada · Navidad hecha a mano" loading="lazy"><div class="pie"><b>Navidad hecha a mano</b><span>Portada</span></div></a>
+  <a class="tarjeta" href="propuesta-logo/pieza.png" target="_blank" data-src="propuesta-logo/pieza.png"><img src="propuesta-logo/miniatura.jpg" width="480" height="600" alt="Logo · Propuesta para Elizabeth Creations" loading="lazy"><div class="pie"><b>Propuesta de logo</b><span>1:1</span></div></a>
+  <a class="tarjeta" href="og-landing/pieza.png" target="_blank" data-src="og-landing/pieza.png"><img src="og-landing/miniatura.jpg" width="480" height="252" alt="OG · Imagen para compartir la página" loading="lazy"><div class="pie"><b>Imagen al compartir el link</b><span>1200×630</span></div></a>
+</div>
+
+<h2>Reels</h2>
+<div class="grid" id="reels">
+  <a class="tarjeta" href="../motion/reel-elizabeth-creations-9x16.mp4" target="_blank" data-src="../motion/reel-elizabeth-creations-9x16.mp4" data-video><video src="../motion/reel-elizabeth-creations-9x16.mp4" poster="../motion/reel-elizabeth-creations-9x16-poster.jpg" muted playsinline preload="none"></video><div class="pie"><b>Reel vertical · 23 s</b><span>9:16</span></div></a>
+  <a class="tarjeta" href="../motion/reel-elizabeth-creations-1x1.mp4" target="_blank" data-src="../motion/reel-elizabeth-creations-1x1.mp4" data-video><video src="../motion/reel-elizabeth-creations-1x1.mp4" poster="../motion/reel-elizabeth-creations-1x1-poster.jpg" muted playsinline preload="none"></video><div class="pie"><b>Reel cuadrado · 10 s</b><span>1:1</span></div></a>
+</div>
+
+<h2>Versiones de la landing</h2>
+<div class="grid grid-variantes">
+  <a class="tarjeta" href="../../index.html" target="_blank"><div class="marco"><img src="versiones/actual.jpg" width="585" height="1140" loading="lazy" alt="Versión actual"></div><div class="pie"><b>Actual</b><span>abrir ↗</span></div></a>
+  <a class="tarjeta" href="../../variantes/navidad/index.html" target="_blank"><div class="marco"><img src="versiones/navidad.jpg" width="585" height="1140" loading="lazy" alt="Noche de Navidad"></div><div class="pie"><b>Noche de Navidad</b><span>abrir ↗</span></div></a>
+  <a class="tarjeta" href="../../variantes/hilo/index.html" target="_blank"><div class="marco"><img src="versiones/hilo.jpg" width="585" height="1140" loading="lazy" alt="Hilo y puntada"></div><div class="pie"><b>Hilo y puntada</b><span>abrir ↗</span></div></a>
+  <a class="tarjeta" href="../../variantes/pop/index.html" target="_blank"><div class="marco"><img src="versiones/pop.jpg" width="585" height="1140" loading="lazy" alt="Juguetería pop"></div><div class="pie"><b>Juguetería pop</b><span>abrir ↗</span></div></a>
+</div>
+</main>
+
+<dialog id="visor" aria-label="Vista en grande">
+  <div class="visor">
+    <div id="medio"></div>
+    <p class="titulo" id="titulo"></p>
+    <button class="cerrar" aria-label="Cerrar">✕</button>
+    <button class="ant" aria-label="Anterior">←</button>
+    <button class="sig" aria-label="Siguiente">→</button>
+  </div>
+</dialog>
+
+<script>
+  // Visor: recorre anuncios y reels en un solo carrusel, sin abrir pestañas.
+  const piezas = [...document.querySelectorAll(".tarjeta[data-src]")]
+  const visor = document.getElementById("visor")
+  const medio = document.getElementById("medio")
+  const titulo = document.getElementById("titulo")
+  let actual = 0
+
+  function mostrar(i) {
+    actual = (i + piezas.length) % piezas.length
+    const p = piezas[actual]
+    medio.replaceChildren()
+    const el = document.createElement(p.hasAttribute("data-video") ? "video" : "img")
+    el.src = p.dataset.src
+    if (el.tagName === "VIDEO") Object.assign(el, { controls: true, autoplay: true, loop: true, playsInline: true })
+    else el.alt = p.querySelector("img").alt
+    medio.append(el)
+    titulo.textContent = `${p.querySelector(".pie b").textContent} · ${actual + 1}/${piezas.length}`
+  }
+
+  piezas.forEach((p, i) => p.addEventListener("click", (e) => { if (!visor.showModal) return; e.preventDefault(); mostrar(i); visor.showModal() }))
+  visor.querySelector(".cerrar").onclick = () => visor.close()
+  visor.querySelector(".ant").onclick = () => mostrar(actual - 1)
+  visor.querySelector(".sig").onclick = () => mostrar(actual + 1)
+  visor.addEventListener("close", () => medio.replaceChildren())
+  visor.addEventListener("click", (e) => { if (e.target.classList.contains("visor")) visor.close() })
+  document.addEventListener("keydown", (e) => {
+    if (!visor.open) return
+    if (e.key === "ArrowLeft") mostrar(actual - 1)
+    if (e.key === "ArrowRight") mostrar(actual + 1)
+  })
+
+</script>
+</body></html>

@@ -1,0 +1,52 @@
+{
+  "_nota": "Las varitas mágicas: lo único que se personaliza, según Erika (audio 3). Se escoge la forma (luna o estrella) y el color; la bisutería NO se escoge, va como en la foto. Ella dijo 'el color del papel', pero en las fotos la luna es de fieltro: en la página se dice 'el color' a secas hasta que lo aclare. Precios de Erika (01-10-2026): $2.50 cada una; la docena, $25.00 con un solo estilo y color; si la docena va variada (mezcla de forma o de color) son $1.50 más por cada varita: $25.00 + 12 × $1.50 = $43.00. Cada forma lleva su foto real (`foto`).",
+  "precios": {
+    "unidad": 2.5,
+    "docena": 25,
+    "porDocena": 12,
+    "variadaPorVarita": 1.5
+  },
+  "formas": [
+    {
+      "id": "luna",
+      "nombre": "Luna",
+      "mensaje": "mensajeVaritaLuna",
+      "foto": "pieza-varita-luna",
+      "alt": "Varita con una luna de fieltro lila llena de perlitas."
+    },
+    {
+      "id": "estrella",
+      "nombre": "Estrella",
+      "mensaje": "mensajeVaritaEstrella",
+      "foto": "pieza-varita-estrella",
+      "alt": "Varita con una estrella de fieltro blanco, carita bordada y lentejuelas."
+    }
+  ],
+  "colores": [
+    {
+      "nombre": "Lila",
+      "hex": "#B79BE6"
+    },
+    {
+      "nombre": "Rosado",
+      "hex": "#F48FB1"
+    },
+    {
+      "nombre": "Amarillo",
+      "hex": "#FFC53D"
+    },
+    {
+      "nombre": "Turquesa",
+      "hex": "#12A5A0"
+    },
+    {
+      "nombre": "Blanco",
+      "hex": "#FFF9EF"
+    },
+    {
+      "nombre": "Rojo",
+      "hex": "#D3253C"
+    }
+  ],
+  "_colores": "Muestras de ejemplo para que se entienda la idea: no son el catálogo de colores de Erika (se pregunta por WhatsApp)."
+}

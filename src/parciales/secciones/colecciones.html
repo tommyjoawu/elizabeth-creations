@@ -1,0 +1,64 @@
+{{!--
+  Las colecciones: banderines de papel picado.
+
+  Cuatro banderines colgados de un mismo cordel, cada uno de su color. El que
+  tiene el puntero o el foco se estira y muestra su foto, su texto y su
+  "Preguntar"; si ninguno lo tiene, se estira el primero, para que la
+  sección nunca quede en cuatro tiras iguales sin nada que leer.
+
+  La tarjeta personalizada y las guirnaldas todavía no tienen foto: su
+  banderín lleva la ranura punteada (`pendiente` en colecciones.json) donde
+  iría. Cada banderín con precios de Erika los dice en una línea corta. Es el acordeón
+  horizontal de la v2 (las láminas de Programas), con la piel del taller.
+
+  Los adornos del hero enlazan a `#coleccion-…`: el banderín apuntado por la
+  URL (`:target`) es el que se abre. Todo es CSS; sin JavaScript funciona
+  igual. En el celular no hay acordeón: es un carril con todos abiertos.
+--}}
+<section id="colecciones" data-costura="der" class="e-papel e-arena e-motivo e-motivo--flores e-feston e-feston--picos relative" style="--feston: #FBF1E1"
+         aria-labelledby="titulo-colecciones">
+  <div class="e-contenedor e-capitulo">
+    <div class="grid items-end gap-8 lg:grid-cols-12">
+      <h2 id="titulo-colecciones" class="e-aparece font-display text-seccion lg:col-span-7" data-controller="revela">
+        Para colgar, para regalar, para jugar.
+      </h2>
+      <p class="e-aparece text-entrada text-tenue lg:col-span-5 lg:pb-3" data-controller="revela" style="--retraso: 120ms">
+        Todo es fieltro cosido a mano y decorado con bisutería. Cada tanda sale un poco distinta:
+        pregunta qué hay disponible y te cuento.
+      </p>
+    </div>
+
+    <ul class="e-banderines mt-16 sm:mt-20" role="list" data-controller="carril" data-action="focusin->carril#enfocar">
+      {{#each colecciones.lista}}
+        <li id="coleccion-{{this.slug}}" class="e-banderin" data-tono="{{this.tono}}" style="--i: {{@index}}">
+          <div class="e-banderin__tela">
+            <span class="e-banderin__lomo font-display" aria-hidden="true">{{this.nombre}}</span>
+
+            <div class="e-banderin__contenido">
+              <h3 class="font-display text-[clamp(1.9rem,2.6vw,2.6rem)] leading-none">{{this.nombre}}</h3>
+              <p class="mt-3 max-w-[34ch] text-[1.02rem] leading-snug">{{this.descripcion}}</p>
+              {{#if this.precios}}<p class="e-banderin__precios mt-3">{{this.precios}}</p>{{/if}}
+              <p class="mt-5">
+                {{> piezas/boton texto=(concat "Preguntar por " this.nombre) glifo="whatsapp" chico=true externo=true
+                                 href=(whatsappPieza this.nombre plantilla="mensajeColeccion")}}
+              </p>
+            </div>
+
+            {{#if this.foto}}
+              <div class="e-banderin__foto">
+                {{imagen this.foto alt=this.alt sizes="(min-width: 1024px) 30rem, 80vw"}}
+              </div>
+            {{else}}
+              <div class="e-banderin__foto e-banderin__foto--hueco">
+                <p class="e-hueco">
+                  <span class="e-hueco__titulo">{{or this.huecoTitulo "Falta que Erika la mande"}}</span>
+                  <span class="mt-2 block text-[0.98rem]">{{this.pendiente}}</span>
+                </p>
+              </div>
+            {{/if}}
+          </div>
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+</section>

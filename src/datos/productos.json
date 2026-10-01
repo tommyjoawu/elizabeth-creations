@@ -1,0 +1,177 @@
+{
+  "_nota": "Las piezas, agrupadas en SETS como Erika las hace y las vende (01-10-2026: 'debe haber una opción para pedir los sets de una vez'). Precios de Erika del 01-10-2026 (docs/material-erika/2026-10-01/precios.md): todo set $15, sirenita y cangrejito $7, el resto $6 por pieza, varitas $2.50, guirnalda $5, guirnalda con nombre de $5 a $10 (+$2.50 por color adicional). `precio` de la pieza es el de UNA en dólares (número); `precioHasta` la vuelve un rango ('desde $5.00 hasta $10.00') y `colorExtra` es lo que suma cada color adicional. Si alguna vez un precio vuelve a ser null, la pieza dibuja la ranura 'Precio: por confirmar' y el total del pedido queda por confirmar. TODOS los sets con precio son de 3 piezas y cuestan $15 (Erika, 01-10-2026: 'todos los sets son de 3'); cada uno lleva la foto de sus tres piezas juntas (`foto`, `alt`; de docs/material-erika/2026-10-01-sets/). La galleta de jengibre va en los DOS sets de Navidad: está escrita dos veces, y la segunda lleva `repite` (el set donde ya salió) para que la ficha de pedido no la liste dos veces; si cambia su precio o su foto, se cambia en las dos. `precio` del SET es el del set completo: sólo los sets con ese número llevan el botón 'Seleccionar el set completo' y, cuando están todas sus piezas, el pedido cobra el set y no la suma. `personaliza: \"varitas\"` manda la pieza a la sección de las varitas (forma, color, docena) en vez de agregarla suelta. `pideNombre` agrega al pedido el campo del nombre y el color adicional. Sin `foto` la tarjeta lleva la ranura punteada 'Foto muy pronto'.",
+  "sets": [
+    {
+      "slug": "navidad-clasica",
+      "nombre": "Navidad clásica",
+      "tono": "mola",
+      "precio": 15,
+      "foto": "set-navidad-clasica-cerca",
+      "alt": "El set Navidad clásica de cerca sobre una cobija blanca: una estrella de fieltro amarillo, un arbolito verde con su estrellita en la punta y una galleta de jengibre, todos con lentejuelas y perlitas.",
+      "descripcion": "Los colores de siempre, con lentejuelas, perlitas y cascabeles.",
+      "piezas": [
+        {
+          "slug": "estrella-brillante",
+          "nombre": "Estrella brillante",
+          "foto": "pieza-estrella-amarilla",
+          "tono": "turquesa",
+          "precio": 6,
+          "material": "Fieltro amarillo, lentejuelas y canutillos",
+          "alt": "Mano sosteniendo una estrella de fieltro amarillo, inflada y decorada con lentejuelas verdes y canutillos."
+        },
+        {
+          "slug": "arbolito-verde",
+          "nombre": "Arbolito verde",
+          "foto": "pieza-arbol-verde",
+          "tono": "mola",
+          "precio": 6,
+          "material": "Fieltro cosido a mano, lentejuelas y perlitas",
+          "alt": "Mano sosteniendo un arbolito de Navidad de fieltro verde con estrella amarilla en la punta, lentejuelas y perlitas de colores."
+        },
+        {
+          "slug": "galleta-de-jengibre",
+          "nombre": "Galleta de jengibre",
+          "foto": "pieza-galleta-jengibre",
+          "tono": "mango",
+          "precio": 6,
+          "material": "Fieltro café con glaseado blanco y bisutería",
+          "alt": "Mano sosteniendo una galleta de jengibre de fieltro café con sonrisa bordada, botones de lentejuela y bordes blancos como glaseado."
+        }
+      ]
+    },
+    {
+      "slug": "navidad-nevada",
+      "nombre": "Navidad nevada",
+      "tono": "hibisco",
+      "precio": 15,
+      "foto": "set-navidad-nevada",
+      "alt": "El set Navidad nevada sobre una cobija blanca: un arbolito de fieltro blanco con estrella rosada, una galleta de jengibre y una estrella blanca, con lentejuelas de colores y cintas color durazno para colgar.",
+      "descripcion": "Blanca como la nieve y llena de lentejuelas de colores.",
+      "piezas": [
+        {
+          "slug": "arbolito-de-nieve",
+          "nombre": "Arbolito de nieve",
+          "foto": "pieza-arbol-blanco",
+          "tono": "hibisco",
+          "precio": 6,
+          "material": "Fieltro blanco, estrella rosada y lentejuelas",
+          "alt": "Mano sosteniendo un arbolito de fieltro blanco con estrella rosada, lentejuelas de colores y cascabeles dorados."
+        },
+        {
+          "slug": "galleta-de-jengibre",
+          "nombre": "Galleta de jengibre",
+          "foto": "pieza-galleta-jengibre",
+          "tono": "mango",
+          "precio": 6,
+          "material": "Fieltro café con glaseado blanco y bisutería",
+          "alt": "Mano sosteniendo una galleta de jengibre de fieltro café con sonrisa bordada, botones de lentejuela y bordes blancos como glaseado.",
+          "repite": "navidad-clasica"
+        },
+        {
+          "slug": "estrella-blanca",
+          "nombre": "Estrella blanca",
+          "foto": "pieza-estrella-blanca",
+          "tono": "turquesa",
+          "precio": 6,
+          "material": "Fieltro blanco, flor de lentejuelas y canutillos",
+          "alt": "Mano sosteniendo una estrella de fieltro blanco con una flor de lentejuelas al centro y canutillos de colores."
+        }
+      ]
+    },
+    {
+      "slug": "bajo-el-mar",
+      "nombre": "Bajo el mar",
+      "tono": "turquesa",
+      "precio": 15,
+      "foto": "set-bajo-el-mar",
+      "alt": "El set Bajo el mar sobre una cobija blanca: un cangrejito rojo, un pececito amarillo con aletas turquesa y una sirenita de pelo rojo, con sus caritas bordadas.",
+      "descripcion": "Con sus caritas bordadas y la cola de lentejuelas de la sirenita.",
+      "piezas": [
+        {
+          "slug": "sirenita",
+          "nombre": "Sirenita",
+          "foto": "pieza-sirenita",
+          "tono": "hibisco",
+          "precio": 7,
+          "material": "Fieltro, pelo rojo y cola de lentejuelas",
+          "alt": "Mano sosteniendo una sirenita de fieltro de pelo rojo, con cola verde llena de lentejuelas."
+        },
+        {
+          "slug": "pececito",
+          "nombre": "Pececito",
+          "foto": "pieza-pececito",
+          "tono": "mango",
+          "precio": 6,
+          "material": "Fieltro amarillo, aletas turquesa y perlitas",
+          "alt": "Mano sosteniendo un pececito de fieltro amarillo con aletas turquesa y ojos bordados con perlitas negras."
+        },
+        {
+          "slug": "cangrejito",
+          "nombre": "Cangrejito",
+          "foto": "pieza-cangrejito",
+          "tono": "mola",
+          "precio": 7,
+          "material": "Fieltro rojo, barriga naranja y piedritas",
+          "alt": "Mano sosteniendo un cangrejito de fieltro rojo con barriga naranja, sonrisa bordada y piedritas."
+        }
+      ]
+    },
+    {
+      "slug": "varitas",
+      "nombre": "Varitas mágicas",
+      "tono": "hibisco",
+      "descripcion": "Con luna o con estrella, del color que tú escojas. Por docena, $25.00.",
+      "piezas": [
+        {
+          "slug": "varita-de-luna",
+          "nombre": "Varita mágica de luna",
+          "foto": "pieza-varita-luna",
+          "tono": "hibisco",
+          "precio": 2.5,
+          "personaliza": "varitas",
+          "forma": "luna",
+          "material": "Fieltro lila, perlitas y cintas, en palito de madera",
+          "alt": "Varita mágica con una luna de fieltro lila llena de perlitas, a la luz de la ventana."
+        },
+        {
+          "slug": "varita-de-estrella",
+          "nombre": "Varita mágica de estrella",
+          "foto": "pieza-varita-estrella",
+          "tono": "turquesa",
+          "precio": 2.5,
+          "personaliza": "varitas",
+          "forma": "estrella",
+          "material": "Fieltro blanco con carita bordada, lentejuelas y cinta rosada, en palito de madera",
+          "alt": "Mano sosteniendo una varita mágica: una estrella de fieltro blanco con carita sonriente bordada, lentejuelas de colores, cinta rosada y un cascabel, en un palito de madera."
+        }
+      ]
+    },
+    {
+      "slug": "guirnaldas",
+      "nombre": "Guirnaldas",
+      "tono": "mango",
+      "descripcion": "Para la puerta, la pared o la fiesta, sencilla o con un nombre.",
+      "piezas": [
+        {
+          "slug": "guirnalda",
+          "nombre": "Guirnalda",
+          "tono": "mango",
+          "precio": 5,
+          "material": "Fieltro cosido a mano",
+          "pendiente": "La foto de una guirnalda."
+        },
+        {
+          "slug": "guirnalda-con-nombre",
+          "nombre": "Guirnalda con nombre",
+          "tono": "mola",
+          "precio": 5,
+          "precioHasta": 10,
+          "colorExtra": 2.5,
+          "pideNombre": true,
+          "material": "Con el nombre que tú escojas",
+          "pendiente": "La foto de una guirnalda con nombre."
+        }
+      ]
+    }
+  ]
+}

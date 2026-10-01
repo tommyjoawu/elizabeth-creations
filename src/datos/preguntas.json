@@ -1,0 +1,24 @@
+{
+  "_nota": "Las preguntas que frenan un pedido, respondidas con lo que Erika confirmó en sus audios del 29-09-2026. Los precios son los que mandó el 01-10-2026. Donde todavía falta un dato suyo va `pendiente` y la página lo dibuja como una ranura punteada, imposible de confundir con contenido. Cuando lo confirme, se escribe en `respuesta` y se borra `pendiente`.",
+  "lista": [
+    { "pregunta": "¿Cómo hago un pedido?",
+      "respuesta": "Escríbeme por WhatsApp con la pieza que te gustó: cada botón de la página ya manda su nombre. Te confirmo el pedido, te paso los datos para pagar y empiezo." },
+    { "pregunta": "¿Cómo se paga?",
+      "respuesta": "Por Yappy o por transferencia bancaria. No recibo efectivo." },
+    { "pregunta": "¿Tengo que abonar?",
+      "respuesta": "Sí: todo pedido, de una pieza o de un set completo, se separa con un abono del 30 %. Importante: una vez abonado, no se devuelve, porque con él ya empiezo a hacer tu pieza." },
+    { "pregunta": "¿Cuánto tarda?",
+      "respuesta": "Entre 3 y 5 días por pieza. Para Navidad recibo pedidos hasta el 15 de noviembre, así te llegan a tiempo." },
+    { "pregunta": "¿Hacen envíos?",
+      "respuesta": "Por ahora entrego en La Chorrera y en la Ciudad de Panamá, en un punto de entrega que coordinamos por WhatsApp.",
+      "pendiente": "El punto de entrega o la mensajería que se usa para retirar (en el audio no se entiende el nombre) y si la entrega tiene costo." },
+    { "pregunta": "¿Puedo personalizarla?",
+      "respuesta": "En las varitas mágicas escoges si llevan luna o estrella, y el color. En la guirnalda con nombre, el nombre. La bisutería va como en la foto. También puedes sumar una tarjeta con un nombre o un mensaje escrito a mano en el centro, por ejemplo para un cumpleaños." },
+    { "pregunta": "¿Cuánto cuestan?",
+      "respuesta": "Todos los sets son de 3 piezas y cuestan $15.00 cada uno: Navidad clásica (estrella amarilla, arbolito verde y galleta de jengibre), Navidad nevada (arbolito de nieve, galleta de jengibre y estrella blanca) y Bajo el mar (sirenita, pececito y cangrejito). Por pieza: la sirenita y el cangrejito, $7.00; las demás, $6.00. Las varitas, $2.50 cada una, o $25.00 la docena de un solo estilo y color (si la quieres variada, $1.50 más por varita: $43.00). La guirnalda, $5.00, y la guirnalda con nombre, de $5.00 a $10.00, con $2.50 más por cada color adicional." },
+    { "pregunta": "¿Va a quedar igual a la foto?",
+      "respuesta": "Muy parecida, pero no idéntica: se hace a mano, una por una, y cada pieza tiene sus pequeñas diferencias. Si algo tiene que ser exacto, como un nombre o un color, dímelo y lo cuidamos." },
+    { "pregunta": "¿Cómo la guardo?",
+      "respuesta": "En una caja, lejos de la humedad y del sol directo. Así el fieltro no pierde su color y la bisutería no se despega de un año para otro." }
+  ]
+}

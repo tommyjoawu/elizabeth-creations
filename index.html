@@ -1,0 +1,96 @@
+{{!--
+  La landing de Elizabeth Creations (la marca de Erika): una sola página.
+
+  Es una plantilla de Handlebars que arma el plugin `vite/plantillas.js`:
+  cada sección vive en `src/parciales/secciones/` y los datos del negocio en
+  `src/datos/*.json`. Nada de este archivo inventa datos: el nombre, las
+  políticas y el WhatsApp salen de `marca.json` (el número, el Instagram y el
+  correo siguen pendientes y están marcados así).
+
+  El orden es el de docs/research.md §5 (AIDA ajustado a una tienda sin
+  carrito, a tres meses de Navidad). Ningún fondo es liso: cada capítulo lleva
+  su motivo (src/estilos/motivos.css), y un hilo cose la página de arriba
+  abajo (piezas/costura + controlador `costura`, sólo por el margen):
+
+    obertura     papel    (Atención: "Bienvenidos a Elizabeth Creations" y el tendedero)
+    temporada    noche    (Interés → Deseo: las piezas colgadas, con precio y por sets)
+    varitas      lila     (Deseo: la pieza que se personaliza)
+    taller       papel    (Confianza: cómo nace una pieza y su historia)
+    colecciones  arena    (Interés: todo lo que hace)
+    encargos     mango    (Acción: cómo pedir, el abono, los tiempos)
+    pared        papel    (Prueba: sus fotos, sin testimonios)
+    preguntas    turquesa (lo que frena un pedido)
+    cierre       mola     (Acción)
+--}}
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>{{marca.titulo}}</title>
+    <meta name="description" content="{{marca.descripcion}}">
+    <meta name="theme-color" content="#FBF1E1">
+    {{!-- La paleta ya trae sus capítulos oscuros: el modo oscuro forzado de
+        Chrome en Android la invertiría entera. --}}
+    <meta name="color-scheme" content="only light">
+    <link rel="canonical" href="{{marca.url}}">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_PA">
+    <meta property="og:title" content="{{marca.titulo}}">
+    <meta property="og:description" content="{{marca.descripcion}}">
+    <meta property="og:url" content="{{marca.url}}">
+    <meta property="og:image" content="{{marca.url}}og.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+
+    {{!-- Las dos fuentes del primer pantallazo, precargadas: Caprasimo pinta
+         el titular (el LCP) y Figtree todo lo demás. La de las notas a mano
+         aparece más abajo y llega cuando llega. --}}
+    <link rel="preload" as="font" type="font/woff2" href="/src/assets/fuentes/caprasimo-latin.woff2" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="/src/assets/fuentes/figtree-latin-variable.woff2" crossorigin>
+
+    {{!-- De esta clase depende que lo que aparece al hacer scroll pueda
+         empezar oculto. Sin JavaScript no se pone, y la página se ve entera
+         y quieta. --}}
+    <script>document.documentElement.classList.add("js")</script>
+
+    <link rel="stylesheet" href="/src/estilos/main.css">
+    <script type="module" src="/src/main.js"></script>
+
+    <script type="application/ld+json">{{esquemaTienda}}</script>
+  </head>
+
+  {{!-- `suave`: el scroll con inercia. Va en el <body> porque es de la página
+       entera; se apaga solo con `reduced-motion` y en pantallas táctiles. --}}
+  <body class="e-sitio" data-controller="suave">
+    <a href="#principal"
+       class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-salto focus:rounded-full
+              focus:bg-mango focus:px-5 focus:py-3 focus:font-bold focus:text-anil">
+      Saltar al contenido
+    </a>
+
+    {{> piezas/isla}}
+
+    {{!-- `overflow-x-clip` y no `hidden`: `hidden` vuelve a <main> un
+         contenedor de scroll, y adentro de uno de esos `position: sticky`
+         deja de pegarse a la pantalla — el taller y las preguntas lo usan. --}}
+    <main id="principal" class="relative w-full max-w-full overflow-x-clip" data-controller="costura">
+      {{> piezas/costura}}
+      {{> secciones/obertura}}
+      {{> secciones/temporada}}
+      {{> secciones/varitas}}
+      {{> secciones/taller}}
+      {{> secciones/colecciones}}
+      {{> secciones/encargos}}
+      {{> secciones/pared}}
+      {{> secciones/preguntas}}
+      {{> secciones/cierre}}
+    </main>
+
+    {{> piezas/pie}}
+    {{> piezas/pildora}}
+  </body>
+</html>

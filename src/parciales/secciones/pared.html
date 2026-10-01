@@ -1,0 +1,70 @@
+{{!--
+  La pared del taller: la prueba social SIN testimonios inventados.
+
+  Las fotos de Elizabeth pegadas con cinta, cada una con su giro fijo, y la
+  última baldosa es la puerta a Instagram. No hay widget: lo que publique se
+  ve allá. Mientras su Instagram no exista (marca.pendiente.instagram), la
+  baldosa dice "muy pronto" y no enlaza a ningún lado.
+
+  ── La grilla, y por qué no le sobra ni le falta una celda ───────────────
+  `grid-flow-dense`, y el orden de pared.json importa:
+
+    4 columnas:  A A B C      2 columnas:  A A
+                 A A D C                   A A
+                 E F F G                   B C
+                                           D C
+                                           E G
+                                           F F
+
+  grande = 2×2, alta = 1×2, ancha = 2×1, chica = 1×1, y G es el enlace.
+  Doce celdas en las dos, cero huecos.
+--}}
+<section id="pared" data-costura="der" class="e-papel e-motivo e-motivo--corazones e-feston e-feston--picos relative" style="--feston: #FFC53D" aria-labelledby="titulo-pared">
+  <div class="e-contenedor e-capitulo">
+    <div class="flex flex-wrap items-end justify-between gap-x-10 gap-y-8">
+      <h2 id="titulo-pared" class="e-aparece max-w-[16ch] font-display text-seccion" data-controller="revela">
+        Recién salidas del taller.
+      </h2>
+      <p class="e-aparece max-w-[34ch] text-entrada" data-controller="revela" style="--retraso: 120ms">
+        Fotos de las piezas de verdad, colgadas en su pared y en las manos de quien las estrena.
+      </p>
+    </div>
+
+    <ul class="e-pared mt-16 sm:mt-20" role="list">
+      {{#each pared.fotos}}
+        <li class="e-pared__baldosa e-pared__baldosa--{{this.forma}} e-aparece" data-controller="revela"
+            style="--tono: {{this.tono}}; --giro: {{this.giro}}deg; --retraso: calc({{@index}} * 70ms)">
+          {{#if this.video}}
+            {{!-- El reel cuadrado: el póster ya trae la marca y la fecha, así
+                que quieto también dice todo. El <video> lo crea el
+                controlador sólo cuando la baldosa entra en pantalla. --}}
+            <div class="e-pared__foto" data-controller="video-fondo"
+                 data-video-fondo-src-value="{{this.video}}" data-video-fondo-movil-value="true">
+              <img src="{{this.poster}}" alt="{{this.alt}}" width="720" height="720" loading="lazy" decoding="async">
+            </div>
+          {{else}}
+            <div class="e-pared__foto">
+              {{imagen this.foto alt=this.alt sizes="(min-width: 1024px) 45vw, 90vw"}}
+            </div>
+          {{/if}}
+        </li>
+      {{/each}}
+      <li class="e-pared__baldosa e-pared__baldosa--chica e-aparece" data-controller="revela"
+          style="--tono: #1E1A3C; --giro: 1.5deg; --retraso: 420ms">
+        {{#if (pendiente "instagram")}}
+          <div class="e-pared__enlace">
+            {{icono "instagram" clase="size-7 sm:size-9"}}
+            <span class="font-display text-[1.15rem] leading-tight sm:text-[1.45rem]">Instagram, muy pronto</span>
+            <span class="text-[0.82rem] leading-snug font-semibold sm:text-[0.92rem]">Mientras tanto, escríbeme por WhatsApp.</span>
+          </div>
+        {{else}}
+          <a href="https://www.instagram.com/{{marca.instagram}}/" target="_blank" rel="noopener" class="e-pared__enlace">
+            {{icono "instagram" clase="size-7 sm:size-9"}}
+            <span class="font-display text-[1.15rem] leading-tight sm:text-[1.45rem]">Mira lo que hay hoy en la mesa</span>
+            <span class="text-[0.82rem] leading-snug font-semibold sm:text-[0.92rem]">{{cortable (concat "@" marca.instagram)}}</span>
+          </a>
+        {{/if}}
+      </li>
+    </ul>
+  </div>
+</section>

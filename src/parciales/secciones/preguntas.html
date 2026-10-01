@@ -1,0 +1,55 @@
+{{!--
+  Las preguntas que frenan un pedido.
+
+  El título se queda fijo a la izquierda mientras se recorren (`sticky`, no
+  GSAP) y cada pregunta es un <details>: funciona sin JavaScript, el buscador
+  del navegador la encuentra y Google la lee. Se abre deslizándose donde el
+  navegador lo sabe hacer (`::details-content`), y de golpe donde no.
+
+  Donde la respuesta depende de una política de Erika que todavía no
+  conocemos, se dibuja la RANURA: punteada, sin fondo, con lo que falta
+  dicho en claro. Es imposible confundirla con contenido, y es a propósito.
+--}}
+<section id="preguntas" data-costura="izq" class="e-turquesa e-motivo e-motivo--estrellas e-feston e-feston--ola relative" style="--feston: #FBF1E1" aria-labelledby="titulo-preguntas">
+  <div class="e-contenedor e-capitulo grid gap-14 lg:grid-cols-12 lg:gap-10">
+    <div class="lg:col-span-5">
+      <div class="lg:sticky lg:top-28">
+        <h2 id="titulo-preguntas" class="max-w-[12ch] font-display text-columna">Antes de escribirme</h2>
+        <p class="mt-6 max-w-[34ch] text-entrada">Pagos, abono, tiempos y entregas. Y si no está aquí, pregúntame: contesto yo.</p>
+        <p class="mt-8">
+          {{> piezas/boton texto="Preguntar por WhatsApp" href=(whatsapp) glifo="whatsapp" externo=true clase="justify-between"}}
+        </p>
+      </div>
+    </div>
+
+    <div class="border-t-[1.5px] border-anil lg:col-span-7">
+      {{#each preguntas.lista}}
+        <details class="e-pregunta group border-b-[1.5px] border-anil">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-8 py-7
+                          [&::-webkit-details-marker]:hidden">
+            <span class="min-w-0 font-display text-[clamp(1.35rem,2vw,1.8rem)] leading-tight">{{this.pregunta}}</span>
+            {{!-- Un más cosido: dos puntadas punteadas que al abrir pierden la
+                vertical y quedan en menos, que es lo que hace el control.
+                Decorativo: el estado lo anuncia el propio <summary>. --}}
+            <span class="e-pregunta__signo relative grid size-12 shrink-0 place-items-center rounded-full bg-crema
+                         shadow-[0_0_0_1.5px_#1E1A3C,0.15rem_0.2rem_0_#1E1A3C] transition-colors duration-500
+                         group-hover:bg-mango" aria-hidden="true">
+              <span class="e-puntada absolute h-[2.5px] w-5"></span>
+              <span class="e-puntada absolute h-[2.5px] w-5 rotate-90"></span>
+            </span>
+          </summary>
+
+          <div class="max-w-[58ch] pb-8 text-[1.08rem] leading-relaxed">
+            <p>{{this.respuesta}}</p>
+            {{#if this.pendiente}}
+              <p class="e-hueco mt-5">
+                <span class="e-hueco__titulo">Falta que Erika lo confirme</span>
+                <span class="mt-2 block text-[0.98rem]">{{this.pendiente}}</span>
+              </p>
+            {{/if}}
+          </div>
+        </details>
+      {{/each}}
+    </div>
+  </div>
+</section>

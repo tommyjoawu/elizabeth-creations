@@ -1,0 +1,46 @@
+/* ============================================================================
+   EL CIERRE — el cordel vuelve, con el adorno que falta
+   ========================================================================== */
+@layer components {
+  /* Las mismas medidas del cordel del hero (ver obertura.css), para que el
+     final rime con el principio. Los adornos usan las mismas piezas. */
+  .e-cierre {
+    --cordel-arriba: 2.5rem;
+    --cordel-alto: 6rem;
+    --escala: 0.6;
+  }
+  @media (min-width: 640px)  { .e-cierre { --cordel-alto: 7rem; --escala: 0.72; } }
+  @media (min-width: 1024px) { .e-cierre { --cordel-arriba: 3rem; --cordel-alto: 8.5rem; --escala: 0.86; } }
+  @media (min-width: 1440px) { .e-cierre { --escala: 1; } }
+
+  .e-cierre .e-tendedero { color: #FBF1E1; }
+  .e-cierre .e-adorno__tapa { background: #FBF1E1; }
+  .e-cierre .e-adorno__tapa::before { border-color: #FBF1E1; }
+  .e-cierre .e-adorno[data-tono="mango"] { --tono: #FFC53D; }
+  .e-cierre .e-adorno[data-tono="crema"] { --tono: #FBF1E1; }
+  /* El que falta: sin relleno ni sombra, con el contorno punteado y un
+     signo de pregunta en la letra de la marca. */
+  .e-cierre .e-adorno[data-tono="crema"] .e-adorno__cuerpo::before { display: none; }
+  .e-cierre .e-adorno[data-tono="crema"] .e-adorno__bola {
+    display: grid;
+    place-items: center;
+    background: transparent;
+    box-shadow: none;
+    outline: 2.5px dashed #FBF1E1;
+    outline-offset: -2.5px;
+  }
+  .e-adorno__signo {
+    font-family: var(--font-display);
+    font-size: calc(var(--t) * 0.55);
+    line-height: 1;
+    color: #FBF1E1;
+  }
+
+  .e-cierre__texto {
+    padding-top: calc(var(--cordel-arriba) + var(--cordel-alto) + 11rem);
+    padding-bottom: clamp(6rem, 12vw, 10rem);
+  }
+  @media (min-width: 1024px) {
+    .e-cierre__texto { padding-top: calc(var(--cordel-arriba) + var(--cordel-alto) + 12rem); }
+  }
+}

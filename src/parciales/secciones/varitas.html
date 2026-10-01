@@ -1,0 +1,188 @@
+{{!--
+  Las varitas mágicas: la única pieza que se personaliza, y por eso tiene
+  capítulo propio, del lila de su luna.
+
+  A la izquierda, dos polaroids colgadas: el video de la varita de luna
+  girando a la luz de la ventana (el único que también corre en el celular:
+  aquí el video ES el producto) y la foto de la varita de estrella
+  terminada (01-10-2026). Luna y estrella, cada una con su foto de verdad.
+
+  A la derecha, las decisiones que se pueden tomar, y sólo esas (audio 3 y
+  precios del 01-10-2026):
+    1. la forma, luna o estrella, cada una con su foto y su precio ($2.50);
+    2. el color: las muestras son un ejemplo de la idea, no un catálogo;
+    3. cuántas: por unidad, o la docena ($25.00, un solo estilo y color; si
+       va variada, $1.50 más por varita, con la cuenta escrita entera).
+  La bisutería no se escoge: va como en la foto, y se dice.
+
+  Sin JavaScript cada forma es un enlace a WhatsApp con su mensaje y hay
+  otro para la docena; la tarifa se lee igual. Con el controlador
+  `varitas` las fichas pasan a escoger, aparece la cuenta en vivo y
+  "Agregar al pedido" suma la varita al mismo resumen de "Las piezas"
+  (evento `pedido:agregar`), o "Pedir sólo esto" la manda sola.
+--}}
+<section id="varitas" data-costura="der" class="e-lila e-motivo e-motivo--lunares e-feston e-feston--ola relative isolate overflow-clip" style="--feston: #1E1A3C"
+         aria-labelledby="titulo-varitas">
+  <div class="e-contenedor e-capitulo grid items-center gap-16 lg:grid-cols-12 lg:gap-10">
+
+    <div class="e-polaroids lg:sticky lg:top-28 lg:col-span-7 lg:self-start" aria-hidden="true" data-controller="revela">
+      <figure class="e-polaroid e-polaroid--video">
+        <div class="e-polaroid__foto" data-controller="video-fondo"
+             data-video-fondo-src-value="/video/varita-luna-gira" data-video-fondo-movil-value="true">
+          <img src="/video/varita-luna-gira-poster.webp" alt="" width="464" height="832" loading="lazy" decoding="async">
+        </div>
+      </figure>
+      <figure class="e-polaroid e-polaroid--foto">
+        <div class="e-polaroid__foto">
+          {{imagen "pieza-varita-estrella" alt="" sizes="(min-width: 1024px) 26rem, 55vw"}}
+        </div>
+        <figcaption class="e-polaroid__pie font-mano">luna o estrella, tú escoges</figcaption>
+      </figure>
+    </div>
+
+    <div class="lg:col-span-5 lg:col-start-8">
+      <h2 id="titulo-varitas" class="e-aparece font-display text-columna" data-controller="revela">
+        Una varita mágica, a su gusto.
+      </h2>
+      <p class="e-aparece mt-6 max-w-[42ch] text-entrada" data-controller="revela" style="--retraso: 100ms">
+        Fieltro cosido a mano, perlitas, un palito de madera y cintas que vuelan cuando la mueven.
+        Cada una cuesta <strong>{{precio varitas.precios.unidad}}</strong>, y tú escoges:
+      </p>
+
+      {{!-- El armado de la varita. El controlador vive en este bloque y no en
+          la sección: las polaroids no tienen nada que decirle. --}}
+      <div data-controller="varitas"
+           data-varitas-unidad-value="{{varitas.precios.unidad}}"
+           data-varitas-docena-value="{{varitas.precios.docena}}"
+           data-varitas-por-docena-value="{{varitas.precios.porDocena}}"
+           data-varitas-variada-value="{{varitas.precios.variadaPorVarita}}"
+           data-varitas-abono-value="{{marca.politicas.abonoPorcentaje}}"
+           data-varitas-numero-value="{{whatsappBase}}"
+           data-varitas-plantilla-value="{{marca.mensajePedido}}"
+           data-action="varitas:forma@window->varitas#desdeGaleria pedido:cambio@window->varitas#alCambiarPedido">
+
+      <h3 class="e-aparece mt-10 font-display text-[1.6rem] leading-none" data-controller="revela" style="--retraso: 140ms">
+        <span class="e-paso-chico" aria-hidden="true">1</span> La forma
+      </h3>
+      <ul class="e-aparece mt-5 grid grid-cols-2 gap-3 sm:max-w-[30rem]" role="list" data-controller="revela" style="--retraso: 180ms">
+        {{#each varitas.formas}}
+          <li>
+            <a class="e-opcion" href="{{whatsappPieza this.nombre plantilla=this.mensaje}}" target="_blank" rel="noopener"
+               aria-label="Pedir una varita con {{this.nombre}} por WhatsApp"
+               data-varitas-target="forma" data-forma="{{this.id}}" data-nombre="{{this.nombre}}" data-action="varitas#escogerForma">
+              <span class="e-opcion__foto">{{imagen this.foto alt="" sizes="(min-width: 640px) 14rem, 42vw"}}</span>
+              <span class="font-display text-[1.45rem] leading-none">{{this.nombre}}</span>
+              <span class="e-opcion__precio">{{precio ../varitas.precios.unidad}} <span>c/u</span></span>
+              <span class="e-opcion__accion" data-texto>Pedir {{icono "whatsapp" clase="size-4"}}</span>
+            </a>
+          </li>
+        {{/each}}
+      </ul>
+
+      <h3 class="e-aparece mt-10 font-display text-[1.6rem] leading-none" data-controller="revela" style="--retraso: 220ms">
+        <span class="e-paso-chico" aria-hidden="true">2</span> El color
+      </h3>
+      <div class="e-aparece mt-5" data-controller="revela" style="--retraso: 260ms">
+        {{!-- Botones apagados sin JavaScript (se ven como muestras y no
+            prometen nada); el controlador los enciende para escoger. --}}
+        <ul class="flex flex-wrap gap-2.5" role="list" aria-label="Colores de ejemplo">
+          {{#each varitas.colores}}
+            <li>
+              <button type="button" class="e-muestra" style="--muestra: {{this.hex}}" disabled aria-pressed="false"
+                      data-varitas-target="color" data-color="{{this.nombre}}" data-action="varitas#escogerColor">
+                <span>{{this.nombre}}</span>
+              </button>
+            </li>
+          {{/each}}
+        </ul>
+        <p class="mt-4 max-w-[44ch] text-[1.02rem]">
+          Son ejemplos: dime el color que quieras y te cuento si lo tengo.
+          Las cintas y la bisutería van como en la foto.
+        </p>
+      </div>
+
+      <h3 class="e-aparece mt-10 font-display text-[1.6rem] leading-none" data-controller="revela" style="--retraso: 280ms">
+        <span class="e-paso-chico" aria-hidden="true">3</span> ¿Cuántas?
+      </h3>
+      {{!-- La tarifa, con la cuenta de la docena variada escrita entera:
+          "$1.50 más por varita" se entiende; "$43.00" sin la cuenta, no. --}}
+      <dl class="e-aparece e-tarifa mt-5" data-controller="revela" style="--retraso: 300ms">
+        <div class="e-tarifa__fila">
+          <dt>Una varita</dt>
+          <dd>{{precio varitas.precios.unidad}}</dd>
+        </div>
+        <div class="e-tarifa__fila">
+          <dt>Docena <span>un solo estilo y color</span></dt>
+          <dd>{{precio varitas.precios.docena}}</dd>
+        </div>
+        <div class="e-tarifa__fila">
+          <dt>Docena variada <span>mezcla de luna y estrella o de colores: +{{precio varitas.precios.variadaPorVarita}} por varita</span></dt>
+          <dd><span class="e-tarifa__cuenta">{{precio varitas.precios.docena}} + {{varitas.precios.porDocena}} × {{precio varitas.precios.variadaPorVarita}} =</span> {{precio (docenaVariada varitas.precios)}}</dd>
+        </div>
+      </dl>
+
+      {{!-- Sin JavaScript: la docena también se pide por WhatsApp. --}}
+      <p class="mt-5" data-varitas-target="sinJs">
+        {{> piezas/enlace texto="Pedir una docena por WhatsApp" externo=true href=(whatsappPieza "docena" plantilla="mensajeVaritaDocena")}}
+      </p>
+
+      {{!-- El armado: sólo con JavaScript. --}}
+      <div class="e-armado mt-6" data-varitas-target="armado" hidden>
+        <fieldset>
+          <legend class="sr-only">¿Por unidad o por docena?</legend>
+          <div class="grid grid-cols-2 gap-3">
+            <label class="e-eleccion">
+              <input type="radio" name="varitas-modo" value="unidad" checked data-action="varitas#componer" data-varitas-target="modo">
+              <span>Por unidad</span>
+            </label>
+            <label class="e-eleccion">
+              <input type="radio" name="varitas-modo" value="docena" data-action="varitas#componer" data-varitas-target="modo">
+              <span>Por docena</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="e-armado__fila mt-4" data-varitas-target="soloUnidad">
+          <span class="e-armado__rotulo" id="varitas-cantidad-rotulo">Cantidad</span>
+          <div class="e-contador" role="group" aria-labelledby="varitas-cantidad-rotulo">
+            <button type="button" class="e-contador__boton" data-action="varitas#menos" aria-label="Una menos">−</button>
+            <output class="e-contador__valor" data-varitas-target="cantidad" aria-live="polite">1</output>
+            <button type="button" class="e-contador__boton" data-action="varitas#mas" aria-label="Una más">+</button>
+          </div>
+        </div>
+
+        <label class="e-eleccion e-eleccion--caja mt-4" data-varitas-target="soloDocena" hidden>
+          <input type="checkbox" data-varitas-target="variada" data-action="varitas#componer">
+          <span>Variada: mezclo luna y estrella o varios colores (+{{precio varitas.precios.variadaPorVarita}} por varita)</span>
+        </label>
+
+        <p class="e-armado__cuenta mt-5" data-varitas-target="cuenta" aria-live="polite"></p>
+        <p class="e-armado__aviso" data-varitas-target="aviso" role="alert" hidden></p>
+
+        <div class="mt-4 flex flex-wrap items-center gap-3">
+          <button type="button" class="e-boton e-boton--primario e-boton--chico justify-between" data-action="varitas#agregar">
+            <span>Agregar al pedido</span>
+            <span class="e-boton__isla">{{icono "mas" clase="size-4"}}</span>
+          </button>
+          <a class="e-armado__solo" href="{{whatsappBase}}" target="_blank" rel="noopener" data-varitas-target="solo" data-action="varitas#pedirSolo">
+            {{icono "whatsapp" clase="size-5"}}<span>Pedir sólo esto</span>
+          </a>
+        </div>
+
+        {{!-- Lo de esta sección que ya está en el pedido, con su "Quitar". --}}
+        <div class="e-armado__pedido mt-6" data-varitas-target="enPedido" hidden>
+          <p class="e-armado__rotulo">Ya en tu pedido</p>
+          <ul class="mt-2 space-y-2" role="list" data-varitas-target="lista"></ul>
+          <p class="mt-3">
+            <a class="e-armado__ver" href="#temporada">Ver el pedido completo y enviarlo</a>
+          </p>
+        </div>
+      </div>
+      </div>
+
+      <p class="e-aparece mt-10" data-controller="revela" style="--retraso: 320ms">
+        {{> piezas/enlace texto="¿Es un regalo? Súmale una tarjeta con su nombre" href="#encargos"}}
+      </p>
+    </div>
+  </div>
+</section>

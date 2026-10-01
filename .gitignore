@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.vite/
+*.log
+.DS_Store
+
+# Material privado de la clienta (fotos originales —incluye a una menor—,
+# audios transcritos) e investigación con capturas de otras marcas: no van
+# a un repo público.
+docs/material-erika/
+docs/research/
+docs/capturas/
+variantes/*/capturas/

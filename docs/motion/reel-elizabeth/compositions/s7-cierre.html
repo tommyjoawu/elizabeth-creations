@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+<head><meta charset="utf-8"></head>
+<body>
+<template>
+<style>
+
+  @font-face { font-family: "Caprasimo"; src: url("assets/fuentes/caprasimo-latin.woff2") format("woff2"); font-display: block; }
+  @font-face { font-family: "Figtree"; src: url("assets/fuentes/figtree-latin-variable.woff2") format("woff2"); font-weight: 300 900; font-display: block; }
+  @font-face { font-family: "Shantell Sans"; src: url("assets/fuentes/shantell-sans-latin-variable.woff2") format("woff2"); font-weight: 300 800; font-display: block; }
+  #root { position: absolute; inset: 0; overflow: hidden; font-family: "Figtree", sans-serif; color: #1E1A3C; }
+  .escena { position: absolute; inset: 0; overflow: hidden; }
+  .grano { position: absolute; inset: 0; opacity: .3; mix-blend-mode: soft-light; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='r'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23r)'/%3E%3C/svg%3E"); }
+  .disp { font-family: "Caprasimo", Georgia, serif; font-weight: 400; letter-spacing: -.02em; }
+  .mano { font-family: "Shantell Sans", sans-serif; font-weight: 600; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  .renglon { display: block; overflow: hidden; padding-bottom: .16em; margin-bottom: -.1em; }
+  .renglon > span { display: block; }
+  .polaroid { position: absolute; background: #FFF9EF; padding: 22px 22px 92px; border-radius: 12px;
+    box-shadow: 0 0 0 5px #1E1A3C, 16px 18px 0 #1E1A3C; }
+  .polaroid .foto { position: relative; width: 100%; height: 100%; overflow: hidden; border-radius: 4px; background: #E9E4EE; }
+  .polaroid img, .polaroid video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .polaroid .pie { position: absolute; left: 0; right: 0; bottom: 20px; text-align: center; font-family: "Shantell Sans", sans-serif; font-weight: 600; font-size: 42px; color: #1E1A3C; }
+  .cinta { position: absolute; z-index: 2; left: 50%; top: -28px; width: 200px; height: 56px; margin-left: -100px; background: rgba(255,197,61,.88);
+    clip-path: polygon(0 12%, 5% 0, 30% 5%, 62% 0, 95% 6%, 100% 0, 97% 50%, 100% 100%, 70% 94%, 35% 100%, 4% 93%, 0 100%, 3% 50%); }
+  .med { position: absolute; transform-origin: 50% 0; }
+  .med .hilo { display: block; width: 4px; margin: 0 auto; background: #1E1A3C; }
+  .med .tapa { display: block; width: 30%; height: 30px; margin: 0 auto; border-radius: 10px 10px 4px 4px; background: #1E1A3C; }
+  .med .cuerpo { position: relative; width: 100%; aspect-ratio: 1; }
+  .med .cuerpo::before, .med .bola { -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%22-1%20-1%202%202%22%3E%3Ccircle%20r%3D%220.82%22/%3E%3Ccircle%20cx%3D%220.800%22%20cy%3D%220.000%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.731%22%20cy%3D%220.325%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.535%22%20cy%3D%220.595%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.247%22%20cy%3D%220.761%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.084%22%20cy%3D%220.796%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.400%22%20cy%3D%220.693%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.647%22%20cy%3D%220.470%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.783%22%20cy%3D%220.166%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.783%22%20cy%3D%22-0.166%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.647%22%20cy%3D%22-0.470%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.400%22%20cy%3D%22-0.693%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.084%22%20cy%3D%22-0.796%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.247%22%20cy%3D%22-0.761%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.535%22%20cy%3D%22-0.595%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.731%22%20cy%3D%22-0.325%22%20r%3D%220.2%22/%3E%3C/svg%3E") center / 100% 100% no-repeat; mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%22-1%20-1%202%202%22%3E%3Ccircle%20r%3D%220.82%22/%3E%3Ccircle%20cx%3D%220.800%22%20cy%3D%220.000%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.731%22%20cy%3D%220.325%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.535%22%20cy%3D%220.595%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.247%22%20cy%3D%220.761%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.084%22%20cy%3D%220.796%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.400%22%20cy%3D%220.693%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.647%22%20cy%3D%220.470%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.783%22%20cy%3D%220.166%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.783%22%20cy%3D%22-0.166%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.647%22%20cy%3D%22-0.470%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.400%22%20cy%3D%22-0.693%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.084%22%20cy%3D%22-0.796%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.247%22%20cy%3D%22-0.761%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.535%22%20cy%3D%22-0.595%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.731%22%20cy%3D%22-0.325%22%20r%3D%220.2%22/%3E%3C/svg%3E") center / 100% 100% no-repeat; }
+  .med .cuerpo::before { content: ""; position: absolute; inset: 0; transform: translate(12px, 14px); background: #1E1A3C; }
+  .med .bola { position: relative; width: 100%; height: 100%; background: var(--tono); }
+  .med .bola img { position: absolute; left: 13%; top: 13%; width: 74%; height: 74%; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 5px #1E1A3C; }
+
+  .escena { background: #D3253C; }
+
+  .logo { position: absolute; left: 330px; top: 330px; width: 420px; height: 420px; transform-origin: 50% 8%; }
+  .nombre { position: absolute; left: 60px; right: 60px; top: 800px; text-align: center; font-size: 164px; line-height: .86; color: #FBF1E1; }
+  .cta { position: absolute; left: 70px; right: 70px; top: 1180px; display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    padding: 18px 18px 18px 56px; border-radius: 999px; background: #FFC53D; color: #1E1A3C; font-size: 50px; font-weight: 800; white-space: nowrap;
+    box-shadow: inset 0 0 0 5px #1E1A3C, 12px 14px 0 #1E1A3C; }
+  .cta .isla { width: 120px; height: 120px; border-radius: 99px; display: grid; place-items: center; background: rgba(30,26,60,.14); flex: none; }
+  .cta .isla svg { width: 64px; height: 64px; }
+  .bajada { position: absolute; left: 60px; right: 60px; top: 1420px; text-align: center; font-size: 50px; color: #FBF1E1; }
+
+</style>
+<div id="root" data-composition-id="s7-cierre" data-width="1080" data-height="1920">
+  <div class="escena">
+
+    <img class="logo" id="s7-logo" src="assets/sello-crema-sobre-oscuro.svg" alt="">
+    <div class="nombre disp"><span class="renglon"><span id="s7-n1">Elizabeth</span></span><span class="renglon"><span id="s7-n2">Creations</span></span></div>
+    <div class="cta" id="s7-cta"><span>Haz tu pedido por WhatsApp</span><span class="isla"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 20.5l1.3-4.6A8.5 8.5 0 1 1 8.2 19.3z"/><path d="M9 8.6c.2-.5.5-.6.8-.6h.5c.2 0 .4.1.5.4l.7 1.6c.1.2 0 .5-.1.7l-.5.6c-.1.2-.1.4 0 .6.6 1 1.4 1.8 2.4 2.4.2.1.4.1.6 0l.6-.5c.2-.2.5-.2.7-.1l1.6.7c.3.1.4.3.4.5v.5c0 .3-.1.6-.6.8-.6.3-1.6.5-3-.2a9 9 0 0 1-3.9-3.9c-.7-1.4-.5-2.4-.2-3z"/></svg></span></div>
+    <p class="bajada mano" id="s7-bajada">hecho a mano en La Chorrera</p>
+
+    <div class="grano"></div>
+  </div>
+</div>
+<script>
+  (function () {
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo(".escena", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.45, ease: "expo.out" }, 0);
+    
+    tl.fromTo("#s7-logo", { y: -700, rotation: 22 }, { y: 0, rotation: 22, duration: 0.6, ease: "power3.out" }, 0.2);
+    tl.to("#s7-logo", { rotation: -12, duration: 0.5, ease: "sine.inOut" }, 0.8);
+    tl.to("#s7-logo", { rotation: 6, duration: 0.45, ease: "sine.inOut" }, 1.3);
+    tl.to("#s7-logo", { rotation: 0, duration: 0.45, ease: "sine.out" }, 1.75);
+    tl.fromTo("#s7-n1", { yPercent: 110 }, { yPercent: 0, duration: 0.6, ease: "expo.out" }, 0.5);
+    tl.fromTo("#s7-n2", { yPercent: 110 }, { yPercent: 0, duration: 0.6, ease: "expo.out" }, 0.62);
+    tl.fromTo("#s7-cta", { y: 260, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "back.out(1.6)" }, 0.95);
+    // El botón se "toca" dos veces, como invitando (press-release-spring).
+    tl.to("#s7-cta", { scale: 0.95, duration: 0.1, ease: "power1.in", yoyo: true, repeat: 1 }, 1.9);
+    tl.to("#s7-cta", { scale: 0.95, duration: 0.1, ease: "power1.in", yoyo: true, repeat: 1 }, 2.6);
+    tl.fromTo("#s7-bajada", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 1.3);
+
+    window.__timelines["s7-cierre"] = tl;
+  })();
+</script>
+</template>
+</body>
+</html>

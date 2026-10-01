@@ -1,0 +1,10 @@
+{
+  "_nota": "El cordel del cierre: piezas de Erika (decorativas) y, en el medio, el gancho vacío del adorno que falta. Mismas unidades que tendedero.json.",
+  "adornos": [
+    { "p": 0.06, "largo": 9,   "tam": 7,   "foto": "adorno-cangrejito", "tono": "turquesa", "movil": true, "px": 0.12 },
+    { "p": 0.2,  "largo": 3.5, "tam": 6,   "foto": "adorno-arbol-blanco", "tono": "mango", "movil": false },
+    { "p": 0.5,  "largo": 3,   "tam": 8,   "falta": true, "tono": "crema", "movil": true, "px": 0.5 },
+    { "p": 0.8,  "largo": 4,   "tam": 6.5, "foto": "adorno-pececito", "tono": "hibisco", "movil": false },
+    { "p": 0.94, "largo": 10,  "tam": 7.5, "foto": "adorno-galleta-jengibre", "tono": "mango", "movil": true, "px": 0.88 }
+  ]
+}

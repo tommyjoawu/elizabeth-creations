@@ -1,0 +1,82 @@
+/* ============================================================================
+   LA PARED — fotos con cinta, en una grilla sin huecos
+   ========================================================================== */
+@layer components {
+  .e-pared {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: clamp(9rem, 42vw, 13rem);
+    grid-auto-flow: dense;
+    gap: 1rem;
+  }
+  @media (min-width: 1024px) {
+    .e-pared {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-auto-rows: clamp(12rem, 17vw, 16rem);
+      gap: 1.5rem;
+    }
+  }
+  .e-pared__baldosa--grande { grid-column: span 2; grid-row: span 2; }
+  .e-pared__baldosa--alta   { grid-row: span 2; }
+  .e-pared__baldosa--ancha  { grid-column: span 2; }
+
+  /* La foto y el enlace giran con `rotate`, que es su propia propiedad: la
+     aparición del <li> anima `transform` y los dos no se pisan. Sin giro en
+     el celular: torcidas y apretadas en dos columnas se tocan entre sí. */
+  .e-pared__foto,
+  .e-pared__enlace {
+    position: relative;
+    height: 100%;
+    border-radius: 1.1rem;
+    box-shadow: 0 0 0 1.5px #1E1A3C, 0.4rem 0.45rem 0 var(--tono), 0.4rem 0.45rem 0 1.5px #1E1A3C;
+    transition: rotate 0.8s var(--ease-rebote), scale 0.8s var(--ease-fluido);
+  }
+  @media (min-width: 768px) {
+    .e-pared__foto, .e-pared__enlace { rotate: var(--giro); }
+    @media (hover: hover) {
+      .e-pared__foto:hover, .e-pared__enlace:hover { rotate: 0deg; scale: 1.02; }
+    }
+  }
+  .e-pared__foto img,
+  .e-pared__foto video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    object-fit: cover;
+  }
+
+  /* La cinta: un pedazo translúcido del color de la baldosa, torcido, que
+     sobresale del borde de arriba, con las puntas rasgadas. El marco no
+     recorta (`overflow` visible) para que la cinta pueda salirse: la foto se
+     recorta sola, con el radio heredado en la <img>. */
+  .e-pared__foto::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: -0.75rem;
+    left: 50%;
+    width: 4.75rem;
+    height: 1.45rem;
+    margin-left: -2.4rem;
+    rotate: calc(var(--giro) * -3);
+    background: color-mix(in srgb, var(--tono) 75%, transparent);
+    clip-path: polygon(0 12%, 5% 0, 30% 5%, 62% 0, 95% 6%, 100% 0, 97% 50%, 100% 100%, 70% 94%, 35% 100%, 4% 93%, 0 100%, 3% 50%);
+  }
+
+  /* La baldosa que lleva a Instagram: añil, con la letra de la marca. */
+  .e-pared__enlace {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.95rem;
+    background: #1E1A3C;
+    color: #FBF1E1;
+    box-shadow: 0 0 0 1.5px #1E1A3C, 0.4rem 0.45rem 0 #FFC53D, 0.4rem 0.45rem 0 1.5px #1E1A3C;
+  }
+  .e-pared__enlace svg { color: #FFC53D; }
+  @media (min-width: 640px) { .e-pared__enlace { gap: 0.75rem; padding: 1.25rem; } }
+  .e-pared__enlace:focus-visible { outline-color: #1E1A3C; }
+}

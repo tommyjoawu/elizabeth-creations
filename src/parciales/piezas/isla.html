@@ -1,0 +1,83 @@
+{{!--
+  La isla: la navegación.
+
+  Flota separada del borde y se esconde al bajar la página, para volver en
+  cuanto se sube un poco (controlador `isla`; sin JavaScript se queda a la
+  vista, que es peor sólo en estética).
+
+  En el celular la navegación es un <details>, igual que en la v2 y por la
+  misma razón: el menú tiene que abrir aunque el bundle no cargue.
+--}}
+<header class="pointer-events-none fixed inset-x-0 top-0 z-isla flex justify-center px-3 pt-3 sm:px-5 sm:pt-5">
+  <div class="e-isla pointer-events-auto flex w-full max-w-5xl items-center justify-between gap-2 p-1.5 lg:w-max lg:gap-9"
+       data-controller="isla" data-action="focusin->isla#mostrar">
+    <a href="#principal" class="group flex min-w-0 items-center gap-3 rounded-full py-0.5 pr-2 pl-0.5"
+       aria-label="{{marca.nombre}} — {{marca.bajada}}, inicio">
+      {{!-- El sello: la estrella de fieltro de Elizabeth (piezas/logo, una
+          propuesta). Es la única pieza de color de la isla, y al pasar el
+          puntero se mece desde su lazo. --}}
+      <span class="e-sello grid size-11 shrink-0 place-items-center text-anil" aria-hidden="true">
+        {{> piezas/logo clase="size-11"}}
+      </span>
+      <span class="flex min-w-0 flex-col leading-none">
+        <span class="truncate font-display text-[1.2rem] leading-none sm:text-[1.3rem]">{{marca.nombre}}</span>
+        <span class="mt-1 truncate text-[0.74rem] font-semibold text-tenue">Hecho a mano en {{marca.ciudad}}</span>
+      </span>
+    </a>
+
+    <nav class="hidden items-center gap-7 lg:flex" aria-label="Secciones">
+      {{#each navegacion}}
+        <a href="{{this.ancla}}" class="text-[0.95rem] font-semibold text-texto/90 transition-colors duration-300 hover:text-texto">{{this.texto}}</a>
+      {{/each}}
+    </nav>
+
+    <div class="flex shrink-0 items-center gap-1.5">
+      {{!-- En el celular el botón no cabe junto al nombre, y la píldora fija de
+          abajo (`piezas/pildora`) ya lleva a WhatsApp. --}}
+      {{> piezas/boton texto="Haz tu pedido" href=(whatsapp) glifo="whatsapp" chico=true externo=true
+                       clase="hidden sm:inline-flex"}}
+
+      <details class="e-menu lg:hidden" data-isla-target="menu" data-action="toggle->isla#alternar">
+        <summary class="grid size-11 cursor-pointer list-none place-items-center rounded-full
+                        bg-anil/6 ring-1 ring-anil/15 transition-colors hover:bg-anil/12
+                        [&::-webkit-details-marker]:hidden">
+          <span class="sr-only">Menú</span>
+          <span class="e-hamburguesa" aria-hidden="true"><span></span><span></span></span>
+        </summary>
+
+        {{!-- `-z-10` dentro de la isla: el panel tapa la página entera pero queda
+            DEBAJO del botón de cerrar, que sigue siendo la isla. Opaco: con
+            transparencia el titular de atrás se lee como un fantasma entre
+            los enlaces. --}}
+        <div data-lenis-prevent class="e-menu__panel e-papel fixed inset-0 -z-10 flex-col justify-between overflow-y-auto
+                    px-6 pt-28 pb-10">
+          <nav aria-label="Secciones">
+            <ul class="space-y-1">
+              {{#each navegacion}}
+                <li class="e-menu__enlace" style="--i: {{@index}}">
+                  <a href="{{this.ancla}}" data-action="isla#cerrar"
+                     class="flex items-center gap-4 py-2 font-display text-[clamp(2.25rem,11vw,3.25rem)] leading-[1.05]">
+                    <span class="size-3 shrink-0 rounded-full" style="background: {{this.color}}" aria-hidden="true"></span>
+                    {{this.texto}}
+                  </a>
+                </li>
+              {{/each}}
+            </ul>
+          </nav>
+
+          <div class="e-menu__enlace mt-12 space-y-5" style="--i: {{navegacion.length}}">
+            {{> piezas/boton texto="Haz tu pedido por WhatsApp" href=(whatsapp) glifo="whatsapp" externo=true
+                             clase="w-full justify-between"}}
+            {{#unless (pendiente "instagram")}}
+            <p class="flex flex-wrap gap-x-6 gap-y-2 text-[0.95rem] font-semibold">
+              <a href="https://www.instagram.com/{{marca.instagram}}/" target="_blank" rel="noopener"
+                 class="inline-flex min-h-11 items-center gap-2">{{icono "instagram" clase="size-5"}}@{{marca.instagram}}</a>
+            </p>
+            {{/unless}}
+            <p class="text-[0.95rem] font-semibold">Pedidos de Navidad hasta el {{marca.politicas.fechaNavidad}}.</p>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+</header>

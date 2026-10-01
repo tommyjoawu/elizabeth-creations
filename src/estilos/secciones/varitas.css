@@ -1,0 +1,292 @@
+/* ============================================================================
+   LAS VARITAS — dos polaroids colgadas y las dos decisiones
+   ========================================================================== */
+@layer components {
+  /* ── Las polaroids ─────────────────────────────────────────────────────
+     Las fotos de Elizabeth son de celular, verticales y con la pared de
+     fondo: el marco blanco de polaroid las iguala y las vuelve objeto, una
+     foto revelada y pegada, no una captura. Una grilla de 12 encima de la
+     otra: la de la niña se monta sobre la esquina de la del video, más
+     abajo, como dos fotos pegadas a mano. */
+  .e-polaroids {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    padding-bottom: 3rem;
+  }
+  .e-polaroid {
+    position: relative;
+    grid-row: 1;
+    margin: 0;
+    padding: 0.65rem 0.65rem 0.65rem;
+    border-radius: 0.5rem;
+    background: #FFF9EF;
+    box-shadow: 0 0 0 1.5px #1E1A3C, 0.45rem 0.5rem 0 #1E1A3C;
+  }
+  .e-polaroid--video { grid-column: 1 / span 8; rotate: -3deg; padding-bottom: 2.6rem; }
+  .e-polaroid--foto  { grid-column: 6 / span 7; align-self: end; margin-bottom: -3rem; rotate: 4deg; z-index: 1; }
+  @media (min-width: 1024px) {
+    .e-polaroid--video { grid-column: 1 / span 7; }
+    .e-polaroid--foto  { grid-column: 6 / span 7; }
+  }
+
+  /* La cinta que la sostiene: la misma de la pared del taller. */
+  .e-polaroid::before {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    top: -0.8rem;
+    left: 50%;
+    width: 5rem;
+    height: 1.5rem;
+    margin-left: -2.5rem;
+    rotate: -4deg;
+    background: rgb(255 197 61 / 0.82);
+    clip-path: polygon(0 12%, 5% 0, 30% 5%, 62% 0, 95% 6%, 100% 0, 97% 50%, 100% 100%, 70% 94%, 35% 100%, 4% 93%, 0 100%, 3% 50%);
+  }
+  .e-polaroid--foto::before { background: rgb(18 165 160 / 0.75); rotate: 6deg; }
+
+  .e-polaroid__foto {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    border-radius: 0.2rem;
+    background: #E9E4EE;
+  }
+  .e-polaroid__foto img,
+  .e-polaroid__foto video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .e-polaroid__pie {
+    padding: 0.55rem 0.2rem 0.1rem;
+    font-size: clamp(1.05rem, 2.6vw, 1.35rem);
+    line-height: 1.1;
+    text-align: center;
+    color: #1E1A3C;
+  }
+
+  /* Al entrar en pantalla (lo marca `revela`, una sola vez) cada polaroid
+     cae desde arriba y se asienta con un último vaivén, como una foto que
+     se pega a la pared: `translate` + `opacity`, en CSS (fuera del hilo
+     principal), con la curva de salida de la página. Después se mecen
+     apenas, cada una a su ritmo, desde la cinta: medio grado y nada más.
+     El vaivén anima `transform` y la caída `translate`/`rotate` aparte:
+     son propiedades distintas y no se pisan.
+     Sin JavaScript se ven quietas desde el principio; con reduced-motion,
+     también (ni caída ni vaivén). */
+  @media (prefers-reduced-motion: no-preference) {
+    .e-polaroid { transform-origin: 50% 0; animation: e-pegada 6s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate; }
+    .e-polaroid--foto { animation-duration: 7.4s; animation-delay: -2s; }
+
+    .js .e-polaroids:not([data-visible]) .e-polaroid { opacity: 0; translate: 0 -4rem; }
+    .js .e-polaroids[data-visible] .e-polaroid--video {
+      animation: e-asentar 1.1s var(--ease-salida) both, e-pegada 6s cubic-bezier(0.45, 0, 0.55, 1) 1.1s infinite alternate;
+    }
+    .js .e-polaroids[data-visible] .e-polaroid--foto {
+      animation: e-asentar 1.1s var(--ease-salida) 140ms both, e-pegada 7.4s cubic-bezier(0.45, 0, 0.55, 1) 1.24s infinite alternate;
+    }
+  }
+  @keyframes e-pegada { to { transform: rotate(0.8deg); } }
+  @keyframes e-asentar {
+    0%   { opacity: 0; translate: 0 -4rem; scale: 0.97; }
+    55%  { opacity: 1; translate: 0 0.35rem; scale: 1; }
+    100% { opacity: 1; translate: 0 0; scale: 1; }
+  }
+
+  /* ── El número chico de cada decisión ──────────────────────────────── */
+  .e-paso-chico {
+    display: inline-grid;
+    place-items: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    margin-right: 0.4rem;
+    border-radius: 999px;
+    background: #FFF9EF;
+    font-size: 1.1rem;
+    vertical-align: 0.15em;
+    box-shadow: 0 0 0 1.5px #1E1A3C, 0.15rem 0.18rem 0 #1E1A3C;
+  }
+
+  /* ── Luna o estrella ───────────────────────────────────────────────────
+     Dos fichas grandes, cada una un enlace a WhatsApp: la figura arriba, el
+     nombre y "Pedir". Al pasar el puntero la figura se mece como el
+     adorno que es; la ficha sube sobre su sombra, igual que los botones. */
+  .e-opcion {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+    height: 100%;
+    padding: 1rem 1rem 1.1rem;
+    border-radius: 1.25rem;
+    background: #FFF9EF;
+    color: #1E1A3C;
+    box-shadow: 0 0 0 1.5px #1E1A3C, 0.25rem 0.3rem 0 #1E1A3C;
+    /* Hover: 220 ms, se hace decenas de veces; tiene que sentirse inmediato. */
+    transition: translate 0.22s var(--ease-fluido), box-shadow 0.22s var(--ease-fluido);
+  }
+  /* La foto real de cada forma (luna y estrella, 01-10-2026), cuadrada y
+     encuadrada en la pieza, no en el palito. */
+  .e-opcion__foto {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 0.8rem;
+    background: #E9E4EE;
+    box-shadow: inset 0 0 0 1.5px #1E1A3C;
+    transform-origin: 50% 10%;
+  }
+  .e-opcion__foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+  .e-opcion__precio { font-family: var(--font-display); font-size: 1.3rem; line-height: 1; }
+  .e-opcion__precio span { font-family: var(--font-sans); font-size: 0.85rem; font-weight: 600; color: #3B3557; }
+  /* Escogida (con el controlador): fondo mango y el anillo de la pieza
+     elegida en la galería. */
+  .e-opcion[aria-pressed="true"] { background: #FFF1C9; box-shadow: 0 0 0 1.5px #1E1A3C, 0 0 0 4.5px #FFC53D, 0.25rem 0.3rem 0 #1E1A3C; }
+  .e-opcion[aria-pressed="true"] .e-opcion__accion { text-decoration: none; }
+  .e-opcion[aria-pressed="true"] .e-opcion__accion::before { content: "✓ "; }
+  .e-opcion__accion {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: auto;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 0.2em;
+  }
+  @media (hover: hover) {
+    .e-opcion:hover { translate: -2px -2px; box-shadow: 0 0 0 1.5px #1E1A3C, calc(0.25rem + 2px) calc(0.3rem + 2px) 0 #1E1A3C; }
+    @media (prefers-reduced-motion: no-preference) {
+      .e-opcion:hover .e-opcion__foto img { scale: 1.04; }
+      .e-opcion__foto img { transition: scale 0.5s var(--ease-salida); }
+    }
+  }
+  .e-opcion:active { translate: 0.15rem 0.2rem; box-shadow: 0 0 0 1.5px #1E1A3C, 0.05rem 0.05rem 0 #1E1A3C; }
+  .e-opcion:focus-visible { outline-offset: 4px; }
+
+  /* ── Las muestras de color ─────────────────────────────────────────────
+     Un retazo redondo de cada color con su nombre: el color solo, sin
+     nombre, no le sirve a quien no distingue bien los colores. */
+  .e-muestra {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.85rem 0.35rem 0.35rem;
+    border-radius: 999px;
+    background: #FFF9EF;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #1E1A3C;
+    box-shadow: inset 0 0 0 1.5px #1E1A3C;
+  }
+  .e-muestra::before {
+    content: "";
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 999px;
+    background: var(--muestra);
+    /* La puntada alrededor del retazo, como la del borde de cada pieza. */
+    box-shadow: inset 0 0 0 1.5px #1E1A3C;
+    outline: 1.5px dashed #1E1A3C;
+    outline-offset: -5px;
+  }
+
+  /* Con el controlador, la muestra es un botón que se escoge. Sin él está
+     `disabled` y se ve igual que antes: una muestra, no un control. */
+  button.e-muestra { font: inherit; font-size: 0.92rem; font-weight: 700; min-height: 2.75rem; }
+  button.e-muestra:not(:disabled) { cursor: pointer; }
+  button.e-muestra[aria-pressed="true"] { background: #1E1A3C; color: #FBF1E1; box-shadow: inset 0 0 0 1.5px #1E1A3C, 0 0 0 3px #FFC53D; }
+  button.e-muestra[aria-pressed="true"]::before { box-shadow: inset 0 0 0 1.5px #FBF1E1; outline-color: #FBF1E1; }
+  button.e-muestra:focus-visible { outline: 3px solid #1E1A3C; outline-offset: 2px; }
+  [data-variada] button.e-muestra, [data-variada] .e-opcion { opacity: 0.6; }
+
+  /* ── La tarifa ─────────────────────────────────────────────────────────
+     Tres renglones en una ficha crema, el precio a la derecha en
+     Caprasimo; la cuenta de la docena variada, entera y en texto. */
+  .e-tarifa {
+    max-width: 30rem;
+    padding: 0.4rem 1.1rem;
+    border-radius: 1.1rem;
+    background: #FFF9EF;
+    color: #1E1A3C;
+    box-shadow: 0 0 0 1.5px #1E1A3C, 0.25rem 0.3rem 0 #1E1A3C;
+  }
+  .e-tarifa__fila {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.15rem 1rem;
+    padding: 0.7rem 0;
+  }
+  .e-tarifa__fila + .e-tarifa__fila { border-top: 1.5px dashed rgb(30 26 60 / 0.3); }
+  .e-tarifa dt { flex: 1 1 12rem; font-weight: 700; }
+  .e-tarifa dt span { display: block; font-size: 0.9rem; font-weight: 500; color: #3B3557; }
+  .e-tarifa dd { margin: 0; font-family: var(--font-display); font-size: 1.35rem; line-height: 1.1; white-space: nowrap; }
+  .e-tarifa__cuenta { font-family: var(--font-sans); font-size: 0.95rem; font-weight: 600; color: #3B3557; }
+
+  /* ── El armado ─────────────────────────────────────────────────────── */
+  .e-armado { max-width: 30rem; }
+  .e-armado__fila { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .e-armado__rotulo { font-size: 0.8rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+  .e-contador {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    background: #FFF9EF;
+    box-shadow: inset 0 0 0 1.5px #1E1A3C;
+  }
+  .e-contador__boton {
+    width: 2.9rem;
+    height: 2.9rem;
+    border-radius: 999px;
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #1E1A3C;
+    cursor: pointer;
+  }
+  .e-contador__boton:active { scale: 0.92; }
+  .e-contador__valor { min-width: 2rem; font-family: var(--font-display); font-size: 1.35rem; text-align: center; }
+  .e-armado__cuenta {
+    padding: 0.75rem 1rem;
+    border-radius: 0.9rem;
+    background: rgb(255 249 239 / 0.7);
+    box-shadow: inset 0 0 0 1.5px #1E1A3C;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+  .e-armado__aviso { margin-top: 0.6rem; font-weight: 700; color: #8E1A2B; }
+  .e-armado__solo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 2.75rem;
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 0.22em;
+  }
+  .e-armado__pedido {
+    padding: 0.9rem 1rem;
+    border: 1.5px dashed #1E1A3C;
+    border-radius: 1rem;
+  }
+  .e-armado__renglon { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; font-weight: 600; line-height: 1.3; }
+  .e-armado__quitar {
+    flex: none;
+    min-height: 2.75rem;
+    padding: 0 0.6rem;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    cursor: pointer;
+  }
+  .e-armado__ver { font-weight: 700; text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 0.22em; text-decoration-color: #D3253C; }
+}

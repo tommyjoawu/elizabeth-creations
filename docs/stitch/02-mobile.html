@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Erika — Adornos hechos a mano</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#C8175F",
+            "cream": "#FFF4E4",
+            "plum": "#2B1238",
+            "mandarina": "#F4661B",
+            "girasol": "#FFC21F",
+            "turquesa": "#12A89E",
+            "hoja": "#3E9B45",
+            "ciruela": "#4A1D5C",
+            "background-light": "#FFF4E4",
+            "background-dark": "#2B1238",
+          },
+          fontFamily: {
+            "display": ['"Bricolage Grotesque"', 'system-ui', 'sans-serif'],
+            "sans": ['"DM Sans"', 'system-ui', 'sans-serif'],
+          },
+          boxShadow: {
+            'folk': '3px 3px 0px #2B1238',
+            'folk-sm': '2px 2px 0px #2B1238',
+            'folk-lg': '4px 4px 0px #2B1238',
+            'folk-white': '3px 3px 0px #FFF4E4',
+          }
+        },
+      },
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    }
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-[#2B1238]/5 text-[#2B1238] font-sans antialiased min-h-screen flex justify-center selection:bg-[#FFC21F] selection:text-[#2B1238] p-0 sm:py-8">
+
+  <!-- Mobile Screen Container: exactly 390px native viewport canvas -->
+  <main class="w-full max-w-[390px] min-h-screen bg-[#FFF4E4] flex flex-col relative overflow-hidden shadow-2xl border-x-2 border-[#2B1238]/15">
+
+    <!-- 1. COMPACT HEADER -->
+    <header class="sticky top-0 z-40 bg-[#FFF4E4]/95 backdrop-blur-sm px-5 py-3 border-b-2 border-[#2B1238] flex items-center justify-between">
+      <div class="flex flex-col">
+        <span class="font-display font-extrabold text-[26px] tracking-tight leading-none text-[#2B1238]">Erika</span>
+        <span class="text-[12px] font-medium tracking-tight text-[#2B1238]/80 mt-0.5">Adornos hechos a mano</span>
+      </div>
+      <div class="flex items-center gap-2.5">
+        <a href="https://wa.me/" class="bg-[#C8175F] text-[#FFF4E4] text-[13px] font-bold px-3.5 py-1.5 rounded-full border-2 border-[#2B1238] shadow-folk-sm hover:-translate-y-0.5 active:translate-y-0 active:shadow-none transition-all flex items-center gap-1">
+          <span>WhatsApp</span>
+        </a>
+        <button aria-label="Menú" class="w-9 h-9 rounded-full bg-[#FFF4E4] border-2 border-[#2B1238] flex items-center justify-center text-[#2B1238] shadow-folk-sm active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all">
+          <span class="material-symbols-outlined text-[20px]">menu</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- 2. HERO SECTION -->
+    <section class="px-5 pt-6 pb-6 relative flex flex-col">
+      <!-- Folk Confetti / Floating Elements -->
+      <svg class="absolute top-4 right-5 w-6 h-6 text-[#F4661B]" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 0L14.2 8.5L22.5 6L16.5 12L22.5 18L14.2 15.5L12 24L9.8 15.5L1.5 18L7.5 12L1.5 6L9.8 8.5L12 0Z"/>
+      </svg>
+      <div class="absolute top-28 left-3 w-3 h-3 rounded-full bg-[#12A89E] border border-[#2B1238]"></div>
+
+      <!-- Headline -->
+      <h1 class="font-display font-extrabold text-[44px] leading-[1.05] tracking-tight text-[#2B1238] text-left pr-2">
+        Adornos hechos a mano para llenar tu casa de 
+        <span class="inline-block relative ml-1 transform -rotate-2 bg-[#FFC21F] text-[#2B1238] px-3 py-0.5 rounded-xl border-2 border-[#2B1238] shadow-folk-sm">
+          color
+        </span>
+      </h1>
+
+      <!-- Body Copy (17px DM Sans) -->
+      <p class="mt-4 text-[17px] leading-relaxed text-[#2B1238] font-normal">
+        Cada pieza sale de mi mesa de trabajo en Panamá: pintada, cosida y armada a mano, una por una.
+      </p>
+
+      <!-- Primary Action Buttons -->
+      <div class="mt-5 flex flex-col gap-3">
+        <a href="https://wa.me/" class="w-full h-[56px] bg-[#C8175F] text-[#FFF4E4] font-display font-bold text-lg rounded-full border-2 border-[#2B1238] shadow-folk flex items-center justify-center gap-2 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all">
+          <span>Pedir por WhatsApp →</span>
+        </a>
+        <a href="#galeria" class="text-center font-bold text-[15px] text-[#2B1238] underline underline-offset-4 decoration-2 decoration-[#C8175F] hover:text-[#C8175F] transition-colors py-1">
+          Ver en Instagram →
+        </a>
+      </div>
+
+      <!-- Hero Visual with Arch and Stickers -->
+      <div class="mt-6 relative w-full flex justify-center items-center pb-2">
+        <!-- Turquesa organic blob backdrop -->
+        <div class="absolute -top-3 -right-2 w-64 h-72 bg-[#12A89E] rounded-[45%_55%_65%_35%/40%_45%_55%_60%] border-2 border-[#2B1238] transform rotate-3"></div>
+
+        <!-- Arch-framed Main Photo -->
+        <div class="relative w-full h-[340px] rounded-t-[150px] rounded-b-2xl overflow-hidden border-2 border-[#2B1238] shadow-folk bg-[#FFF4E4] z-10">
+          <img src="https://lh3.googleusercontent.com/aida/AEtjO1UqxcirEwRt3fXvuXlgtpvyPEL9xCUd82h5TOnnD12zkLVSgKgUTiblPmJZQS6DDLdPgjmcIFSLalmXrjWYLhz8uQjHFkIMZtZfgoQHuXOpmV9Fv21b-giG3M-q4cYrjXYKvnYmo86FNSRyKDVYeC5Z_VfJJdmPOlUjBAsnP-l3HJZaqsr8SEhH0G3URZ3SPL8jyQ_V_KCIM0BU09Hva9Yb2Y5xrhF9qMfTwrcwRcAHu74IRVuIqCwkscQ" alt="Adornos festivos hechos a mano colgando de hilos naturales" class="w-full h-full object-cover"/>
+        </div>
+
+        <!-- Floating Decorative Confetti around Arch -->
+        <div class="absolute -top-3 left-2 z-20 w-8 h-8 text-[#FFC21F] transform -rotate-12">
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="#2B1238" stroke-width="1.5">
+            <path d="M12 2C13.5 6 15 8 19 9.5C15 11 13.5 13 12 17C10.5 13 9 11 5 9.5C9 8 10.5 6 12 2Z"/>
+          </svg>
+        </div>
+        <div class="absolute bottom-16 -left-2 z-20 text-[#F4661B]">
+          <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+            <circle cx="10" cy="10" r="8" fill="#F4661B" stroke="#2B1238" stroke-width="1.5"/>
+            <circle cx="10" cy="10" r="3" fill="#FFF4E4"/>
+          </svg>
+        </div>
+
+        <!-- Bottom right rotated round badge -->
+        <div class="absolute -bottom-3 -right-1 z-20 bg-[#FFC21F] border-2 border-[#2B1238] shadow-folk rounded-full px-4 py-2.5 transform rotate-6 flex items-center justify-center">
+          <span class="font-display font-extrabold text-[12px] text-[#2B1238] tracking-tight leading-none text-center">
+            ★ Hecho a mano<br/>en Panamá
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. SCALLOPED EDGE TRANSITION -->
+    <div class="w-full overflow-hidden leading-none z-20 pt-2">
+      <svg class="w-full h-5 text-[#FFF4E4]" viewBox="0 0 390 16" fill="currentColor" preserveAspectRatio="none">
+        <path d="M0,0 Q13,16 26,0 Q39,16 52,0 Q65,16 78,0 Q91,16 104,0 Q117,16 130,0 Q143,16 156,0 Q169,16 182,0 Q195,16 208,0 Q221,16 234,0 Q247,16 260,0 Q273,16 286,0 Q299,16 312,0 Q325,16 338,0 Q351,16 364,0 Q377,16 390,0 L390,16 L0,16 Z" fill="#FFF4E4"/>
+      </svg>
+    </div>
+
+    <!-- 3. HORIZONTAL CAROUSEL: "ENCUENTRA TU PIEZA" -->
+    <section class="pt-2 pb-8 bg-[#FFF4E4] relative" id="galeria">
+      <!-- Section Title Header -->
+      <div class="px-5 mb-5">
+        <h2 class="font-display font-extrabold text-[32px] tracking-tight text-[#2B1238] leading-tight">
+          Encuentra tu pieza
+        </h2>
+        <p class="text-[16px] text-[#2B1238] mt-1.5 leading-snug">
+          Explora las técnicas y materiales que trabajamos en el taller.
+        </p>
+      </div>
+
+      <!-- Rope Wire at Top of Cards with knot details -->
+      <div class="relative w-full h-3 mb-1 px-4">
+        <div class="w-full h-[2px] bg-[#2B1238] relative">
+          <!-- Rope knot dots -->
+          <div class="absolute left-8 -top-1 w-2.5 h-2.5 rounded-full bg-[#F4661B] border border-[#2B1238]"></div>
+          <div class="absolute left-44 -top-1 w-2.5 h-2.5 rounded-full bg-[#12A89E] border border-[#2B1238]"></div>
+          <div class="absolute left-80 -top-1 w-2.5 h-2.5 rounded-full bg-[#FFC21F] border border-[#2B1238]"></div>
+        </div>
+      </div>
+
+      <!-- Horizontal Swiping Cards Container (Peeking next card) -->
+      <div class="flex overflow-x-auto snap-x snap-mandatory gap-4 px-5 pt-3 pb-5 hide-scrollbar">
+
+        <!-- Card 1: Colgantes de fieltro (Mandarina) -->
+        <div class="snap-center shrink-0 w-[240px] bg-[#F4661B] rounded-2xl border-2 border-[#2B1238] shadow-folk p-3.5 flex flex-col transform -rotate-1.5 relative">
+          <!-- Hanging string from rope -->
+          <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-[2px] h-4 bg-[#2B1238]"></div>
+          
+          <div class="w-full h-[180px] rounded-t-[70px] rounded-b-xl overflow-hidden border-2 border-[#2B1238] bg-[#FFF4E4]">
+            <img src="https://lh3.googleusercontent.com/aida/AEtjO1Xz2Q1E6MU3iEwLllJa5R4vwBcTvwKLmVJYbwjEzCiprLJx_u5X2qMoAx9fQgT2uF83CuK7DGaP-yKDMBApTNf-_DGVSD_GbQ5DguOlH4gIjJYzvDc3eEzyJgiEswwFNpjni4Z-opthuIbJQhQyQVBUmo1TuvbFCYVrNOqgkDmMODDDNN_3hQDWCKtCacPBmNtjoy1MZwBosC5t_yJhpdbIAVWyQTCt45TmZoZAO5sgpvhbzeamtdQqbgA" alt="Colgantes de fieltro hechos a mano" class="w-full h-full object-cover"/>
+          </div>
+          <div class="mt-3 flex flex-col">
+            <h3 class="font-display font-extrabold text-[20px] text-[#2B1238] leading-tight">Colgantes de fieltro</h3>
+            <p class="text-[13px] text-[#2B1238] font-medium mt-1 leading-snug">Bordados a mano con hilos multicolores y detalles en relieve.</p>
+            <div class="mt-3 self-start bg-[#FFF4E4] text-[#2B1238] text-[11px] font-bold px-3 py-1 rounded-full border border-[#2B1238]">
+              Lana y fieltro
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Esferas pintadas (Turquesa) -->
+        <div class="snap-center shrink-0 w-[240px] bg-[#12A89E] rounded-2xl border-2 border-[#2B1238] shadow-folk p-3.5 flex flex-col transform rotate-1 relative">
+          <!-- Hanging string from rope -->
+          <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-[2px] h-4 bg-[#2B1238]"></div>
+
+          <div class="w-full h-[180px] rounded-t-[70px] rounded-b-xl overflow-hidden border-2 border-[#2B1238] bg-[#FFF4E4]">
+            <img src="https://lh3.googleusercontent.com/aida/AEtjO1U6udJLUXN0Coz2yCseSQ43ilAt5a3Jk1lzKRC2rQT1GddZSVBkauA1eGCe9bJhDOkfIW0VpGudu67i2bZ2_JrEHXIAfljVTVgbCbWUPtKTRxNx4SX_c37dAueNa7gdtq10NmNRXO5637V2xwPtH5rm1X1b27EeuBQ_WILsePHd5UvCz19dt0bf8RpMzR2O69PUIoZqIymnGGZO9tt42oBHSEsPnTs9zJgxgZFInDmxWUIHi9riVVkhBII" alt="Esferas de madera pintadas a mano" class="w-full h-full object-cover"/>
+          </div>
+          <div class="mt-3 flex flex-col">
+            <h3 class="font-display font-extrabold text-[20px] text-[#2B1238] leading-tight">Esferas pintadas</h3>
+            <p class="text-[13px] text-[#2B1238] font-medium mt-1 leading-snug">Madera de fuentes sostenibles con pintura acrílica y barniz protector.</p>
+            <div class="mt-3 self-start bg-[#FFF4E4] text-[#2B1238] text-[11px] font-bold px-3 py-1 rounded-full border border-[#2B1238]">
+              Madera tallada
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Guirnaldas (Girasol) -->
+        <div class="snap-center shrink-0 w-[240px] bg-[#FFC21F] rounded-2xl border-2 border-[#2B1238] shadow-folk p-3.5 flex flex-col transform -rotate-2 relative">
+          <!-- Hanging string from rope -->
+          <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-[2px] h-4 bg-[#2B1238]"></div>
+
+          <div class="w-full h-[180px] rounded-t-[70px] rounded-b-xl overflow-hidden border-2 border-[#2B1238] bg-[#FFF4E4]">
+            <img src="https://lh3.googleusercontent.com/aida/AEtjO1UqxcirEwRt3fXvuXlgtpvyPEL9xCUd82h5TOnnD12zkLVSgKgUTiblPmJZQS6DDLdPgjmcIFSLalmXrjWYLhz8uQjHFkIMZtZfgoQHuXOpmV9Fv21b-giG3M-q4cYrjXYKvnYmo86FNSRyKDVYeC5Z_VfJJdmPOlUjBAsnP-l3HJZaqsr8SEhH0G3URZ3SPL8jyQ_V_KCIM0BU09Hva9Yb2Y5xrhF9qMfTwrcwRcAHu74IRVuIqCwkscQ" alt="Guirnaldas artesanales de pompones" class="w-full h-full object-cover"/>
+          </div>
+          <div class="mt-3 flex flex-col">
+            <h3 class="font-display font-extrabold text-[20px] text-[#2B1238] leading-tight">Guirnaldas</h3>
+            <p class="text-[13px] text-[#2B1238] font-medium mt-1 leading-snug">Tiras de pompones, borlas y figuras colgantes para puertas y paredes.</p>
+            <div class="mt-3 self-start bg-[#FFF4E4] text-[#2B1238] text-[11px] font-bold px-3 py-1 rounded-full border border-[#2B1238]">
+              Hilos y borlas
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4: Móviles (Fucsia suave con texto tinta) -->
+        <div class="snap-center shrink-0 w-[240px] bg-[#FFD7E5] rounded-2xl border-2 border-[#2B1238] shadow-folk p-3.5 flex flex-col transform rotate-1.5 relative">
+          <!-- Hanging string from rope -->
+          <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-[2px] h-4 bg-[#2B1238]"></div>
+
+          <div class="w-full h-[180px] rounded-t-[70px] rounded-b-xl overflow-hidden border-2 border-[#2B1238] bg-[#FFF4E4]">
+            <img src="https://lh3.googleusercontent.com/aida/AEtjO1W7-iGb4Tf4vbAvViUFcZJ-BpHSjOLGsG-dHlZQxl46T_g9v6meEzsr9YFxod9oiDfQTPoTUxzEPO26ifPt607ogjH1Q64RdsQ0Z0o8GAVdd3CyrL0mU5KRk8-mCZG1yCNAH8Lp9PlkUd9jl_DUCzOKM5K-bJNFiX4DJn-3SLwJEQRLbdStUaw9e9fdzgPkfSBZcy8HE21I6Xziai0LpHX6EkJpS2rtMBoxu_82wAL_t6rxqL-HdoxnieS2" alt="Móviles decorativos colgantes" class="w-full h-full object-cover"/>
+          </div>
+          <div class="mt-3 flex flex-col">
+            <h3 class="font-display font-extrabold text-[20px] text-[#2B1238] leading-tight">Móviles</h3>
+            <p class="text-[13px] text-[#2B1238] font-medium mt-1 leading-snug">Estructuras ligeras con movimiento suave para cuartos y rincones de calma.</p>
+            <div class="mt-3 self-start bg-[#FFF4E4] text-[#2B1238] text-[11px] font-bold px-3 py-1 rounded-full border border-[#2B1238]">
+              Equilibrio y luz
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 5: Cerámica y papel (Hoja verde) -->
+        <div class="snap-center shrink-0 w-[240px] bg-[#3E9B45] rounded-2xl border-2 border-[#2B1238] shadow-folk p-3.5 flex flex-col transform -rotate-1 relative">
+          <!-- Hanging string from rope -->
+          <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-[2px] h-4 bg-[#2B1238]"></div>
+
+          <div class="w-full h-[180px] rounded-t-[70px] rounded-b-xl overflow-hidden border-2 border-[#2B1238] bg-[#FFF4E4]">
+            <img src="https://lh3.googleusercontent.com/aida/AEtjO1W7-iGb4Tf4vbAvViUFcZJ-BpHSjOLGsG-dHlZQxl46T_g9v6meEzsr9YFxod9oiDfQTPoTUxzEPO26ifPt607ogjH1Q64RdsQ0Z0o8GAVdd3CyrL0mU5KRk8-mCZG1yCNAH8Lp9PlkUd9jl_DUCzOKM5K-bJNFiX4DJn-3SLwJEQRLbdStUaw9e9fdzgPkfSBZcy8HE21I6Xziai0LpHX6EkJpS2rtMBoxu_82wAL_t6rxqL-HdoxnieS2" alt="Piezas en cerámica y papel picado" class="w-full h-full object-cover"/>
+          </div>
+          <div class="mt-3 flex flex-col">
+            <h3 class="font-display font-extrabold text-[20px] text-[#2B1238] leading-tight">Cerámica y papel</h3>
+            <p class="text-[13px] text-[#2B1238] font-medium mt-1 leading-snug">Pequeñas placas modeladas en barro horneado y detalles en fibras vegetales.</p>
+            <div class="mt-3 self-start bg-[#FFF4E4] text-[#2B1238] text-[11px] font-bold px-3 py-1 rounded-full border border-[#2B1238]">
+              Barro y fibras
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 4. SCALLOPED TRANSITION INTO DEEP CIRUELA BAND (#4A1D5C) -->
+    <div class="w-full overflow-hidden leading-none z-10 -mb-[1px]">
+      <svg class="w-full h-6 text-[#4A1D5C] block" viewBox="0 0 390 20" fill="currentColor" preserveAspectRatio="none">
+        <path d="M0,20 C10,4 25,4 35,20 C45,4 60,4 70,20 C80,4 95,4 105,20 C115,4 130,4 140,20 C150,4 165,4 175,20 C185,4 200,4 210,20 C220,4 235,4 245,20 C255,4 270,4 280,20 C290,4 305,4 315,20 C325,4 340,4 350,20 C360,4 375,4 390,20 L390,20 L0,20 Z"/>
+      </svg>
+    </div>
+
+    <!-- 4. BAND: "DEL HILO A TU ÁRBOL" (CIRUELA #4A1D5C) -->
+    <section class="bg-[#4A1D5C] text-[#FFF4E4] px-5 pt-3 pb-10 border-t-2 border-[#2B1238] relative">
+      <!-- Folk star accent in ciruela band -->
+      <div class="absolute top-4 right-5 text-[#FFC21F]">
+        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0L14.2 8.5L22.5 6L16.5 12L22.5 18L14.2 15.5L12 24L9.8 15.5L1.5 18L7.5 12L1.5 6L9.8 8.5L12 0Z"/>
+        </svg>
+      </div>
+
+      <h2 class="font-display font-extrabold text-[36px] leading-[1.08] tracking-tight text-[#FFF4E4] pr-6">
+        Del hilo a tu árbol
+      </h2>
+      <p class="mt-3 text-[16px] leading-relaxed text-[#FFF4E4]/90 font-normal">
+        No usamos máquinas industriales ni producciones masivas. En el taller, el tiempo se mide en puntadas, mezclas de pintura y saquitos de tela hechos con esmero.
+      </p>
+
+      <!-- Dual Overlapping Craft Imagery -->
+      <div class="mt-7 relative w-full h-[270px] flex items-center justify-center">
+        <!-- Arch photo: Hands painting wooden bauble (Behind, right) -->
+        <div class="absolute right-1 top-2 w-[185px] h-[220px] rounded-t-[90px] rounded-b-2xl overflow-hidden border-2 border-[#FFF4E4] shadow-folk-white z-10 bg-[#FFF4E4]">
+          <img src="https://lh3.googleusercontent.com/aida/AEtjO1U6udJLUXN0Coz2yCseSQ43ilAt5a3Jk1lzKRC2rQT1GddZSVBkauA1eGCe9bJhDOkfIW0VpGudu67i2bZ2_JrEHXIAfljVTVgbCbWUPtKTRxNx4SX_c37dAueNa7gdtq10NmNRXO5637V2xwPtH5rm1X1b27EeuBQ_WILsePHd5UvCz19dt0bf8RpMzR2O69PUIoZqIymnGGZO9tt42oBHSEsPnTs9zJgxgZFInDmxWUIHi9riVVkhBII" alt="Manos de artesana pintando esfera de madera con pincel fino" class="w-full h-full object-cover"/>
+        </div>
+
+        <!-- Circular photo: Hands sewing felt bird (Front, left overlapping) -->
+        <div class="absolute left-1 bottom-1 w-[165px] h-[165px] rounded-full overflow-hidden border-3 border-[#FFF4E4] shadow-folk-white z-20 bg-[#FFF4E4]">
+          <img src="https://lh3.googleusercontent.com/aida/AEtjO1Xz2Q1E6MU3iEwLllJa5R4vwBcTvwKLmVJYbwjEzCiprLJx_u5X2qMoAx9fQgT2uF83CuK7DGaP-yKDMBApTNf-_DGVSD_GbQ5DguOlH4gIjJYzvDc3eEzyJgiEswwFNpjni4Z-opthuIbJQhQyQVBUmo1TuvbFCYVrNOqgkDmMODDDNN_3hQDWCKtCacPBmNtjoy1MZwBosC5t_yJhpdbIAVWyQTCt45TmZoZAO5sgpvhbzeamtdQqbgA" alt="Manos cosiendo pajarito de fieltro con hilo y aguja" class="w-full h-full object-cover"/>
+        </div>
+
+        <!-- Tiny Folk Star accent badge -->
+        <div class="absolute top-0 left-6 z-30 bg-[#FFC21F] text-[#2B1238] w-11 h-11 rounded-full border-2 border-[#2B1238] shadow-folk-sm flex items-center justify-center font-display font-extrabold text-xs transform -rotate-12">
+          100%
+        </div>
+      </div>
+
+      <!-- 3 Compact Process Steps with Folk Shape Markers -->
+      <div class="mt-8 flex flex-col gap-5">
+        <!-- Step 1: Diseño -->
+        <div class="flex items-start gap-3.5">
+          <!-- Girasol diamond/star shape marker -->
+          <div class="w-10 h-10 shrink-0 bg-[#FFC21F] border-2 border-[#2B1238] shadow-folk-sm rounded-lg flex items-center justify-center transform rotate-6">
+            <svg class="w-5 h-5 text-[#2B1238]" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2L14.8 9.2L22 12L14.8 14.8L12 22L9.2 14.8L2 12L9.2 9.2L12 2Z"/>
+            </svg>
+          </div>
+          <div class="flex flex-col">
+            <h3 class="font-display font-bold text-[19px] text-[#FFF4E4] leading-snug">Diseño</h3>
+            <p class="text-[14px] text-[#FFF4E4]/85 leading-relaxed mt-0.5">
+              Bocetos sobre papel y paletas de color inspiradas en la flora y la tradición artesanal.
+            </p>
+          </div>
+        </div>
+
+        <!-- Step 2: Pinto y coso -->
+        <div class="flex items-start gap-3.5">
+          <!-- Turquesa circle marker -->
+          <div class="w-10 h-10 shrink-0 bg-[#12A89E] border-2 border-[#2B1238] shadow-folk-sm rounded-full flex items-center justify-center">
+            <svg class="w-5 h-5 text-[#FFF4E4]" fill="currentColor" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="6" fill="currentColor"/>
+              <circle cx="12" cy="12" r="2" fill="#2B1238"/>
+            </svg>
+          </div>
+          <div class="flex flex-col">
+            <h3 class="font-display font-bold text-[19px] text-[#FFF4E4] leading-snug">Pinto y coso</h3>
+            <p class="text-[14px] text-[#FFF4E4]/85 leading-relaxed mt-0.5">
+              Maderas lijadas, pinceladas a mano alzada y bordados punto a punto con hilos de lana.
+            </p>
+          </div>
+        </div>
+
+        <!-- Step 3: Empaco con cariño -->
+        <div class="flex items-start gap-3.5">
+          <!-- Fucsia petal shape marker -->
+          <div class="w-10 h-10 shrink-0 bg-[#C8175F] border-2 border-[#2B1238] shadow-folk-sm rounded-2xl flex items-center justify-center transform -rotate-6">
+            <svg class="w-5 h-5 text-[#FFF4E4]" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+          </div>
+          <div class="flex flex-col">
+            <h3 class="font-display font-bold text-[19px] text-[#FFF4E4] leading-snug">Empaco con cariño</h3>
+            <p class="text-[14px] text-[#FFF4E4]/85 leading-relaxed mt-0.5">
+              Cada adorno viaja protegido en saquitos de lienzo listos para colgar o regalar.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Workshop Floating Action Box -->
+      <div class="mt-9 p-4 rounded-xl bg-[#FFF4E4] text-[#2B1238] border-2 border-[#2B1238] shadow-folk flex items-center justify-between">
+        <div>
+          <p class="font-display font-bold text-[15px] leading-tight">¿Tienes un encargo especial?</p>
+          <p class="text-[12px] text-[#2B1238]/80 mt-0.5">Personalizamos nombres y colores</p>
+        </div>
+        <a href="https://wa.me/" class="shrink-0 bg-[#C8175F] text-[#FFF4E4] text-xs font-bold px-3 py-2 rounded-lg border border-[#2B1238] shadow-folk-sm active:translate-x-0.5 active:translate-y-0.5 transition-all">
+          Escríbeme
+        </a>
+      </div>
+    </section>
+
+    <!-- FOOTER NOTE -->
+    <footer class="bg-[#FFF4E4] border-t-2 border-[#2B1238] py-6 px-5 flex flex-col items-center justify-center text-center">
+      <span class="font-display font-extrabold text-[20px] text-[#2B1238]">Erika</span>
+      <p class="text-[13px] text-[#2B1238]/70 mt-1">
+        Taller artesanal · Hecho con amor en Panamá
+      </p>
+      <div class="flex items-center gap-4 mt-3 text-xs font-bold text-[#2B1238]">
+        <a href="https://wa.me/" class="underline decoration-[#C8175F]">WhatsApp</a>
+        <span>·</span>
+        <a href="#galeria" class="underline decoration-[#FFC21F]">Colección</a>
+        <span>·</span>
+        <a href="#" class="underline decoration-[#12A89E]">Instagram</a>
+      </div>
+    </footer>
+
+  </main>
+</body>
+</html>

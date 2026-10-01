@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="es-PA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Elizabeth Creations · Hilo y puntada</title>
+  <meta name="description" content="Adornos de fieltro cosidos a mano y decorados con bisutería en La Chorrera: arbolitos, estrellas, galletas de jengibre, figuras del mar y varitas mágicas. Pedidos por WhatsApp; para Navidad, hasta el 15 de noviembre.">
+  <meta name="theme-color" content="#FBF4E6">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M20 3 L25 15 L37.5 16 L28 24.5 L31 37 L20 30.5 L9 37 L12 24.5 L2.5 16 L15 15 Z' fill='%23FFC53D' stroke='%23E0A21A' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <!-- Marca la página como "con JS" antes de pintar: los estados iniciales de
+       las animaciones sólo existen si el JS va a poder terminarlas. -->
+  <script>document.documentElement.classList.add("js")</script>
+  <link rel="stylesheet" href="./hilo.css">
+  <script type="module" src="./hilo.js"></script>
+</head>
+<body>
+  <a class="saltar" href="#piezas">Saltar a las piezas</a>
+
+  <header class="cabecera">
+    <div class="ancho cabecera__fila">
+      <a class="marca" href="#inicio" aria-label="Elizabeth Creations, inicio">
+        <svg class="marca__estrella" viewBox="0 0 40 40" aria-hidden="true">
+          <path d="M20 3 L25 15 L37.5 16 L28 24.5 L31 37 L20 30.5 L9 37 L12 24.5 L2.5 16 L15 15 Z" fill="#FFC53D" stroke="#E0A21A" stroke-width="4" stroke-linejoin="round"/>
+          <path d="M20 8.5 L23.4 17.2 L32.4 18 L25.6 24 L27.6 32.8 L20 28.3 L12.4 32.8 L14.4 24 L7.6 18 L16.6 17.2 Z" fill="none" stroke="#7A4A12" stroke-width="1.4" stroke-dasharray="2.2 2" stroke-linejoin="round"/>
+        </svg>
+        <span>Elizabeth <em>Creations</em></span>
+      </a>
+      <a class="boton boton--chico" href="https://wa.me/50760000000?text=%C2%A1Hola!%20Vi%20la%20p%C3%A1gina%20de%20Elizabeth%20Creations%20y%20quiero%20hacer%20un%20pedido." rel="noopener" target="_blank">
+        <span>WhatsApp</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="mesa" id="inicio">
+    <!-- El hilo: un solo trazo que baja por toda la página. El JS lo dibuja
+         según dónde quedó cada sección; sin JS no hay hilo y no hace falta. -->
+    <svg class="hilo" aria-hidden="true" focusable="false"></svg>
+
+    <!-- ============ PORTADA ============ -->
+    <section class="portada" data-puntada="der">
+      <div class="ancho portada__grilla">
+        <div class="portada__texto">
+          <p class="nota-mano">Hecho a mano en La Chorrera, Panamá Oeste</p>
+          <h1 class="cosible portada__titulo">Adornos de fieltro cosidos a mano, puntada por puntada.</h1>
+          <p class="portada__bajada">
+            Arbolitos, estrellas, galletas de jengibre, criaturas del mar y varitas mágicas.
+            Cada pieza la corto, la coso y la decoro con bisutería yo misma, una por una.
+          </p>
+          <div class="acciones">
+            <a class="boton" href="https://wa.me/50760000000?text=%C2%A1Hola!%20Vi%20la%20p%C3%A1gina%20de%20Elizabeth%20Creations%20y%20quiero%20hacer%20un%20pedido." rel="noopener" target="_blank">
+              <span>Pedir por WhatsApp</span>
+            </a>
+            <a class="enlace-mano" href="#piezas">Ver las piezas</a>
+          </div>
+        </div>
+
+        <div class="portada__collage" data-ojal>
+          <figure class="polaroid polaroid--grande" style="--giro:-4deg">
+            <span class="cinta cinta--lila" aria-hidden="true"></span>
+            <picture>
+              <source type="image/avif" srcset="/src/assets/img/adorno-estrella-amarilla-400.avif 400w, /src/assets/img/adorno-estrella-amarilla-800.avif 800w" sizes="(min-width: 900px) 360px, 62vw">
+              <source type="image/webp" srcset="/src/assets/img/adorno-estrella-amarilla-400.webp 400w, /src/assets/img/adorno-estrella-amarilla-800.webp 800w" sizes="(min-width: 900px) 360px, 62vw">
+              <img src="/src/assets/img/adorno-estrella-amarilla-800.jpg" width="800" height="800" alt="Estrella de fieltro amarillo, inflada, con lentejuelas verdes, perlitas y canutillos." fetchpriority="high">
+            </picture>
+            <figcaption>Estrella amarilla</figcaption>
+          </figure>
+          <figure class="polaroid polaroid--chica polaroid--a" style="--giro:7deg">
+            <span class="cinta cinta--rosa" aria-hidden="true"></span>
+            <picture>
+              <source type="image/avif" srcset="/src/assets/img/adorno-sirenita-400.avif 400w" sizes="200px">
+              <source type="image/webp" srcset="/src/assets/img/adorno-sirenita-400.webp 400w" sizes="200px">
+              <img src="/src/assets/img/adorno-sirenita-400.jpg" width="400" height="400" alt="Sirenita de fieltro de pelo rojo con cola verde de lentejuelas.">
+            </picture>
+            <figcaption>Sirenita</figcaption>
+          </figure>
+          <figure class="polaroid polaroid--chica polaroid--b" style="--giro:-8deg">
+            <span class="cinta cinta--menta" aria-hidden="true"></span>
+            <picture>
+              <source type="image/avif" srcset="/src/assets/img/adorno-arbol-verde-400.avif 400w" sizes="200px">
+              <source type="image/webp" srcset="/src/assets/img/adorno-arbol-verde-400.webp 400w" sizes="200px">
+              <img src="/src/assets/img/adorno-arbol-verde-400.jpg" width="400" height="400" alt="Arbolito de fieltro verde con estrella amarilla y lentejuelas de colores.">
+            </picture>
+            <figcaption>Arbolito</figcaption>
+          </figure>
+          <p class="etiqueta-navidad">
+            <span class="etiqueta-navidad__ojal" aria-hidden="true"></span>
+            <strong>Navidad</strong> pedidos hasta el <b>15 de noviembre</b>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PIEZAS ============ -->
+    <section class="seccion piezas" id="piezas" data-puntada="izq">
+      <div class="ancho">
+        <header class="encabezado">
+          <h2 class="cosible">Lo que sale de mi mesa</h2>
+          <p>Todo es fieltro cosido a mano, con lentejuelas, perlitas, canutillos y piedritas. Toca <b>Pedir esta</b> y el mensaje de WhatsApp ya lleva el nombre de la pieza.</p>
+        </header>
+
+        <h3 class="grupo"><span>Navidad</span></h3>
+        <ul class="album" role="list">
+          <li class="polaroid" style="--giro:-3deg" data-ojal>
+            <span class="cinta cinta--amarilla" aria-hidden="true"></span>
+            <picture>
+              <source type="image/avif" srcset="/src/assets/img/adorno-arbol-verde-400.avif 400w, /src/assets/img/adorno-arbol-verde-800.avif 800w" sizes="(min-width: 900px) 260px, 44vw">
+              <source type="image/webp" srcset="/src/assets/img/adorno-arbol-verde-400.webp 400w, /src/assets/img/adorno-arbol-verde-800.webp 800w" sizes="(min-width: 900px) 260px, 44vw">
+              <img src="/src/assets/img/adorno-arbol-verde-400.jpg" width="400" height="400" loading="lazy" alt="Arbolito de fieltro verde con estrella amarilla en la punta, lentejuelas y perlitas de colores.">
+            </picture>
+            <p class="polaroid__pie">Arbolito verde</p>
+            <a class="pedir" href="https://wa.me/50760000000?text=%C2%A1Hola!%20Vi%20%C2%ABArbolito%20verde%C2%BB%20en%20la%20p%C3%A1gina%20de%20Elizabeth%20Creations%20y%20me%20gustar%C3%ADa%20pedirlo.%20%C2%BFMe%20cuentas%20c%C3%B3mo%3F" rel="noopener" target="_blank">Pedir esta<span class="sr"> pieza: Arbolito verde</span></a>
+          </li>
+          <li class="polaroid" style="--giro:4deg">
+            <span class="cinta cinta--rosa" aria-hidden="true"></span>
+            <picture>
+              <source type="image/avif" srcset="/src/assets/img/adorno-arbol-blanco-400.avif 400w, /src/assets/img/adorno-arbol-blanco-800.avif 800w" sizes="(min-width: 900px) 260px, 44vw">
+              <source type="image/webp" srcset="/src/assets/img/adorno-arbol-blanco-400.webp 400w, /src/assets/img/adorno-arbol-blanco-800.webp 800w" sizes="(min-width: 900px) 260px, 44vw">
+              <img src="/src/assets/img/adorno-arbol-blanco-400.jpg" width="400" height="400" loading="lazy" alt="Arbolito de fieltro blanco con estrella rosada, lentejuelas de colores y cascabeles dorados.">
+            </picture>
+            <p class="polaroid__pie">Arbolito de nieve</p>
+            <a class="pedir" href="https://wa.me/50760000000?text=%C2%A1Hola!%20Vi%20%C2%ABArbolito%20de%20nieve%C2%BB%20en%20la%20p%C3%A1gina%20de%20Elizabeth%20Creations%20y%20me%20gustar%C3%ADa%20pedirlo.%20%C2%BFMe%20cuentas%20c%C3%B3mo%3F" rel="noopener" target="_blank">Pedir esta<span class="sr"> pieza: Arbolito de nieve</span></a>
+          </li>
+          <li class="polaroid" style="--giro:-5deg">
+            <span class="cinta cinta--menta" aria-hidden="true"></span>
+            <picture>
+              <source type="image/avif" srcset="/src/assets/img/adorno-galleta-jengibre-400.avif 400w, /src/assets/img/adorno-galleta-jengibre-800.avif 800w" sizes="(min-width: 900px) 260px, 44vw">
+              <source type="image/webp" srcset="/src/assets/img/adorno-galleta-jengibre-400.webp 400w, /src/assets/img/adorno-galleta-jengibre-800.webp 800w" sizes="(min-width: 900px) 260px, 44vw">
+              <img src="/src/assets/img/adorno-galleta-jengibre-400.jpg" width="400" height="400" loading="lazy" alt="Galleta de jengibre de fieltro café con sonrisa bordada, botones de lentejuela y bordes blancos como glaseado.">
+            </picture>
+            <p class="polaroid__pie">Galleta de jengibre</p>
+            <a class="pedir" href="https://wa.me/50760000000?text=%C2%A1Hola!%20Vi%20%C2%ABGalleta%20de%20jengibre%C2%BB%20en%20la%20p%C3%A1gina%20de%20Elizabeth%20Creations%20y%20me%20gustar%C3%ADa%20pedirlo.%20%C2%BFMe%20cuentas%20c%C3%B3mo%3F" rel="noopener" target="_blank">Pedir esta<span class="sr"> pieza: Galleta de jengibre</span></a>
+          </li>
+          <li class="polaroid" style="--giro:3deg">
+            <span class="cinta cinta--lila" aria-hidden="true"></span>
+            <picture>
+              <source type="image/avif" srcset="/src/assets/img/adorno-estrella-blanca-400.avif 400w, /src/assets/img/adorno-estrella-blanca-800.avif 800w" sizes="(min-width: 900px) 260px, 44vw">
+              <source type="image/webp" srcset="/src/assets/img/adorno-estrella-blanca-400.webp 400w, /src/assets/img/adorno-estrella-blanca-800.webp 800w" sizes="(min-width: 900px) 260px, 44vw">
+              <img src="/src/assets/img/adorno-estrella-blanca-400.jpg" width="400" height="400" loading="lazy" alt="Estrella de fieltro blanco con una flor de lentejuelas al centro y canutillos de colores.">
+            </picture>
+            <p class="polaroid__pie">Estrella blanca</p>
+            <a class="pedir" href="https://wa.me/50760000000?text=%C2%A1Hola!%20Vi%20%C2%ABEstrella%20blanca%C2%BB%20en%20la%20p%C3%A1gina%20de%20Elizabeth%20Creations%20y%20me%20gustar%C3%ADa%20pedirlo.%20%C2%BFMe%20cuentas%20c%C3%B3mo%3F" rel="noopener" target="_blank">Pedir esta<span class="sr"> pieza: Estrella blanca</span></a>
+          </li>
+          <li class="polaroid" style="--giro:-2deg">
+            <span class="cinta cinta--rosa" aria-hidden="true"></span>
+            <picture>
+              <source type="image/avif" srcset="/src/assets/img/adorno-estrella-amarilla-400.avif 400w, /src/assets/img/adorno-estrella-amarilla-800.avif 800w" sizes="(min-width: 900px) 260px, 44vw">
+              <source type="image/webp" srcset="/src/assets/img/adorno-estrella-amarilla-400.webp 400w, /src/assets/img/adorno-estrella-amarilla-800.webp 800w" sizes="(min-width: 900px) 260px, 44vw">
+              <img src="/src/assets/img/adorno-estrella-amarilla-400.jpg" width="400" height="400" loading="lazy" alt="Estrella de fieltro amarillo, inflada y decorada con lentejuelas verdes y canutillos.">
+            </picture>
+            <p class="polaroid__pie">Estrella amarilla</p>
+            <a class="pedir" href="https://wa.me/50760000000?text=%C2%A1Hola!%20Vi%20%C2%ABEstrella%20amarilla%C2%BB%20en%20la%20p%C3%A1gina%20de%20Elizabeth%20Creations%20y%20me%20gustar%C3%ADa%20pedirlo.%20%C2%BFMe%20cuentas%20c%C3%B3mo%3F" rel="noopener" target="_blank">Pedir esta<span class="sr"> pieza: Estrella amarilla</span></a>
+          </li>
+          <li class="nota-papel" style="--giro:2deg">
+            <p>Para que te llegue a tiempo, los pedidos de Navidad los recibo <b>hasta el 15 de noviembre</b>.</p>
+          </li>
+        </ul>
+
+        <h3 class="grupo grupo--mar"><span>Bajo el mar</span></h3>
+        <ul class="album album--mar" role="list">
+          <li class="polaroid" style="--giro:3deg" data-ojal>
+            <span class="cinta cinta--menta" aria-hidden="true"></span>
+            <picture>
+              <source type="image/avif" srcset="/src/assets/img/adorno-sirenita-400.avif 400w, /src/assets/img/adorno-sirenita-800.avif 800w" sizes="(min-width: 900px) 260px, 44vw">
+              <source type="image/webp" srcset="/src/assets/img/adorno-sirenita-400.webp 400w, /src/assets/img/adorno-sirenita-800.webp 800w" sizes="(min-width: 900px) 260px, 44vw">
+              <img src="/src/assets/img/adorno-sirenita-400.jpg" width="400" height="400" loading="lazy" alt="Sirenita de fieltro de pelo rojo, con carita bordada y cola verde llena de lentejuelas.">
+            </picture>
+            <p class="polaroid__pie">Sirenita</p>
+            <a class="pedir" href="https://wa.me/50760000000?text=%C2%A1Hola!%20Vi%20%C2%ABSirenita%C2%BB%20en%20la%20p%C3%A1gina%20de%20Elizabeth%20Creations%20y%20me%20gustar%C3%ADa%20pedirlo.%20%C2%BFMe%20cuentas%20c%C3%B3mo%3F" rel="noopener" target="_blank">Pedir esta<span class="sr"> pieza: Sirenita</span></a>
+          </li>
+          <li class="polaroid" style="--giro:-4deg">
+            <span class="cinta cinta--amarilla" aria-hidden="true"></span>
+            <picture>
+              <source type="image/avif" srcset="/src/assets/img/adorno-pececito-400.avif 400w, /src/assets/img/adorno-pececito-800.avif 800w" sizes="(min-width: 900px) 260px, 44vw">
+              <source type="image/webp" srcset="/src/assets/img/adorno-pececito-400.webp 400w, /src/assets/img/adorno-pececito-800.webp 800w" sizes="(min-width: 900px) 260px, 44vw">
+              <img src="/src/assets/img/adorno-pececito-400.jpg" width="400" height="400" loading="lazy" alt="Pececito de fieltro amarillo con aletas turquesa y carita bordada.">
+            </picture>
+            <p class="polaroid__pie">Pececito</p>
+            <a class="pedir" href="https://wa.me/50760000000?text=%C2%A1Hola!%20Vi%20%C2%ABPececito%C2%BB%20en%20la%20p%C3%A1gina%20de%20Elizabeth%20Creations%20y%20me%20gustar%C3%ADa%20pedirlo.%20%C2%BFMe%20cuentas%20c%C3%B3mo%3F" rel="noopener" target="_blank">Pedir esta<span class="sr"> pieza: Pececito</span></a>
+          </li>
+          <li class="polaroid" style="--giro:5deg">
+            <span class="cinta cinta--lila" aria-hidden="true"></span>
+            <picture>
+              <source type="image/avif" srcset="/src/assets/img/adorno-cangrejito-400.avif 400w, /src/assets/img/adorno-cangrejito-800.avif 800w" sizes="(min-width: 900px) 260px, 44vw">
+              <source type="image/webp" srcset="/src/assets/img/adorno-cangrejito-400.webp 400w, /src/assets/img/adorno-cangrejito-800.webp 800w" sizes="(min-width: 900px) 260px, 44vw">
+              <img src="/src/assets/img/adorno-cangrejito-400.jpg" width="400" height="400" loading="lazy" alt="Cangrejito de fieltro rojo con barriga naranja, ojitos de perla y lentejuelas.">
+            </picture>
+            <p class="polaroid__pie">Cangrejito</p>
+            <a class="pedir" href="https://wa.me/50760000000?text=%C2%A1Hola!%20Vi%20%C2%ABCangrejito%C2%BB%20en%20la%20p%C3%A1gina%20de%20Elizabeth%20Creations%20y%20me%20gustar%C3%ADa%20pedirlo.%20%C2%BFMe%20cuentas%20c%C3%B3mo%3F" rel="noopener" target="_blank">Pedir esta<span class="sr"> pieza: Cangrejito</span></a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ TALLER ============ -->
+    <section class="seccion taller" id="taller" data-puntada="izq">
+      <div class="ancho taller__grilla">
+        <figure class="taller__video fieltro fieltro--menta" data-ojal>
+          <video autoplay muted loop playsinline preload="metadata" poster="/video/coleccion-fieltro-poster.webp" aria-label="Recorrido sobre la colección de fieltro: lentejuelas, perlitas y piedritas en cada pieza.">
+            <source src="/video/coleccion-fieltro.webm" type="video/webm">
+            <source src="/video/coleccion-fieltro.mp4" type="video/mp4">
+          </video>
+          <figcaption>La colección completa, recién terminada.</figcaption>
+        </figure>
+        <div class="taller__texto">
+          <h2 class="cosible">Así nace cada pieza</h2>
+          <p class="taller__historia">Elizabeth Creations es un emprendimiento hecho con mucho amor en La Chorrera. Cada pieza la corto, la coso y la decoro a mano, una por una, pensando en quien la va a colgar en su arbolito o la va a recibir de regalo.</p>
+          <ol class="taller__pasos">
+            <li><b>Corto el fieltro</b> a mano, parte por parte: el cuerpo, las aletas, la estrella de la punta.</li>
+            <li><b>Coso a mano</b> las dos caras con una puntada que se ve en el borde, y la relleno para que quede inflada.</li>
+            <li><b>Decoro con bisutería</b>: lentejuelas, perlitas, canutillos y piedritas. Por eso ninguna sale igual.</li>
+            <li><b>Le pongo su cinta</b> y queda lista para tu arbolito, tu puerta o para regalar.</li>
+          </ol>
+          <p class="firma">Erika</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ VARITAS ============ -->
+    <section class="seccion varitas" id="varitas" data-puntada="der">
+      <div class="ancho">
+        <header class="encabezado">
+          <h2 class="cosible">Arma tu varita mágica</h2>
+          <p>Las varitas son lo que más se personaliza: escoges si llevan <b>luna o estrella</b> y <b>el color que quieras</b>. La bisutería va como en la foto.</p>
+        </header>
+
+        <div class="taller-varita">
+          <div class="taller-varita__lienzo">
+            <svg class="varita" viewBox="0 0 240 420" role="img" aria-labelledby="varita-titulo">
+              <title id="varita-titulo">Tu varita</title>
+              <!-- palito de madera -->
+              <rect x="113" y="160" width="14" height="252" rx="7" fill="#D9AE74"/>
+              <rect x="117" y="168" width="3" height="236" rx="1.5" fill="#E9C996"/>
+              <!-- cintas -->
+              <path class="varita__cinta" d="M120 182 C 96 214, 132 240, 98 282 C 84 300, 92 320, 86 336" stroke="#F7C6D6" stroke-width="7" fill="none" stroke-linecap="round"/>
+              <path class="varita__cinta" d="M120 182 C 146 210, 112 236, 146 270 C 160 286, 150 304, 158 318" stroke="#FFF6EA" stroke-width="6" fill="none" stroke-linecap="round"/>
+              <circle cx="120" cy="182" r="8" fill="#F7C6D6"/>
+              <!-- luna -->
+              <g class="varita__cabeza varita__cabeza--luna">
+                <path class="varita__fieltro" d="M160 28 A 80 80 0 1 0 160 172 A 76 76 0 0 1 160 28 Z"/>
+                <path class="varita__puntada" d="M152 40 A 68 68 0 1 0 152 160 A 61 61 0 0 1 152 40 Z"/>
+                <path d="M62 92 q6 6 12 0 M84 92 q6 6 12 0" stroke="#3A2230" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+                <path d="M72 108 q7 6 14 0" stroke="#3A2230" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+                <circle cx="62" cy="104" r="4" fill="#F49BB6" opacity=".7"/>
+                <g class="varita__brillos">
+                  <circle cx="106" cy="42" r="4.5" fill="#FFF6EA"/><circle cx="66" cy="62" r="3.5" fill="#12A5A0"/>
+                  <circle cx="54" cy="128" r="4" fill="#FFC53D"/><circle cx="88" cy="152" r="4.5" fill="#F48FB1"/>
+                  <circle cx="122" cy="160" r="3.5" fill="#FFF6EA"/><circle cx="96" cy="128" r="3" fill="#B79BE6"/>
+                  <circle cx="132" cy="36" r="3" fill="#F48FB1"/><circle cx="46" cy="96" r="3" fill="#FFF6EA"/>
+                </g>
+              </g>
+              <!-- estrella -->
+              <g class="varita__cabeza varita__cabeza--estrella">
+                <path class="varita__fieltro" d="M120 10 L143.5 69.6 L207.5 73.6 L158 114.4 L174.1 176.4 L120 142 L65.9 176.4 L82 114.4 L32.5 73.6 L96.5 69.6 Z"/>
+                <path class="varita__puntada" d="M120 26 L139 75 L192 78.5 L151.5 112 L164.5 162 L120 134 L75.5 162 L88.5 112 L48 78.5 L101 75 Z"/>
+                <g class="varita__brillos">
+                  <circle cx="120" cy="96" r="7" fill="#FFF6EA"/><circle cx="120" cy="96" r="3.2" fill="#F48FB1"/>
+                  <circle cx="120" cy="48" r="3.5" fill="#12A5A0"/><circle cx="168" cy="84" r="3.5" fill="#FFC53D"/>
+                  <circle cx="72" cy="84" r="3.5" fill="#B79BE6"/><circle cx="146" cy="138" r="3.5" fill="#FFF6EA"/>
+                  <circle cx="94" cy="138" r="3.5" fill="#F48FB1"/><circle cx="102" cy="74" r="2.6" fill="#FFF6EA"/>
+                  <circle cx="138" cy="74" r="2.6" fill="#FFF6EA"/><circle cx="120" cy="122" r="3" fill="#12A5A0"/>
+                </g>
+              </g>
+            </svg>
+            <p class="varita__resumen" aria-live="polite">Tu varita: <b data-resumen>luna, color lila</b></p>
+          </div>
+
+          <form class="taller-varita__controles" action="#" onsubmit="return false">
+            <fieldset class="opciones">
+              <legend>1. La forma</legend>
+              <div class="opciones__formas">
+                <label class="forma"><input type="radio" name="forma" value="luna" checked><span>Luna</span></label>
+                <label class="forma"><input type="radio" name="forma" value="estrella"><span>Estrella</span></label>
+              </div>
+            </fieldset>
+            <fieldset class="opciones">
+              <legend>2. El color</legend>
+              <div class="opciones__colores">
+                <label class="muestra" style="--c:#B79BE6"><input type="radio" name="color" value="Lila" checked><span>Lila</span></label>
+                <label class="muestra" style="--c:#F48FB1"><input type="radio" name="color" value="Rosado"><span>Rosado</span></label>
+                <label class="muestra" style="--c:#FFC53D"><input type="radio" name="color" value="Amarillo"><span>Amarillo</span></label>
+                <label class="muestra" style="--c:#12A5A0"><input type="radio" name="color" value="Turquesa"><span>Turquesa</span></label>
+                <label class="muestra" style="--c:#FFF9EF"><input type="radio" name="color" value="Blanco"><span>Blanco</span></label>
+                <label class="muestra" style="--c:#D3253C"><input type="radio" name="color" value="Rojo"><span>Rojo</span></label>
+              </div>
+              <p class="opciones__nota">Son colores de ejemplo: si quieres otro, dímelo por WhatsApp.</p>
+            </fieldset>
+            <a class="boton boton--ancho" data-varita-pedir href="https://wa.me/50760000000?text=%C2%A1Hola!%20Quiero%20una%20varita%20m%C3%A1gica%20con%20LUNA.%20El%20color%20que%20me%20gustar%C3%ADa%20es%3A%20Lila" rel="noopener" target="_blank">
+              <span>Pedir mi varita por WhatsApp</span>
+            </a>
+          </form>
+
+          <figure class="polaroid polaroid--varita" style="--giro:4deg" data-ojal>
+            <span class="cinta cinta--rosa" aria-hidden="true"></span>
+            <video autoplay muted loop playsinline preload="metadata" poster="/video/varita-luna-gira-poster.webp" aria-label="Varita mágica de luna lila girando: fieltro con perlitas y cintas en un palito de madera.">
+              <source src="/video/varita-luna-gira.webm" type="video/webm">
+              <source src="/video/varita-luna-gira.mp4" type="video/mp4">
+            </video>
+            <figcaption>Así queda la de luna lila</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TARJETA ============ -->
+    <section class="seccion tarjeta" id="tarjeta" data-puntada="der">
+      <div class="ancho tarjeta__grilla">
+        <div class="tarjeta__texto">
+          <h2 class="cosible">Con tarjeta y mensaje escrito a mano</h2>
+          <p>Puedes sumar una tarjeta personalizada con un nombre o un mensaje en el centro, escrito a mano por mí. Para un cumpleaños o para acompañar el regalo.</p>
+          <a class="enlace-mano" href="https://wa.me/50760000000?text=%C2%A1Hola!%20Vi%20%C2%ABTarjeta%20con%20tu%20mensaje%C2%BB%20en%20la%20p%C3%A1gina%20de%20Elizabeth%20Creations%20y%20me%20gustar%C3%ADa%20pedirlo.%20%C2%BFMe%20cuentas%20c%C3%B3mo%3F" rel="noopener" target="_blank">Pedir una tarjeta</a>
+        </div>
+        <div class="tarjeta__dibujo" data-ojal aria-hidden="true">
+          <div class="sobre"></div>
+          <div class="tarjetita" style="--giro:-5deg">
+            <span class="cinta cinta--amarilla"></span>
+            <p class="tarjetita__para">Para Sofía</p>
+            <p class="tarjetita__msj">¡Feliz cumple! Que tu varita te conceda todos los deseos.</p>
+            <svg class="tarjetita__corazon" viewBox="0 0 40 36"><path d="M20 33 C 6 23, 2 15, 6 9 C 10 3, 18 4, 20 11 C 22 4, 30 3, 34 9 C 38 15, 34 23, 20 33 Z" fill="#F48FB1" stroke="#C2577A" stroke-width="1.6" stroke-dasharray="3 2.4"/></svg>
+          </div>
+          <p class="tarjeta__ejemplo">Ejemplo de mensaje</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CÓMO PEDIR ============ -->
+    <section class="seccion pedir-pasos" id="como-pedir" data-puntada="izq">
+      <div class="ancho">
+        <header class="encabezado">
+          <h2 class="cosible">Cómo pedir</h2>
+          <p>Cuatro puntadas, de tu mensaje a tus manos.</p>
+        </header>
+        <ol class="pasos">
+          <li class="paso fieltro fieltro--lila" data-ojal>
+            <span class="costura" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+            <span class="paso__num" aria-hidden="true">1</span>
+            <h3>Escoges tu pieza</h3>
+            <p>De las fotos o una idea tuya. En las varitas escoges luna o estrella y el color. Me escribes por WhatsApp.</p>
+          </li>
+          <li class="paso fieltro fieltro--rosa">
+            <span class="costura" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+            <span class="paso__num" aria-hidden="true">2</span>
+            <h3>Separas con el 30 %</h3>
+            <p>Todo pedido, de una pieza o de un set, se separa con un abono del 30 % por Yappy o transferencia.</p>
+          </li>
+          <li class="paso fieltro fieltro--menta">
+            <span class="costura" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+            <span class="paso__num" aria-hidden="true">3</span>
+            <h3>La hago en 3 a 5 días</h3>
+            <p>Cada pieza, cosida y decorada a mano. Te aviso cuando esté lista.</p>
+          </li>
+          <li class="paso fieltro fieltro--mantequilla">
+            <span class="costura" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+            <span class="paso__num" aria-hidden="true">4</span>
+            <h3>Te la entrego</h3>
+            <p>En La Chorrera o en la Ciudad de Panamá, en un punto de entrega que coordinamos.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ LO IMPORTANTE ============ -->
+    <section class="seccion importante" id="importante" data-puntada="izq">
+      <div class="ancho importante__grilla">
+        <div class="kraft" data-ojal>
+          <span class="kraft__ojal" aria-hidden="true"></span>
+          <h2 class="cosible">Antes de pedir</h2>
+          <dl class="reglas">
+            <div><dt>Pago</dt><dd>Solo Yappy o transferencia bancaria. <b>No recibo efectivo.</b></dd></div>
+            <div><dt>Abono</dt><dd>Todos los pedidos, de una pieza o de un set, se separan con un <b>abono del 30 %</b>. Una vez abonado, <b>el abono no se devuelve</b>, porque con él ya empecé tu pieza.</dd></div>
+            <div><dt>Tiempo</dt><dd><b>3 a 5 días</b> por pieza.</dd></div>
+            <div><dt>Entregas</dt><dd>En <b>La Chorrera</b> y en la <b>Ciudad de Panamá</b>.</dd></div>
+            <div><dt>Navidad</dt><dd>Recibo pedidos <b>hasta el 15 de noviembre</b>.</dd></div>
+          </dl>
+        </div>
+
+        <div class="preguntas">
+          <h2 class="cosible">Preguntas</h2>
+          <details>
+            <summary>¿Cuánto cuestan?</summary>
+            <p>Depende de la pieza y de cuántas lleves. Pregúntame por WhatsApp y te digo.</p>
+          </details>
+          <details>
+            <summary>¿Va a quedar igual a la foto?</summary>
+            <p>Muy parecida, pero no idéntica: se hace a mano, una por una, y cada pieza tiene sus pequeñas diferencias. Si algo tiene que ser exacto, como un nombre o un color, dímelo y lo cuidamos.</p>
+          </details>
+          <details>
+            <summary>¿Hacen envíos?</summary>
+            <p>Por ahora entrego en La Chorrera y en la Ciudad de Panamá, en un punto de entrega que coordinamos por WhatsApp.</p>
+          </details>
+          <details>
+            <summary>¿Puedo personalizarla?</summary>
+            <p>En las varitas mágicas escoges si llevan luna o estrella, y el color. La bisutería va como en la foto. También puedes sumar una tarjeta con un nombre o un mensaje escrito a mano.</p>
+          </details>
+          <details>
+            <summary>¿Cómo la guardo?</summary>
+            <p>En una caja, lejos de la humedad y del sol directo. Así el fieltro no pierde su color y la bisutería no se despega de un año para otro.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CIERRE ============ -->
+    <section class="cierre" id="pedido" data-puntada="der">
+      <div class="ancho cierre__caja">
+        <p class="nota-mano">¿Ya escogiste?</p>
+        <h2 class="cosible">Escríbeme y empiezo a coser la tuya.</h2>
+        <p class="cierre__bajada">Pagas por Yappy o transferencia, la tienes en 3 a 5 días y te la entrego en La Chorrera o la Ciudad de Panamá. Para Navidad, hasta el 15 de noviembre.</p>
+        <a class="boton boton--grande" data-fin href="https://wa.me/50760000000?text=%C2%A1Hola!%20Vi%20la%20p%C3%A1gina%20de%20Elizabeth%20Creations%20y%20quiero%20hacer%20un%20pedido." rel="noopener" target="_blank">
+          <span>Pedir por WhatsApp</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <div class="ancho">
+      <p><b>Elizabeth Creations</b> · Adornos de fieltro hechos a mano en La Chorrera, Panamá Oeste.</p>
+      <p>© 2026</p>
+    </div>
+  </footer>
+</body>
+</html>

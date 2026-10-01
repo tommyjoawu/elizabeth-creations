@@ -1,0 +1,61 @@
+{{!--
+  El cierre: vuelve el cordel del hero, y en el medio hay un gancho con el
+  adorno que falta —punteado, vacío—. La pregunta del titular es ESA: cuál
+  falta en tu casa. Es la única vez en la página que el titular es más
+  grande que el del hero, y es el único capítulo rojo: se lee como el final.
+
+  WhatsApp primero, que es por donde se pide. Instagram y el correo sólo
+  cuando existan (marca.pendiente); mientras, una línea que lo dice.
+--}}
+<section id="contacto" data-costura="der" class="e-mola e-motivo e-motivo--nieve e-feston e-cierre relative isolate overflow-clip" style="--feston: #12A5A0"
+         aria-labelledby="titulo-cierre" data-controller="tendedero">
+  <div class="e-tendedero" aria-hidden="true">
+    <svg class="e-tendedero__cordel" viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false">
+      <path d="M-2 20 Q50 140 102 20" fill="none" stroke="currentColor" stroke-width="1.5"
+            vector-effect="non-scaling-stroke" stroke-linecap="round"/>
+    </svg>
+    {{#each cierre.adornos}}
+      <span class="e-adorno e-adorno--esfera{{#unless this.movil}} e-adorno--amplio{{/unless}}"
+            data-tono="{{this.tono}}" data-tendedero-target="adorno"
+            style="--p: {{this.p}}; --px: {{or this.px this.p}}; --largo: {{this.largo}}; --tam: {{this.tam}}; --i: {{@index}}">
+        <span class="e-adorno__impulso">
+          <span class="e-adorno__mecer">
+            <span class="e-adorno__hilo"></span>
+            <span class="e-adorno__tapa"></span>
+            {{#if this.foto}}
+              <span class="e-adorno__cuerpo e-adorno__cuerpo--roseta">
+                <span class="e-adorno__bola e-adorno__bola--roseta">{{imagen this.foto alt="" sizes="8rem"}}</span>
+              </span>
+            {{else}}
+              <span class="e-adorno__cuerpo">
+                <span class="e-adorno__bola">{{#if this.falta}}<span class="e-adorno__signo">?</span>{{/if}}</span>
+              </span>
+            {{/if}}
+          </span>
+        </span>
+      </span>
+    {{/each}}
+  </div>
+
+  <div class="e-contenedor e-cierre__texto relative flex flex-col items-center text-center">
+    <h2 id="titulo-cierre" class="e-aparece max-w-[12ch] font-display text-cierre" data-controller="revela">
+      ¿Cuál falta en tu casa?
+    </h2>
+    <p class="e-aparece mx-auto mt-8 max-w-[44ch] text-entrada" data-controller="revela" style="--retraso: 120ms">
+      Escríbeme y lo conversamos. Si todavía no sabes cuál escoger, también te ayudo con eso.
+      Para Navidad, pide antes del {{marca.politicas.fechaNavidad}}.
+    </p>
+    <div class="e-aparece mt-11 flex w-full flex-col justify-center gap-3 sm:w-auto sm:flex-row sm:flex-wrap"
+         data-controller="revela" data-costura-fin style="--retraso: 220ms">
+      {{> piezas/boton texto="Haz tu pedido por WhatsApp" href=(whatsapp) glifo="whatsapp" externo=true clase="justify-between"}}
+      {{#unless (pendiente "instagram")}}
+        {{> piezas/boton texto="Ver Instagram" href=(concat "https://www.instagram.com/" marca.instagram "/")
+                         glifo="instagram" variante="fantasma" externo=true clase="justify-between"}}
+      {{/unless}}
+      {{#unless (pendiente "correo")}}
+        {{> piezas/boton texto="Escribir un correo" href=(concat "mailto:" marca.correo)
+                         glifo="correo" variante="fantasma" clase="justify-between"}}
+      {{/unless}}
+    </div>
+  </div>
+</section>

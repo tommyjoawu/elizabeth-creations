@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Erika — Adornos hechos a mano | Hero Crema Editorial</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&amp;family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'cream': '#FFF4E4',
+            'plum': '#2B1238',
+            'fucsia': '#C8175F',
+            'mandarina': '#F4661B',
+            'girasol': '#FFC21F',
+            'turquesa': '#12A89E',
+            'hoja': '#3E9B45',
+            'ciruela': '#4A1D5C',
+          },
+          fontFamily: {
+            'display': ['"Bricolage Grotesque"', 'system-ui', 'sans-serif'],
+            'sans': ['"DM Sans"', 'system-ui', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+<style>
+    /* Subtle paper texture simulation */
+    .bg-paper {
+      background-color: #FFF4E4;
+      background-image: 
+        radial-gradient(rgba(43, 18, 56, 0.035) 1px, transparent 0),
+        radial-gradient(rgba(200, 23, 95, 0.02) 1px, transparent 0);
+      background-size: 28px 28px, 42px 42px;
+      background-position: 0 0, 14px 14px;
+    }
+
+    /* Die-cut sticker effect: thick crisp white outline + hard ink shadow */
+    .die-cut-sticker {
+      filter: 
+        drop-shadow(0 0 0 5px #FFF4E4)
+        drop-shadow(0 0 0 7px #2B1238)
+        drop-shadow(4px 5px 0px rgba(43, 18, 56, 0.95));
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .die-cut-sticker:hover {
+      transform: scale(1.04) translateY(-3px);
+    }
+
+    /* Direct white border card stickers with photo cutouts */
+    .sticker-badge {
+      box-shadow: 4px 5px 0px #2B1238;
+      border: 3.5px solid #2B1238;
+    }
+    .sticker-pill {
+      box-shadow: 3px 4px 0px #2B1238;
+      border: 2px solid #2B1238;
+    }
+
+    /* Text select highlight */
+    ::selection {
+      background-color: #FFC21F;
+      color: #2B1238;
+    }
+  </style>
+</head>
+<body class="bg-paper text-plum font-sans antialiased overflow-x-hidden m-0 p-0 selection:bg-girasol selection:text-plum">
+<!-- Desktop Hero Container (1440px target, min-h-[920px]) -->
+<div class="w-full min-h-[920px] max-w-[1440px] mx-auto flex flex-col justify-between relative px-8 lg:px-16 pt-5 pb-0">
+<!-- HEADER / NAVIGATION -->
+<header class="w-full flex items-center justify-between py-4 border-b-2 border-plum/15 relative z-30">
+<!-- Wordmark & subtitle -->
+<div class="flex items-baseline gap-3.5">
+<a class="font-display font-extrabold text-[32px] tracking-tight text-plum leading-none" href="#">
+          Erika
+        </a>
+<span class="text-xs font-semibold text-plum/70 tracking-tight pl-3 border-l-2 border-plum/30">
+          Adornos hechos a mano
+        </span>
+</div>
+<!-- Center navigation links -->
+<nav class="hidden md:flex items-center gap-9 text-[15px] font-semibold text-plum">
+<a class="hover:text-fucsia transition-colors" href="#">Colecciones</a>
+<a class="hover:text-fucsia transition-colors" href="#">El taller</a>
+<a class="hover:text-fucsia transition-colors flex items-center gap-1.5" href="#">
+<span>Navidad</span>
+<span class="w-2 h-2 rounded-full bg-mandarina inline-block"></span>
+</a>
+<a class="hover:text-fucsia transition-colors" href="#">Encargos</a>
+<a class="hover:text-fucsia transition-colors" href="#">Preguntas</a>
+</nav>
+<!-- Right action button -->
+<div class="flex items-center">
+<a class="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-fucsia text-cream font-bold text-sm sticker-pill hover:-translate-y-0.5 active:translate-y-0 transition-transform" href="https://wa.me/">
+<span>WhatsApp</span>
+<span class="text-xs">↗</span>
+</a>
+</div>
+</header>
+<!-- HERO MAIN CONTENT -->
+<main class="relative w-full flex-1 flex flex-col items-center justify-center pt-8 pb-12 z-10">
+<!-- ============================================================== -->
+<!-- SCATTERED DIE-CUT PHOTO STICKERS & FOLK ACCENTS AROUND HEADLINE -->
+<!-- ============================================================== -->
+<!-- Sticker 1: Fucsia Felt Embroidered Heart (Top Left of Headline) -->
+<div class="absolute top-52 lg:top-48 left-1 lg:left-4 z-20 transform rotate-[6deg] cursor-pointer select-none hover:scale-105 transition-transform duration-200"><div class="w-24 h-24 lg:w-32 lg:h-32 rounded-3xl overflow-hidden bg-white p-1 border-[4px] border-white shadow-[4px_4px_0px_#2B1238]"><img alt="Corazón de fieltro fucsia bordado a mano" class="w-full h-full object-cover rounded-2xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_RbCDdCgp5OEecPNLBEw3INmz9oPwIW6NgSDnWPqJLMyqinPolUT3LBhGCh3g9K7hc3r_1Wqzb3TLE2U9yitDQrlL53YsUbqXZwWXkY1ii90AAir5a8MJHHA4xtBY-PKJhN83mSFkk200eN5WVEZdQ1W7rSFBYtSO5lDoX725qLkLo0aEYQryE-IgfIV38kiHT8PK_hJpvNXnkxj1P2ASq0wA7H22koJ2xBukx8llqNKQN_jb-SCjIoiaTTwfJTFM81upZz96wFLb"/></div></div>
+<!-- Sticker 2: Turquoise Hand-Painted Wooden Folk Bird (Overlapping "Adornos" top-right) -->
+<div class="absolute -top-8 right-36 lg:right-56 z-20 flex flex-col items-center transform rotate-[4deg] cursor-pointer select-none pointer-events-auto hover:rotate-6 transition-transform"><div class="w-0.5 h-10 border-l-2 border-dashed border-plum"></div><div class="w-24 h-24 lg:w-28 lg:h-28 rounded-full overflow-hidden bg-turquesa p-1 border-[4px] border-white shadow-[4px_4px_0px_#2B1238]"><img alt="Pájaro de madera pintado a mano" class="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida/AEtjO1VAVeIc98UaDm5LXOHsA7xpdo7Ycm7_iqNnQ2_wpaAHW-Lto95lKOg6gB-JcqW4Okw3j-CtM_boe9vM2ob3LtgJNUNADtzRrzidamnVIA14SBZdot1TBCgimI7Q3bwunig9hgq48geIucdf43R8GW2WKPIXYJD_AJrziI0d4GRlwbe--KmWE09U_t7vdpDhx2rv7GqPEPnJOaBwG3_1P-vWXcH2Jc-l6H3NE2_yvqaLY-BLiMUkODqo_jLu"/></div></div>
+<!-- Sticker 3: Sunflower-Yellow Painted Ceramic Bauble (Mid-right between lines) -->
+<div class="absolute top-36 right-2 lg:right-6 z-20 transform rotate-[5deg] cursor-pointer select-none hover:scale-105 transition-transform duration-200"><div class="w-24 h-24 lg:w-32 lg:h-32 rounded-full overflow-hidden bg-girasol p-1 border-[4px] border-white shadow-[4px_4px_0px_#2B1238]"><img alt="Pintando esfera artesanal a mano" class="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida/AEtjO1U6udJLUXN0Coz2yCseSQ43ilAt5a3Jk1lzKRC2rQT1GddZSVBkauA1eGCe9bJhDOkfIW0VpGudu67i2bZ2_JrEHXIAfljVTVgbCbWUPtKTRxNx4SX_c37dAueNa7gdtq10NmNRXO5637V2xwPtH5rm1X1b27EeuBQ_WILsePHd5UvCz19dt0bf8RpMzR2O69PUIoZqIymnGGZO9tt42oBHSEsPnTs9zJgxgZFInDmxWUIHi9riVVkhBII"/></div></div>
+<!-- Sticker 4: Mandarina Felt Star / Sun Ornament (Mid-left below "hechos") -->
+<div class="absolute top-2 lg:top-4 left-3 lg:left-8 z-20 transform -rotate-[7deg] cursor-pointer select-none hover:scale-105 transition-transform duration-200"><div class="w-24 h-24 lg:w-32 lg:h-32 rounded-3xl overflow-hidden bg-mandarina p-1 border-[4px] border-white shadow-[4px_4px_0px_#2B1238]"><img alt="Adorno estrella de fieltro color mandarina" class="w-full h-full object-cover rounded-2xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDPyUXc2cGYoV8kSx8HgsMGWUo-1SnbA7cLSTK1vrqj1t_pd5mS3L6XYIdVORLXkdcZ1nLJ2nqZlYU8SwA3DBUZ4n1f6NvruCt3ktBmXHZbnsKQcrNJVO8KEVetYMnAjF6ip5bOPs46olTYbOptGSUOkJLa6Jnm_IDh0VeFbYIhy2phrG9v2D8fS5jjNp-66wffBfaJxm_oSCem1JenMWN4oeYvzFSzHzYfdJJ_UCLoHiPsTlJ3JMEO9rYBhTdO9hiKRJnI89U3FTd"/></div></div>
+<!-- Sticker 5: Pompom Garland Segment (Suspended loop near bottom-left of headline) -->
+<div class="absolute bottom-24 lg:bottom-28 left-4 lg:left-14 z-20 transform rotate-[3deg] cursor-pointer select-none hover:scale-105 transition-transform duration-200"><div class="w-32 h-20 lg:w-40 lg:h-24 rounded-full overflow-hidden bg-white p-1 border-[4px] border-white shadow-[4px_4px_0px_#2B1238]"><img alt="Mesa de taller artesanal con hilos y adornos" class="w-full h-full object-cover rounded-full object-center" src="https://lh3.googleusercontent.com/aida/AEtjO1W7-iGb4Tf4vbAvViUFcZJ-BpHSjOLGsG-dHlZQxl46T_g9v6meEzsr9YFxod9oiDfQTPoTUxzEPO26ifPt607ogjH1Q64RdsQ0Z0o8GAVdd3CyrL0mU5KRk8-mCZG1yCNAH8Lp9PlkUd9jl_DUCzOKM5K-bJNFiX4DJn-3SLwJEQRLbdStUaw9e9fdzgPkfSBZcy8HE21I6Xziai0LpHX6EkJpS2rtMBoxu_82wAL_t6rxqL-HdoxnieS2"/></div></div>
+<!-- Sticker 6: Small Artisan Paper & Fabric Flower / Rosette (Bottom-right below headline) -->
+<div class="absolute bottom-24 lg:bottom-28 right-4 lg:right-16 z-20 transform -rotate-[5deg] cursor-pointer select-none hover:scale-105 transition-transform duration-200"><div class="w-24 h-24 lg:w-28 lg:h-28 rounded-full overflow-hidden bg-ciruela p-1 border-[4px] border-white shadow-[4px_4px_0px_#2B1238]"><img alt="Manos bordando adorno artesanal en el taller" class="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida/AEtjO1Xz2Q1E6MU3iEwLllJa5R4vwBcTvwKLmVJYbwjEzCiprLJx_u5X2qMoAx9fQgT2uF83CuK7DGaP-yKDMBApTNf-_DGVSD_GbQ5DguOlH4gIjJYzvDc3eEzyJgiEswwFNpjni4Z-opthuIbJQhQyQVBUmo1TuvbFCYVrNOqgkDmMODDDNN_3hQDWCKtCacPBmNtjoy1MZwBosC5t_yJhpdbIAVWyQTCt45TmZoZAO5sgpvhbzeamtdQqbgA"/></div></div>
+<!-- Round Rotated Girasol Badge: "Hecho a mano en Panamá" near right edge -->
+<div class="absolute top-6 right-1 lg:right-4 z-20 transform rotate-12 cursor-pointer select-none"><div class="w-24 h-24 lg:w-28 lg:h-28 rounded-full bg-girasol border-[3px] border-plum flex flex-col items-center justify-center p-2 text-center sticker-badge hover:rotate-6 transition-transform"><span class="text-xs text-plum leading-none">★</span><span class="font-display font-extrabold text-[11px] lg:text-[12px] leading-tight text-plum uppercase tracking-tight my-0.5">Hecho a mano<br/>en Panamá</span><span class="text-xs text-plum leading-none">★</span></div></div>
+<!-- FLAT FOLK VECTOR GRAPHIC ACCENTS (8-point star, leaf, drop, 6-petal flower) -->
+<!-- 1. 8-Point Star in Girasol #FFC21F (Top center left) -->
+<div class="absolute top-4 left-[34%] z-10 text-girasol transform rotate-6 drop-shadow-[2px_2px_0px_#2B1238]">
+<svg class="w-9 h-9" fill="currentColor" stroke="#2B1238" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M12 0L14.5 7.5L22 5L17 12L22 19L14.5 16.5L12 24L9.5 16.5L2 19L7 12L2 5L9.5 7.5Z"></path>
+</svg>
+</div>
+<!-- 2. Small Leaf in Hoja #3E9B45 (Top center right) -->
+<div class="absolute top-8 right-[33%] z-10 text-hoja transform -rotate-45 drop-shadow-[2px_2px_0px_#2B1238]">
+<svg class="w-8 h-8" fill="currentColor" stroke="#2B1238" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M17 3C10 3 5 9 5 15C5 17 6 19 8 20C14 20 20 14 20 7C20 4.5 18.5 3 17 3ZM17 5C17.8 5 18.5 5.7 18.5 6.5C18.5 10.5 15 15 10 17C8.5 17.5 7.5 16.5 7.5 15C7.5 10 11.5 5 17 5Z"></path>
+</svg>
+</div>
+<!-- 3. Turquesa #12A89E Drop (Lower left margin) -->
+<div class="absolute bottom-36 left-[22%] z-10 text-turquesa transform rotate-12 drop-shadow-[2px_2px_0px_#2B1238]">
+<svg class="w-6 h-6" fill="currentColor" stroke="#2B1238" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M12 2.5C12 2.5 5 12 5 16.5C5 20.1 7.9 23 11.5 23C15.1 23 18 20.1 18 16.5C18 12 12 2.5 12 2.5Z"></path>
+</svg>
+</div>
+<!-- 4. Fucsia #C8175F 6-Petal Folk Flower (Lower right margin) -->
+<div class="absolute bottom-36 right-[21%] z-10 text-fucsia transform -rotate-12 drop-shadow-[2px_2px_0px_#2B1238]">
+<svg class="w-9 h-9" fill="currentColor" stroke="#2B1238" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M12 9C12 5 10 3 8 4C6 5 6 8 9 10C5 10 3 12 4 14C5 16 8 16 10 13C10 17 12 19 14 18C16 17 16 14 13 12C17 12 19 10 18 8C17 6 14 6 12 9Z"></path>
+</svg>
+</div>
+<!-- ============================================================== -->
+<!-- HUGE CENTERED EDITORIAL HEADLINE (~140px, Bricolage Grotesque) -->
+<!-- ============================================================== -->
+<div class="w-full text-center relative z-10 px-2 select-text">
+<h1 class="font-display font-extrabold text-[64px] sm:text-[90px] md:text-[112px] lg:text-[124px] leading-[0.94] tracking-[-0.04em] text-plum text-center max-w-[1140px] mx-auto relative z-10">
+<span class="block relative">
+            Adornos hechos
+          </span>
+<span class="block relative mt-1 lg:mt-2">
+            a mano con 
+            <span class="inline-block relative">
+              alegría
+              <!-- Playful yellow hand-drawn underline accent -->
+<svg class="absolute -bottom-2 sm:-bottom-4 left-0 w-full h-4 sm:h-6 text-girasol -z-10" fill="none" preserveaspectratio="none" viewbox="0 0 280 20">
+<path d="M3 14C65 5 185 4 277 15" stroke="currentColor" stroke-linecap="round" stroke-width="8"></path>
+</svg>
+</span>
+</span>
+</h1>
+</div>
+<!-- ============================================================== -->
+<!-- SUBHEAD COPY (DM Sans 20px ink) -->
+<!-- ============================================================== -->
+<p class="mt-8 lg:mt-9 max-w-[700px] text-center font-sans font-normal text-lg sm:text-[20px] leading-relaxed text-plum/90 px-4">
+        Cada pieza sale de mi mesa de trabajo en Panamá: pintada, cosida y armada a mano, una por una.
+      </p>
+<!-- ============================================================== -->
+<!-- CALL TO ACTION BUTTONS -->
+<!-- ============================================================== -->
+<div class="mt-7 flex flex-wrap items-center justify-center gap-4.5 z-20">
+<!-- Fucsia Pill: Pedir por WhatsApp -->
+<a class="inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-fucsia text-cream font-display font-bold text-lg sm:text-[19px] sticker-pill hover:-translate-y-0.5 active:translate-y-0 transition-transform" href="https://wa.me/">
+<span>Pedir por WhatsApp</span>
+<span class="text-xl">→</span>
+</a>
+<!-- Outlined Ink Pill: Ver en Instagram -->
+<a class="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-transparent text-plum font-display font-bold text-lg sm:text-[19px] border-2 border-plum hover:bg-plum/5 active:translate-y-0 transition-colors" href="#instagram">
+<span>Ver en Instagram</span>
+<span class="text-sm">↗</span>
+</a>
+</div>
+</main>
+<!-- ============================================================== -->
+<!-- BOTTOM EDGE: WAVY LINE LEADING INTO NEXT SECTION -->
+<!-- ============================================================== -->
+<div class="w-full relative z-20 leading-none overflow-hidden -mx-8 lg:-mx-16" style="width: calc(100% + 4rem); max-width: none;">
+<svg class="w-full h-10 sm:h-12 text-ciruela/10" fill="none" preserveaspectratio="none" viewbox="0 0 1440 48">
+<path d="M0,24 C120,44 240,4 360,24 C480,44 600,4 720,24 C840,44 960,4 1080,24 C1200,44 1320,4 1440,24" stroke="#2B1238" stroke-linecap="round" stroke-width="3"></path>
+</svg>
+</div>
+</div>
+</body>
+</html>

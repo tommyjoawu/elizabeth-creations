@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="es">
+<head><meta charset="utf-8"></head>
+<body>
+<template>
+<style>
+
+  @font-face { font-family: "Caprasimo"; src: url("assets/fuentes/caprasimo-latin.woff2") format("woff2"); font-display: block; }
+  @font-face { font-family: "Figtree"; src: url("assets/fuentes/figtree-latin-variable.woff2") format("woff2"); font-weight: 300 900; font-display: block; }
+  @font-face { font-family: "Shantell Sans"; src: url("assets/fuentes/shantell-sans-latin-variable.woff2") format("woff2"); font-weight: 300 800; font-display: block; }
+  #root { position: absolute; inset: 0; overflow: hidden; font-family: "Figtree", sans-serif; color: #1E1A3C; }
+  .escena { position: absolute; inset: 0; overflow: hidden; }
+  .grano { position: absolute; inset: 0; opacity: .3; mix-blend-mode: soft-light; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='r'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23r)'/%3E%3C/svg%3E"); }
+  .disp { font-family: "Caprasimo", Georgia, serif; font-weight: 400; letter-spacing: -.02em; }
+  .mano { font-family: "Shantell Sans", sans-serif; font-weight: 600; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  .renglon { display: block; overflow: hidden; padding-bottom: .16em; margin-bottom: -.1em; }
+  .renglon > span { display: block; }
+  .polaroid { position: absolute; background: #FFF9EF; padding: 22px 22px 92px; border-radius: 12px;
+    box-shadow: 0 0 0 5px #1E1A3C, 16px 18px 0 #1E1A3C; }
+  .polaroid .foto { position: relative; width: 100%; height: 100%; overflow: hidden; border-radius: 4px; background: #E9E4EE; }
+  .polaroid img, .polaroid video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .polaroid .pie { position: absolute; left: 0; right: 0; bottom: 20px; text-align: center; font-family: "Shantell Sans", sans-serif; font-weight: 600; font-size: 42px; color: #1E1A3C; }
+  .cinta { position: absolute; z-index: 2; left: 50%; top: -28px; width: 200px; height: 56px; margin-left: -100px; background: rgba(255,197,61,.88);
+    clip-path: polygon(0 12%, 5% 0, 30% 5%, 62% 0, 95% 6%, 100% 0, 97% 50%, 100% 100%, 70% 94%, 35% 100%, 4% 93%, 0 100%, 3% 50%); }
+  .med { position: absolute; transform-origin: 50% 0; }
+  .med .hilo { display: block; width: 4px; margin: 0 auto; background: #1E1A3C; }
+  .med .tapa { display: block; width: 30%; height: 30px; margin: 0 auto; border-radius: 10px 10px 4px 4px; background: #1E1A3C; }
+  .med .cuerpo { position: relative; width: 100%; aspect-ratio: 1; }
+  .med .cuerpo::before, .med .bola { -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%22-1%20-1%202%202%22%3E%3Ccircle%20r%3D%220.82%22/%3E%3Ccircle%20cx%3D%220.800%22%20cy%3D%220.000%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.731%22%20cy%3D%220.325%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.535%22%20cy%3D%220.595%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.247%22%20cy%3D%220.761%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.084%22%20cy%3D%220.796%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.400%22%20cy%3D%220.693%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.647%22%20cy%3D%220.470%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.783%22%20cy%3D%220.166%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.783%22%20cy%3D%22-0.166%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.647%22%20cy%3D%22-0.470%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.400%22%20cy%3D%22-0.693%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.084%22%20cy%3D%22-0.796%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.247%22%20cy%3D%22-0.761%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.535%22%20cy%3D%22-0.595%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.731%22%20cy%3D%22-0.325%22%20r%3D%220.2%22/%3E%3C/svg%3E") center / 100% 100% no-repeat; mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%22-1%20-1%202%202%22%3E%3Ccircle%20r%3D%220.82%22/%3E%3Ccircle%20cx%3D%220.800%22%20cy%3D%220.000%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.731%22%20cy%3D%220.325%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.535%22%20cy%3D%220.595%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.247%22%20cy%3D%220.761%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.084%22%20cy%3D%220.796%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.400%22%20cy%3D%220.693%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.647%22%20cy%3D%220.470%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.783%22%20cy%3D%220.166%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.783%22%20cy%3D%22-0.166%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.647%22%20cy%3D%22-0.470%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.400%22%20cy%3D%22-0.693%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%22-0.084%22%20cy%3D%22-0.796%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.247%22%20cy%3D%22-0.761%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.535%22%20cy%3D%22-0.595%22%20r%3D%220.2%22/%3E%3Ccircle%20cx%3D%220.731%22%20cy%3D%22-0.325%22%20r%3D%220.2%22/%3E%3C/svg%3E") center / 100% 100% no-repeat; }
+  .med .cuerpo::before { content: ""; position: absolute; inset: 0; transform: translate(12px, 14px); background: #1E1A3C; }
+  .med .bola { position: relative; width: 100%; height: 100%; background: var(--tono); }
+  .med .bola img { position: absolute; left: 13%; top: 13%; width: 74%; height: 74%; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 5px #1E1A3C; }
+
+  .escena { background: #FBF1E1; }
+
+  .cordel { position: absolute; left: 0; top: 40px; width: 1080px; height: 200px; overflow: visible; }
+  .logo { position: absolute; left: 70px; top: 470px; width: 300px; height: 300px; transform-origin: 50% 8%; }
+  .nombre { position: absolute; left: 400px; right: 50px; top: 470px; font-size: 104px; line-height: .88; }
+  .fecha { position: absolute; left: 70px; right: 70px; top: 850px; text-align: center; font-size: 52px; font-weight: 800; }
+  .fecha b { color: #B21F33; }
+
+</style>
+<div id="root" data-composition-id="c3-navidad" data-width="1080" data-height="1080">
+  <div class="escena">
+
+    <svg class="cordel" viewBox="0 0 1080 200" fill="none"><path id="c3-cuerda" d="M-20 20 Q540 240 1100 20" stroke="#1E1A3C" stroke-width="5" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+    <div class="med" id="c3-m1" style="left:120px; top:60px; width:210px; --tono:#FFC53D"><i class="hilo" style="height:70px; background:#1E1A3C"></i><i class="tapa" style="background:#1E1A3C"></i><div class="cuerpo"><div class="bola"><img src="assets/img/adorno-galleta-jengibre.jpg" alt=""></div></div></div>
+    <div class="med" id="c3-m2" style="left:435px; top:120px; width:210px; --tono:#F48FB1"><i class="hilo" style="height:40px; background:#1E1A3C"></i><i class="tapa" style="background:#1E1A3C"></i><div class="cuerpo"><div class="bola"><img src="assets/img/adorno-varita-luna.jpg" alt=""></div></div></div>
+    <div class="med" id="c3-m3" style="left:750px; top:60px; width:210px; --tono:#12A5A0"><i class="hilo" style="height:70px; background:#1E1A3C"></i><i class="tapa" style="background:#1E1A3C"></i><div class="cuerpo"><div class="bola"><img src="assets/img/adorno-pececito.jpg" alt=""></div></div></div>
+    <img class="logo" id="c3-logo" src="assets/sello-color.svg" alt="">
+    <div class="nombre disp"><span class="renglon"><span id="c3-n1">Elizabeth</span></span><span class="renglon"><span id="c3-n2">Creations</span></span></div>
+    <p class="fecha" id="c3-fecha">Pedidos de Navidad hasta el <b>15 de noviembre</b></p>
+
+    <div class="grano"></div>
+  </div>
+</div>
+<script>
+  (function () {
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo(".escena", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.45, ease: "expo.out" }, 0);
+    
+    tl.fromTo("#c3-cuerda", { attr: { "stroke-dashoffset": 1 } }, { attr: { "stroke-dashoffset": 0 }, duration: 0.6, ease: "power2.inOut" }, 0.15);
+    tl.fromTo(["#c3-m1", "#c3-m2", "#c3-m3"], { y: -500 }, { y: 0, duration: 0.5, ease: "power3.out", stagger: 0.1 }, 0.35);
+    tl.fromTo("#c3-m1", { rotation: 24 }, { rotation: -13.2, duration: 0.5, ease: "sine.inOut" }, 0.85);
+    tl.to("#c3-m1", { rotation: 7.2, duration: 0.45, ease: "sine.inOut" }, 1.35);
+    tl.to("#c3-m1", { rotation: -3.4, duration: 0.40, ease: "sine.inOut" }, 1.80);
+    tl.to("#c3-m1", { rotation: 0, duration: 0.40, ease: "sine.out" }, 2.20);
+    tl.fromTo("#c3-m2", { rotation: -20 }, { rotation: 11.0, duration: 0.5, ease: "sine.inOut" }, 0.95);
+    tl.to("#c3-m2", { rotation: -6.0, duration: 0.45, ease: "sine.inOut" }, 1.45);
+    tl.to("#c3-m2", { rotation: 2.8, duration: 0.40, ease: "sine.inOut" }, 1.90);
+    tl.to("#c3-m2", { rotation: 0, duration: 0.40, ease: "sine.out" }, 2.30);
+    tl.fromTo("#c3-m3", { rotation: 22 }, { rotation: -12.1, duration: 0.5, ease: "sine.inOut" }, 1.05);
+    tl.to("#c3-m3", { rotation: 6.6, duration: 0.45, ease: "sine.inOut" }, 1.55);
+    tl.to("#c3-m3", { rotation: -3.1, duration: 0.40, ease: "sine.inOut" }, 2.00);
+    tl.to("#c3-m3", { rotation: 0, duration: 0.40, ease: "sine.out" }, 2.40);
+    tl.fromTo("#c3-logo", { scale: 0, rotation: -40 }, { scale: 1, rotation: 0, duration: 0.7, ease: "back.out(1.8)" }, 0.6);
+    tl.fromTo("#c3-n1", { yPercent: 110 }, { yPercent: 0, duration: 0.6, ease: "expo.out" }, 0.8);
+    tl.fromTo("#c3-n2", { yPercent: 110 }, { yPercent: 0, duration: 0.6, ease: "expo.out" }, 0.92);
+    tl.fromTo("#c3-fecha", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 1.3);
+
+    window.__timelines["c3-navidad"] = tl;
+  })();
+</script>
+</template>
+</body>
+</html>

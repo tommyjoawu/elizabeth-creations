@@ -1,0 +1,311 @@
+/* ============================================================================
+   LA OBERTURA — el tendedero de adornos
+   ========================================================================== */
+@layer components {
+  /* El cordel es una curva cuadrática con los extremos a `A` y el control a
+     `A + 2S`, en unidades del alto del SVG: la flecha de la curva a la
+     altura `p` (0 a 1) es `A + 4·S·p·(1 − p)`. Con A = 20% y S = 60% del alto,
+     el adorno en `p` se engancha a `alto × (0.2 + 2.4·p·(1 − p))`. Esa misma
+     cuenta vive en `top` de `.e-adorno`: si se cambia el cordel, se cambia
+     acá y allá, en ningún otro lado. */
+  .e-obertura {
+    --cordel-arriba: 4.25rem;
+    --cordel-alto: 6.5rem;
+    --escala: 0.52;
+    transition: background-color 0.9s var(--ease-fluido);
+  }
+  @media (min-width: 640px)  { .e-obertura { --cordel-alto: 8rem;  --escala: 0.72; } }
+  @media (min-width: 1024px) { .e-obertura { --cordel-arriba: 4.75rem; --cordel-alto: 9.5rem; --escala: 0.86; } }
+  @media (min-width: 1440px) { .e-obertura { --cordel-alto: 10.5rem; --escala: 1; } }
+
+  .e-tendedero {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    color: #1E1A3C;
+  }
+  .e-tendedero__cordel {
+    position: absolute;
+    left: 0;
+    top: var(--cordel-arriba);
+    width: 100%;
+    height: var(--cordel-alto);
+    overflow: visible;
+  }
+
+  /* ── Un adorno ─────────────────────────────────────────────────────────
+     El elemento se ubica en su punto del cordel; adentro, tres capas: el
+     empujón (GSAP), el vaivén (CSS) y el adorno. Cada una gira desde ARRIBA,
+     desde el nudo, que es donde gira algo que cuelga. */
+  .e-adorno {
+    --t: calc(var(--tam) * var(--escala) * 1rem);
+    --p-actual: var(--p);
+    position: absolute;
+    z-index: 1;
+    left: calc(var(--p-actual) * 100%);
+    top: calc(var(--cordel-arriba) + var(--cordel-alto) * (0.2 + 2.4 * var(--p-actual) * (1 - var(--p-actual))));
+    width: var(--t);
+    margin-left: calc(var(--t) / -2);
+    pointer-events: none;
+  }
+  /* En el celular caben cuatro, en su propia posición (`--px`). */
+  @media (max-width: 1023.98px) {
+    .e-adorno { --p-actual: var(--px); }
+    .e-adorno--amplio { display: none; }
+  }
+
+  .e-adorno__impulso,
+  .e-adorno__mecer {
+    display: block;
+    transform-origin: 50% 0;
+  }
+
+  .e-adorno__hilo {
+    display: block;
+    width: 1.5px;
+    height: calc(var(--largo) * var(--escala) * 1rem);
+    margin-inline: auto;
+    background: currentColor;
+  }
+
+  /* La tapa: el casquillo con su argolla, como en una esfera de verdad. */
+  .e-adorno__tapa {
+    position: relative;
+    display: block;
+    width: 30%;
+    height: calc(var(--t) * 0.13);
+    margin-inline: auto;
+    border-radius: 0.35rem 0.35rem 0.2rem 0.2rem;
+    background:
+      repeating-linear-gradient(90deg, rgb(255 255 255 / 0.22) 0 2px, transparent 2px 6px),
+      #1E1A3C;
+  }
+  .e-adorno__tapa::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 100%;
+    width: 0.7rem;
+    height: 0.7rem;
+    margin-left: -0.35rem;
+    margin-bottom: -0.3rem;
+    border: 1.5px solid #1E1A3C;
+    border-radius: 999px;
+  }
+
+  /* ── El cuerpo y su sombra ─────────────────────────────────────────────
+     Plano, como un recorte de papel pintado: sin brillo ni sombra
+     difuminada. Lo despega del fondo la misma sombra dura de toda la
+     página, dibujada por el `::before` del cuerpo con la MISMA silueta que
+     la bola (una `filter: drop-shadow` en el adorno entero le daría sombra
+     también al hilo). */
+  .e-adorno__cuerpo {
+    position: relative;
+    display: block;
+    pointer-events: auto;
+    border-radius: 999px;
+  }
+  .e-adorno__cuerpo::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    translate: calc(var(--t) * 0.035) calc(var(--t) * 0.045);
+    border-radius: inherit;
+    background: #1E1A3C;
+  }
+
+  .e-adorno__bola {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--tono);
+    box-shadow: inset 0 0 0 1.5px #1E1A3C;
+  }
+  .e-adorno--capsula .e-adorno__bola { aspect-ratio: 0.72; }
+
+  /* La roseta: las que llevan foto no son un círculo —un círculo con una
+     foto se lee como un avatar—, sino un medallón festoneado del color de
+     su pieza con la foto engastada al medio, con su filo de tinta. */
+  .e-adorno__cuerpo--roseta::before,
+  .e-adorno__bola--roseta {
+    border-radius: 0;
+    box-shadow: none;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns=%27http%3A//www.w3.org/2000/svg%27 viewBox=%27-1 -1 2 2%27%3E%3Ccircle r=%270.82%27/%3E%3Ccircle cx=%270.800%27 cy=%270.000%27 r=%270.2%27/%3E%3Ccircle cx=%270.721%27 cy=%270.347%27 r=%270.2%27/%3E%3Ccircle cx=%270.499%27 cy=%270.625%27 r=%270.2%27/%3E%3Ccircle cx=%270.178%27 cy=%270.780%27 r=%270.2%27/%3E%3Ccircle cx=%27-0.178%27 cy=%270.780%27 r=%270.2%27/%3E%3Ccircle cx=%27-0.499%27 cy=%270.625%27 r=%270.2%27/%3E%3Ccircle cx=%27-0.721%27 cy=%270.347%27 r=%270.2%27/%3E%3Ccircle cx=%27-0.800%27 cy=%270.000%27 r=%270.2%27/%3E%3Ccircle cx=%27-0.721%27 cy=%27-0.347%27 r=%270.2%27/%3E%3Ccircle cx=%27-0.499%27 cy=%27-0.625%27 r=%270.2%27/%3E%3Ccircle cx=%27-0.178%27 cy=%27-0.780%27 r=%270.2%27/%3E%3Ccircle cx=%270.178%27 cy=%27-0.780%27 r=%270.2%27/%3E%3Ccircle cx=%270.499%27 cy=%27-0.625%27 r=%270.2%27/%3E%3Ccircle cx=%270.721%27 cy=%27-0.347%27 r=%270.2%27/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns=%27http%3A//www.w3.org/2000/svg%27 viewBox=%27-1 -1 2 2%27%3E%3Ccircle r=%270.82%27/%3E%3Ccircle cx=%270.800%27 cy=%270.000%27 r=%270.2%27/%3E%3Ccircle cx=%270.721%27 cy=%270.347%27 r=%270.2%27/%3E%3Ccircle cx=%270.499%27 cy=%270.625%27 r=%270.2%27/%3E%3Ccircle cx=%270.178%27 cy=%270.780%27 r=%270.2%27/%3E%3Ccircle cx=%27-0.178%27 cy=%270.780%27 r=%270.2%27/%3E%3Ccircle cx=%27-0.499%27 cy=%270.625%27 r=%270.2%27/%3E%3Ccircle cx=%27-0.721%27 cy=%270.347%27 r=%270.2%27/%3E%3Ccircle cx=%27-0.800%27 cy=%270.000%27 r=%270.2%27/%3E%3Ccircle cx=%27-0.721%27 cy=%27-0.347%27 r=%270.2%27/%3E%3Ccircle cx=%27-0.499%27 cy=%27-0.625%27 r=%270.2%27/%3E%3Ccircle cx=%27-0.178%27 cy=%27-0.780%27 r=%270.2%27/%3E%3Ccircle cx=%270.178%27 cy=%27-0.780%27 r=%270.2%27/%3E%3Ccircle cx=%270.499%27 cy=%27-0.625%27 r=%270.2%27/%3E%3Ccircle cx=%270.721%27 cy=%27-0.347%27 r=%270.2%27/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  }
+  .e-adorno__bola img {
+    position: absolute;
+    inset: 9%;
+    width: 82%;
+    height: 82%;
+    border-radius: 999px;
+    object-fit: cover;
+    box-shadow: 0 0 0 1.5px #1E1A3C;
+  }
+
+  /* Los tonos: el medallón, y el papel del hero cuando el adorno se toca. */
+  .e-adorno[data-tono="mango"]    { --tono: #FFC53D; }
+  .e-adorno[data-tono="papaya"]   { --tono: #F2711C; }
+  .e-adorno[data-tono="turquesa"] { --tono: #12A5A0; }
+  .e-adorno[data-tono="hibisco"]  { --tono: #F48FB1; }
+
+  /* Los pintados, planos, con motivos de arte popular: una faja de puntos,
+     lunares y una flor de ocho pétalos. */
+  .e-pintura--rayas {
+    background:
+      radial-gradient(circle, #FBF1E1 0 0.14rem, transparent 0.16rem) 0.2rem 50% / 0.72rem 0.72rem repeat-x,
+      linear-gradient(to bottom,
+        #FFC53D 0 34%, #1E1A3C 34% 36%, #D3253C 36% 64%, #1E1A3C 64% 66%, #FFC53D 66% 100%);
+  }
+  .e-pintura--lunares {
+    background:
+      radial-gradient(circle, #FBF1E1 0 28%, transparent 31%) 0 0 / 1.3rem 1.3rem,
+      radial-gradient(circle, #FFC53D 0 22%, transparent 25%) 0.65rem 0.65rem / 1.3rem 1.3rem,
+      #12A5A0;
+  }
+  .e-pintura--flor {
+    background: url("data:image/svg+xml,%3Csvg xmlns=%27http%3A//www.w3.org/2000/svg%27 viewBox=%27-1 -1 2 2%27%3E%3Crect x=%27-1%27 y=%27-1%27 width=%272%27 height=%272%27 fill=%27%2312A5A0%27/%3E%3Cg fill=%27%23FBF1E1%27%3E%3Cellipse cy=%27-0.44%27 rx=%270.16%27 ry=%270.3%27 transform=%27rotate(0)%27/%3E%3Cellipse cy=%27-0.44%27 rx=%270.16%27 ry=%270.3%27 transform=%27rotate(45)%27/%3E%3Cellipse cy=%27-0.44%27 rx=%270.16%27 ry=%270.3%27 transform=%27rotate(90)%27/%3E%3Cellipse cy=%27-0.44%27 rx=%270.16%27 ry=%270.3%27 transform=%27rotate(135)%27/%3E%3Cellipse cy=%27-0.44%27 rx=%270.16%27 ry=%270.3%27 transform=%27rotate(180)%27/%3E%3Cellipse cy=%27-0.44%27 rx=%270.16%27 ry=%270.3%27 transform=%27rotate(225)%27/%3E%3Cellipse cy=%27-0.44%27 rx=%270.16%27 ry=%270.3%27 transform=%27rotate(270)%27/%3E%3Cellipse cy=%27-0.44%27 rx=%270.16%27 ry=%270.3%27 transform=%27rotate(315)%27/%3E%3C/g%3E%3Cg fill=%27%23D3253C%27%3E%3Ccircle cx=%270.237%27 cy=%27-0.573%27 r=%270.07%27/%3E%3Ccircle cx=%270.573%27 cy=%27-0.237%27 r=%270.07%27/%3E%3Ccircle cx=%270.573%27 cy=%270.237%27 r=%270.07%27/%3E%3Ccircle cx=%270.237%27 cy=%270.573%27 r=%270.07%27/%3E%3Ccircle cx=%27-0.237%27 cy=%270.573%27 r=%270.07%27/%3E%3Ccircle cx=%27-0.573%27 cy=%270.237%27 r=%270.07%27/%3E%3Ccircle cx=%27-0.573%27 cy=%27-0.237%27 r=%270.07%27/%3E%3Ccircle cx=%27-0.237%27 cy=%27-0.573%27 r=%270.07%27/%3E%3C/g%3E%3Ccircle r=%270.2%27 fill=%27%23FFC53D%27/%3E%3Ccircle r=%270.07%27 fill=%27%231E1A3C%27/%3E%3C/svg%3E") center / cover;
+  }
+
+  /* ── El vaivén ─────────────────────────────────────────────────────────
+     Un péndulo: cada adorno con su amplitud y su período, desfasados, para
+     que el tendedero nunca se mueva al unísono como un solo objeto. Curva
+     senoidal a propósito: es la que hace un péndulo de verdad. */
+  @media (prefers-reduced-motion: no-preference) {
+    .e-adorno__mecer {
+      animation: e-mecer calc(3.4s + var(--i) * 0.45s) cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+      animation-delay: calc(var(--i) * -0.9s);
+    }
+    /* Al tocarlo, un tilín: una oscilación grande que se apaga. */
+    @media (hover: hover) {
+      .e-adorno:hover .e-adorno__mecer { animation: e-tilin 1.6s var(--ease-salida); }
+    }
+  }
+  @keyframes e-mecer {
+    from { rotate: calc(-2deg - var(--i) * 0.3deg); }
+    to   { rotate: calc(2deg + var(--i) * 0.3deg); }
+  }
+  @keyframes e-tilin {
+    0%   { rotate: 0deg; }
+    18%  { rotate: 9deg; }
+    40%  { rotate: -6deg; }
+    62%  { rotate: 3.5deg; }
+    82%  { rotate: -1.5deg; }
+    100% { rotate: 0deg; }
+  }
+  /* Quietos, cada uno con su inclinación: se ven colgados, no pegados. */
+  @media (prefers-reduced-motion: reduce) {
+    .e-adorno__mecer { rotate: calc((var(--i) - 2.5) * 1.2deg); }
+  }
+
+  /* ── El papel se tiñe del adorno que se toca ───────────────────────────
+     Sólo los colores con los que el titular añil sigue pasando AA (mango
+     10.5, turquesa 5.5, hibisco 7.4, papaya 5.6). El texto tenue pasa a
+     añil: el gris-lila del papel no pasa sobre ninguno. Sobre mango el
+     botón mango pasa a crema, para no desaparecer en su propio fondo. */
+  .e-obertura:has(.e-adorno[data-tono="mango"]:is(:hover, :focus-visible))    { --fondo: #FFC53D; --tenue: #1E1A3C; --boton: #FBF1E1; }
+  .e-obertura:has(.e-adorno[data-tono="papaya"]:is(:hover, :focus-visible))   { --fondo: #F2711C; --tenue: #1E1A3C; }
+  .e-obertura:has(.e-adorno[data-tono="turquesa"]:is(:hover, :focus-visible)) { --fondo: #12A5A0; --tenue: #1E1A3C; }
+  .e-obertura:has(.e-adorno[data-tono="hibisco"]:is(:hover, :focus-visible))  { --fondo: #F48FB1; --tenue: #1E1A3C; }
+
+  /* Al tocarlo, el adorno crece un poco hacia el que lo mira. */
+  .e-adorno__cuerpo { transition: scale 0.6s var(--ease-rebote); }
+  .e-adorno:is(:hover, :focus-visible) .e-adorno__cuerpo { scale: 1.06; }
+  /* El papel del hero toma el color del adorno: la roseta pasa a crema,
+     porque de su propio color desaparecería contra el fondo. */
+  .e-adorno:is(:hover, :focus-visible) .e-adorno__bola--roseta { background: #FBF1E1; }
+
+  /* El foco lo dibuja el cuerpo, no la caja del enlace (que abarca el hilo),
+     y no la bola: la roseta es una máscara, y la máscara recortaría el
+     contorno del foco. */
+  .e-adorno:focus-visible { outline: none; }
+  .e-adorno:focus-visible .e-adorno__cuerpo { outline: 3px solid #1E1A3C; outline-offset: 6px; border-radius: 999px; }
+
+  /* ── La nota a mano ────────────────────────────────────────────────────
+     Shantell Sans, torcida, con su flecha: la letra de Erika en el margen. */
+  .e-nota {
+    font-family: var(--font-mano);
+    font-weight: 500;
+    line-height: 1.1;
+    color: #1E1A3C;
+  }
+  .e-nota--obertura {
+    position: absolute;
+    display: none;
+    left: calc(62% - 2rem);
+    top: calc(var(--cordel-arriba) + var(--cordel-alto) * 1.02);
+    width: 11rem;
+    font-size: 1.2rem;
+    rotate: -6deg;
+  }
+  .e-nota--obertura svg { width: 4.5rem; margin: 0.35rem 0 0 5rem; }
+  @media (min-width: 1280px) and (pointer: fine) { .e-nota--obertura { display: block; } }
+
+  /* ── El texto ──────────────────────────────────────────────────────────
+     Abajo del tendedero, apoyado al pie de la pantalla: el aire de arriba
+     es de los adornos. */
+  .e-obertura__texto {
+    position: relative;
+    z-index: 2;
+    padding-top: calc(var(--cordel-arriba) + var(--cordel-alto) + 9rem);
+  }
+  /* En el celular los medallones cuelgan más abajo que el cordel (hilos
+     largos en las puntas) y la etiqueta de la fecha chocaba con ellos:
+     el texto baja lo que mide un medallón. */
+  @media (min-width: 1024px) {
+    .e-obertura__texto { padding-top: calc(var(--cordel-arriba) + var(--cordel-alto) + 7.25rem); }
+  }
+  @media (max-width: 639.98px) {
+    .e-obertura__texto { padding-top: calc(var(--cordel-arriba) + var(--cordel-alto) + 13.5rem); }
+  }
+  .e-obertura__texto {
+    padding-bottom: clamp(3rem, 9vh, 6.5rem);
+    /* La caja del texto cubre el hero entero, adornos incluidos: su aire
+       deja pasar el puntero, y sólo lo que tiene adentro lo recibe. */
+    pointer-events: none;
+  }
+  .e-obertura__texto > * { pointer-events: auto; }
+
+  /* En el titular la píldora va pegada a sus palabras: los espacios del HTML
+     ya separan, y el margen de la píldora común sumaba un hueco de más. */
+  .e-pastilla--video { width: 1.7em; margin-inline: 0; }
+  .e-pastilla video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  /* La varita es vertical y la píldora apaisada: se encuadra la luna, que
+     está en el tercio de arriba, y no el palito del centro. */
+  .e-pastilla--video img, .e-pastilla--video video { object-position: 50% 30%; }
+}
+
+/* ── El titular: el nombre ─────────────────────────────────────────────
+   "Elizabeth" y "Creations" en su propio renglón, al tamaño más grande de
+   la página: Caprasimo es ancha, y 9 letras a 15.5vw llenan el teléfono sin
+   cortarse; en escritorio se frena en 10.5rem para dejar los costados a los
+   medallones. El saludo va chico y en la mano de Erika; "Creations" en el
+   rojo honda (6:1 sobre el crema) para que el nombre no sea un bloque. */
+@layer components {
+  .e-titular { line-height: 0.9; letter-spacing: -0.025em; }
+  .e-titular__saludo {
+    font-family: var(--font-mano);
+    font-size: clamp(1.35rem, 2.4vw, 2.1rem);
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 1.2;
+    color: var(--acento);
+  }
+  .e-titular__saludo > span { rotate: -3deg; }
+  .e-titular__marca { font-size: clamp(3.5rem, 15.5vw, 9.25rem); }
+  .e-titular__marca + .e-titular__marca { color: var(--acento); margin-top: -0.04em; }
+  .e-obertura:has(.e-adorno:is(:hover, :focus-visible)) .e-titular__marca + .e-titular__marca,
+  .e-obertura:has(.e-adorno:is(:hover, :focus-visible)) .e-titular__saludo { color: var(--texto); }
+
+  .e-titular__bajada {
+    max-width: 22ch;
+    font-size: clamp(1.55rem, 3vw, 2.6rem);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  @media (min-width: 640px) { .e-titular__bajada { max-width: none; } }
+}

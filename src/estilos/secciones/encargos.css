@@ -1,0 +1,117 @@
+/* ============================================================================
+   LOS ENCARGOS — la ficha de taller sobre el bloque mango
+   ========================================================================== */
+@layer components {
+  /* ── Los stickers de la ficha ──────────────────────────────────────────
+     Una estrella y una flor de arte popular pegadas en dos esquinas de la
+     ficha, como se pegan en un cuaderno. Quietas: pegadas, no flotando. */
+  .e-confeti { position: absolute; inset: 0; pointer-events: none; }
+  .e-confeti__pieza {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: var(--t);
+    height: var(--t);
+    fill: var(--c);
+    rotate: var(--g);
+    filter: drop-shadow(0.15rem 0.18rem 0 #1E1A3C);
+  }
+  @media (max-width: 639.98px) {
+    .e-confeti__pieza { width: calc(var(--t) * 0.72); height: calc(var(--t) * 0.72); }
+  }
+
+  .e-encargo__numero {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 999px;
+    background: #FBF1E1;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    line-height: 1;
+    box-shadow: 0 0 0 1.5px #1E1A3C, 0.18rem 0.2rem 0 #1E1A3C;
+  }
+
+  /* ── La ficha ──────────────────────────────────────────────────────────
+     Papel rayado con el margen rojo de un cuaderno, borde de tinta y la
+     sombra dura de un papel apoyado sobre otro. Adentro valen los colores
+     de rol del papel: la ficha es un pedazo de capítulo claro sobre el
+     mango, con sus mismos contrastes medidos. */
+  .e-ficha {
+    --fondo: #FFF9EF;
+    --superficie: #FFFFFF;
+    --texto: #1E1A3C;
+    --tenue: #3B3557;
+    --acento: #B21F33;
+    --linea: rgb(30 26 60 / 0.2);
+    --linea-fuerte: #1E1A3C;
+    --boton: #FFC53D;
+    --boton-texto: #1E1A3C;
+    --boton-borde: #1E1A3C;
+    --alto: #B21F33;
+    position: relative;
+    isolation: isolate;
+    padding: 1.5rem 1.25rem 1.75rem 2rem;
+    border-radius: 1.5rem;
+    color: var(--texto);
+  }
+  /* El papel es una capa aparte, y es ELLA la que va torcida: si se torciera
+     el formulario, se torcería también lo que se escribe en los campos. */
+  .e-ficha::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background:
+      linear-gradient(90deg, transparent 1.15rem, rgb(211 37 60 / 0.45) 1.15rem calc(1.15rem + 1.5px), transparent 0),
+      repeating-linear-gradient(to bottom, transparent 0 2.1rem, rgb(18 165 160 / 0.14) 2.1rem calc(2.1rem + 1px)),
+      var(--fondo);
+    box-shadow: 0 0 0 1.5px #1E1A3C, 0.7rem 0.8rem 0 #1E1A3C;
+  }
+  @media (min-width: 640px) { .e-ficha { padding: 2.25rem 2.25rem 2.5rem 3.25rem; } }
+  @media (min-width: 1024px) { .e-ficha::before { rotate: 1.4deg; } }
+
+  .e-ficha__encabezado {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+    font-size: 1.65rem;
+    line-height: 1.1;
+  }
+  .e-ficha__sello {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: 999px;
+    background: #D3253C;
+    color: #FBF1E1;
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    rotate: -12deg;
+    box-shadow: 0 0 0 3px #FFF9EF, 0 0 0 4.5px #D3253C;
+  }
+
+  /* ── La burbuja ────────────────────────────────────────────────────────
+     El mensaje como llega: con su colita y los renglones tal cual. */
+  .e-burbuja { margin-top: 1.5rem; }
+  .e-burbuja__texto {
+    position: relative;
+    max-width: 30rem;
+    min-height: 3rem;
+    padding: 0.85rem 1rem;
+    border-radius: 1.1rem 1.1rem 1.1rem 0.25rem;
+    background: #D9F2EE;
+    font-size: 0.98rem;
+    line-height: 1.5;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+    box-shadow: inset 0 0 0 1.5px rgb(30 26 60 / 0.18);
+  }
+}

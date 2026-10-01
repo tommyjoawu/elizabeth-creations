@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="pieza" content="1080x1350">
+<title>Feed · ¿Luna o estrella? Tú escoges</title>
+<link rel="stylesheet" href="../marca/marca.css">
+<style>
+  .pieza { width: 1080px; height: 1350px; }
+
+  .pieza { background: var(--lila); }
+  h1 { position: absolute; left: 70px; top: 196px; width: 960px; font-family: var(--disp); font-weight: 400; font-size: 118px; line-height: .94; letter-spacing: -.02em; }
+  .p1 { left: 80px; top: 470px; width: 520px; height: 620px; rotate: -3deg; }
+  .p1 .cinta { left: 195px; top: -22px; rotate: -4deg; }
+  .opciones { position: absolute; left: 670px; top: 520px; width: 350px; display: grid; gap: 26px; }
+  .op { background: var(--papel); border-radius: 30px; padding: 22px 26px; display: flex; align-items: center; gap: 20px; box-shadow: 0 0 0 4px var(--anil), 9px 11px 0 var(--anil); }
+  .op svg, .op img { width: 92px; height: 92px; flex: none; }
+  .op b { font-family: var(--disp); font-weight: 400; font-size: 52px; line-height: 1; }
+  .op.color { flex-direction: column; align-items: flex-start; gap: 14px; }
+  .op.color b { font-size: 40px; }
+  .gotas { display: flex; gap: 12px; }
+  .gotas i { width: 46px; height: 46px; border-radius: 99px; box-shadow: inset 0 0 0 3px var(--anil); outline: 3px dashed var(--anil); outline-offset: -11px; }
+  .pie { position: absolute; left: 70px; right: 70px; bottom: 54px; display: flex; justify-content: space-between; align-items: center; }
+
+</style>
+</head>
+<body>
+<div class="pieza grano fondo-bolitas">
+
+  <h1>¿Luna o estrella? Tú escoges.</h1>
+  <figure class="polaroid p1"><span class="cinta"></span><div class="foto"><img src="../marca/img/varita-luna-ventana.jpg" alt=""></div><figcaption>varita mágica de luna</figcaption></figure>
+  <div class="opciones">
+    <div class="op"><svg viewBox="0 0 64 64"><path d="M41 8a24 24 0 1 0 15 38A20 20 0 0 1 41 8z" fill="#B79BE6" stroke="#1E1A3C" stroke-width="3" stroke-linejoin="round"/><path d="M38 13a19 19 0 1 0 12 30" fill="none" stroke="#1E1A3C" stroke-width="1.8" stroke-dasharray="3 3"/></svg><b>Luna</b></div>
+    <div class="op"><img src="../marca/sello.svg" alt=""><b>Estrella</b></div>
+    <div class="op color"><b>+ el color que quieras</b><div class="gotas"><i style="background:#B79BE6"></i><i style="background:#F48FB1"></i><i style="background:#FFC53D"></i><i style="background:#12A5A0"></i><i style="background:#FFF9EF"></i></div></div>
+  </div>
+  <div class="pie"><div class="lock"><img src="../marca/sello.svg" alt=""><div><b>Elizabeth<br>Creations</b><span>Hecho a mano en La Chorrera</span></div></div><span class="cta oscuro">Pide tu varita<span class="isla"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 20.5l1.3-4.6A8.5 8.5 0 1 1 8.2 19.3z"/><path d="M9 8.6c.2-.5.5-.6.8-.6h.5c.2 0 .4.1.5.4l.7 1.6c.1.2 0 .5-.1.7l-.5.6c-.1.2-.1.4 0 .6.6 1 1.4 1.8 2.4 2.4.2.1.4.1.6 0l.6-.5c.2-.2.5-.2.7-.1l1.6.7c.3.1.4.3.4.5v.5c0 .3-.1.6-.6.8-.6.3-1.6.5-3-.2a9 9 0 0 1-3.9-3.9c-.7-1.4-.5-2.4-.2-3z"/></svg></span></span></div>
+
+</div>
+</body>
+</html>

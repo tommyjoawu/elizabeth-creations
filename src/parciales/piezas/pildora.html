@@ -1,0 +1,12 @@
+{{!--
+  La píldora de WhatsApp del celular: en lugar de la burbuja verde genérica
+  de la esquina (docs/research.md §7), un botón de la marca fijo abajo.
+
+  Aparece cuando el hero se va —ahí el botón grande ya está a la vista— y
+  se esconde cuando llega el cierre, que tiene el suyo. Lo decide el
+  controlador `pildora`; sin JavaScript no aparece nunca: la isla y los
+  botones de cada sección alcanzan.
+--}}
+<div class="e-pildora" data-controller="pildora" data-pildora-oculta="true" inert>
+  {{> piezas/boton texto="Haz tu pedido por WhatsApp" href=(whatsapp) glifo="whatsapp" externo=true clase="w-full justify-between"}}
+</div>

@@ -1,0 +1,248 @@
+{{!--
+  Las piezas: la galería colgada, con el pedido por sets.
+
+  Erika la escogió de la variante "Noche de Navidad" (01-10-2026): las
+  piezas cuelgan de un cable con pinzas de madera y la galería avanza de lado
+  mientras se baja la página. Aquí va con la paleta de la portada: la noche
+  añil con sus lucecitas y sus bastoncitos de caramelo de fondo, tarjetas de
+  papel crema con la sombra dura del color de cada pieza.
+
+  Las piezas van agrupadas en SETS (productos.json): primero el letrero del
+  set, colgado con dos pinzas, con la foto de sus tres piezas juntas, y
+  detrás sus piezas. Todos los sets son de 3 piezas y cuestan $15.00 (Erika,
+  01-10-2026); el letrero dice eso y cuánto saldría por separado. La galleta
+  de jengibre va en los dos sets de Navidad, así que su tarjeta sale dos
+  veces: las dos son la MISMA pieza para el pedido (mismo `data-slug`), y
+  el `id` lleva el set para no repetirse.
+  Las varitas no se agregan sueltas desde aquí: su forma y su color se
+  escogen en la sección de las varitas, y su tarjeta lleva hasta allá. Las
+  guirnaldas todavía no tienen foto: su tarjeta lleva la ranura punteada
+  "Foto muy pronto", y la de nombre pide el nombre.
+
+  Tres capas, cada una con su dueño:
+    · Sin JavaScript: la fila se desliza con el dedo (overflow-x), cada
+      pieza tiene su "Pedir por WhatsApp" y cada set su "Pedir el set
+      completo", los dos con el mensaje ya escrito.
+    · Controlador `pedido`: aparecen los botones "Agregar al pedido" y el
+      letrero del set pasa a "Seleccionar el set completo"; abajo, el resumen
+      (piezas, cuántas, total o "por confirmar") que manda la lista entera
+      por WhatsApp con la nota del abono.
+    · Controlador `galeria`: con movimiento, la sección se fija y la fila
+      avanza de lado con el scroll; las piezas se mecen con la velocidad
+      (péndulo amortiguado, el mismo de la variante). Con reduced-motion no
+      se fija ni se mece: queda la fila deslizable.
+--}}
+<section id="temporada" class="e-noche e-motivo e-motivo--dulces e-feston e-galeria relative isolate overflow-clip"
+         aria-labelledby="titulo-temporada"
+         data-controller="pedido galeria"
+         data-pedido-numero-value="{{whatsappBase}}"
+         data-pedido-plantilla-value="{{marca.mensajePedido}}"
+         data-pedido-abono-value="{{marca.politicas.abonoPorcentaje}}"
+         data-action="pedido:agregar@window->pedido#agregar pedido:quitar@window->pedido#quitar pedido:estado@window->pedido#avisar">
+  <div class="e-galeria__fijo" data-galeria-target="fijo">
+    {{!-- Las luces: decorativas, y encendidas desde el principio si no hay
+        JavaScript o si hay `reduced-motion`. --}}
+    <div class="e-luces" data-controller="revela" aria-hidden="true">
+      <svg class="e-luces__cordel" viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false">
+        <path d="M-2 20 Q50 140 102 20" fill="none" stroke="currentColor" stroke-width="1.5"
+              vector-effect="non-scaling-stroke"/>
+      </svg>
+      {{#each (rango 17)}}
+        <span class="e-luz" style="--i: {{this}}"></span>
+      {{/each}}
+    </div>
+
+    <div class="e-galeria__ventana" data-galeria-target="ventana">
+      <div class="e-galeria__pista" data-galeria-target="pista">
+        {{!-- La cabeza: arriba de la fila cuando no hay galería fijada; con
+            ella, es el primer panel de la fila y deja toda la altura a las
+            fotos. --}}
+        <div class="e-galeria__cabeza">
+          <h2 id="titulo-temporada" class="font-display text-seccion">Las piezas</h2>
+          <p class="mt-5 max-w-[36ch] text-entrada text-tenue">
+            Escoge pieza por pieza o pide el set completo. Cada una se hace en {{marca.politicas.tiempo}}.
+          </p>
+          <p class="e-sello-fecha mt-7">
+            <span class="e-sello-fecha__texto">Navidad: pedidos hasta el</span>
+            <strong class="e-sello-fecha__dia font-display">{{marca.politicas.fechaNavidad}}</strong>
+          </p>
+          <p class="e-galeria__pista-nota e-nota mt-6" aria-hidden="true">sigue bajando, van pasando →</p>
+        </div>
+
+        <ul class="e-galeria__tira" role="list" data-controller="carril" data-action="focusin->carril#enfocar">
+          {{#each productos.sets}}
+            {{!-- El letrero del set: cuelga de dos pinzas y dice cuántas
+                piezas trae. Sólo los sets de más de una pieza llevan el botón
+                del set completo. --}}
+            <li class="e-letrero{{#if this.foto}} e-letrero--foto{{/if}}" data-tono="{{this.tono}}">
+              <div class="e-letrero__mece" data-galeria-target="pendulo">
+                <span class="e-pinza e-pinza--izq" aria-hidden="true"></span>
+                <span class="e-pinza e-pinza--der" aria-hidden="true"></span>
+                <div class="e-letrero__tela">
+                  {{#if this.foto}}
+                    {{!-- Las tres piezas juntas, como Erika las arma. --}}
+                    <div class="e-letrero__foto">
+                      {{imagen this.foto alt=this.alt sizes="(min-width: 1024px) 19rem, 72vw"}}
+                    </div>
+                  {{/if}}
+                  <p class="e-letrero__ceja font-mano">{{#if this.precio}}Set de {{this.piezas.length}} piezas{{else}}Se piden por unidad{{/if}}</p>
+                  <h3 class="mt-2 font-display text-[clamp(2rem,3vw,2.6rem)] leading-[0.98]">{{this.nombre}}</h3>
+                  <p class="e-letrero__desc mt-3 text-[1rem] leading-snug">{{this.descripcion}}</p>
+                  {{!-- Sólo un set con precio propio se pide completo: las
+                      varitas y las guirnaldas se escogen una por una. --}}
+                  {{#if this.precio}}
+                    <p class="e-letrero__precio mt-4">
+                      <strong class="font-display">{{precio this.precio}}</strong>
+                      <span>el set completo</span>
+                      <span class="e-letrero__antes">por separado serían {{precio (sumaPrecios this.piezas)}}</span>
+                    </p>
+                    <ul class="e-letrero__lista mt-4" role="list">
+                      {{#each this.piezas}}<li>{{this.nombre}}</li>{{/each}}
+                    </ul>
+                    <p class="mt-5">
+                      <a class="e-boton e-boton--primario e-boton--chico w-full justify-between"
+                         href="{{whatsappSet this}}" target="_blank" rel="noopener"
+                         data-action="pedido#set" data-set="{{this.slug}}" data-set-nombre="{{this.nombre}}" data-precio-set="{{this.precio}}"
+                         data-piezas="{{#each this.piezas}}{{this.slug}}{{#unless @last}} {{/unless}}{{/each}}" data-pedido-target="botonSet">
+                        <span data-texto>Pedir el set completo</span>
+                        {{!-- WhatsApp sin JavaScript (abre el chat); con el
+                            pedido armable, un más (suma al resumen). --}}
+                        <span class="e-boton__isla"><span class="e-icono-wa">{{icono "whatsapp" clase="size-4"}}</span><span class="e-icono-mas">{{icono "mas" clase="size-4"}}</span></span>
+                      </a>
+                    </p>
+                  {{/if}}
+                </div>
+              </div>
+            </li>
+
+            {{#each this.piezas}}
+              <li class="e-pieza{{#unless this.foto}} e-pieza--sin-foto{{/unless}}" data-tono="{{this.tono}}" data-pedido-target="pieza"
+                  data-slug="{{this.slug}}" data-set="{{../slug}}" data-set-nombre="{{../nombre}}" data-nombre="{{this.nombre}}"
+                  {{#if ../precio}}data-precio-set="{{../precio}}"{{/if}}
+                  {{#if (precio this.precio)}}data-precio="{{this.precio}}"{{/if}}
+                  {{#if this.precioHasta}}data-precio-hasta="{{this.precioHasta}}"{{/if}}
+                  {{#if this.colorExtra}}data-color-extra="{{this.colorExtra}}"{{/if}}>
+                <article class="e-pieza__mece" data-galeria-target="pendulo" aria-labelledby="pieza-{{../slug}}-{{this.slug}}">
+                  <span class="e-pinza" aria-hidden="true"></span>
+                  <div class="e-pieza__foto">
+                    {{#if this.foto}}
+                      {{imagen this.foto alt=this.alt sizes="(min-width: 1024px) 26rem, 76vw"}}
+                    {{else}}
+                      {{!-- Sin foto todavía: la ranura punteada de la página,
+                          que nadie confunde con una foto. --}}
+                      <p class="e-hueco e-pieza__hueco">
+                        <span class="e-hueco__titulo">Foto muy pronto</span>
+                        <span class="mt-2 block">{{this.pendiente}}</span>
+                      </p>
+                    {{/if}}
+                    <span class="e-pieza__check" aria-hidden="true">{{icono "estrella" clase="size-4"}}</span>
+                  </div>
+                  <div class="e-pieza__texto">
+                    <div class="e-pieza__fila">
+                      <p class="e-pieza__grupo font-mano">{{../nombre}}</p>
+                      <p class="e-precio">
+                        {{#if this.precioHasta}}
+                          <span class="sr-only">Precio: </span><span class="e-precio__unidad">desde</span>
+                          <strong class="e-precio__valor">{{precio this.precio}}</strong>
+                        {{else if (precio this.precio)}}
+                          <span class="sr-only">Precio: </span><strong class="e-precio__valor">{{precio this.precio}}</strong>
+                          <span class="e-precio__unidad">c/u</span>
+                        {{else}}
+                          <span class="e-precio__falta">Precio: por confirmar</span>
+                        {{/if}}
+                      </p>
+                    </div>
+                    <h3 id="pieza-{{../slug}}-{{this.slug}}" class="mt-1 font-display text-[1.55rem] leading-[1.02]">{{this.nombre}}</h3>
+                    <p class="mt-1.5 text-[0.95rem] leading-snug text-tenue">{{this.material}}</p>
+                    {{#if this.precioHasta}}
+                      <p class="e-pieza__rango mt-1.5">
+                        De {{precio this.precio}} a {{precio this.precioHasta}}.
+                        {{#if this.colorExtra}}Cada color adicional, +{{precio this.colorExtra}}.{{/if}}
+                      </p>
+                    {{/if}}
+                    {{#if this.pideNombre}}
+                      {{!-- El nombre de la guirnalda, que viaja en el pedido.
+                          Sólo con JavaScript: sin él, el enlace de WhatsApp
+                          de abajo abre el chat y el nombre se escribe ahí. --}}
+                      <div class="e-pieza__personal mt-3" data-pedido-target="personal" data-slug="{{this.slug}}" hidden>
+                        <label class="e-pieza__rotulo" for="nombre-{{this.slug}}">¿Qué nombre lleva?</label>
+                        <input class="e-campo e-campo--chico" id="nombre-{{this.slug}}" type="text" maxlength="24" autocomplete="off"
+                               placeholder="Ej.: Sofía" data-pedido-campo="nombre" data-action="input->pedido#personalizar">
+                        {{#if this.colorExtra}}
+                          <label class="e-pieza__extra">
+                            <input type="checkbox" data-pedido-campo="colorExtra" data-action="change->pedido#personalizar">
+                            <span>Un color adicional (+{{precio this.colorExtra}})</span>
+                          </label>
+                        {{/if}}
+                      </div>
+                    {{/if}}
+                    {{!-- Sin JavaScript: el enlace con su texto. Con el pedido
+                        armable, "Agregar" pasa adelante y el enlace se encoge
+                        a un botón redondo con el icono (el texto sigue ahí
+                        para un lector de pantalla). --}}
+                    <div class="e-pieza__acciones mt-4">
+                      {{#if this.personaliza}}
+                        {{!-- La varita se arma en su sección (forma, color,
+                            unidad o docena): este enlace lleva hasta allá con
+                            la forma ya escogida. Funciona sin JavaScript. --}}
+                        <a class="e-agregar e-agregar--ir" href="#varitas" data-action="pedido#irAVaritas" data-forma="{{this.forma}}">
+                          <span>Escoger color<span class="e-agregar__mas"> y cantidad</span></span>
+                          {{icono "flecha" clase="size-4"}}
+                          <span class="sr-only">: {{this.nombre}}</span>
+                        </a>
+                      {{else}}
+                        <button type="button" class="e-agregar" data-action="pedido#alternar" aria-pressed="false" hidden>
+                          <span class="e-agregar__caja" aria-hidden="true"></span>
+                          <span><span data-texto>Agregar</span><span class="e-agregar__mas" data-mas> al pedido</span></span>
+                          <span class="sr-only">: {{this.nombre}}</span>
+                        </button>
+                      {{/if}}
+                      <a class="e-pieza__wa" href="{{whatsappPieza this.nombre}}" target="_blank" rel="noopener">
+                        <span class="e-pieza__wa-icono" aria-hidden="true">{{icono "whatsapp" clase="size-5"}}</span>
+                        <span class="e-pieza__wa-texto">Pedir sólo esta por WhatsApp<span class="sr-only">: {{this.nombre}}</span></span>
+                      </a>
+                    </div>
+                  </div>
+                </article>
+              </li>
+            {{/each}}
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+
+    {{!-- El resumen del pedido: sólo con JavaScript (sin él, cada pieza y
+        cada set ya tienen su enlace). Va DENTRO de la caja fijada, para que
+        se vea mientras la fila avanza. `aria-live` sólo en la cuenta: el
+        nombre de cada pieza ya lo dijo su botón. --}}
+    <div class="e-contenedor e-resumen__lugar" data-pedido-target="lugar" hidden>
+      <div class="e-resumen" data-pedido-target="resumen" data-vacio="true" role="region" aria-label="Tu pedido">
+        <div class="min-w-0 flex-1">
+          <p class="e-resumen__cuenta">
+            <strong data-pedido-target="cuenta" aria-live="polite">Tu pedido está vacío</strong>
+            <span class="e-resumen__total" data-pedido-target="total"></span>
+          </p>
+          <p class="e-resumen__lista" data-pedido-target="lista">
+            Toca «Agregar al pedido» en cada pieza, o «Seleccionar el set completo».
+          </p>
+        </div>
+        <div class="e-resumen__acciones">
+          <button type="button" class="e-resumen__vaciar" data-action="pedido#vaciar" data-pedido-target="vaciar" hidden>Vaciar</button>
+          <a class="e-boton e-boton--primario e-boton--chico justify-between" href="{{whatsapp}}" target="_blank" rel="noopener"
+             data-pedido-target="enviar" hidden>
+            <span>Enviar<span class="e-resumen__largo"> por WhatsApp</span></span>
+            <span class="e-boton__isla">{{icono "whatsapp" clase="size-4"}}</span>
+          </a>
+        </div>
+        {{!-- El empujoncito honesto: si las piezas sueltas de un set ya
+            cuestan más que el set entero, se dice, con el botón para
+            cambiarlo. Renglón propio, a todo lo ancho del resumen. --}}
+        <p class="e-resumen__pista" data-pedido-target="pista" hidden></p>
+        <p class="e-resumen__abono">
+          <strong class="e-resumen__abono-monto" data-pedido-target="abono" hidden></strong>
+          Todo pedido se separa con el {{marca.politicas.abonoPorcentaje}} % de abono, que no se devuelve.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
