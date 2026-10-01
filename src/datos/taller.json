@@ -2,9 +2,7 @@
   "_nota": "Los pasos del taller, contados con los videos de las manos de Erika haciendo una varita de estrella (01-10-2026, docs/material-erika/2026-10-01/): cada paso lleva el bucle de SU video (`video` sin extensión: hay .webm y .mp4, más `-poster.webp/.jpg`, todo de scripts/procesar-material.sh). `encuadre` es el object-position del video en el marco fijo de escritorio, que recorta el vertical: apunta a donde están las manos. Materiales confirmados: fieltro, bisutería, silicón caliente y costura a mano.",
   "frase": {
     "antes": "Cada pieza empieza con un retazo de fieltro,",
-    "pastilla1": "adorno-estrella-blanca",
     "medio": "se cose a mano punto por punto",
-    "pastilla2": "adorno-galleta-jengibre",
     "despues": "y se llena de brillitos hasta que sonríe."
   },
   "pasos": [

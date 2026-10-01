@@ -33,8 +33,8 @@
 
     <div class="flex shrink-0 items-center gap-1.5">
       {{!-- En el celular el botón no cabe junto al nombre, y la píldora fija de
-          abajo (`piezas/pildora`) ya lleva a WhatsApp. --}}
-      {{> piezas/boton texto="Haz tu pedido" href=(whatsapp) glifo="whatsapp" chico=true externo=true
+          abajo (`piezas/pildora`) ya lleva a la ficha de pedido. --}}
+      {{> piezas/boton texto="Haz tu pedido" href="#ficha-pedido" glifo="whatsapp" chico=true
                        clase="hidden sm:inline-flex"}}
 
       <details class="e-menu lg:hidden" data-isla-target="menu" data-action="toggle->isla#alternar">
@@ -66,7 +66,7 @@
           </nav>
 
           <div class="e-menu__enlace mt-12 space-y-5" style="--i: {{navegacion.length}}">
-            {{> piezas/boton texto="Haz tu pedido por WhatsApp" href=(whatsapp) glifo="whatsapp" externo=true
+            {{> piezas/boton texto="Haz tu pedido por WhatsApp" href="#ficha-pedido" glifo="whatsapp" accion="isla#cerrar"
                              clase="w-full justify-between"}}
             {{#unless (pendiente "instagram")}}
             <p class="flex flex-wrap gap-x-6 gap-y-2 text-[0.95rem] font-semibold">

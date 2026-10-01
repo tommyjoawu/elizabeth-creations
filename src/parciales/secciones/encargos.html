@@ -54,7 +54,7 @@
     </div>
 
     <div class="lg:col-span-6 lg:col-start-7">
-      <form class="e-ficha" action="{{whatsappBase}}" method="get" target="_blank" rel="noopener"
+      <form id="ficha-pedido" class="e-ficha" action="{{whatsappBase}}" method="get" target="_blank" rel="noopener"
             data-controller="encargo" data-action="submit->encargo#enviar input->encargo#componer change->encargo#componer"
             data-encargo-saludo-value="¡Hola! Quiero hacer un pedido a {{marca.nombre}}."
             data-encargo-abono-value="{{marca.mensajeAbono}}"

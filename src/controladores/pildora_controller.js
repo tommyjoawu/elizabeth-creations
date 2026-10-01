@@ -7,9 +7,8 @@ import { Controller } from "@hotwired/stimulus"
 // alguno se vea:
 //
 //   · el hero, con su botón grande;
-//   · los encargos: ahí el botón es "Enviar por WhatsApp" de la ficha, que
-//     manda el mensaje armado, y la píldora mandaría uno genérico encima
-//     del formulario;
+//   · los encargos: la píldora lleva a la ficha de pedido, y estando en ella
+//     sólo taparía el formulario;
 //   · el cierre y el pie, que tienen los suyos.
 export default class extends Controller {
   connect() {

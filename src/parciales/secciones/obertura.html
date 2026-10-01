@@ -65,8 +65,7 @@
         negocio, tipo bienvenidos a Elizabeth Creations, que el nombre
         resalte"). Va en dos renglones a propósito, "Elizabeth" y
         "Creations", al tamaño más grande de la página; el saludo arriba,
-        chico, y lo que hace —adornos de fieltro cosidos a mano— abajo, con
-        la píldora de la varita girando. --}}
+        chico, y lo que hace —adornos de fieltro cosidos a mano— abajo. --}}
     <h1 id="titular" class="e-titular w-full font-display">
       <span class="e-renglon e-titular__saludo"><span style="--retraso: 80ms">Bienvenidos a</span></span>
       <span class="e-renglon e-titular__marca"><span style="--retraso: 180ms">Elizabeth</span></span>
@@ -75,10 +74,6 @@
 
     <p class="e-asoma e-titular__bajada mx-auto mt-5 font-display sm:mt-6" style="--retraso: 380ms">
       Adornos de fieltro cosidos a mano
-      <span class="e-pastilla e-pastilla--video" aria-hidden="true" data-controller="video-fondo"
-            data-video-fondo-src-value="/video/varita-luna-gira">
-        <img src="/video/varita-luna-gira-poster.webp" alt="" width="464" height="832" decoding="async">
-      </span>
       con amor.
     </p>
 
@@ -88,7 +83,10 @@
 
     <div class="e-asoma mt-8 flex w-full flex-col gap-3 sm:mt-7 sm:w-auto sm:flex-row" style="--retraso: 540ms"
          data-costura-inicio>
-      {{> piezas/boton texto="Haz tu pedido por WhatsApp" href=(whatsapp) glifo="whatsapp" externo=true clase="justify-between"}}
+      {{!-- Los botones de arriba llevan a la ficha de pedido, no directo a WhatsApp
+          (Erika, 01-10-2026): así el mensaje llega con la pieza, la cantidad
+          y los detalles ya escritos. --}}
+      {{> piezas/boton texto="Haz tu pedido por WhatsApp" href="#ficha-pedido" glifo="whatsapp" clase="justify-between"}}
       {{> piezas/boton texto="Ver las piezas" href="#temporada" variante="fantasma" clase="justify-between"}}
     </div>
     <p class="e-asoma e-fecha mt-7 sm:mt-8" style="--retraso: 620ms">
