@@ -7,7 +7,7 @@
   "_descripcion": "La descripción de los buscadores (≈160 caracteres). Las llaves {…} se llenan al armar la página con los precios de productos.json y varitas.json y la fecha de `politicas`: si un precio cambia, la descripción cambia sola. Las llaves que hay están en vite/hechos.js.",
   "descripcion": "Adornos navideños de fieltro cosidos a mano: sets de 3 por {setCorto}, varitas mágicas a {varitaCorto} y guirnaldas. Pide por WhatsApp; envío a todo el país.",
   "_url": "La dirección pública del sitio, con la barra final. Es la ÚNICA: el canonical, Open Graph, el JSON-LD, sitemap.xml, robots.txt, llms.txt y el manifiesto salen de aquí. Hoy es GitHub Pages; el día que haya dominio propio se cambia sólo esto (y el --base del build en .github/workflows/pages.yml, si deja de ser una subcarpeta).",
-  "url": "https://tommyjoawu.github.io/elizabeth-creations/",
+  "url": "https://elizabethcreation.com/",
   "actualizado": "2026-10-01",
   "_actualizado": "Fecha (AAAA-MM-DD) de la última vez que cambiaron precios, piezas o políticas: va en el pie ('Precios de la temporada…'), en el sitemap (lastmod) y en el JSON-LD (dateModified). Se cambia a mano al publicar cambios de contenido.",
   "imagenSocialAlt": "Elizabeth Creations, adornos cosidos a mano: un arbolito verde, una sirenita y una varita con luna lila.",

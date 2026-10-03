@@ -1,5 +1,5 @@
 # Publica el sitio en GitHub Pages en cada push a master.
-# El sitio vive en /elizabeth-creations/, por eso el build lleva --base.
+# El sitio vive en la raíz de elizabethcreation.com (dominio propio, 02-10-2026).
 # Además de la landing (y sus variantes), copia la galería de anuncios y los
 # reels de docs/ para poder compartirlos con el mismo link.
 name: Pages
@@ -28,7 +28,7 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npx vite build --base=/elizabeth-creations/
+      - run: npx vite build --base=/
       - name: Galería de anuncios y reels
         run: |
           mkdir -p dist/docs/motion
