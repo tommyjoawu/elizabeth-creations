@@ -90,7 +90,7 @@
                       {{imagen this.foto alt=this.alt sizes="(min-width: 1024px) 19rem, 72vw"}}
                     </div>
                   {{/if}}
-                  <p class="e-letrero__ceja font-mano">{{#if this.precio}}Set de {{this.piezas.length}} piezas{{else}}Se piden por unidad{{/if}}</p>
+                  <p class="e-letrero__ceja font-mano">{{#if this.precio}}Set de {{this.piezas.length}} piezas{{else if this.proximamente}}Próximamente{{else}}Se piden por unidad{{/if}}</p>
                   <h3 class="mt-2 font-display text-[clamp(2rem,3vw,2.6rem)] leading-[0.98]">{{this.nombre}}</h3>
                   <p class="e-letrero__desc mt-3 text-[1rem] leading-snug">{{this.descripcion}}</p>
                   {{!-- Sólo un set con precio propio se pide completo: las
@@ -121,7 +121,9 @@
             </li>
 
             {{#each this.piezas}}
-              <li class="e-pieza{{#unless this.foto}} e-pieza--sin-foto{{/unless}}" data-tono="{{this.tono}}" data-pedido-target="pieza"
+              {{!-- Lo de "Muy pronto" (`proximamente` en el grupo) se ve pero no se
+                  pide: sin precio, sin botones y fuera del pedido armable. --}}
+              <li class="e-pieza{{#unless this.foto}} e-pieza--sin-foto{{/unless}}{{#if ../proximamente}} e-pieza--pronto{{/if}}" data-tono="{{this.tono}}" {{#unless ../proximamente}}data-pedido-target="pieza"{{/unless}}
                   data-slug="{{this.slug}}" data-set="{{../slug}}" data-set-nombre="{{../nombre}}" data-nombre="{{this.nombre}}"
                   {{#if ../precio}}data-precio-set="{{../precio}}"{{/if}}
                   {{#if (precio this.precio)}}data-precio="{{this.precio}}"{{/if}}
@@ -136,7 +138,7 @@
                       {{!-- Sin foto todavía: la ranura punteada de la página,
                           que nadie confunde con una foto. --}}
                       <p class="e-hueco e-pieza__hueco">
-                        <span class="e-hueco__titulo">Foto muy pronto</span>
+                        <span class="e-hueco__titulo">{{#if ../proximamente}}Muy pronto{{else}}Foto muy pronto{{/if}}</span>
                         {{!-- La nota interna, sólo en desarrollo (`borrador`). --}}
                         {{#if @root.borrador}}<span class="mt-2 block">{{this.pendiente}}</span>{{/if}}
                       </p>
@@ -147,7 +149,9 @@
                     <div class="e-pieza__fila">
                       <p class="e-pieza__grupo font-mano">{{../nombre}}</p>
                       <p class="e-precio">
-                        {{#if this.precioHasta}}
+                        {{#if ../proximamente}}
+                          <span class="e-precio__falta">Próximamente</span>
+                        {{else if this.precioHasta}}
                           <span class="sr-only">Precio: </span><span class="e-precio__unidad">desde</span>
                           <strong class="e-precio__valor">{{precio this.precio}}</strong>
                         {{else if (precio this.precio)}}
@@ -195,6 +199,7 @@
                         armable, "Agregar" pasa adelante y el enlace se encoge
                         a un botón redondo con el icono (el texto sigue ahí
                         para un lector de pantalla). --}}
+                    {{#unless ../proximamente}}
                     <div class="e-pieza__acciones mt-4">
                       {{#if this.personaliza}}
                         {{!-- La varita se arma en su sección (forma, color,
@@ -217,6 +222,7 @@
                         <span class="e-pieza__wa-texto">Pedir sólo esta por WhatsApp<span class="sr-only">: {{this.nombre}}</span></span>
                       </a>
                     </div>
+                    {{/unless}}
                   </div>
                 </article>
               </li>

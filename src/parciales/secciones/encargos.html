@@ -88,6 +88,7 @@
                 {{/each}}
               </optgroup>
               {{#each productos.sets}}
+                {{#unless this.proximamente}}
                 <optgroup label="{{this.nombre}}{{#if this.precio}}, por pieza{{/if}}">
                   {{#each this.piezas}}
                     {{#unless (or this.personaliza this.repite)}}
@@ -103,6 +104,7 @@
                             data-variada="{{../varitas.precios.variadaPorVarita}}" data-por-docena="{{../varitas.precios.porDocena}}">Docena de varitas — {{precio ../varitas.precios.docena}}</option>
                   {{/if}}
                 </optgroup>
+                {{/unless}}
               {{/each}}
               <option value="Otra idea">Otra idea</option>
             </select>

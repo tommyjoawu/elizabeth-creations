@@ -5,7 +5,7 @@
   "bajada": "Adornos de fieltro hechos a mano",
   "titulo": "Adornos de fieltro hechos a mano en La Chorrera, Panamá · Elizabeth Creations",
   "_descripcion": "La descripción de los buscadores (≈160 caracteres). Las llaves {…} se llenan al armar la página con los precios de productos.json y varitas.json y la fecha de `politicas`: si un precio cambia, la descripción cambia sola. Las llaves que hay están en vite/hechos.js.",
-  "descripcion": "Adornos navideños de fieltro cosidos a mano en {ciudad}: sets de 3 por {setCorto}, varitas mágicas a {varitaCorto} y guirnaldas con nombre. Pide por WhatsApp; Navidad hasta el {fechaNavidadCorta}.",
+  "descripcion": "Adornos navideños de fieltro cosidos a mano en {ciudad}: sets de 3 por {setCorto}, varitas mágicas a {varitaCorto} y guirnaldas. Pide por WhatsApp; Navidad hasta el {fechaNavidadCorta}.",
   "_url": "La dirección pública del sitio, con la barra final. Es la ÚNICA: el canonical, Open Graph, el JSON-LD, sitemap.xml, robots.txt, llms.txt y el manifiesto salen de aquí. Hoy es GitHub Pages; el día que haya dominio propio se cambia sólo esto (y el --base del build en .github/workflows/pages.yml, si deja de ser una subcarpeta).",
   "url": "https://tommyjoawu.github.io/elizabeth-creations/",
   "actualizado": "2026-10-01",

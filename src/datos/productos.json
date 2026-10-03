@@ -150,7 +150,7 @@
       "slug": "guirnaldas",
       "nombre": "Guirnaldas",
       "tono": "mango",
-      "descripcion": "Para la puerta, la pared o la fiesta, sencilla o con un nombre.",
+      "descripcion": "Para la puerta, la pared o la fiesta.",
       "piezas": [
         {
           "slug": "guirnalda",
@@ -159,17 +159,30 @@
           "precio": 5,
           "material": "Fieltro cosido a mano",
           "pendiente": "La foto de una guirnalda."
-        },
+        }
+      ]
+    },
+    {
+      "slug": "muy-pronto",
+      "nombre": "Muy pronto",
+      "proximamente": true,
+      "_nota": "Lo que Erika todavía está haciendo (02-10-2026: 'pon próximamente guirnalda de nombre y llaveros, me va a llevar tiempo'). Sin precio ni botón de pedir: no entra al pedido, a la ficha ni al JSON-LD. Cuando estén listos, se mueven a su grupo con su precio y su foto (la guirnalda con nombre era de $5.00 a $10.00, +$2.50 por color).",
+      "tono": "mola",
+      "descripcion": "Lo que Erika está cosiendo ahora mismo.",
+      "piezas": [
         {
           "slug": "guirnalda-con-nombre",
           "nombre": "Guirnalda con nombre",
           "tono": "mola",
-          "precio": 5,
-          "precioHasta": 10,
-          "colorExtra": 2.5,
-          "pideNombre": true,
-          "material": "Con el nombre que tú escojas",
-          "pendiente": "La foto de una guirnalda con nombre."
+          "material": "De fieltro, con el nombre que tú escojas",
+          "pendiente": "Erika todavía la está haciendo."
+        },
+        {
+          "slug": "llaveros",
+          "nombre": "Llaveros de fieltro",
+          "tono": "turquesa",
+          "material": "Pequeños, cosidos a mano y con bisutería",
+          "pendiente": "Erika todavía los está haciendo."
         }
       ]
     }

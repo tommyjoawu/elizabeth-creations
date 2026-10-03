@@ -96,6 +96,15 @@ function llms(contexto) {
     linea()
   }
 
+  // Lo que Erika todavía está haciendo: se anuncia, sin precio.
+  const pronto = productos.sets.filter((s) => s.proximamente).flatMap((s) => s.piezas)
+  if (pronto.length) {
+    linea("## Próximamente")
+    linea()
+    for (const p of pronto) linea(`- ${p.nombre}: muy pronto (todavía no se piden).`)
+    linea()
+  }
+
   linea("## Cómo pedir")
   linea()
   encargo.pasos.forEach((paso, i) => linea(`${i + 1}. ${paso.titulo} ${paso.texto}`))
