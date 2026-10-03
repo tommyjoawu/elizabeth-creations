@@ -657,3 +657,21 @@
   .e-eleccion:has(input:focus-visible) { outline: 3px solid #1E1A3C; outline-offset: 2px; }
   .e-eleccion--caja { font-weight: 600; }
 }
+
+/* Crédito "Diseñado por Catalyx Studio" del pie, portado de Abastra
+   (storefront.css, .ft-credit). min-height + margen negativo: 44px de área
+   pulsable sin engordar la fila (26 + 9 + 9). */
+.e-credito {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  margin-top: 2.5rem;
+  padding: 18px 0 max(26px, calc(env(safe-area-inset-bottom) + 8px));
+  border-top: 1px solid rgb(255 255 255 / 0.08);
+  font-size: 13px; color: rgb(255 255 255 / 0.82);
+}
+.e-credito a {
+  display: inline-flex; align-items: center; min-height: 44px; margin-block: -9px;
+  opacity: 0.85; transition: opacity 0.3s ease;
+}
+.e-credito a:hover, .e-credito a:focus-visible { opacity: 1; }
+.e-credito a:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; border-radius: 6px; }
+.e-credito img { display: block; height: 26px; width: auto; }

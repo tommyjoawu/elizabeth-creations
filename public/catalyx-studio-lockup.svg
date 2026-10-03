@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 14 352 72" role="img" aria-label="CatalyxStudio">
+  <title>CatalyxStudio horizontal lockup (dark)</title>
+  <!--
+    Copia de Abastra. El DIBUJO es el del lockup original; lo que cambia es el
+    lienzo, por dos medidas tomadas sobre el archivo de adriannevoiceover:
+
+    1. viewBox: era `0 0 480 100`, pero la tinta termina en x=344 y el símbolo
+       ocupa y=15..85. Sobraba un 28% de ancho vacío a la derecha y 15 unidades
+       arriba y abajo: al centrar la fila del crédito, ese vacío desplazaba el
+       logotipo ~17px a la izquierda del centro real y obligaba a pedir el doble
+       de `height` para que el texto se leyera. Ahora el lienzo es la tinta más
+       1 unidad de aire (el remate redondo de las marcas de la rosa se sale un
+       0.36 de su caja declarada), así que `height` en CSS ES la altura visible.
+
+    2. y del texto: 68 -> 63.5. El centro óptico del wordmark caía en y=54.2 y
+       el del símbolo en y=50; por eso "CatalyxStudio" se veía hundido respecto
+       a "Diseñado por". 63.5 deja ambos centros en 50.
+
+    3. textLength: un SVG cargado con <img> no ve las tipografías de la página,
+       así que "Inter" no resuelve y cada sistema cae en su propia fuente, con
+       anchos distintos. Fijar el avance en las 249.4 unidades medidas evita que
+       el wordmark se salga del lienzo recortado en otra plataforma. Sin
+       `lengthAdjust`, que por defecto reparte en el espaciado y no deforma las
+       letras.
+  -->
+  <svg x="0" y="15" width="70" height="70" viewBox="0 0 240 240">
+    <circle cx="120" cy="120" r="108" fill="none" stroke="#FF8B7A" stroke-width="1.2" stroke-dasharray="3 6" opacity="0.6"/>
+    <g stroke-width="2.5" stroke-linecap="round" fill="none">
+      <line x1="120" y1="0" x2="120" y2="20" stroke="#F26B5E"/>
+      <line x1="120" y1="220" x2="120" y2="240" stroke="#F26B5E"/>
+      <line x1="0" y1="120" x2="20" y2="120" stroke="#F26B5E"/>
+      <line x1="220" y1="120" x2="240" y2="120" stroke="#F26B5E"/>
+      <line x1="35" y1="35" x2="50" y2="50" stroke="#FF8B7A"/>
+      <line x1="190" y1="190" x2="205" y2="205" stroke="#FF8B7A"/>
+      <line x1="205" y1="35" x2="190" y2="50" stroke="#FF8B7A"/>
+      <line x1="50" y1="190" x2="35" y2="205" stroke="#FF8B7A"/>
+    </g>
+    <circle cx="120" cy="28" r="5" fill="#FF8B7A"/>
+    <circle cx="212" cy="120" r="5" fill="#F26B5E"/>
+    <circle cx="120" cy="212" r="5" fill="#FF8B7A"/>
+    <circle cx="28" cy="120" r="5" fill="#F26B5E"/>
+    <polygon points="120,52 178,86 178,154 120,188 62,154 62,86" fill="#A11D33"/>
+    <polygon points="120,68 162,93 162,147 120,172 78,147 78,93" fill="#D63B47"/>
+    <polygon points="120,88 146,103 146,137 120,152 94,137 94,103" fill="#F26B5E"/>
+    <path d="M 146 102 A 30 30 0 1 0 146 138" stroke="#1A0A0F" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <circle cx="120" cy="120" r="4" fill="#1A0A0F"/>
+  </svg>
+  <text x="95" y="63.5" textLength="249.4" font-family="Inter, 'Space Grotesk', system-ui, sans-serif" font-weight="600" font-size="36" fill="#FFF5F5">Catalyx<tspan fill="#F26B5E">Studio</tspan></text>
+</svg>

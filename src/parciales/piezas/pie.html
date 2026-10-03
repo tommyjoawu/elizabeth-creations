@@ -1,8 +1,6 @@
 {{!--
   El pie. Ordena los enlaces y los datos de contacto, dice lo legal, y
-  cierra con el nombre a todo el ancho, cortado por el borde de abajo: la
-  firma de la página, no un dato. La línea legal va ARRIBA del nombre: si
-  va debajo, el nombre la tapa al sangrar por el borde.
+  cierra con el sello de la marca y el crédito de Catalyx Studio.
 --}}
 <footer class="e-noche e-motivo e-motivo--cielo e-feston e-feston--picos relative overflow-clip" style="--feston: #D3253C">
   <div class="e-contenedor pt-24 sm:pt-28">
@@ -83,13 +81,20 @@
       <p>Precios actualizados el <time datetime="{{marca.actualizado}}">{{fechaLarga marca.actualizado}}</time>.</p>
     </div>
 
-    {{!-- El nombre a todo el ancho, en mango y cortado por el borde de abajo.
-        Decorativo: la marca
-        ya está dicha arriba y en la isla. "Elizabeth" tiene nueve letras: a
-        18vw ocupa el ancho entero sin cortarse a los lados. --}}
-    <p class="pointer-events-none mt-10 -mb-[0.24em] flex items-start justify-center font-display text-[clamp(4rem,17.5vw,19rem)]
-              leading-[0.8] text-mango select-none" aria-hidden="true">
-      {{marca.nombreCorto}}
-    </p>
+    {{!-- El sello y el nombre, a tamaño de logo (Tommy, 03-10-2026: el nombre
+        a todo el ancho era demasiado). Lleva al inicio. --}}
+    <a href="#inicio" class="mt-12 flex w-fit items-center gap-4 mx-auto text-texto" aria-label="{{marca.nombre}}, volver al inicio">
+      {{> piezas/logo clase="size-16 sm:size-20" fieltro="#FFC53D"}}
+      <span class="font-display text-[clamp(1.6rem,3vw,2.2rem)] leading-[0.95]">Elizabeth<br>Creations</span>
+    </a>
+
+    {{!-- Crédito "Diseñado por Catalyx Studio", el mismo de Abastra
+        (sistema-abastra, shared/_catalyx_credit): última fila del pie. --}}
+    <div class="e-credito">
+      <span>Diseñado por</span>
+      <a href="https://catalyxstudio.com" target="_blank" rel="noopener noreferrer" aria-label="Catalyx Studio">
+        <img src="/catalyx-studio-lockup.svg" alt="Catalyx Studio" width="127" height="26" loading="lazy" decoding="async">
+      </a>
+    </div>
   </div>
 </footer>
