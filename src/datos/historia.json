@@ -1,16 +1,19 @@
 {
-  "_nota": "La historia de Erika (02-10-2026, Tommy tras la reunión con ella: 'contar una historia de Erika — artesanal, transmitir sentimiento; ella haciendo su negocio, expandir'). Contada por ella, en primera persona y de tú, como el resto de la página. Sólo con lo que sabemos: cose a mano piezas de fieltro con bisutería, cada una la hace ella, vende por WhatsApp, Navidad, varitas para los niños, sets. NADA inventado: ni años, ni nombres, ni lugares, ni otros trabajos. Si Erika quiere sumar un dato de verdad (cuándo empezó, por quién), se escribe aquí.",
-  "_revisar": "BORRADOR para que Erika lo apruebe o lo cambie con sus palabras. Mientras sea borrador, en desarrollo (`npm run dev`) se ve una nota punteada que lo dice; publicada, no.",
-  "borrador": true,
+  "_nota": "La historia de Erika, con SUS palabras (03-10-2026): los cuatro primeros párrafos y el cierre son su texto tal cual (sólo puntuación), con sus emojis; los dos últimos párrafos son del borrador anterior, que ella pidió dejar (quitó sólo el primero). El título y la frase grande salen de su texto. Nada inventado: si Erika quiere sumar o cambiar algo, se escribe aquí. Mandará fotos nuevas; mientras, queda la de sus manos en la mesa.",
+  "_revisar": "Aprobado por Erika (03-10-2026): `borrador: false`. Si se vuelve a poner `true`, en desarrollo (`npm run dev`) se ve la nota punteada que lo dice; publicada, no.",
+  "borrador": false,
   "antetitulo": "Mi historia",
-  "titulo": "Todo empezó en mi mesa, con un retazo y una aguja.",
+  "titulo": "De dónde nace Elizabeth Creations",
   "parrafos": [
-    "Empecé en casa, con unos retazos de colores, hilo, aguja y muchas ganas de hacer algo bonito con mis manos. Una estrella llevó a un arbolito, el arbolito a una sirenita, y sin darme cuenta la mesa se llenó de piezas.",
+    "¡Hola! Soy Erika⭐ y quiero contarte de dónde nace Elizabeth Creations.",
+    "En el 2023 llegó a mi hogar mi dulce hija, Elizabeth Love.💜 Desde el momento en que supe que venía, empecé a crear cositas lindas para adornar su cuarto, probando con todo tipo de materiales.",
+    "Hasta que un día, en casa, con unos retazos de colores, hilo, aguja y muchas ganas de hacer algo bonito con mis manos, descubrí el fieltro y me encantó.",
+    "Lo que empezó como un regalo para ella hoy son varitas mágicas, guirnaldas y adornos cosidos a mano, puntada a puntada, para llenar de alegría tu hogar también 🪄🌈",
     "Cada una la corto, la coso y la decoro yo misma, puntada a puntada, con lentejuelas y perlitas. Por eso ninguna sale igual: cada pieza lleva un ratito de mi tiempo y mucho de mi corazón.",
     "Así, pieza por pieza, nació Elizabeth Creations: mi pequeño negocio, que crece con cada mensaje que me llega por WhatsApp. Adornos para tu arbolito, sets para regalar y varitas para que los niños jueguen a la magia."
   ],
-  "cita": "Cada pieza que sale de mis manos lleva un pedacito de mí.",
-  "cierre": "Gracias por dejar que una de mis piezas llegue a tu casa.",
+  "cita": "Lo que empezó como un regalo para ella…",
+  "cierre": "Gracias por estar aquí y ser parte de este sueño💌",
   "firma": "con mucho amor, Erika",
   "imagen": {
     "_que": "El póster de uno de los videos del taller (las manos de Erika cosiendo la bisutería sobre una estrella, en su mesa): una foto quieta, no el proceso. El video de ese paso ya no se muestra en el taller.",

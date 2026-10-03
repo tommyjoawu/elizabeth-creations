@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
-import { dinero, totalDe, textoTotal, textoAbono, montoAbono } from "../precios.js"
+import { dinero, totalDe, textoTotal, rellenarMensaje } from "../precios.js"
 
 // La varita armable: forma, color y cuántas, con la cuenta a la vista.
 //
@@ -16,7 +16,9 @@ import { dinero, totalDe, textoTotal, textoAbono, montoAbono } from "../precios.
 //     mezcla se conversa por WhatsApp.
 //   · "Agregar al pedido" manda el renglón al resumen de "Las piezas"
 //     (evento `pedido:agregar` en `window`; el controlador `pedido` es el
-//     dueño del pedido). "Pedir sólo esto" abre WhatsApp con la varita sola.
+//     dueño del pedido). "Pedir sólo esto" abre WhatsApp con la varita sola,
+//     directo: las varitas no llevan abono (Erika, 03-10-2026), así que ni
+//     la ventanita del abono ni su renglón en el mensaje.
 //   · Lo que ya está en el pedido se lista aquí con su "Quitar": se entera
 //     por `pedido:cambio`.
 //
@@ -28,7 +30,7 @@ export default class extends Controller {
                     "cuenta", "aviso", "solo", "armado", "sinJs", "enPedido", "lista"]
   static values = {
     unidad: Number, docena: Number, porDocena: Number, variada: Number,
-    abono: Number, numero: String, plantilla: String
+    numero: String, plantilla: String
   }
 
   connect() {
@@ -119,8 +121,6 @@ export default class extends Controller {
     this.cuentaTarget.textContent = `${r.texto[0].toUpperCase()}${r.texto.slice(1)}: ${r.cuenta || dinero(r.precio)}`
     if (this.color || this.esVariada) this.avisoTarget.hidden = true
     this.soloTarget.href = this.enlace(r)
-    // Para la ventanita del abono (controlador `abono`).
-    this.soloTarget.dataset.abonoMonto = montoAbono(totalDe([r]), this.abonoValue) || ""
   }
 
   // Sin color no hay varita (salvo la docena variada): se avisa en vez de
@@ -142,13 +142,14 @@ export default class extends Controller {
     if (this.falta()) evento.preventDefault()
   }
 
+  // Sin abono: el renglón y la nota del abono quedan vacíos y se quitan.
   enlace(r) {
-    const total = totalDe([r])
-    const plantilla = this.plantillaValue.split("\n").map((x) => x.trim()).join("\n")
-    const texto = plantilla
-      .replaceAll("{lista}", `• ${r.texto} — ${r.cuenta || dinero(r.precio)}`)
-      .replaceAll("{total}", textoTotal(total))
-      .replaceAll("{abono}", textoAbono(total, this.abonoValue, { delCliente: true }))
+    const texto = rellenarMensaje(this.plantillaValue, {
+      lista: `• ${r.texto} — ${r.cuenta || dinero(r.precio)}`,
+      total: textoTotal(totalDe([r])),
+      abono: "",
+      notaAbono: ""
+    })
     return `${this.numeroValue}?text=${encodeURIComponent(texto)}`
   }
 

@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
-import { dinero, totalDe, textoTotal, textoAbono, montoAbono } from "../precios.js"
+import { dinero, totalDe, textoTotal, textoAbono, montoAbono, abonoDe, rellenarMensaje } from "../precios.js"
 
 // El pedido por piezas y por sets (Erika, 01-10-2026: "debe haber una opción
 // para pedir los sets de una vez").
@@ -24,8 +24,12 @@ import { dinero, totalDe, textoTotal, textoAbono, montoAbono } from "../precios.
 //       - la guirnalda con nombre es un rango (de $5.00 a $10.00): el total
 //         dice "desde" y el abono se calcula cuando Erika confirme;
 //       - si algún precio fuera null, "por confirmar" (ver src/precios.js).
+//   · El abono es sólo de los sets, las piezas sueltas y las guirnaldas, no
+//     de las varitas (Erika, 03-10-2026; ver `abonoDe` en src/precios.js):
+//     sobre eso se saca el 30 %, y un pedido de puras varitas no lo lleva.
 //   · "Enviar" no abre WhatsApp directo: pasa por la ventanita del abono
-//     (controlador `abono`), que lee el monto de `data-abono-monto`.
+//     (controlador `abono`), que lee el monto de `data-abono-monto` y si
+//     aplica de `data-abono-aplica`; con puras varitas no sale.
 //   · Lo que se arma en OTRA sección (las varitas: forma, color, unidad o
 //     docena) llega con el evento `pedido:agregar` en `window` y se quita
 //     con `pedido:quitar`. Cada cambio se avisa con `pedido:cambio`, para
@@ -48,7 +52,8 @@ const CLAVE = "elizabeth-pedido"
 export default class extends Controller {
   static targets = ["pieza", "botonSet", "lugar", "resumen", "cuenta", "total", "lista",
                     "vaciar", "enviar", "personal"]
-  static values = { numero: String, plantilla: String, abono: { type: Number, default: 30 } }
+  static values = { numero: String, plantilla: String, abono: { type: Number, default: 30 },
+                    nota: String, notaParte: String }
 
   connect() {
     this.catalogo = this.leerSets()
@@ -306,10 +311,13 @@ export default class extends Controller {
     this.vaciarTarget.hidden = vacio
     this.enviarTarget.hidden = vacio
     if (!vacio) {
-      this.enviarTarget.href = this.enlace(renglones, total)
-      // Para la ventanita del abono: "$4.50", o nada si el total no es
-      // cerrado (entonces la ventanita dice sólo el porcentaje).
-      this.enviarTarget.dataset.abonoMonto = montoAbono(total, this.abonoValue) || ""
+      const abono = abonoDe(renglones)
+      this.enviarTarget.href = this.enlace(renglones, total, abono)
+      // Para la ventanita del abono: si aplica ("no", "todo" o "parte") y el
+      // monto, "$4.50", o nada si el total no es cerrado (entonces la
+      // ventanita dice sólo el porcentaje).
+      this.enviarTarget.dataset.abonoAplica = abono.aplica
+      this.enviarTarget.dataset.abonoMonto = abono.total ? montoAbono(abono.total, this.abonoValue) || "" : ""
     }
 
     this.guardar()
@@ -336,16 +344,17 @@ export default class extends Controller {
   // ── El mensaje ─────────────────────────────────────────────────────────
   // Un renglón por cosa, con su precio y, si hay multiplicación, la cuenta
   // entera ("3 × $2.50 = $7.50"): así Erika no tiene que sacarla.
-  enlace(renglones, total) {
+  // El abono (renglón y nota) sólo si hay algo que no sea varita.
+  enlace(renglones, total, abono) {
     const lista = renglones.map((r) =>
       `• ${r.textoLargo || r.texto} — ${this.precioRenglon(r)}`)
-    // Cada renglón de la plantilla se recorta: Handlebars indenta los
-    // parciales, y la sangría del HTML se colaba en el mensaje.
-    const plantilla = this.plantillaValue.split("\n").map((r) => r.trim()).join("\n")
-    const texto = plantilla
-      .replaceAll("{lista}", lista.join("\n"))
-      .replaceAll("{total}", textoTotal(total))
-      .replaceAll("{abono}", textoAbono(total, this.abonoValue, { delCliente: true }))
+    const parte = abono.aplica === "parte"
+    const texto = rellenarMensaje(this.plantillaValue, {
+      lista: lista.join("\n"),
+      total: textoTotal(total),
+      abono: abono.total ? textoAbono(abono.total, this.abonoValue, { delCliente: true, parte }) : "",
+      notaAbono: abono.total ? `${parte ? this.notaParteValue : this.notaValue} ` : ""
+    })
     return `${this.numeroValue}?text=${encodeURIComponent(texto)}`
   }
 

@@ -1,5 +1,5 @@
 {
-  "_nota": "Cómo pedir, con las reglas de Erika: pago por Yappy o transferencia (sin efectivo), abono del 30 % en TODOS los pedidos y sets (no reembolsable: se dice con calma en la ventanita de 'Antes de enviar tu pedido' y en las preguntas, no aquí en grande — 02-10-2026), 3 a 5 días por pieza, envío a todo Panamá (02-10-2026; el costo según la zona, por WhatsApp), Navidad hasta el 15 de noviembre. `rotulo` es cómo aparece cada campo en el mensaje de WhatsApp. Las piezas de la lista de la ficha NO viven aquí: salen de productos.json (con sus precios) y de varitas.json (la varita suelta y la docena), para que un precio se cambie en un solo lugar.",
+  "_nota": "Cómo pedir, con las reglas de Erika: pago por Yappy o transferencia (sin efectivo), abono del 30 % sólo en los sets, las piezas individuales y las guirnaldas, no en las varitas (Erika, 03-10-2026; no reembolsable: se dice con calma en la ventanita de 'Antes de enviar tu pedido' y en las preguntas, no aquí en grande — 02-10-2026), 3 a 5 días por pieza, envío a todo Panamá (02-10-2026; el costo según la zona, por WhatsApp), Navidad hasta el 15 de noviembre. `rotulo` es cómo aparece cada campo en el mensaje de WhatsApp. `soloVarita`: el campo sale sólo si la pieza es una varita (o una docena de un solo estilo) y es una lista con los colores de varitas.json, no texto libre (03-10-2026). \"¿Para cuándo la necesitas?\" se quitó (03-10-2026). Las piezas de la lista de la ficha NO viven aquí: salen de productos.json (con sus precios) y de varitas.json (la varita suelta y la docena), para que un precio se cambie en un solo lugar.",
   "pasos": [
     {
       "figura": "estrella",
@@ -9,7 +9,7 @@
     {
       "figura": "corazon",
       "titulo": "Separas con el 30 %.",
-      "texto": "Por Yappy o transferencia, y empiezo a coser."
+      "texto": "Los sets, las piezas y las guirnaldas, por Yappy o transferencia (las varitas no llevan abono), y empiezo a coser."
     },
     {
       "figura": "flor",
@@ -34,14 +34,8 @@
       "id": "color",
       "rotulo": "Color",
       "etiqueta": "Color que te gusta",
-      "ejemplo": "Lila"
-    },
-    {
-      "id": "cuando",
-      "rotulo": "Para cuándo",
-      "etiqueta": "¿Para cuándo la necesitas?",
-      "ejemplo": "Antes del 15 de noviembre",
-      "ancho": true
+      "ejemplo": "Escoge un color…",
+      "soloVarita": true
     },
     {
       "id": "zona",

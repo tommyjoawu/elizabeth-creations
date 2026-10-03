@@ -3,9 +3,9 @@
   capítulo propio, del lila de su luna.
 
   A la izquierda, dos polaroids colgadas: el video de la varita de luna
-  girando a la luz de la ventana (el único que también corre en el celular:
-  aquí el video ES el producto) y la foto de la varita de estrella
-  terminada (01-10-2026). Luna y estrella, cada una con su foto de verdad.
+  girando a la luz de la ventana y el de la varita de estrella terminada
+  (03-10-2026: antes era su foto). Los dos corren también en el celular:
+  aquí el video ES el producto. Luna y estrella, cada una con lo suyo.
 
   A la derecha, las decisiones que se pueden tomar, y sólo esas (audio 3 y
   precios del 01-10-2026):
@@ -19,7 +19,8 @@
   otro para la docena; la tarifa se lee igual. Con el controlador
   `varitas` las fichas pasan a escoger, aparece la cuenta en vivo y
   "Agregar al pedido" suma la varita al mismo resumen de "Las piezas"
-  (evento `pedido:agregar`), o "Pedir sólo esto" la manda sola.
+  (evento `pedido:agregar`), o "Pedir sólo esto" la manda sola, directo a
+  WhatsApp: las varitas no llevan abono (03-10-2026), así que sin ventanita.
 --}}
 <section id="varitas" data-costura="der" class="e-lila e-motivo e-motivo--lunares e-feston e-feston--ola relative isolate overflow-clip" style="--feston: #1E1A3C"
          aria-labelledby="titulo-varitas">
@@ -33,8 +34,12 @@
         </div>
       </figure>
       <figure class="e-polaroid e-polaroid--foto">
-        <div class="e-polaroid__foto">
-          {{imagen "pieza-varita-estrella" alt="" sizes="(min-width: 1024px) 26rem, 55vw"}}
+        {{!-- La varita de estrella, también en video (Erika, 03-10-2026):
+            conserva la clase `--foto` porque de ella salen su lugar, su
+            giro y su cinta; sólo cambia lo de adentro. --}}
+        <div class="e-polaroid__foto" data-controller="video-fondo"
+             data-video-fondo-src-value="/video/varita-estrella-lista" data-video-fondo-movil-value="true">
+          <img src="/video/varita-estrella-lista-poster.webp" alt="" width="464" height="832" loading="lazy" decoding="async">
         </div>
         <figcaption class="e-polaroid__pie font-mano">luna o estrella, tú escoges</figcaption>
       </figure>
@@ -56,7 +61,6 @@
            data-varitas-docena-value="{{varitas.precios.docena}}"
            data-varitas-por-docena-value="{{varitas.precios.porDocena}}"
            data-varitas-variada-value="{{varitas.precios.variadaPorVarita}}"
-           data-varitas-abono-value="{{marca.politicas.abonoPorcentaje}}"
            data-varitas-numero-value="{{whatsappBase}}"
            data-varitas-plantilla-value="{{marca.mensajePedido}}"
            data-action="varitas:forma@window->varitas#desdeGaleria pedido:cambio@window->varitas#alCambiarPedido">
@@ -164,7 +168,7 @@
             <span>Agregar al pedido</span>
             <span class="e-boton__isla">{{icono "mas" clase="size-4"}}</span>
           </button>
-          <a class="e-armado__solo" href="{{whatsappBase}}" target="_blank" rel="noopener" data-varitas-target="solo" data-action="varitas#pedirSolo abono#confirmar">
+          <a class="e-armado__solo" href="{{whatsappBase}}" target="_blank" rel="noopener" data-varitas-target="solo" data-action="varitas#pedirSolo">
             {{icono "whatsapp" clase="size-5"}}<span>Pedir sólo esto</span>
           </a>
         </div>

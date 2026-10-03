@@ -2,8 +2,9 @@
   Cómo pedir: las reglas del negocio, dichas una vez y en claro.
 
   A la izquierda, el camino de un pedido en cuatro pasos (encargo.json): pago
-  por Yappy o transferencia (sin efectivo), el abono del 30 % en TODOS los
-  pedidos y sets, 3 a 5 días por pieza y envío a todo Panamá. Que el abono no
+  por Yappy o transferencia (sin efectivo), el abono del 30 % en los sets,
+  las piezas individuales y las guirnaldas —no en las varitas (Erika,
+  03-10-2026)—, 3 a 5 días por pieza y envío a todo Panamá. Que el abono no
   es reembolsable ya NO va en un recuadro rojo (02-10-2026: "no ser tan obvio
   con el abono… algo más sutil"): lo dice, con calma, la ventanita que
   aparece al enviar el pedido (piezas/abono) y la pregunta "¿Cómo se paga?".
@@ -15,10 +16,12 @@
       `text`: wa.me lo recibe tal cual y abre el chat con el mensaje escrito.
     · Con JavaScript (controlador `encargo`) aparecen los campos ordenados
       —la pieza con su precio, luna o estrella si es varita, la docena
-      variada, el nombre de la guirnalda, color, cantidad, fecha, zona y la
-      tarjeta personalizada— y el mensaje se arma solo, con la cuenta del
-      precio y del abono, y una vista previa como la burbuja que Erika va a
-      recibir. Al enviar, antes de abrir WhatsApp, la ventanita del abono.
+      variada, el nombre de la guirnalda, cantidad, el color si es varita
+      (una lista con los de varitas.json), zona y la tarjeta personalizada—
+      y el mensaje se arma solo, con la cuenta del precio y del abono (si no
+      es varita), y una vista previa como la burbuja que Erika va a recibir.
+      Al enviar, antes de abrir WhatsApp, la ventanita del abono; con una
+      varita, directo.
 --}}
 <section id="encargos" data-costura="izq" class="e-mango e-motivo e-motivo--flores-estrellas e-feston relative isolate overflow-clip" style="--feston: #F3DFC1"
          aria-labelledby="titulo-encargos">
@@ -28,7 +31,7 @@
         <span class="e-antetitulo">Por WhatsApp, sin complicaciones</span><span class="sr-only">: </span>Así haces tu pedido
       </h2>
       <p class="e-aparece mt-6 max-w-[40ch] text-entrada" data-controller="revela" style="--retraso: 100ms">
-        Todo te lo coordino por WhatsApp. Me pagas por {{marca.politicas.pagos}} (no recibo efectivo)
+        Todo te lo coordino por WhatsApp. Puedes pagar por {{marca.politicas.pagos}} (no recibo efectivo)
         y te lo envío a todo el país.
       </p>
 
@@ -140,12 +143,28 @@
           </div>
 
           {{#each encargo.campos}}
-            <div {{#if this.ancho}}class="sm:col-span-2"{{/if}}>
-              <label class="e-rotulo" for="encargo-{{this.id}}">{{this.etiqueta}}</label>
-              <input class="e-campo" id="encargo-{{this.id}}" type="{{or this.tipo "text"}}" autocomplete="off"
-                     {{#if (eq this.tipo "number")}}min="1" inputmode="numeric"{{/if}}
-                     placeholder="{{this.ejemplo}}" data-encargo-target="campo" data-rotulo="{{this.rotulo}}">
-            </div>
+            {{#if this.soloVarita}}
+              {{!-- El color: sólo para una varita (o una docena de un solo
+                  estilo), y de la lista de colores de varitas.json, no
+                  escrito a mano (03-10-2026): las demás piezas van como en
+                  la foto. Escondido no viaja en el mensaje. --}}
+              <div {{#if this.ancho}}class="sm:col-span-2"{{/if}} data-encargo-target="soloColor" hidden>
+                <label class="e-rotulo" for="encargo-{{this.id}}">{{this.etiqueta}}</label>
+                <select class="e-campo" id="encargo-{{this.id}}" data-encargo-target="campo" data-rotulo="{{this.rotulo}}">
+                  <option value="">{{this.ejemplo}}</option>
+                  {{#each @root.varitas.colores}}
+                    <option value="{{this.nombre}}">{{this.nombre}}</option>
+                  {{/each}}
+                </select>
+              </div>
+            {{else}}
+              <div {{#if this.ancho}}class="sm:col-span-2"{{/if}}>
+                <label class="e-rotulo" for="encargo-{{this.id}}">{{this.etiqueta}}</label>
+                <input class="e-campo" id="encargo-{{this.id}}" type="{{or this.tipo "text"}}" autocomplete="off"
+                       {{#if (eq this.tipo "number")}}min="1" inputmode="numeric"{{/if}}
+                       placeholder="{{this.ejemplo}}" data-encargo-target="campo" data-rotulo="{{this.rotulo}}">
+              </div>
+            {{/if}}
           {{/each}}
 
           <div class="sm:col-span-2">

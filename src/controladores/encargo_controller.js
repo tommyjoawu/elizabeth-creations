@@ -7,11 +7,12 @@ import { dinero, totalDe, textoTotal, textoAbono, montoAbono } from "../precios.
 // pedido en el campo `text`, que es lo único que wa.me lee. Lo que se agrega
 // acá es orden:
 //
-//   1. Se muestran los campos (pieza, cantidad, color, fecha, zona, tarjeta),
-//      que sin JavaScript se perderían (no se llaman `text`).
-//   2. "¿Luna o estrella?" aparece sólo si la pieza es una varita, y el campo
-//      del mensaje de la tarjeta sólo si se marcó la tarjeta: lo demás no
-//      se personaliza, y preguntarlo prometería algo que no se hace.
+//   1. Se muestran los campos (pieza, cantidad, zona, tarjeta), que sin
+//      JavaScript se perderían (no se llaman `text`).
+//   2. "¿Luna o estrella?" y el color (una lista con los colores de las
+//      varitas, 03-10-2026) aparecen sólo si la pieza es una varita, y el
+//      campo del mensaje de la tarjeta sólo si se marcó la tarjeta: lo demás
+//      no se personaliza, y preguntarlo prometería algo que no se hace.
 //   3. El texto libre deja de llamarse `text` y deja de ser obligatorio (la
 //      pieza ya dice qué se quiere); un campo oculto con ese nombre lleva el
 //      mensaje completo, un renglón por dato.
@@ -21,8 +22,10 @@ import { dinero, totalDe, textoTotal, textoAbono, montoAbono } from "../precios.
 //      cuenta ("2 × $6.00 = $12.00") y el abono. La docena variada suma
 //      $1.50 por varita; la guirnalda con nombre es un rango, y se dice
 //      "desde".
+//   6. Las varitas (sueltas o por docena) no llevan abono (Erika,
+//      03-10-2026): ni renglón, ni nota al final, ni ventanita al enviar.
 export default class extends Controller {
-  static targets = ["campos", "campo", "pieza", "forma", "soloVarita", "tarjeta", "soloTarjeta",
+  static targets = ["campos", "campo", "pieza", "forma", "soloVarita", "soloColor", "tarjeta", "soloTarjeta",
                     "soloDocena", "variada", "soloNombre", "colorExtra", "precioColor",
                     "idea", "rotuloIdea", "vista", "texto"]
   static values = { saludo: String, abono: String, porcentaje: { type: Number, default: 30 } }
@@ -56,8 +59,11 @@ export default class extends Controller {
     const tipo = opcion?.dataset.tipo
     const variada = tipo === "docena" && this.variadaTarget.checked
     const esVarita = tipo === "varita" || (tipo === "docena" && !variada)
+    // Varita en cualquier forma (también la docena variada): sin abono.
+    const sinAbono = tipo === "varita" || tipo === "docena"
     const conTarjeta = this.tarjetaTarget.checked
     this.soloVaritaTarget.hidden = !esVarita
+    this.soloColorTarget.hidden = !esVarita
     this.soloDocenaTarget.hidden = tipo !== "docena"
     this.soloNombreTarget.hidden = tipo !== "nombre"
     this.soloTarjetaTarget.hidden = !conTarjeta
@@ -78,9 +84,13 @@ export default class extends Controller {
     }
     if (variada) renglones.push("• Variada: sí (la mezcla te la digo por aquí)")
     if (tipo === "nombre" && this.colorExtraTarget.checked) renglones.push("• Color adicional: sí")
-    const precio = this.precio(opcion, tipo, variada)
+    const precio = this.precio(opcion, tipo, variada, sinAbono)
     if (precio) renglones.push(...precio)
-    // Para la ventanita del abono que sale al enviar (controlador `abono`).
+    // Para la ventanita del abono que sale al enviar (controlador `abono`):
+    // con una varita no sale. Sin pieza escogida el formulario no se envía
+    // (la pieza es obligatoria), así que da igual.
+    const conAbono = Boolean(opcion?.value) && !sinAbono
+    this.element.dataset.abonoAplica = conAbono ? "todo" : "no"
     this.element.dataset.abonoMonto = this.monto || ""
     if (conTarjeta && !renglones.some((r) => r.startsWith("• Tarjeta:"))) {
       renglones.push("• Tarjeta: sí, personalizada")
@@ -88,16 +98,17 @@ export default class extends Controller {
     const idea = this.ideaTarget.value.trim()
     if (idea) renglones.push(`• Detalle: ${idea}`)
 
-    // La nota del abono va al final de todo pedido: es la regla que Erika
-    // pidió dejar clara, y así queda dicha también en el chat.
-    const mensaje = [this.saludoValue, ...renglones, ...(this.abonoValue ? ["", this.abonoValue] : [])].join("\n")
+    // La nota del abono va al final de todo pedido que lo lleva: es la regla
+    // que Erika pidió dejar clara, y así queda dicha también en el chat.
+    const nota = conAbono && this.abonoValue ? ["", this.abonoValue] : []
+    const mensaje = [this.saludoValue, ...renglones, ...nota].join("\n")
     this.oculto.value = mensaje
     this.textoTarget.textContent = mensaje
   }
 
   // La cuenta de la pieza escogida, en renglones para el mensaje, o nada
   // si no tiene precio.
-  precio(opcion, tipo, variada) {
+  precio(opcion, tipo, variada, sinAbono) {
     this.monto = null
     const base = parseFloat(opcion?.dataset.precio)
     if (!Number.isFinite(base)) return null
@@ -117,13 +128,13 @@ export default class extends Controller {
     const desde = tipo === "nombre"
     const monto = Math.round(unidad * 100) * cantidad / 100
     const total = totalDe([{ precio: monto, desde }])
-    this.monto = montoAbono(total, this.porcentajeValue)
+    this.monto = sinAbono ? null : montoAbono(total, this.porcentajeValue)
     const cuenta = cantidad > 1 ? `${cantidad} × ${dinero(unidad)} = ${dinero(monto)}` : dinero(monto)
     return [
       `• Precio: ${desde ? "desde " : ""}${variada ? detalle + (cantidad > 1 ? `; ${cuenta}` : "") : cuenta}` +
         (desde ? ` (de ${dinero(base)} a ${dinero(opcion.dataset.hasta)})` : ""),
       `• Total: ${textoTotal(total)}`,
-      `• ${textoAbono(total, this.porcentajeValue, { delCliente: true })}`
+      ...(sinAbono ? [] : [`• ${textoAbono(total, this.porcentajeValue, { delCliente: true })}`])
     ]
   }
 

@@ -6,7 +6,7 @@
     { "pregunta": "¿Cuánto cuestan los adornos de fieltro?",
       "respuesta": "Cada set de {piezasPorSet} cuesta {set}, y cada pieza individual de {adornoDesde} a {adornoHasta}. Las varitas mágicas cuestan {varita} c/u, o {docena} la docena." },
     { "pregunta": "¿Cómo se paga?",
-      "respuesta": "Por Yappy o transferencia; no recibo efectivo. Para empezar, el pedido se separa con un abono del {abono}, que no es reembolsable porque con él ya empiezo a coser tus piezas." },
+      "respuesta": "Por Yappy o transferencia; no recibo efectivo. Los sets, las piezas individuales y las guirnaldas se separan con un abono del {abono}, que no es reembolsable porque con él ya empiezo a coser tus piezas. Las varitas no llevan abono." },
     { "pregunta": "¿Cuánto tarda un pedido?",
       "respuesta": "De {tiempo}, porque cada pieza la hago a mano de principio a fin. Te aviso por WhatsApp en cuanto esté lista." },
     { "pregunta": "¿Haces envíos?",
