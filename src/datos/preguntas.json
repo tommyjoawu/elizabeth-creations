@@ -9,8 +9,8 @@
       "respuesta": "Por Yappy o transferencia; no recibo efectivo. Para empezar, el pedido se separa con un abono del {abono}, que no es reembolsable porque con él ya empiezo a coser tus piezas." },
     { "pregunta": "¿Cuánto tarda un pedido?",
       "respuesta": "De {tiempo}, porque cada pieza la hago a mano de principio a fin. Te aviso por WhatsApp en cuanto esté lista." },
-    { "pregunta": "¿Envías a todo Panamá?",
-      "respuesta": "Sí, envío a todo Panamá. El costo del envío te lo confirmo por WhatsApp según tu zona.",
+    { "pregunta": "¿Haces envíos?",
+      "respuesta": "Sí, envío a todo el país. El costo del envío te lo confirmo por WhatsApp según tu zona.",
       "pendiente": "Cómo envía Erika (mensajería, punto de entrega) y cuánto cuesta el envío según la zona." },
     { "pregunta": "¿Hasta cuándo puedo pedir para Navidad?",
       "respuesta": "Hasta el {fechaNavidad}. Así me da tiempo de hacer cada pieza con calma y que te llegue antes de las fiestas." }
