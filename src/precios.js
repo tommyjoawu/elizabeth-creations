@@ -35,6 +35,12 @@ export function textoTotal(total) {
 //
 // `delCliente`: el texto va en el mensaje que la clienta le manda a Erika,
 // así que habla ella ("cuando me confirmes"), no la página ("te confirme").
+// El monto del abono ("$4.50"), o null si el total no es cerrado.
+export function montoAbono(total, porcentaje) {
+  if (total.falta || total.desde) return null
+  return dinero(Math.round(centavos(total.monto) * porcentaje / 100) / 100)
+}
+
 export function textoAbono(total, porcentaje, { delCliente = false } = {}) {
   if (total.falta || total.desde) {
     return delCliente

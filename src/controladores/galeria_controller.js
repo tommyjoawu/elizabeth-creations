@@ -1,99 +1,93 @@
 import { Controller } from "@hotwired/stimulus"
 import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
 
-// La galería colgada (traída de variantes/navidad/navidad.js).
+// La galería colgada de "Las piezas": las flechas y el vaivén.
 //
-// Dos cosas, las dos sólo con movimiento (`prefers-reduced-motion:
-// no-preference`); sin eso la fila queda deslizable con el dedo, quieta:
+// La fila es un `overflow-x` nativo con `scroll-snap` (ver temporada.css):
+// se desliza con el dedo, el trackpad, Mayús + rueda o las flechas del
+// teclado, y el scroll de la página pasa de largo. Antes la sección se fijaba
+// y bajar la página movía la fila; la gente intentaba ir a la derecha y se
+// confundía (02-10-2026), así que ya no se secuestra ningún scroll. Esto sólo
+// suma:
 //
-//   1. La sección se fija y la pista avanza de lado mientras se baja la
-//      página: el scroll vertical se vuelve el paseo por el cable. El largo
-//      del fijado es lo que mide la pista de más, así que bajar un píxel es
-//      avanzar un píxel.
-//   2. Cada pieza es un péndulo con resorte y amortiguación (Euler
-//      semi-implícito): al avanzar, las piezas se quedan atrás y se mecen, y
-//      al frenar vuelven solas. La velocidad del scroll las empuja; nada se
-//      anima con una duración fija, así que nada se pisa al cambiar de
-//      sentido.
+//   1. Los botones ← →: mueven la fila casi una pantalla, y se apagan
+//      (`aria-disabled`, no `disabled`, para no perder el foco) en cada
+//      punta.
+//   2. El vaivén, sólo con movimiento (`prefers-reduced-motion:
+//      no-preference`): cada pieza es un péndulo con resorte y amortiguación
+//      (Euler semi-implícito). Al asomar llega colgando, y al deslizar la
+//      fila se queda atrás y se mece con la velocidad del deslizamiento; al
+//      frenar vuelve sola. Nada se anima con una duración fija, así que nada
+//      se pisa al cambiar de sentido.
 //
 // Todo es `transform`. El ticker de GSAP sólo corre mientras algún péndulo se
 // mueve: con la galería quieta no cuesta nada.
 export default class extends Controller {
-  static targets = ["fijo", "ventana", "pista", "pendulo"]
+  static targets = ["tira", "flechas", "atras", "adelante", "pendulo"]
 
   connect() {
-    this.mm = gsap.matchMedia()
-    this.mm.add("(prefers-reduced-motion: no-preference)", () => {
-      this.element.classList.add("e-galeria--fija")
-      this.crearPendulos()
+    if (!this.hasTiraTarget) return
+    this.suave = window.matchMedia("(prefers-reduced-motion: no-preference)")
+    if (this.hasFlechasTarget) this.flechasTarget.hidden = false
+    this.actualizar()
+    // Al cambiar el ancho (girar el teléfono, llegar las fotos) cambia
+    // dónde está cada punta.
+    this.medidor = new ResizeObserver(() => this.actualizar())
+    this.medidor.observe(this.tiraTarget)
 
-      // Las fotos de la fila son `lazy`, pero con la pista fuera de la
-      // pantalla (a la derecha) el navegador no las pediría hasta que
-      // entren, en pleno paseo. Se piden un poco antes de llegar.
-      ScrollTrigger.create({
-        trigger: this.element, start: "top bottom+=120%", once: true,
-        // `decoding = "sync"` también: con `async`, Chrome deja para después
-        // decodificar una foto que entra de lado en una capa que se mueve, y
-        // por un instante se veía el fondo de color en vez de la pieza.
-        onEnter: () => this.element.querySelectorAll(".e-galeria__tira img").forEach((img) => {
-          img.loading = "eager"
-          img.decoding = "sync"
-        })
-      })
+    if (this.suave.matches) this.crearPendulos()
 
-      const recorrido = () => Math.max(0, this.pistaTarget.scrollWidth - document.documentElement.clientWidth)
-      this.tween = gsap.to(this.pistaTarget, {
-        x: () => -recorrido(),
-        ease: "none",
-        // Se fija la caja de adentro y no la sección: ScrollTrigger mete lo
-        // fijado en un `pin-spacer`, y si moviera el elemento del
-        // controlador, Stimulus lo vería salir y entrar del DOM y volvería a
-        // conectarlo (y a fijarlo) sin fin.
-        scrollTrigger: {
-          trigger: this.fijoTarget,
-          start: "top top",
-          end: () => "+=" + recorrido(),
-          pin: this.fijoTarget,
-          scrub: 0.6,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-          onUpdate: (st) => this.sentir(st.getVelocity())
-        }
-      })
-
-      // Con el teclado, el foco puede caer en una pieza que todavía está
-      // fuera de la pantalla, a la derecha: se baja la página hasta donde la
-      // pista la muestra.
-      this.alEnfocar = (evento) => this.mostrar(evento.target)
-      this.element.addEventListener("focusin", this.alEnfocar)
-
-      return () => {
-        this.element.removeEventListener("focusin", this.alEnfocar)
-        gsap.ticker.remove(this.paso)
-        this.corriendo = false
-        this.io?.disconnect()
-        for (const p of this.pendulos ?? []) gsap.set(p.el, { clearProps: "transform" })
-        this.element.classList.remove("e-galeria--fija")
-      }
-    })
+    // Las fotos de la fila son `lazy`, y las que están a la derecha, fuera
+    // de la fila visible, el navegador las pide recién al deslizar: se veía
+    // el fondo de color un instante. Se piden todas cuando la sección se
+    // acerca (son pocas y livianas).
+    this.cerca = new IntersectionObserver((entradas) => {
+      if (!entradas.some((e) => e.isIntersecting)) return
+      this.tiraTarget.querySelectorAll("img[loading=lazy]").forEach((img) => { img.loading = "eager" })
+      this.cerca.disconnect()
+    }, { rootMargin: "100% 0px" })
+    this.cerca.observe(this.element)
   }
 
   disconnect() {
-    this.mm?.revert()
+    this.medidor?.disconnect()
+    this.cerca?.disconnect()
+    this.io?.disconnect()
+    if (this.paso) gsap.ticker.remove(this.paso)
+    this.corriendo = false
+    for (const p of this.pendulos ?? []) gsap.set(p.el, { clearProps: "transform" })
   }
 
-  mostrar(objetivo) {
-    const st = this.tween?.scrollTrigger
-    const pieza = objetivo.closest("li")
-    if (!st || !pieza || !this.pistaTarget.contains(pieza)) return
-    const recorrido = st.end - st.start
-    if (recorrido <= 0) return
-    const ancho = document.documentElement.clientWidth
-    // La pieza centrada en la pantalla.
-    const centro = pieza.offsetLeft + pieza.closest("ul").offsetLeft + pieza.offsetWidth / 2 - ancho / 2
-    const avance = gsap.utils.clamp(0, recorrido, centro)
-    window.scrollTo({ top: st.start + avance, behavior: "instant" })
+  // ── Las flechas ────────────────────────────────────────────────────────
+  atras() { this.mover(-1) }
+  adelante() { this.mover(1) }
+
+  mover(sentido) {
+    const tira = this.tiraTarget
+    tira.scrollBy({ left: sentido * tira.clientWidth * 0.8, behavior: this.suave.matches ? "smooth" : "auto" })
+  }
+
+  actualizar() {
+    if (!this.hasAtrasTarget) return
+    const tira = this.tiraTarget
+    const inicio = tira.scrollLeft <= 2
+    const fin = tira.scrollLeft + tira.clientWidth >= tira.scrollWidth - 2
+    this.atrasTarget.setAttribute("aria-disabled", String(inicio))
+    this.adelanteTarget.setAttribute("aria-disabled", String(fin))
+  }
+
+  // Cada `scroll` de la fila: las flechas, y el empujón a los péndulos con
+  // la velocidad del deslizamiento (px/s).
+  alDeslizar(evento) {
+    this.actualizar()
+    if (!this.pendulos) return
+    const ahora = evento.timeStamp
+    const x = this.tiraTarget.scrollLeft
+    if (this.ultimo && ahora > this.ultimo.t) {
+      const velocidad = ((x - this.ultimo.x) / (ahora - this.ultimo.t)) * 1000
+      this.sentir(velocidad)
+    }
+    this.ultimo = { x, t: ahora }
   }
 
   // ── Los péndulos ───────────────────────────────────────────────────────
@@ -143,7 +137,7 @@ export default class extends Controller {
         continue
       }
       p.w += (-p.k * Math.sin(p.th) - p.c * p.w) * dt
-      // Tope de ~15°: un scroll violento no da vuelta una pieza.
+      // Tope de ~15°: un deslizamiento violento no da vuelta una pieza.
       p.th = gsap.utils.clamp(-0.26, 0.26, p.th + p.w * dt)
       p.set(p.th * 57.2958)
       activos++
@@ -154,10 +148,11 @@ export default class extends Controller {
     }
   }
 
-  // La pista va hacia la izquierda al bajar: lo que cuelga se queda atrás,
-  // con la base corrida a la derecha (giro negativo desde la pinza).
+  // La fila va hacia la izquierda al deslizar hacia adelante: lo que cuelga
+  // se queda atrás, con la base corrida a la derecha (giro negativo desde la
+  // pinza).
   sentir(velocidad) {
-    if (!velocidad || !this.pendulos) return
+    if (!velocidad) return
     const dw = gsap.utils.clamp(-0.12, 0.12, velocidad * -0.0001)
     for (const p of this.pendulos) if (p.visible) this.empujar(p, dw)
   }

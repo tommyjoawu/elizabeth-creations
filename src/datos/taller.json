@@ -1,11 +1,29 @@
 {
-  "_nota": "Los pasos del taller, contados con los videos de las manos de Erika haciendo una varita de estrella (01-10-2026, docs/material-erika/2026-10-01/): cada paso lleva el bucle de SU video (`video` sin extensión: hay .webm y .mp4, más `-poster.webp/.jpg`, todo de scripts/procesar-material.sh). `encuadre` es el object-position del video en el marco fijo de escritorio, que recorta el vertical: apunta a donde están las manos. Materiales confirmados: fieltro, bisutería, silicón caliente y costura a mano.",
+  "_nota": "Un VISTAZO al taller, no el proceso entero (02-10-2026, Tommy tras la reunión con Erika: 'mostrar sólo una parte del proceso, no todo el 100 %; no mostrar todos los videos'). Se ven dos pasos de los cinco videos de las manos de Erika haciendo una varita de estrella (01-10-2026, docs/material-erika/2026-10-01/). Los otros tres siguen procesados en public/video (taller-coser-bisuteria, taller-decorar, taller-rellenar-palito) y quedan en `_guardados`, sin dibujarse ni precargarse: para volver a mostrar uno se mueve a `pasos`. `video` va sin extensión (hay .webm y .mp4, más `-poster.webp/.jpg`, de scripts/procesar-material.sh). `encuadre` es el object-position del video en el marco fijo de escritorio, que recorta el vertical: apunta a donde están las manos.",
   "frase": {
-    "antes": "Cada pieza empieza con un retazo de fieltro,",
+    "antes": "Cada pieza empieza con un retazo de color,",
     "medio": "se cose a mano punto por punto",
     "despues": "y se llena de brillitos hasta que sonríe."
   },
   "pasos": [
+    {
+      "titulo": "Puntada a puntada",
+      "tono": "#12A5A0",
+      "video": "/video/taller-coser-borde",
+      "encuadre": "50% 58%",
+      "alt": "Las manos de Erika uniendo con aguja e hilo las dos caras de una estrella, puntada a puntada por el borde.",
+      "texto": "Las dos caras se unen con una puntada a mano que da la vuelta a todo el borde, y se queda a la vista. Lo demás es secreto de mi mesa."
+    },
+    {
+      "titulo": "¡Lista!",
+      "tono": "#F2711C",
+      "video": "/video/varita-estrella-lista",
+      "encuadre": "50% 40%",
+      "alt": "La varita de estrella terminada en la mano: blanca, con carita sonriente, lentejuelas, cinta rosada y cascabel.",
+      "texto": "Con su cinta y su cascabel, lista para jugar o para regalar. Ninguna sale igual a otra."
+    }
+  ],
+  "_guardados": [
     {
       "titulo": "Coser la bisutería",
       "tono": "#FFC53D",
@@ -13,14 +31,6 @@
       "encuadre": "50% 62%",
       "alt": "Las manos de Erika cosiendo lentejuelas y perlitas de colores sobre una estrella de fieltro blanco, en su mesa de trabajo.",
       "texto": "Primero la estrella, todavía plana: le coso las lentejuelas y las perlitas una por una."
-    },
-    {
-      "titulo": "Coser el borde",
-      "tono": "#12A5A0",
-      "video": "/video/taller-coser-borde",
-      "encuadre": "50% 58%",
-      "alt": "Las manos de Erika uniendo con aguja e hilo las dos caras de la estrella de fieltro, puntada a puntada por el borde.",
-      "texto": "Las dos caras se unen con una puntada a mano que da la vuelta a todo el borde. Esa costura se queda a la vista."
     },
     {
       "titulo": "Decorar",
@@ -37,14 +47,6 @@
       "encuadre": "50% 45%",
       "alt": "Las manos de Erika rellenando la estrella con algodón y colocándola en el palito de madera.",
       "texto": "La relleno para que quede inflada y le pongo su palito de madera."
-    },
-    {
-      "titulo": "¡Lista!",
-      "tono": "#F2711C",
-      "video": "/video/varita-estrella-lista",
-      "encuadre": "50% 40%",
-      "alt": "La varita de estrella terminada en la mano: fieltro blanco con carita sonriente, lentejuelas, cinta rosada y cascabel.",
-      "texto": "Con su cinta y su cascabel, lista para jugar o para regalar. Las lunas y los adornos nacen igual: fieltro, aguja y paciencia."
     }
   ]
 }

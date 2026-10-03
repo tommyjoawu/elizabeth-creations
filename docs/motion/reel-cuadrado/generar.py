@@ -108,14 +108,14 @@ escena("c1-varita", "#CDB9F2", '''
     tl.fromTo("#c1-mini", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 0.9);
 ''', cortina=False)
 
-# ── B · Hecho en La Chorrera ──────────────────────────────────────────────
-escena("c2-chorrera", "#FFC53D", '''
+# ── B · Hecho en Panamá ───────────────────────────────────────────────────
+escena("c2-panama", "#FFC53D", '''
   h1 { position: absolute; left: 60px; right: 60px; top: 70px; font-size: 96px; line-height: .92; }
   .polaroid { width: 300px; height: 420px; padding: 14px 14px 64px; top: 450px; }
   .polaroid .pie { font-size: 30px; bottom: 14px; }
   #c2-a { left: 60px; } #c2-b { left: 390px; } #c2-c { left: 720px; }
 ''', '''
-    <h1 class="disp"><span class="renglon"><span id="c2-l1">Hecho a mano</span></span><span class="renglon"><span id="c2-l2">en La Chorrera</span></span></h1>
+    <h1 class="disp"><span class="renglon"><span id="c2-l1">Hecho a mano</span></span><span class="renglon"><span id="c2-l2">en Panamá</span></span></h1>
     <div class="polaroid" id="c2-a"><div class="foto"><img src="assets/img/pieza-sirenita.jpg" alt=""></div><p class="pie">sirenita</p></div>
     <div class="polaroid" id="c2-b"><div class="foto"><img src="assets/img/pieza-arbol-verde.jpg" alt=""></div><p class="pie">arbolito</p></div>
     <div class="polaroid" id="c2-c"><div class="foto"><img src="assets/img/pieza-estrella-amarilla.jpg" alt=""></div><p class="pie">estrella</p></div>
@@ -154,7 +154,7 @@ escena("c3-navidad", "#FBF1E1", '''
     tl.fromTo("#c3-fecha", {{ opacity: 0, y: 30 }}, {{ opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }}, 1.3);
 ''')
 
-ESCENAS = [("c1-varita", 0, 3.6), ("c2-chorrera", 3.4, 3.4), ("c3-navidad", 6.6, 3.6)]
+ESCENAS = [("c1-varita", 0, 3.6), ("c2-panama", 3.4, 3.4), ("c3-navidad", 6.6, 3.6)]
 hosts = "\n".join(f'''      <div id="{n}" data-composition-id="{n}" data-composition-src="compositions/{n}.html" data-start="{s}" data-duration="{d}" data-track-index="{i}" data-width="1080" data-height="1080"></div>''' for i, (n, s, d) in enumerate(ESCENAS))
 open(os.path.join(R, "index.html"), "w").write(f'''<!doctype html>
 <html lang="es">

@@ -52,13 +52,13 @@
 
   /* ── El banderín ───────────────────────────────────────────────────────
      La tela es del color del banderín; arriba lleva el doblez sobre el
-     cordel y dos filas de calado de papel picado (flores, rombos y puntos
-     del color del capítulo, que sobre un fondo liso es lo mismo que
-     recortarlos), y abajo termina en picos. Los picos son una máscara: el
+     cordel y unas cuantas florecitas crema sueltas (02-10-2026: fuera las
+     dos filas de rombos del papel picado, "unas cuantas florecitas"), y
+     abajo termina en picos. Los picos son una máscara: el
      recorte es de verdad, no una forma pintada encima. */
   .e-banderin { position: relative; min-width: 0; transform-origin: 50% 0; }
   .e-banderin__tela {
-    --calado: url("data:image/svg+xml,%3Csvg xmlns=%27http%3A//www.w3.org/2000/svg%27 viewBox=%270 0 40 40%27%3E%3Cg fill=%27%23F3DFC1%27%3E%3Cellipse cx=%2720%27 cy=%2712.5%27 rx=%272.6%27 ry=%275.2%27 transform=%27rotate(0 20 20)%27/%3E%3Cellipse cx=%2720%27 cy=%2712.5%27 rx=%272.6%27 ry=%275.2%27 transform=%27rotate(90 20 20)%27/%3E%3Cellipse cx=%2720%27 cy=%2712.5%27 rx=%272.6%27 ry=%275.2%27 transform=%27rotate(180 20 20)%27/%3E%3Cellipse cx=%2720%27 cy=%2712.5%27 rx=%272.6%27 ry=%275.2%27 transform=%27rotate(270 20 20)%27/%3E%3Ccircle cx=%2720%27 cy=%2712%27 r=%271.3%27 transform=%27rotate(45 20 20)%27/%3E%3Ccircle cx=%2720%27 cy=%2712%27 r=%271.3%27 transform=%27rotate(135 20 20)%27/%3E%3Ccircle cx=%2720%27 cy=%2712%27 r=%271.3%27 transform=%27rotate(225 20 20)%27/%3E%3Ccircle cx=%2720%27 cy=%2712%27 r=%271.3%27 transform=%27rotate(315 20 20)%27/%3E%3Ccircle cx=%2720%27 cy=%2720%27 r=%271.6%27/%3E%3Cpath d=%27M0 13l5.5 7L0 27zM40 13l-5.5 7 5.5 7z%27/%3E%3Ccircle cx=%2720%27 cy=%272.2%27 r=%271.4%27/%3E%3Ccircle cx=%2720%27 cy=%2737.8%27 r=%271.4%27/%3E%3C/g%3E%3C/svg%3E");
+    --calado: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 80'%3E%3Cg transform='translate(22 22) rotate(8)' fill='%23FBF1E1'%3E%3Cellipse cx='0' cy='-5.58' rx='3.24' ry='4.95' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-5.58' rx='3.24' ry='4.95' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-5.58' rx='3.24' ry='4.95' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-5.58' rx='3.24' ry='4.95' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-5.58' rx='3.24' ry='4.95' transform='rotate(288)'/%3E%3Ccircle r='2.52' fill='%23FFC53D'/%3E%3C/g%3E%3Cg transform='translate(78 50) rotate(-14)' fill='%23FBF1E1'%3E%3Cellipse cx='0' cy='-4.03' rx='2.34' ry='3.58' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-4.03' rx='2.34' ry='3.58' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-4.03' rx='2.34' ry='3.58' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-4.03' rx='2.34' ry='3.58' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-4.03' rx='2.34' ry='3.58' transform='rotate(288)'/%3E%3Ccircle r='1.82' fill='%23FFC53D'/%3E%3C/g%3E%3Cg transform='translate(104 14) rotate(20)' fill='%23FBF1E1'%3E%3Cellipse cx='0' cy='-2.79' rx='1.62' ry='2.48' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-2.79' rx='1.62' ry='2.48' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-2.79' rx='1.62' ry='2.48' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-2.79' rx='1.62' ry='2.48' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-2.79' rx='1.62' ry='2.48' transform='rotate(288)'/%3E%3Ccircle r='1.26' fill='%23FFC53D'/%3E%3C/g%3E%3Ccircle cx='52' cy='16' r='1.6' fill='%23FBF1E1'/%3E%3Ccircle cx='46' cy='64' r='1.3' fill='%23FBF1E1'/%3E%3C/svg%3E");
     position: relative;
     display: flex;
     flex-direction: column;
@@ -66,8 +66,7 @@
     overflow: hidden;
     padding: 7.1rem 1.25rem 3.25rem;
     background:
-      var(--calado) 0 1.35rem / 2.7rem 2.7rem repeat-x,
-      var(--calado) 1.35rem 4.05rem / 2.7rem 2.7rem repeat-x,
+      var(--calado) 0.4rem 1.4rem / 7.5rem 5rem repeat-x,
       linear-gradient(rgb(30 26 60 / 0.18), rgb(30 26 60 / 0.18)) 0 0 / 100% 0.85rem no-repeat,
       var(--tono);
     color: var(--texto);

@@ -49,8 +49,8 @@ function llms(contexto) {
 
   linea(`# ${marca.nombre}`)
   linea()
-  linea(`> ${marca.nombre} hace adornos de fieltro cosidos a mano y decorados con bisutería en ${marca.ciudad}, ${marca.region} (Panamá). ` +
-    `Los hace Erika, uno por uno. Se piden por WhatsApp, se pagan por ${marca.politicas.pagos} y se entregan en ${marca.politicas.entrega}. ` +
+  linea(`> ${marca.nombre} hace adornos de fieltro cosidos a mano y decorados con bisutería en ${marca.lugar}. ` +
+    `Los hace Erika, uno por uno. Se piden por WhatsApp, se pagan por ${marca.politicas.pagos} y Erika envía a todo ${marca.lugar}. ` +
     `Pedidos de Navidad hasta el ${h.fechaNavidad}.`)
   linea()
   linea(`- Sitio: ${marca.url}`)
@@ -58,14 +58,14 @@ function llms(contexto) {
   linea(`- Precios en dólares (USD). Rango: ${h.rango}.`)
   linea()
 
-  linea("## Sets de adornos de fieltro")
+  linea("## Sets de adornos")
   linea()
   for (const set of productos.sets.filter((s) => typeof s.precio === "number")) {
     linea(`- Set ${set.nombre} (${set.piezas.length} piezas: ${set.piezas.map((p) => p.nombre.toLowerCase()).join(", ")}): ${dinero(set.precio)}`)
   }
   linea()
 
-  linea("## Piezas sueltas")
+  linea("## Piezas individuales")
   linea()
   const vistas = new Set()
   for (const set of productos.sets) {
@@ -81,7 +81,7 @@ function llms(contexto) {
   }
   linea()
 
-  linea("## Varitas mágicas de fieltro")
+  linea("## Varitas mágicas")
   linea()
   linea(`- Con luna o con estrella, del color que escojas, en un palito de madera con cintas: ${dinero(varitas.precios.unidad)} cada una.`)
   linea(`- Docena de un solo estilo y color: ${dinero(varitas.precios.docena)}.`)
@@ -115,7 +115,7 @@ function llms(contexto) {
   linea(`- Pago: ${marca.politicas.pagos}. ${marca.politicas.sinEfectivo}`)
   linea(`- Abono: ${marca.politicas.abono}`)
   linea(`- Tiempo: ${marca.politicas.tiempo} por pieza.`)
-  linea(`- Entrega: ${marca.politicas.entrega}, en un punto de entrega que se coordina por WhatsApp.`)
+  linea(`- Envío: ${marca.politicas.envio}`)
   linea(`- Navidad: pedidos hasta el ${h.fechaNavidad}.`)
   linea(`- Materiales: ${marca.politicas.materiales}.`)
   linea()

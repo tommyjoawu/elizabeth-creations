@@ -41,10 +41,10 @@
   #c2-a { left: 60px; } #c2-b { left: 390px; } #c2-c { left: 720px; }
 
 </style>
-<div id="root" data-composition-id="c2-chorrera" data-width="1080" data-height="1080">
+<div id="root" data-composition-id="c2-panama" data-width="1080" data-height="1080">
   <div class="escena">
 
-    <h1 class="disp"><span class="renglon"><span id="c2-l1">Hecho a mano</span></span><span class="renglon"><span id="c2-l2">en La Chorrera</span></span></h1>
+    <h1 class="disp"><span class="renglon"><span id="c2-l1">Hecho a mano</span></span><span class="renglon"><span id="c2-l2">en Panamá</span></span></h1>
     <div class="polaroid" id="c2-a"><div class="foto"><img src="assets/img/pieza-sirenita.jpg" alt=""></div><p class="pie">sirenita</p></div>
     <div class="polaroid" id="c2-b"><div class="foto"><img src="assets/img/pieza-arbol-verde.jpg" alt=""></div><p class="pie">arbolito</p></div>
     <div class="polaroid" id="c2-c"><div class="foto"><img src="assets/img/pieza-estrella-amarilla.jpg" alt=""></div><p class="pie">estrella</p></div>
@@ -63,7 +63,7 @@
     ["#c2-a", "#c2-b", "#c2-c"].forEach((sel, i) =>
       tl.fromTo(sel, { y: 700, rotation: 0 }, { y: 0, rotation: giros[i], duration: 0.7, ease: "power3.out" }, 0.3 + i * 0.12));
 
-    window.__timelines["c2-chorrera"] = tl;
+    window.__timelines["c2-panama"] = tl;
   })();
 </script>
 </template>

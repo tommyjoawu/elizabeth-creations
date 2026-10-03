@@ -12,14 +12,14 @@
       "nombre": "Luna",
       "mensaje": "mensajeVaritaLuna",
       "foto": "pieza-varita-luna",
-      "alt": "Varita con una luna de fieltro lila llena de perlitas."
+      "alt": "Varita con una luna lila llena de perlitas."
     },
     {
       "id": "estrella",
       "nombre": "Estrella",
       "mensaje": "mensajeVaritaEstrella",
       "foto": "pieza-varita-estrella",
-      "alt": "Varita con una estrella de fieltro blanco, carita bordada y lentejuelas."
+      "alt": "Varita con una estrella blanca, carita bordada y lentejuelas."
     }
   ],
   "colores": [

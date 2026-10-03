@@ -66,7 +66,9 @@ const TRAZOS = {
   mas: '<path d="M12 5v14M5 12h14"/>',
   estrella: '<path d="M12 3.5l2.3 5.3 5.7.5-4.3 3.8 1.3 5.6L12 15.8l-5 2.9 1.3-5.6L4 9.3l5.7-.5z"/>',
   flor: '<circle cx="12" cy="12" r="2.4"/><path d="M12 9.6c-1.6-2.6-1.3-5.6 0-6.6 1.3 1 1.6 4 0 6.6zM12 14.4c1.6 2.6 1.3 5.6 0 6.6-1.3-1-1.6-4 0-6.6zM9.6 12c-2.6 1.6-5.6 1.3-6.6 0 1-1.3 4-1.6 6.6 0zM14.4 12c2.6-1.6 5.6-1.3 6.6 0-1 1.3-4 1.6-6.6 0z"/>',
-  corazon: '<path d="M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.3 4.3 4.3 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10z"/>'
+  corazon: '<path d="M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.3 4.3 4.3 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10z"/>',
+  lupa: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.3 15.3L20 20M10.5 7.8v5.4M7.8 10.5h5.4"/>',
+  cerrar: '<path d="M6 6l12 12M18 6L6 18"/>'
 }
 
 export function ayudantes(hb) {
@@ -242,11 +244,27 @@ export function ayudantes(hb) {
     return `https://wa.me/${numero}?text=${encodeURIComponent(texto)}`
   })
 
-  // (sumaPrecios set.piezas) → lo que costarían las piezas de un set
-  // compradas por separado, para el "por separado serían…" del letrero. En
-  // centavos enteros, por la coma flotante.
-  hb.registerHelper("sumaPrecios", (piezas) =>
-    piezas.reduce((suma, p) => suma + Math.round(Number(p.precio) * 100), 0) / 100)
+  // (individual set.piezas) → el precio de una pieza del set: "$6.00 c/u"
+  // si todas cuestan lo mismo, "desde $6.00" si no (Bajo el mar: la sirenita
+  // y el cangrejito son de $7.00). Sin sumas ni ahorros (02-10-2026: "no
+  // mencionar el ahorro").
+  hb.registerHelper("individual", (piezas) => {
+    const precios = piezas.map((p) => p.precio).filter((v) => typeof v === "number")
+    if (precios.length === 0) return "por confirmar"
+    const menor = Math.min(...precios)
+    return precios.every((v) => v === menor) ? `$${menor.toFixed(2)} c/u` : `desde $${menor.toFixed(2)}`
+  })
+
+  // {{fotoGrande "set-bajo-el-mar"}} → la foto más grande de un slug (en
+  // JPEG si existe), para el enlace de "ver en grande". Vite no reescribe el
+  // `href` de un <a>: va marcada `%RUTA:…%` y el plugin `recursosEnEsquema`
+  // (vite/plantillas.js) la cambia por el archivo publicado, con su hash.
+  // Sale en el build porque el mismo archivo está en el `srcset` de la foto.
+  hb.registerHelper("fotoGrande", (slug) => {
+    const ruta = fotoMayor(slug)
+    if (!ruta) throw new Error(`No hay foto para "${slug}" en src/assets/img`)
+    return `%RUTA:${ruta}%`
+  })
 
   // (docenaVariada varitas.precios) → $25.00 + 12 × $1.50: la cuenta de la
   // tarifa sale de los mismos números que la escriben.

@@ -7,14 +7,14 @@
       "forma": "grande",
       "tono": "#F48FB1",
       "giro": -1.5,
-      "alt": "Video corto de Elizabeth Creations: la varita de luna girando, piezas de fieltro en la mano y el aviso de pedidos de Navidad hasta el 15 de noviembre."
+      "alt": "Video corto de Elizabeth Creations: la varita de luna girando, piezas en la mano y el aviso de pedidos de Navidad hasta el 15 de noviembre."
     },
     {
       "foto": "adorno-estrella-blanca",
       "forma": "chica",
       "tono": "#12A5A0",
       "giro": 2,
-      "alt": "Estrella de fieltro blanco colgada de una cinta, con lentejuelas de colores y canutillos dorados."
+      "alt": "Estrella blanca colgada de una cinta, con lentejuelas de colores y canutillos dorados."
     },
     {
       "foto": "varita-luna-ventana",
@@ -28,21 +28,21 @@
       "forma": "chica",
       "tono": "#F2711C",
       "giro": -2,
-      "alt": "Pececito de fieltro amarillo con aletas turquesa y ojos bordados con perlitas negras."
+      "alt": "Pececito amarillo con aletas turquesa y ojos bordados con perlitas negras."
     },
     {
       "foto": "adorno-cangrejito",
       "forma": "chica",
       "tono": "#D3253C",
       "giro": 1.6,
-      "alt": "Cangrejito de fieltro rojo con barriga naranja, sonrisa bordada y piedritas en las patas."
+      "alt": "Cangrejito rojo con barriga naranja, sonrisa bordada y piedritas en las patas."
     },
     {
       "foto": "coleccion-fieltro",
       "forma": "ancha",
       "tono": "#12A5A0",
       "giro": -0.8,
-      "alt": "Toda la colección de fieltro junta sobre una manta blanca."
+      "alt": "Toda la colección junta sobre una manta blanca."
     }
   ]
 }

@@ -42,13 +42,17 @@ export default class extends Controller {
     gsap.ticker.add(this.alTic)
     gsap.ticker.lagSmoothing(0)
 
-    // Con el menú del celular abierto la página de atrás no tiene que moverse.
+    // Con el menú del celular abierto, o con una ventanita encima (la foto
+    // en grande, el aviso del abono), la página de atrás no tiene que moverse.
     this.alMenu = (evento) => (evento.detail.abierto ? this.lenis.stop() : this.lenis.start())
+    this.alQuieta = (evento) => (evento.detail.quieta ? this.lenis.stop() : this.lenis.start())
     window.addEventListener("isla:menu", this.alMenu)
+    window.addEventListener("pagina:quieta", this.alQuieta)
   }
 
   disconnect() {
     window.removeEventListener("isla:menu", this.alMenu)
+    window.removeEventListener("pagina:quieta", this.alQuieta)
     if (this.alTic) gsap.ticker.remove(this.alTic)
     this.lenis?.destroy()
     this.lenis = null

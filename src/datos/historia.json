@@ -1,0 +1,23 @@
+{
+  "_nota": "La historia de Erika (02-10-2026, Tommy tras la reunión con ella: 'contar una historia de Erika — artesanal, transmitir sentimiento; ella haciendo su negocio, expandir'). Contada por ella, en primera persona y de tú, como el resto de la página. Sólo con lo que sabemos: cose a mano piezas de fieltro con bisutería, cada una la hace ella, vende por WhatsApp, Navidad, varitas para los niños, sets. NADA inventado: ni años, ni nombres, ni lugares, ni otros trabajos. Si Erika quiere sumar un dato de verdad (cuándo empezó, por quién), se escribe aquí.",
+  "_revisar": "BORRADOR para que Erika lo apruebe o lo cambie con sus palabras. Mientras sea borrador, en desarrollo (`npm run dev`) se ve una nota punteada que lo dice; publicada, no.",
+  "borrador": true,
+  "antetitulo": "Mi historia",
+  "titulo": "Todo empezó en mi mesa, con un retazo y una aguja.",
+  "parrafos": [
+    "Empecé en casa, con unos retazos de colores, hilo, aguja y muchas ganas de hacer algo bonito con mis manos. Una estrella llevó a un arbolito, el arbolito a una sirenita, y sin darme cuenta la mesa se llenó de piezas.",
+    "Cada una la corto, la coso y la decoro yo misma, puntada a puntada, con lentejuelas y perlitas. Por eso ninguna sale igual: cada pieza lleva un ratito de mi tiempo y mucho de mi corazón.",
+    "Así, pieza por pieza, nació Elizabeth Creations: mi pequeño negocio, que crece con cada mensaje que me llega por WhatsApp. Adornos para tu arbolito, sets para regalar y varitas para que los niños jueguen a la magia."
+  ],
+  "cita": "Cada pieza que sale de mis manos lleva un pedacito de mí.",
+  "cierre": "Gracias por dejar que una de mis piezas llegue a tu casa.",
+  "firma": "con mucho amor, Erika",
+  "imagen": {
+    "_que": "El póster de uno de los videos del taller (las manos de Erika cosiendo la bisutería sobre una estrella, en su mesa): una foto quieta, no el proceso. El video de ese paso ya no se muestra en el taller.",
+    "poster": "/video/taller-coser-bisuteria-poster",
+    "ancho": 464,
+    "alto": 832,
+    "alt": "Las manos de Erika en su mesa de trabajo, cosiendo lentejuelas de colores sobre una estrella todavía plana, entre cajitas de perlitas y cintas.",
+    "pie": "mi mesa, un día cualquiera"
+  }
+}

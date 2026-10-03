@@ -19,10 +19,10 @@ beat: "Adornos de fieltro cosidos a mano" + el video real de la varita girando e
 
 ## Frame 3
 status: built
-src: compositions/s3-chorrera.html
+src: compositions/s3-panama.html
 slot: 7.4 – 10.8 s
 rules: center-outward-expansion (las polaroids se reparten como cartas)
-beat: "Hecho a mano en La Chorrera" con cuatro piezas en la mano.
+beat: "Hecho a mano en Panamá" con cuatro piezas en la mano.
 
 ## Frame 4
 status: built
@@ -43,7 +43,7 @@ status: built
 src: compositions/s6-pago.html
 slot: 17.0 – 19.6 s
 rules: reactive-displacement suave (etiquetas que entran de lados alternos)
-beat: Yappy o transferencia · 3 a 5 días · La Chorrera y Ciudad de Panamá.
+beat: Yappy o transferencia · 3 a 5 días · envío a todo Panamá.
 
 ## Frame 7
 status: built

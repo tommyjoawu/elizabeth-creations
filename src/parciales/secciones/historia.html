@@ -1,0 +1,64 @@
+{{!--
+  La historia de Erika: quién hace las piezas y cómo se volvió su negocio.
+
+  Pedido del 02-10-2026 (Tommy, tras la reunión con Erika): "contar una
+  historia de Erika — artesanal, transmitir sentimiento". Es un relato corto,
+  no una lista: tres párrafos en primera persona (como toda la página), una
+  frase grande de ella en Caprasimo, y sus manos en la mesa como única foto.
+  Va justo antes del taller: primero quién, después un vistazo a cómo.
+
+  Todo el texto vive en historia.json y es un BORRADOR hasta que Erika lo
+  apruebe: en desarrollo se ve la ranura punteada que lo dice (`borrador`).
+
+  La foto es el póster de un video del taller (una foto quieta, `lazy`):
+  ese paso ya no se muestra en el taller, así que no se repite.
+--}}
+<section id="historia" data-costura="der" class="e-hibisco e-motivo e-motivo--corazones e-feston e-feston--ola e-historia relative isolate overflow-clip"
+         style="--feston: #CDB9F2" aria-labelledby="titulo-historia">
+  <div class="e-contenedor e-capitulo grid gap-12 lg:grid-cols-12 lg:items-center lg:gap-10">
+    <div class="lg:col-span-7 lg:col-start-6 lg:row-start-1">
+      <h2 id="titulo-historia" class="e-aparece font-display text-columna" data-controller="revela">
+        <span class="e-antetitulo">{{historia.antetitulo}}</span><span class="sr-only">: </span>{{historia.titulo}}
+      </h2>
+
+      {{#if (and @root.borrador historia.borrador)}}
+        <p class="e-hueco mt-6">
+          <span class="e-hueco__titulo">Borrador: falta que Erika lo apruebe</span>
+          <span class="mt-2 block text-[0.98rem]">Sólo con lo que sabemos de ella; sin fechas ni nombres inventados.</span>
+        </p>
+      {{/if}}
+
+      <div class="e-historia__relato mt-8 space-y-5 text-entrada">
+        {{#each historia.parrafos}}
+          <p class="e-aparece" data-controller="revela" style="--retraso: calc({{@index}} * 90ms + 80ms)">{{this}}</p>
+        {{/each}}
+      </div>
+    </div>
+
+    {{!-- Sus manos, en una polaroid pegada con cinta. En el celular va entre
+        el relato y la frase: corta el texto en dos y le da aire. --}}
+    <figure class="e-historia__foto e-aparece lg:col-span-4 lg:col-start-1 lg:row-span-2 lg:row-start-1" data-controller="revela">
+      <span class="e-historia__cinta" aria-hidden="true"></span>
+      <picture class="contents">
+        <source type="image/webp" srcset="{{historia.imagen.poster}}.webp">
+        <img src="{{historia.imagen.poster}}.jpg" alt="{{historia.imagen.alt}}"
+             width="{{historia.imagen.ancho}}" height="{{historia.imagen.alto}}" loading="lazy" decoding="async">
+      </picture>
+      <figcaption class="e-historia__pie font-mano">{{historia.imagen.pie}}</figcaption>
+    </figure>
+
+    <div class="lg:col-span-7 lg:col-start-6 lg:row-start-2">
+      {{!-- La frase de ella: lo más grande de la sección, con sus comillas
+          dibujadas en mola. --}}
+      <blockquote class="e-historia__cita e-aparece" data-controller="revela">
+        <p class="font-display">{{historia.cita}}</p>
+      </blockquote>
+      <p class="e-aparece mt-8 max-w-[40ch] text-entrada" data-controller="revela" style="--retraso: 120ms">{{historia.cierre}}</p>
+      <p class="e-nota e-aparece mt-4 inline-flex flex-col text-[1.7rem]" data-controller="revela" style="rotate: -3deg; --retraso: 200ms">
+        {{historia.firma}}
+        <svg class="-mt-1 h-3 w-24 text-mola-honda" viewBox="0 0 96 12" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" aria-hidden="true"><path d="M2 8c14-6 26-6 34-2s18 4 28-1 20-4 30 1"/></svg>
+      </p>
+    </div>
+  </div>
+</section>

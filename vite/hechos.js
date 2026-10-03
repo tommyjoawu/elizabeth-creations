@@ -48,12 +48,12 @@ export function hechos(datos) {
 
   return {
     nombre: marca.nombre,
-    ciudad: marca.ciudad,
-    region: marca.region,
+    lugar: marca.lugar,
     url: marca.url,
     pagos: marca.politicas.pagos,
     tiempo: marca.politicas.tiempo,
     entrega: marca.politicas.entrega,
+    envio: marca.politicas.envio,
     abono: `${marca.politicas.abonoPorcentaje} %`,
     fechaNavidad: fechaLarga(marca.politicas.fechaNavidadIso),
     fechaNavidadCorta: marca.politicas.fechaNavidad,

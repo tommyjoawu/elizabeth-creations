@@ -131,15 +131,15 @@ escena("s2-varita", "#CDB9F2", '''
     tl.to("#s2-pol", { scale: 1.035, duration: 3.4, ease: "sine.inOut" }, 1.0);
 ''')
 
-# ── 3 · El origen: hecho a mano en La Chorrera ────────────────────────────
-escena("s3-chorrera", "#FFC53D", '''
+# ── 3 · El origen: hecho a mano en Panamá ─────────────────────────────────
+escena("s3-panama", "#FFC53D", '''
   h1 { position: absolute; left: 70px; right: 70px; top: 270px; font-size: 124px; line-height: .92; }
   .polaroid { width: 420px; height: 560px; padding: 18px 18px 78px; }
   .polaroid .pie { font-size: 36px; bottom: 16px; }
   #s3-a { left: 80px; top: 600px; } #s3-b { left: 580px; top: 640px; }
   #s3-c { left: 100px; top: 1150px; } #s3-d { left: 570px; top: 1120px; }
 ''', '''
-    <h1 class="disp"><span class="renglon"><span id="s3-l1">Hecho a mano</span></span><span class="renglon"><span id="s3-l2">en La Chorrera</span></span></h1>
+    <h1 class="disp"><span class="renglon"><span id="s3-l1">Hecho a mano</span></span><span class="renglon"><span id="s3-l2">en Panamá</span></span></h1>
     <div class="polaroid" id="s3-a"><div class="foto"><img src="assets/img/pieza-sirenita.jpg" alt=""></div><p class="pie">sirenita</p></div>
     <div class="polaroid" id="s3-b"><div class="foto"><img src="assets/img/pieza-estrella-blanca.jpg" alt=""></div><p class="pie">estrella</p></div>
     <div class="polaroid" id="s3-c"><div class="foto"><img src="assets/img/pieza-pececito.jpg" alt=""></div><p class="pie">pececito</p></div>
@@ -231,7 +231,7 @@ escena("s6-pago", "#FBF1E1", '''
     <h1 class="disp"><span class="renglon"><span id="s6-l1">Así de fácil</span></span></h1>
     <div class="eti" id="s6-a" data-layout-allow-overlap><small>Pagas por</small><b class="disp">Yappy o transferencia</b></div>
     <div class="eti" id="s6-b" data-layout-allow-overlap><small>La hago en</small><b class="disp">3 a 5 días</b></div>
-    <div class="eti" id="s6-c" data-layout-allow-overlap><small>Te la entrego en</small><b class="disp">La Chorrera y Ciudad de Panamá</b></div>
+    <div class="eti" id="s6-c" data-layout-allow-overlap><small>Envío a</small><b class="disp">todo Panamá</b></div>
 ''', '''
     tl.fromTo("#s6-l1", { yPercent: 110 }, { yPercent: 0, duration: 0.6, ease: "expo.out" }, 0.2);
     tl.fromTo("#s6-a", { x: -1200 }, { x: 0, duration: 0.6, ease: "power4.out" }, 0.35);
@@ -253,7 +253,7 @@ escena("s7-cierre", "#D3253C", '''
     <img class="logo" id="s7-logo" src="assets/sello-crema-sobre-oscuro.svg" alt="">
     <div class="nombre disp"><span class="renglon"><span id="s7-n1">Elizabeth</span></span><span class="renglon"><span id="s7-n2">Creations</span></span></div>
     <div class="cta" id="s7-cta"><span>Haz tu pedido por WhatsApp</span><span class="isla">{WA}</span></div>
-    <p class="bajada mano" id="s7-bajada">hecho a mano en La Chorrera</p>
+    <p class="bajada mano" id="s7-bajada">hecho a mano en Panamá</p>
 ''', '''
     tl.fromTo("#s7-logo", { y: -700, rotation: 22 }, { y: 0, rotation: 22, duration: 0.6, ease: "power3.out" }, 0.2);
     tl.to("#s7-logo", { rotation: -12, duration: 0.5, ease: "sine.inOut" }, 0.8);
@@ -269,7 +269,7 @@ escena("s7-cierre", "#D3253C", '''
 ''')
 
 # ── index.html: las siete escenas en fila, cada una sobre la anterior ─────
-ESCENAS = [("s1-intro", 0, 3.2), ("s2-varita", 3.0, 4.6), ("s3-chorrera", 7.4, 3.4), ("s4-escoges", 10.6, 3.4),
+ESCENAS = [("s1-intro", 0, 3.2), ("s2-varita", 3.0, 4.6), ("s3-panama", 7.4, 3.4), ("s4-escoges", 10.6, 3.4),
            ("s5-navidad", 13.8, 3.4), ("s6-pago", 17.0, 2.6), ("s7-cierre", 19.4, 3.6)]
 hosts = "\n".join(f'''      <div id="{n}" data-composition-id="{n}" data-composition-src="compositions/{n}.html" data-start="{s}" data-duration="{d}" data-track-index="{i}" data-width="1080" data-height="1920"></div>''' for i, (n, s, d) in enumerate(ESCENAS))
 open(os.path.join(R, "index.html"), "w").write(f'''<!doctype html>

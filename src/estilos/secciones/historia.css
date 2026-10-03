@@ -1,0 +1,85 @@
+/* ============================================================================
+   LA HISTORIA — Erika, contada por ella
+   El capítulo hibisco: el único rosado de la página, el color más tierno de
+   la paleta para la sección más tierna. Tinta añil encima (medido en
+   main.css: `.e-hibisco` lleva --tenue #2A2550).
+   ========================================================================== */
+@layer components {
+  /* Corazoncitos crema: los del motivo de la pared son rosados y en este
+     fondo no se verían. */
+  .e-historia.e-motivo {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg transform='translate(24 26) rotate(-10)' opacity='0.5'%3E%3Cpath d='M0 4.6C-4-.9-6.2-2.6-4.6-4.6-3.4-6 -1.2-5.6 0-3.6 1.2-5.6 3.4-6 4.6-4.6 6.2-2.6 4 1-0 4.6Z' fill='%23FFF9EF'/%3E%3C/g%3E%3Cg transform='translate(76 76) rotate(12) scale(.8)' opacity='0.5'%3E%3Cpath d='M0 4.6C-4-.9-6.2-2.6-4.6-4.6-3.4-6 -1.2-5.6 0-3.6 1.2-5.6 3.4-6 4.6-4.6 6.2-2.6 4 1-0 4.6Z' fill='%23FFF9EF'/%3E%3C/g%3E%3Ccircle cx='76' cy='22' r='1.6' fill='%23FFC53D' opacity='0.7'/%3E%3Ccircle cx='24' cy='78' r='1.5' fill='%23FFF9EF' opacity='0.5'/%3E%3C/svg%3E");
+    background-size: 100px 100px;
+  }
+
+  /* ── Sus manos, en una polaroid ──────────────────────────────────────
+     Papel blanco con margen ancho abajo (ahí va el pie escrito a mano),
+     torcida, con un pedazo de cinta arriba y la sombra dura en añil. */
+  .e-historia__foto {
+    position: relative;
+    justify-self: center;
+    width: min(100%, 22rem);
+    padding: 0.8rem 0.8rem 0;
+    border-radius: 0.5rem;
+    background: #FFF9EF;
+    rotate: -2.5deg;
+    box-shadow: 0 0 0 1.5px #1E1A3C, 0.6rem 0.65rem 0 #1E1A3C;
+  }
+  .e-historia__foto img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: 50% 62%;
+    border-radius: 0.25rem;
+  }
+  .e-historia__pie {
+    padding: 0.7rem 0.2rem 0.9rem;
+    font-size: 1.2rem;
+    text-align: center;
+    color: #1E1A3C;
+  }
+  .e-historia__cinta {
+    position: absolute;
+    z-index: 1;
+    top: -0.9rem;
+    left: 50%;
+    width: 6.5rem;
+    height: 1.8rem;
+    margin-left: -3.25rem;
+    background: rgb(255 197 61 / 0.82);
+    rotate: 3deg;
+    box-shadow: 0 0 0 1px rgb(30 26 60 / 0.2);
+  }
+  @media (min-width: 1024px) {
+    .e-historia__foto { width: 100%; max-width: 24rem; justify-self: start; }
+  }
+
+  /* ── La frase de ella ────────────────────────────────────────────────
+     Lo más grande del capítulo, con unas comillas gruesas en mola que
+     cuelgan por fuera del renglón: se lee como algo que ella dijo, no como
+     un titular más. */
+  .e-historia__cita {
+    position: relative;
+    margin-top: 0.5rem;
+    padding-top: 2.6rem;
+  }
+  .e-historia__cita::before {
+    content: "“";
+    position: absolute;
+    top: -0.6rem;
+    left: -0.2rem;
+    font-family: var(--font-display);
+    font-size: 6.5rem;
+    line-height: 1;
+    color: #B21F33;
+  }
+  .e-historia__cita p {
+    max-width: 18ch;
+    font-size: clamp(2.1rem, 4.4vw, 3.6rem);
+    line-height: 1.04;
+    text-wrap: balance;
+  }
+  .e-historia__relato { max-width: 46ch; }
+}

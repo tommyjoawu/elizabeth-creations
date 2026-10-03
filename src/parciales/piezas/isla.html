@@ -12,7 +12,7 @@
   <div class="e-isla pointer-events-auto flex w-full max-w-5xl items-center justify-between gap-2 p-1.5 lg:w-max lg:gap-9"
        data-controller="isla" data-action="focusin->isla#mostrar">
     {{!-- Sin `aria-label`: el nombre accesible es el texto que se ve
-        ("Elizabeth Creations, hecho a mano en La Chorrera") más ", inicio".
+        ("Elizabeth Creations, hecho a mano en Panamá") más ", inicio".
         Un nombre distinto del que se lee confunde a quien maneja la página
         por voz (dice lo que ve y no pasa nada). --}}
     <a href="#principal" class="group flex min-w-0 items-center gap-3 rounded-full py-0.5 pr-2 pl-0.5">
@@ -24,7 +24,7 @@
       </span>
       <span class="flex min-w-0 flex-col leading-none">
         <span class="truncate font-display text-[1.2rem] leading-none sm:text-[1.3rem]">{{marca.nombre}}</span>
-        <span class="mt-1 truncate text-[0.74rem] font-semibold text-tenue"><span class="sr-only">, </span>Hecho a mano en {{marca.ciudad}}<span class="sr-only">, inicio</span></span>
+        <span class="mt-1 truncate text-[0.74rem] font-semibold text-tenue"><span class="sr-only">, </span>Hecho a mano en {{marca.lugar}}<span class="sr-only">, inicio</span></span>
       </span>
     </a>
 

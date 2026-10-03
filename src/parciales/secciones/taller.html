@@ -1,12 +1,14 @@
 {{!--
-  El taller: cómo nace una pieza, y la historia de Elizabeth Creations.
+  El taller: un VISTAZO a cómo nace una pieza, no el proceso entero.
 
-  Arriba, una frase grande que se enciende al leerla (controlador `lectura`,
-  el mismo de la v2). Sin fotitos dentro del texto: Erika no las entendía
-  (01-10-2026, "¿qué es esto?").
+  Pedido del 02-10-2026 (Tommy, tras la reunión con Erika): "mostrar sólo una
+  parte del proceso, no todo el 100 %; no mostrar todos los videos". De los
+  cinco videos de las manos de Erika haciendo una varita de estrella se ven
+  dos (taller.json → `pasos`); los otros tres quedan guardados en
+  `_guardados`, sin dibujarse ni pedirse. Los pasos no van numerados: con
+  números, dos pasos se leerían como el proceso completo.
 
-  Abajo, los pasos, contados con los videos de las manos de Erika haciendo
-  una varita de estrella (01-10-2026): cada paso tiene el bucle de SU video.
+  Arriba, una frase grande que se enciende al leerla (controlador `lectura`).
   En escritorio el video se queda quieto a la izquierda (`sticky`, no GSAP)
   y cambia al paso que se está leyendo; su marco de capas —las capas
   recortadas de la mola— toma el color de ese paso, y sólo corre el video
@@ -14,12 +16,10 @@
   hay marco fijo: cada paso lleva su póster debajo, que es lo que se ve
   siempre en el celular, donde el bucle corre al entrar en pantalla.
 
-  Con reduced-motion ningún video arranca: queda el póster de cada paso,
-  escogido para que cuente el paso solo (scripts/procesar-material.sh).
-
-  La historia es un BORRADOR para que Erika lo revise (marca.historia).
+  Con reduced-motion ningún video arranca: queda el póster de cada paso.
+  La historia de Erika vive en su propia sección, justo antes (historia).
 --}}
-<section id="taller" data-costura="izq" class="e-papel e-motivo e-motivo--puntadas e-feston e-feston--picos relative" style="--feston: #CDB9F2" aria-labelledby="titulo-taller">
+<section id="taller" data-costura="izq" class="e-papel e-motivo e-motivo--puntadas e-feston e-feston--picos relative" style="--feston: #F48FB1" aria-labelledby="titulo-taller">
   <div class="e-contenedor e-capitulo">
     <p class="e-lectura max-w-6xl font-display text-declaracion" data-controller="lectura">
       {{palabras taller.frase.antes}}
@@ -29,13 +29,10 @@
 
     <div class="mt-24 grid gap-14 sm:mt-32 lg:grid-cols-12 lg:gap-16" data-controller="taller">
       <div class="e-taller__cabecera lg:col-span-5 lg:col-start-8 lg:row-start-1">
-        <h2 id="titulo-taller" class="font-display text-columna"><span class="e-antetitulo">Hechos a mano en {{marca.ciudad}}, paso a paso</span><span class="sr-only">: </span>Así nace cada pieza</h2>
-        <p class="mt-6 max-w-[42ch] text-entrada">{{marca.historia.texto}}</p>
-        {{!-- La firma: el nombre a mano con un trazo debajo, sin raya delante. --}}
-        <p class="e-nota mt-5 inline-flex flex-col text-[1.6rem]" style="rotate: -3deg">
-          con mucho amor, {{marca.nombreCorto}}
-          <svg class="-mt-1 h-3 w-24 text-acento" viewBox="0 0 96 12" fill="none" stroke="currentColor" stroke-width="2"
-               stroke-linecap="round" aria-hidden="true"><path d="M2 8c14-6 26-6 34-2s18 4 28-1 20-4 30 1"/></svg>
+        <h2 id="titulo-taller" class="font-display text-columna"><span class="e-antetitulo">Un vistazo a mi mesa</span><span class="sr-only">: </span>Así nace cada pieza</h2>
+        <p class="mt-6 max-w-[42ch] text-entrada">
+          No te lo cuento todo, que cada pieza tiene su secreto. Pero aquí van dos momentos de una varita
+          de estrella, con mis manos y sin prisa.
         </p>
       </div>
 
@@ -69,10 +66,9 @@
       <ol class="e-pasos lg:col-span-5 lg:col-start-8" role="list">
         {{#each taller.pasos}}
           <li class="e-paso" data-taller-target="paso" data-tono="{{this.tono}}" style="--tono-paso: {{this.tono}}">
-            <span class="e-paso__numero" aria-hidden="true">{{suma @index 1}}</span>
-            <h3 class="font-display text-[clamp(1.7rem,2.4vw,2.2rem)] leading-[1.05]">
-              <span class="sr-only">Paso {{suma @index 1}}: </span>{{this.titulo}}
-            </h3>
+            {{!-- Una estrella y un corazón, no números (ver arriba). --}}
+            <span class="e-paso__numero" aria-hidden="true">{{#if @first}}{{icono "estrella" clase="size-6"}}{{else}}{{icono "corazon" clase="size-6"}}{{/if}}</span>
+            <h3 class="font-display text-[clamp(1.7rem,2.4vw,2.2rem)] leading-[1.05]">{{this.titulo}}</h3>
             <p class="mt-3 max-w-[40ch]">{{this.texto}}</p>
             <div class="e-paso__foto{{#if this.pendiente}} e-paso__foto--hueco{{/if}}{{#if this.video}} e-paso__foto--video{{/if}}"
                  {{#if this.video}}data-controller="video-fondo" data-video-fondo-src-value="{{this.video}}" data-video-fondo-movil-value="true"{{/if}}>

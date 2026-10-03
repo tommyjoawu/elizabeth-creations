@@ -1,13 +1,12 @@
 {{!--
   Cómo pedir: las reglas del negocio, dichas una vez y en claro.
 
-  A la izquierda, el camino de un pedido en cuatro pasos, con lo que Erika
-  pidió en sus audios: pago por Yappy o transferencia (sin efectivo), el
-  abono del 30 % en TODOS los pedidos y sets (que una vez abonado no se
-  devuelve), 3 a 5 días por pieza y entrega en
-  La Chorrera o la Ciudad de Panamá. Debajo, el AVISO del abono: "esa parte
-  le tienes que dejar bastante clara" (audio 2). Va en un recuadro de tinta
-  con su propio título, no en letra chica.
+  A la izquierda, el camino de un pedido en cuatro pasos (encargo.json): pago
+  por Yappy o transferencia (sin efectivo), el abono del 30 % en TODOS los
+  pedidos y sets, 3 a 5 días por pieza y envío a todo Panamá. Que el abono no
+  es reembolsable ya NO va en un recuadro rojo (02-10-2026: "no ser tan obvio
+  con el abono… algo más sutil"): lo dice, con calma, la ventanita que
+  aparece al enviar el pedido (piezas/abono) y la pregunta "¿Cómo se paga?".
 
   A la derecha, la FICHA de pedido, que termina en WhatsApp y no en un
   servidor que no existe:
@@ -19,44 +18,36 @@
       variada, el nombre de la guirnalda, color, cantidad, fecha, zona y la
       tarjeta personalizada— y el mensaje se arma solo, con la cuenta del
       precio y del abono, y una vista previa como la burbuja que Erika va a
-      recibir.
+      recibir. Al enviar, antes de abrir WhatsApp, la ventanita del abono.
 --}}
 <section id="encargos" data-costura="izq" class="e-mango e-motivo e-motivo--flores-estrellas e-feston relative isolate overflow-clip" style="--feston: #F3DFC1"
          aria-labelledby="titulo-encargos">
   <div class="e-contenedor e-capitulo relative grid gap-14 lg:grid-cols-12 lg:gap-10">
     <div class="lg:col-span-5">
       <h2 id="titulo-encargos" class="e-aparece font-display text-columna" data-controller="revela">
-        <span class="e-antetitulo">Cómo pedir tus adornos por WhatsApp</span><span class="sr-only">: </span>Así haces tu pedido
+        <span class="e-antetitulo">Por WhatsApp, sin complicaciones</span><span class="sr-only">: </span>Así haces tu pedido
       </h2>
       <p class="e-aparece mt-6 max-w-[40ch] text-entrada" data-controller="revela" style="--retraso: 100ms">
-        Todo se coordina por WhatsApp. Pagas por {{marca.politicas.pagos}}: no recibo efectivo.
-        Te entrego en {{marca.politicas.entrega}}.
+        Todo te lo coordino por WhatsApp. Me pagas por {{marca.politicas.pagos}} (no recibo efectivo)
+        y te lo envío a todo {{marca.lugar}}.
       </p>
 
       <ol class="mt-12 space-y-6" role="list">
         {{#each encargo.pasos}}
           <li class="e-aparece flex items-start gap-4" data-controller="revela" style="--retraso: calc({{@index}} * 90ms + 150ms)">
             {{!-- Un número cosido en una pastilla crema: aquí el orden sí
-                importa, primero se abona y después se hace. --}}
+                importa, primero se separa y después se hace. --}}
             <span class="e-encargo__numero" aria-hidden="true">{{suma @index 1}}</span>
             <p class="pt-1"><strong class="font-bold">{{this.titulo}}</strong> {{this.texto}}</p>
           </li>
         {{/each}}
       </ol>
 
-      <div class="e-aparece e-aviso mt-12" data-controller="revela" style="--retraso: 520ms" role="note"
-           aria-labelledby="titulo-abono">
-        <p id="titulo-abono" class="e-aviso__titulo font-display">El abono no se devuelve</p>
-        <p class="mt-2">
-          Todo pedido, de una pieza o de un set completo, se separa con el {{marca.politicas.abonoPorcentaje}} % de abono.
-          Una vez abonado, no se devuelve: con él ya empiezo a hacer tu pieza.
-        </p>
-      </div>
     </div>
 
     <div class="lg:col-span-6 lg:col-start-7">
       <form id="ficha-pedido" class="e-ficha" action="{{whatsappBase}}" method="get" target="_blank" rel="noopener"
-            data-controller="encargo" data-action="submit->encargo#enviar input->encargo#componer change->encargo#componer"
+            data-controller="encargo" data-action="submit->encargo#enviar submit->abono#confirmar input->encargo#componer change->encargo#componer"
             data-encargo-saludo-value="¡Hola! Quiero hacer un pedido a {{marca.nombre}}."
             data-encargo-abono-value="{{marca.mensajeAbono}}"
             data-encargo-porcentaje-value="{{marca.politicas.abonoPorcentaje}}">
@@ -106,7 +97,6 @@
                 </optgroup>
                 {{/unless}}
               {{/each}}
-              <option value="Otra idea">Otra idea</option>
             </select>
           </div>
 
@@ -174,7 +164,7 @@
         <div class="mt-5">
           <label class="e-rotulo" for="encargo-idea" data-encargo-target="rotuloIdea">Cuéntame tu pedido</label>
           <textarea class="e-campo" id="encargo-idea" name="text" rows="3" required
-                    placeholder="Una varita con luna lila para el cumpleaños de mi hija…"
+                    placeholder="El set Bajo el mar y dos varitas con luna lila…"
                     data-encargo-target="idea"></textarea>
         </div>
 
@@ -182,7 +172,7 @@
             se rearma en cada tecla, y un lector de pantalla repetiría el
             mensaje entero con cada letra. --}}
         <div class="e-burbuja" data-encargo-target="vista" hidden>
-          <p class="e-rotulo mb-2">Así le llega a {{marca.nombre}}</p>
+          <p class="e-rotulo mb-2">Así me llega tu mensaje</p>
           <p class="e-burbuja__texto" data-encargo-target="texto"></p>
         </div>
 

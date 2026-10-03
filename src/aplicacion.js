@@ -24,6 +24,8 @@ import PedidoController from "./controladores/pedido_controller.js"
 import GaleriaController from "./controladores/galeria_controller.js"
 import CosturaController from "./controladores/costura_controller.js"
 import VaritasController from "./controladores/varitas_controller.js"
+import ZoomController from "./controladores/zoom_controller.js"
+import AbonoController from "./controladores/abono_controller.js"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -40,6 +42,11 @@ application.register("pedido", PedidoController)
 application.register("varitas", VaritasController)
 application.register("encargo", EncargoController)
 application.register("video-fondo", VideoFondoController)
+application.register("zoom", ZoomController)
+application.register("abono", AbonoController)
+// La galería ya no es una escena de scroll (no se fija): sólo flechas y
+// vaivén, liviana como las de arriba.
+application.register("galeria", GaleriaController)
 
 // Después, las escenas de scroll, UNA POR TAREA. Registrar un controlador
 // conecta en el acto todos sus elementos, y cada escena mide la página
@@ -48,13 +55,11 @@ application.register("video-fondo", VideoFondoController)
 // una y otra se le devuelve el turno al navegador, que pinta y atiende un
 // toque si llega.
 //
-// El orden es el de la página y no se cambia: la galería se fija ANTES de
-// que se midan las escenas que están debajo (su `pin-spacer` las corre), y
-// el hilo va al final porque recorre todas las secciones ya acomodadas.
+// El orden es el de la página, y el hilo va al final porque recorre todas
+// las secciones ya acomodadas.
 const ESCENAS = [
   ["suave", SuaveController],
   ["tendedero", TendederoController],
-  ["galeria", GaleriaController],
   ["lectura", LecturaController],
   ["taller", TallerController],
   ["costura", CosturaController]

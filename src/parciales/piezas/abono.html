@@ -1,0 +1,35 @@
+{{!--
+  Antes de enviar tu pedido: el abono, dicho con calma.
+
+  02-10-2026: "no ser tan obvio con el abono no se devuelve; una modal de
+  advertencia al hacer checkout… algo más sutil". Ya no hay recuadro rojo
+  ni renglón fijo en el resumen: esta ventanita sale UNA vez, justo al tocar
+  el último "Enviar por WhatsApp" (el del resumen de las piezas, el de la
+  ficha de pedido y el "Pedir sólo esto" de las varitas), con el monto del
+  abono si el total es cerrado. "Entendido, enviar por WhatsApp" es un
+  enlace de verdad al chat con el mensaje armado (no una ventana abierta
+  por código, que el navegador podría bloquear).
+
+  Sin JavaScript no aparece y los enlaces van directo: el mensaje de
+  WhatsApp igual lleva la línea del abono (marca.mensajePedido).
+--}}
+<dialog class="e-aviso-abono" data-abono-target="dialogo" aria-labelledby="abono-titulo" aria-describedby="abono-texto"
+        data-abono-porcentaje-value="{{marca.politicas.abonoPorcentaje}}" data-lenis-prevent
+        data-action="click->abono#alTocarFondo close->abono#alCerrar">
+  <div class="e-aviso-abono__caja">
+    <span class="e-aviso-abono__sello" aria-hidden="true">{{> piezas/logo clase="size-12"}}</span>
+    <h2 id="abono-titulo" class="font-display">Antes de enviar tu pedido</h2>
+    <p id="abono-texto" class="mt-3">
+      Para empezar a hacer tu pedido, se separa con un abono del {{marca.politicas.abonoPorcentaje}} %<span data-abono-target="monto"></span>
+      por Yappy o transferencia. Como con el abono ya empiezo a coser tus piezas, no es reembolsable.
+    </p>
+    <div class="e-aviso-abono__acciones">
+      <a class="e-boton e-boton--primario justify-between" href="{{whatsapp}}" target="_blank" rel="noopener"
+         data-abono-target="seguir" data-action="abono#seguir">
+        <span>Entendido, enviar por WhatsApp</span>
+        <span class="e-boton__isla">{{icono "whatsapp" clase="size-4"}}</span>
+      </a>
+      <button type="button" class="e-aviso-abono__volver" data-action="abono#cerrar">Volver</button>
+    </div>
+  </div>
+</dialog>

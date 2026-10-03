@@ -9,7 +9,7 @@
       "tono": "mango",
       "movil": true,
       "px": 0.17,
-      "nombre": "Arbolito verde de fieltro",
+      "nombre": "Arbolito verde",
       "ancla": "#temporada"
     },
     {
@@ -19,7 +19,7 @@
       "foto": "adorno-galleta-jengibre",
       "tono": "papaya",
       "movil": false,
-      "nombre": "Galleta de jengibre de fieltro",
+      "nombre": "Galleta de jengibre",
       "ancla": "#temporada"
     },
     {
@@ -40,7 +40,7 @@
       "tono": "turquesa",
       "movil": true,
       "px": 0.5,
-      "nombre": "Sirenita de fieltro",
+      "nombre": "Sirenita",
       "ancla": "#coleccion-bajo-el-mar"
     },
     {
@@ -50,7 +50,7 @@
       "foto": "adorno-estrella-blanca",
       "tono": "hibisco",
       "movil": false,
-      "nombre": "Estrella blanca de fieltro",
+      "nombre": "Estrella blanca",
       "ancla": "#temporada"
     },
     {
@@ -61,7 +61,7 @@
       "tono": "papaya",
       "movil": true,
       "px": 0.83,
-      "nombre": "Estrella amarilla de fieltro",
+      "nombre": "Estrella amarilla",
       "ancla": "#temporada"
     }
   ]

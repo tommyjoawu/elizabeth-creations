@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
-import { dinero, totalDe, textoTotal, textoAbono } from "../precios.js"
+import { dinero, totalDe, textoTotal, textoAbono, montoAbono } from "../precios.js"
 
 // La ficha de pedido: arma el mensaje de WhatsApp a partir de los campos.
 //
@@ -80,6 +80,8 @@ export default class extends Controller {
     if (tipo === "nombre" && this.colorExtraTarget.checked) renglones.push("• Color adicional: sí")
     const precio = this.precio(opcion, tipo, variada)
     if (precio) renglones.push(...precio)
+    // Para la ventanita del abono que sale al enviar (controlador `abono`).
+    this.element.dataset.abonoMonto = this.monto || ""
     if (conTarjeta && !renglones.some((r) => r.startsWith("• Tarjeta:"))) {
       renglones.push("• Tarjeta: sí, personalizada")
     }
@@ -94,8 +96,9 @@ export default class extends Controller {
   }
 
   // La cuenta de la pieza escogida, en renglones para el mensaje, o nada
-  // si no tiene precio ("Otra idea").
+  // si no tiene precio.
   precio(opcion, tipo, variada) {
+    this.monto = null
     const base = parseFloat(opcion?.dataset.precio)
     if (!Number.isFinite(base)) return null
     const cantidad = Math.max(1, parseInt(this.campoTargets.find((c) => c.dataset.rotulo === "Cantidad")?.value, 10) || 1)
@@ -114,6 +117,7 @@ export default class extends Controller {
     const desde = tipo === "nombre"
     const monto = Math.round(unidad * 100) * cantidad / 100
     const total = totalDe([{ precio: monto, desde }])
+    this.monto = montoAbono(total, this.porcentajeValue)
     const cuenta = cantidad > 1 ? `${cantidad} × ${dinero(unidad)} = ${dinero(monto)}` : dinero(monto)
     return [
       `• Precio: ${desde ? "desde " : ""}${variada ? detalle + (cantidad > 1 ? `; ${cuenta}` : "") : cuenta}` +
@@ -123,6 +127,8 @@ export default class extends Controller {
     ]
   }
 
+  // Antes que `abono#confirmar` (mismo `submit`, declarado después): el
+  // mensaje y el monto tienen que estar al día cuando abra la ventanita.
   enviar() {
     // Por si algo se autocompletó sin disparar `input`.
     this.componer()

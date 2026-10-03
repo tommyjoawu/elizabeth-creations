@@ -99,22 +99,31 @@ export function plantillas() {
 
 // Las fotos del JSON-LD (`%RECURSO:src/assets/img/…%`, ver vite/esquema.js)
 // pasan a su URL publicada: la dirección del sitio (marca.url) + el archivo
-// con su hash. En desarrollo, a la ruta que sirve Vite.
+// con su hash. Las de los enlaces "ver en grande" (`%RUTA:…%`, ayudante
+// `fotoGrande`) pasan a la ruta del archivo dentro del sitio (`base` +
+// archivo): así también sirven en `vite preview` y en cualquier subcarpeta.
+// En desarrollo, las dos van a la ruta que sirve Vite.
 export function recursosEnEsquema() {
+  let base = "/"
   return {
     name: "erika-recursos-en-esquema",
+    configResolved(config) {
+      base = config.base
+    },
     transformIndexHtml: {
       order: "post",
       handler(html, ctx) {
-        if (!html.includes("%RECURSO:")) return html
+        if (!html.includes("%RECURSO:") && !html.includes("%RUTA:")) return html
         const url = datos().marca.url
-        return html.replace(/%RECURSO:([^%"]+)%/g, (_, ruta) => {
-          if (!ctx.bundle) return `/${ruta}`
+        const publicado = (ruta) => {
           const archivo = Object.values(ctx.bundle).find((salida) =>
             salida.type === "asset" && (salida.originalFileNames || []).some((original) => original.replace(/\\/g, "/").endsWith(ruta)))
-          if (!archivo) throw new Error(`El JSON-LD cita ${ruta}, pero no salió en el build (¿la foto se usa en la página?)`)
-          return url + archivo.fileName
-        })
+          if (!archivo) throw new Error(`La página cita ${ruta}, pero no salió en el build (¿la foto se usa en la página?)`)
+          return archivo.fileName
+        }
+        return html
+          .replace(/%RECURSO:([^%"]+)%/g, (_, ruta) => (ctx.bundle ? url + publicado(ruta) : `/${ruta}`))
+          .replace(/%RUTA:([^%"]+)%/g, (_, ruta) => (ctx.bundle ? base + publicado(ruta) : `/${ruta}`))
       }
     }
   }

@@ -496,20 +496,145 @@
     vertical-align: middle;
   }
 
-  /* ── El aviso del abono ────────────────────────────────────────────────
-     Un recuadro crema con borde de tinta entero y su sombra dura, sobre el
-     mango: se ve desde lejos sin gritar en rojo, y el título lo dice todo
-     aunque no se lea el resto. */
-  .e-aviso {
-    position: relative;
-    max-width: 30rem;
-    padding: 1.25rem 1.35rem 1.35rem;
-    border-radius: 1.25rem;
+  /* ── Las ventanitas (<dialog>) ─────────────────────────────────────────
+     Con una abierta, la página de atrás no se desplaza (en el teléfono no
+     hay Lenis que detener). */
+  html:has(dialog[open]) { overflow: hidden; }
+
+  /* "Antes de enviar tu pedido": chica, papel crema, filo de tinta y sombra
+     dura mango, como la ficha de pedido. Nada rojo: es un recordatorio, no
+     una alarma (02-10-2026). */
+  .e-aviso-abono {
+    width: min(calc(100% - 2rem), 28rem);
+    max-width: none;
+    margin: auto;
+    padding: 0;
+    border: 0;
+    border-radius: 1.5rem;
     background: #FFF9EF;
     color: #1E1A3C;
-    box-shadow: 0 0 0 1.5px #1E1A3C, 0.35rem 0.4rem 0 #D3253C, 0.35rem 0.4rem 0 1.5px #1E1A3C;
+    box-shadow: 0 0 0 1.5px #1E1A3C, 0.45rem 0.5rem 0 #FFC53D, 0.45rem 0.5rem 0 1.5px #1E1A3C;
+    overflow: visible;
   }
-  .e-aviso__titulo { font-size: 1.45rem; line-height: 1.05; color: #B21F33; }
+  .e-aviso-abono::backdrop { background: rgb(30 26 60 / 0.55); }
+  .e-aviso-abono__caja { position: relative; padding: 2rem 1.5rem 1.5rem; }
+  .e-aviso-abono__sello { position: absolute; top: -1.6rem; left: 1.4rem; rotate: -8deg; }
+  .e-aviso-abono h2 { font-size: clamp(1.7rem, 5vw, 2rem); line-height: 1.05; }
+  .e-aviso-abono p { font-size: 1.05rem; line-height: 1.5; color: #3B3557; }
+  .e-aviso-abono__acciones { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; margin-top: 1.5rem; }
+  .e-aviso-abono__acciones .e-boton { flex: 1 1 auto; }
+  .e-aviso-abono__volver {
+    min-height: 2.75rem;
+    padding: 0 0.75rem;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    cursor: pointer;
+  }
+  .e-aviso-abono :focus-visible { outline: 3px solid #1E1A3C; outline-offset: 3px; }
+  @media (prefers-reduced-motion: no-preference) {
+    .e-aviso-abono[open] { animation: e-ventanita 0.28s var(--ease-salida); }
+    .e-aviso-abono[open]::backdrop { animation: e-fundido 0.28s var(--ease-salida); }
+  }
+  @keyframes e-ventanita { from { opacity: 0; translate: 0 0.75rem; scale: 0.97; } }
+  @keyframes e-fundido { from { opacity: 0; } }
+
+  /* La foto en grande: la pantalla entera en añil, la foto lo más grande
+     que quepa, el pie abajo y los botones redondos de papel. */
+  .e-zoom-dialogo {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: rgb(20 17 42 / 0.96);
+    color: #FBF1E1;
+    overflow: hidden;
+  }
+  .e-zoom-dialogo::backdrop { background: transparent; }
+  .e-zoom-dialogo[open] { display: grid; grid-template-rows: minmax(0, 1fr) auto; }
+  .e-zoom-dialogo__lienzo {
+    display: grid;
+    place-items: center;
+    min-height: 0;
+    padding: 4.5rem 1rem 0.5rem;
+    overflow: hidden;
+    touch-action: pinch-zoom;
+  }
+  .e-zoom-dialogo__foto {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 0.75rem;
+    cursor: zoom-in;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+  /* Agrandada: el doble de ancho y el lienzo se recorre. */
+  .e-zoom-dialogo__lienzo[data-ampliada] {
+    display: block;
+    padding: 0;
+    overflow: auto;
+    overscroll-behavior: contain;
+    touch-action: pan-x pan-y pinch-zoom;
+  }
+  .e-zoom-dialogo__lienzo[data-ampliada] .e-zoom-dialogo__foto {
+    width: 200%;
+    max-width: none;
+    max-height: none;
+    border-radius: 0;
+    cursor: zoom-out;
+  }
+  @media (min-width: 1024px) {
+    .e-zoom-dialogo__lienzo { padding: 4.5rem 6rem 0.5rem; }
+    .e-zoom-dialogo__lienzo[data-ampliada] .e-zoom-dialogo__foto { width: max(200%, 1600px); }
+  }
+  .e-zoom-dialogo__pie {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.25rem 1rem;
+    max-width: 48rem;
+    margin: 0 auto;
+    padding: 0.75rem 1.25rem max(1.25rem, env(safe-area-inset-bottom));
+    font-size: 0.98rem;
+    line-height: 1.4;
+    text-align: center;
+  }
+  .e-zoom-dialogo__cuenta { font-weight: 800; color: #FFC53D; white-space: nowrap; }
+  .e-zoom-dialogo__boton {
+    position: absolute;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: 999px;
+    background: #FFF9EF;
+    color: #1E1A3C;
+    box-shadow: 0 0 0 1.5px #1E1A3C, 0.2rem 0.25rem 0 #FFC53D;
+    cursor: pointer;
+  }
+  .e-zoom-dialogo__boton[hidden] { display: none; }
+  .e-zoom-dialogo__boton:focus-visible { outline: 3px solid #FFC53D; outline-offset: 3px; }
+  .e-zoom-dialogo__cerrar { top: max(0.9rem, env(safe-area-inset-top)); right: 0.9rem; }
+  .e-zoom-dialogo__anterior, .e-zoom-dialogo__siguiente { top: 50%; margin-top: -1.6rem; }
+  .e-zoom-dialogo__anterior { left: 0.9rem; }
+  .e-zoom-dialogo__anterior svg { rotate: 180deg; }
+  .e-zoom-dialogo__siguiente { right: 0.9rem; }
+  /* En el teléfono las flechas bajan junto al pie: en el medio taparían la
+     foto, y ahí se desliza con el dedo. */
+  @media (max-width: 639.98px) {
+    .e-zoom-dialogo__anterior, .e-zoom-dialogo__siguiente { top: auto; bottom: max(0.9rem, env(safe-area-inset-bottom)); margin-top: 0; }
+    .e-zoom-dialogo__pie { padding-inline: 4.5rem; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .e-zoom-dialogo[open] { animation: e-fundido 0.25s var(--ease-salida); }
+  }
 
   /* ── Elegir: radios y casillas que se tocan con el dedo entero ─────────
      La etiqueta ES el control (48px de alto): marcar un círculo de 16px en

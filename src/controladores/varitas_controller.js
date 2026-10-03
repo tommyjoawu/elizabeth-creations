@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
-import { dinero, totalDe, textoTotal, textoAbono } from "../precios.js"
+import { dinero, totalDe, textoTotal, textoAbono, montoAbono } from "../precios.js"
 
 // La varita armable: forma, color y cuántas, con la cuenta a la vista.
 //
@@ -119,6 +119,8 @@ export default class extends Controller {
     this.cuentaTarget.textContent = `${r.texto[0].toUpperCase()}${r.texto.slice(1)}: ${r.cuenta || dinero(r.precio)}`
     if (this.color || this.esVariada) this.avisoTarget.hidden = true
     this.soloTarget.href = this.enlace(r)
+    // Para la ventanita del abono (controlador `abono`).
+    this.soloTarget.dataset.abonoMonto = montoAbono(totalDe([r]), this.abonoValue) || ""
   }
 
   // Sin color no hay varita (salvo la docena variada): se avisa en vez de

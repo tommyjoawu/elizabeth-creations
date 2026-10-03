@@ -1,9 +1,20 @@
 # Elizabeth Creations — Adornos de fieltro hechos a mano
 
 Landing de una sola página para la marca de Erika, **Elizabeth Creations**:
-adornos de fieltro cosidos a mano y decorados con bisutería en La Chorrera
-(Panamá Oeste). Colorida, alegre y hecha a mano, con el pedido por WhatsApp
-como camino principal. En español de Panamá, de tú.
+adornos de fieltro cosidos a mano y decorados con bisutería en Panamá, con
+envío a todo el país. Colorida, alegre y hecha a mano, con el pedido por
+WhatsApp como camino principal. En español de Panamá, de tú, y Erika habla
+siempre en primera persona ("hago", "te confirmo", "escríbeme").
+
+**Ronda del 02-10-2026** (notas de Tommy tras la reunión con Erika): sin La
+Chorrera en ningún lado (el negocio se presenta para todo Panamá), envío a
+todo el país (el costo, según la zona, por WhatsApp), la historia de Erika
+como sección propia, la galería de "Las piezas" ya no se fija (se desliza de
+lado, con flechas), fotos que se agrandan al tocarlas, una sola voz (Erika en
+primera persona), precios sin ahorros ("Set de 3: $15.00 · Individual: $6.00
+c/u"), el abono dicho con calma en una ventanita al enviar el pedido, seis
+preguntas cortas, "fieltro" sólo donde importa (titular, título, descripción,
+una pregunta y el pie) y un vistazo al taller (dos pasos, no los cinco).
 
 Nació como hermana de la portada v2 de `ticket-qr-system`: copia su manera de
 trabajar (capítulos con colores de rol, fuentes autoalojadas, todo funciona
@@ -30,13 +41,14 @@ del 29-09-2026 (`docs/material-erika/transcripcion-audios-2026-09-29.txt`).
 
 | Archivo | Qué hay | Estado |
 |---|---|---|
-| `marca.json` | nombre, ciudad, políticas (pago, abono, tiempos, entrega, fecha de Navidad), historia, mensajes de WhatsApp | **real**: Elizabeth Creations, La Chorrera, Yappy o transferencia (sin efectivo), abono del 30 % en **todos** los pedidos y sets (corregido por Erika el 01-10-2026: ya no es sólo "más de $20"), que una vez abonado no se devuelve, 3 a 5 días, entrega en La Chorrera y Ciudad de Panamá, Navidad hasta el 15 de noviembre. **Pendiente** (`pendiente`): número de WhatsApp (hoy +507 6000-0000), Instagram y correo. La `historia` es un **borrador** para que Erika lo revise. |
+| `marca.json` | nombre, `lugar` (Panamá), políticas (pago, abono, tiempos, envío, fecha de Navidad), mensajes de WhatsApp | **real**: Elizabeth Creations, Panamá (sin ciudad desde el 02-10-2026), Yappy o transferencia (sin efectivo), abono del 30 % en **todos** los pedidos y sets, no reembolsable (dicho con calma: ventanita al enviar y "¿Cómo se paga?"), 3 a 5 días, envío a todo Panamá, Navidad hasta el 15 de noviembre. **Pendiente** (`pendiente`): número de WhatsApp (hoy +507 6000-0000), Instagram y correo; el **costo y la manera del envío** (la página dice "te lo confirmo por WhatsApp según tu zona"). |
+| `historia.json` | la historia de Erika (sección `historia`): antetítulo, título, tres párrafos, su frase, el cierre, la firma y la foto (el póster de sus manos en la mesa) | **borrador** (`borrador: true`) para que Erika lo apruebe: sólo con lo que sabemos (cose a mano, cada pieza la hace ella, vende por WhatsApp, Navidad, varitas, sets), sin fechas, nombres ni lugares inventados. En desarrollo se ve la ranura "Borrador: falta que Erika lo apruebe"; al aprobarlo se pone `borrador: false`. |
 | `productos.json` | las piezas agrupadas en **sets** (Navidad clásica, Navidad nevada, Bajo el mar, Varitas, Guirnaldas) para la galería colgada y el pedido por sets; cada pieza con `precio` y cada set completo con el suyo. **Todos los sets son de 3 piezas, $15.00** (Erika, 01-10-2026), cada uno con la foto de sus tres piezas juntas: Navidad clásica (estrella brillante, arbolito verde, galleta de jengibre; por separado $18.00), Navidad nevada (arbolito de nieve, galleta de jengibre, estrella blanca; $18.00) y Bajo el mar (sirenita, pececito, cangrejito; $20.00). La galleta va en los dos sets de Navidad: está escrita dos veces y la copia lleva `repite` | **real** (fotos de Erika); nombres descriptivos hasta que ella mande los suyos. **Precios reales** (Erika, 01-10-2026, `docs/material-erika/2026-10-01/precios.md`): todo set completo $15.00, sirenita y cangrejito $7.00, el resto $6.00, varitas $2.50, guirnalda $5.00, guirnalda con nombre de $5.00 a $10.00 (`precioHasta`, +$2.50 por color: `colorExtra`). Las **guirnaldas no tienen foto** todavía (ranura "Foto muy pronto"). Si un precio vuelve a ser `null`, la pieza dice "Precio: por confirmar" y el total también |
 | `varitas.json` | luna o estrella (cada una con su foto) + color + `precios` (unidad $2.50, docena $25.00, variada +$1.50 por varita = $43.00) | **real** (audio 3 y precios del 01-10-2026). Ella dijo "el color del papel" pero la luna se ve de fieltro: la página dice "el color" a secas hasta que lo aclare. Las muestras de color son ejemplos. |
 | `colecciones.json` | Navidad, Bajo el mar, Varitas, Guirnaldas, Tarjeta con tu mensaje, con una línea de precios; Navidad y Bajo el mar con la foto de un set | **real**; la tarjeta personalizada y las guirnaldas **no tienen foto** (ranura punteada) |
-| `taller.json` | los pasos de "Así nace cada pieza", cada uno con su video | **real**: los 5 videos de las manos de Erika haciendo una varita de estrella (01-10-2026): coser la bisutería, coser el borde, decorar, rellenar y poner el palito, ¡lista! |
+| `taller.json` | los pasos de "Así nace cada pieza", cada uno con su video | **real**: de los 5 videos de las manos de Erika haciendo una varita de estrella (01-10-2026) se ven **dos** ("Puntada a puntada" y "¡Lista!"): un vistazo, no el proceso entero (02-10-2026). Los otros tres quedan en `_guardados`, sin dibujarse ni pedirse; sus archivos siguen en `public/video/`. |
 | `encargo.json` | "Así haces tu pedido": pasos, piezas y campos de la ficha | **real** |
-| `preguntas.json` | preguntas frecuentes | **real**, con los precios; queda 1 ranura: el **punto de entrega/mensajería** (en el audio no se entiende el nombre) |
+| `preguntas.json` | preguntas frecuentes | **real**: seis, cortas (cómo pido, cuánto cuesta, cómo pago y el abono, cuánto tarda, envíos, Navidad); queda 1 ranura: **cómo envía y cuánto cuesta el envío** |
 | `pared.json` | la pared de fotos + el reel cuadrado | **real**; la baldosa de Instagram dice "muy pronto" |
 | `tendedero.json`, `cierre.json` | los adornos que cuelgan | ajustado, con las piezas de Erika |
 
@@ -98,7 +110,7 @@ src/main.js                 casi nada: pide src/aplicacion.js DESPUÉS del prime
 src/aplicacion.js           Stimulus + GSAP; las escenas de scroll se registran una por tarea
 src/controladores/          Stimulus: revela, suave, isla, lectura, tendedero,
                             taller, encargo, pildora, video-fondo, carril,
-                            galeria, pedido, costura, varitas
+                            galeria, pedido, costura, varitas, zoom, abono
 src/precios.js              formato "$6.00", total, "desde" y abono: lo usan
                             pedido, varitas y encargo
 src/estilos/motivos.css     los motivos de fondo (ningún capítulo es liso)
@@ -123,9 +135,13 @@ docs/                       brief, investigación, material de Erika, logo,
 - **Escenas**: el tendedero del hero (adornos grandes que se mecen; al
   tocarlos el papel se tiñe de su color) bajo el nombre "Bienvenidos a
   Elizabeth Creations", las lucecitas de Navidad, la galería colgada de "Las
-  piezas" (traída de `variantes/navidad`: cable, pinzas de madera, la sección
-  se fija y la fila avanza de lado; cada pieza se mece como un péndulo),
-  el pedido por piezas y por sets (controlador `pedido`), el hilo con su
+  piezas" (traída de `variantes/navidad`: cable, pinzas de madera y una fila
+  que se desliza de lado sola —dedo, trackpad, teclado o flechas ← →— sin
+  fijar la sección; cada pieza se mece como un péndulo al deslizarla),
+  el pedido por piezas y por sets (controlador `pedido`), la historia de
+  Erika (capítulo hibisco, con su frase grande y la polaroid de sus manos), la
+  foto en grande al tocar un set o una pieza (`zoom`, un `<dialog>`), la
+  ventanita del abono antes de enviar un pedido (`abono`), el hilo con su
   aguja que se dibuja con el scroll por el margen y termina en el WhatsApp
   del cierre (traído de `variantes/hilo`), la frase que se enciende al leerla, el marco fijo del taller,
   los banderines de papel picado, las polaroids de la varita (que caen y se
@@ -143,14 +159,11 @@ docs/                       brief, investigación, material de Erika, logo,
   JavaScript se eligen piezas o el set completo y el resumen manda una sola
   lista (`mensajePedido`) con la cuenta: todos los sets son de 3 piezas y un
   set es UN renglón a $15.00 con sus tres piezas nombradas (no la suma); si
-  se eligen las tres sueltas, se juntan solas en el set. La galleta está en
-  los dos sets de Navidad: una galleta suelta cuenta para un solo set (gana
-  la combinación que más ahorra; a igual ahorro, el set de más arriba), y
-  dos sets de Navidad son dos galletas. Si a las sueltas les falta una pieza
-  para un set, el resumen sugiere "Llévate el set completo por $15.00" con
-  un botón; la guirnalda
-  con nombre pide el nombre y un color adicional y deja el total en "desde";
-  el abono (30 %) se muestra en dólares cuando el total es cerrado.
+  se eligen las tres sueltas, se juntan solas en el set, sin decir nada de
+  ahorros. La galleta está en los dos sets de Navidad: una galleta suelta
+  cuenta para un solo set, y dos sets de Navidad son dos galletas. Al tocar
+  "Enviar", la ventanita del abono dice el 30 % en dólares (si el total es
+  cerrado) y "Entendido, enviar por WhatsApp" abre el chat.
 - **Varitas armables** (controlador `varitas`): forma con su foto, color,
   por unidad o por docena (variada: "$25.00 + 12 × $1.50 = $43.00"), y
   "Agregar al pedido" suma al mismo resumen de "Las piezas" (eventos
@@ -183,7 +196,7 @@ docs/                       brief, investigación, material de Erika, logo,
 - Todo funciona sin JavaScript: lo oculto para animar vive bajo `html.js`,
   el menú y las preguntas son `<details>`, el formulario manda a `wa.me`.
 - `prefers-reduced-motion` apaga el vaivén, las luces, la inercia y las
-  apariciones; la galería no se fija (queda la fila deslizable) y el hilo
+  apariciones; las flechas de la galería mueven la fila sin animar y el hilo
   aparece entero, sin aguja; los videos no arrancan y queda su póster.
 - Objetivos táctiles de 44–48px, campos a 16px, foco visible, 0 scroll
   horizontal a 360px.

@@ -2,35 +2,43 @@
   Las piezas: la galería colgada, con el pedido por sets.
 
   Erika la escogió de la variante "Noche de Navidad" (01-10-2026): las
-  piezas cuelgan de un cable con pinzas de madera y la galería avanza de lado
-  mientras se baja la página. Aquí va con la paleta de la portada: la noche
-  añil con sus lucecitas y sus bastoncitos de caramelo de fondo, tarjetas de
-  papel crema con la sombra dura del color de cada pieza.
+  piezas cuelgan de un cable con pinzas de madera. Aquí va con la paleta de
+  la portada: la noche añil con sus lucecitas y sus bastoncitos de caramelo
+  de fondo, tarjetas de papel crema con la sombra dura del color de cada
+  pieza.
+
+  La fila se desliza DE LADO, sola, y el scroll de la página pasa de largo
+  (02-10-2026: "al scrollear sólo funciona hacia abajo, la gente intenta a
+  la derecha y se confunde"). Antes la sección se fijaba y bajar movía la
+  fila; ya no se fija nada. Es un `overflow-x` nativo con `scroll-snap`: el
+  dedo, el trackpad, Mayús + rueda y las flechas del teclado (la fila se
+  enfoca) la mueven, y el controlador `galeria` le suma los botones ← → y el
+  vaivén de las piezas al deslizarla. En el celular, la nota "desliza →".
 
   Las piezas van agrupadas en SETS (productos.json): primero el letrero del
   set, colgado con dos pinzas, con la foto de sus tres piezas juntas, y
-  detrás sus piezas. Todos los sets son de 3 piezas y cuestan $15.00 (Erika,
-  01-10-2026); el letrero dice eso y cuánto saldría por separado. La galleta
-  de jengibre va en los dos sets de Navidad, así que su tarjeta sale dos
-  veces: las dos son la MISMA pieza para el pedido (mismo `data-slug`), y
+  detrás sus piezas. Los precios, sin cuentas ni ahorros (02-10-2026: "más
+  claro que sea set por X monto, individual a X monto, no mencionar el
+  ahorro"): "Set de 3: $15.00" e "Individual: $6.00 c/u" (o "desde"). La
+  galleta de jengibre va en los dos sets de Navidad, así que su tarjeta sale
+  dos veces: las dos son la MISMA pieza para el pedido (mismo `data-slug`), y
   el `id` lleva el set para no repetirse.
   Las varitas no se agregan sueltas desde aquí: su forma y su color se
-  escogen en la sección de las varitas, y su tarjeta lleva hasta allá. Las
-  guirnaldas todavía no tienen foto: su tarjeta lleva la ranura punteada
-  "Foto muy pronto", y la de nombre pide el nombre.
+  escogen en la sección de las varitas, y su tarjeta lleva hasta allá.
+
+  Las fotos de los sets y de las piezas se agrandan al tocarlas (controlador
+  `zoom`, en el <body>); sin JavaScript son un enlace a la foto grande.
 
   Tres capas, cada una con su dueño:
-    · Sin JavaScript: la fila se desliza con el dedo (overflow-x), cada
-      pieza tiene su "Pedir por WhatsApp" y cada set su "Pedir el set
-      completo", los dos con el mensaje ya escrito.
+    · Sin JavaScript: la fila se desliza, cada pieza tiene su "Pedir por
+      WhatsApp" y cada set su "Pedir el set completo", con el mensaje ya
+      escrito.
     · Controlador `pedido`: aparecen los botones "Agregar al pedido" y el
       letrero del set pasa a "Seleccionar el set completo"; abajo, el resumen
       (piezas, cuántas, total o "por confirmar") que manda la lista entera
-      por WhatsApp con la nota del abono.
-    · Controlador `galeria`: con movimiento, la sección se fija y la fila
-      avanza de lado con el scroll; las piezas se mecen con la velocidad
-      (péndulo amortiguado, el mismo de la variante). Con reduced-motion no
-      se fija ni se mece: queda la fila deslizable.
+      por WhatsApp, después de la ventanita del abono (controlador `abono`).
+    · Controlador `galeria`: las flechas y el vaivén. Con reduced-motion no
+      se mece nada y el deslizamiento de las flechas es instantáneo.
 --}}
 <section id="temporada" class="e-noche e-motivo e-motivo--dulces e-feston e-galeria relative isolate overflow-clip"
          aria-labelledby="titulo-temporada"
@@ -39,42 +47,60 @@
          data-pedido-plantilla-value="{{marca.mensajePedido}}"
          data-pedido-abono-value="{{marca.politicas.abonoPorcentaje}}"
          data-action="pedido:agregar@window->pedido#agregar pedido:quitar@window->pedido#quitar pedido:estado@window->pedido#avisar">
-  <div class="e-galeria__fijo" data-galeria-target="fijo">
-    {{!-- Las luces: decorativas, y encendidas desde el principio si no hay
-        JavaScript o si hay `reduced-motion`. --}}
-    <div class="e-luces" data-controller="revela" aria-hidden="true">
-      <svg class="e-luces__cordel" viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false">
-        <path d="M-2 20 Q50 140 102 20" fill="none" stroke="currentColor" stroke-width="1.5"
-              vector-effect="non-scaling-stroke"/>
-      </svg>
-      {{#each (rango 17)}}
-        <span class="e-luz" style="--i: {{this}}"></span>
-      {{/each}}
+  {{!-- Las luces: decorativas, y encendidas desde el principio si no hay
+      JavaScript o si hay `reduced-motion`. --}}
+  <div class="e-luces" data-controller="revela" aria-hidden="true">
+    <svg class="e-luces__cordel" viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false">
+      <path d="M-2 20 Q50 140 102 20" fill="none" stroke="currentColor" stroke-width="1.5"
+            vector-effect="non-scaling-stroke"/>
+    </svg>
+    {{#each (rango 17)}}
+      <span class="e-luz" style="--i: {{this}}"></span>
+    {{/each}}
+  </div>
+
+  <div class="e-galeria__cabeza">
+    <div class="e-galeria__titulo">
+      <h2 id="titulo-temporada" class="font-display text-seccion">
+        <span class="e-antetitulo">Hechas a mano, una por una</span><span class="sr-only">: </span>Las piezas
+      </h2>
+      {{!-- Los dos precios, dichos igual que en cada letrero. Salen de
+          productos.json (vite/hechos.js). --}}
+      <p class="e-galeria__tarifa mt-5">
+        <span><strong>Set de {{hechos.piezasPorSet}}:</strong> {{hechos.set}}</span>
+        <span><strong>Individual:</strong> desde {{hechos.adornoDesde}}</span>
+      </p>
+      <p class="mt-3 max-w-[36ch] text-entrada text-tenue">Cada pieza la hago a mano en {{marca.politicas.tiempo}}.</p>
     </div>
-
-    <div class="e-galeria__ventana" data-galeria-target="ventana">
-      <div class="e-galeria__pista" data-galeria-target="pista">
-        {{!-- La cabeza: arriba de la fila cuando no hay galería fijada; con
-            ella, es el primer panel de la fila y deja toda la altura a las
-            fotos. --}}
-        <div class="e-galeria__cabeza">
-          {{!-- El antetítulo dice con palabras de búsqueda lo que el titular dice
-              corto (ver .e-antetitulo); el precio sale de productos.json. --}}
-          <h2 id="titulo-temporada" class="font-display text-seccion">
-            <span class="e-antetitulo">Adornos navideños de fieltro: sets de {{hechos.piezasPorSet}} por {{hechos.set}}</span><span class="sr-only">: </span>Las piezas
-          </h2>
-          <p class="mt-5 max-w-[36ch] text-entrada text-tenue">
-            Todos los sets son de {{hechos.piezasPorSet}} piezas y cuestan {{hechos.set}}; por pieza, desde {{hechos.adornoDesde}}.
-            Cada una se hace a mano en {{marca.politicas.tiempo}}.
-          </p>
-          <p class="e-sello-fecha mt-7">
-            <span class="e-sello-fecha__texto">Navidad: pedidos hasta el</span>
-            <strong class="e-sello-fecha__dia font-display">{{marca.politicas.fechaNavidad}}</strong>
-          </p>
-          <p class="e-galeria__pista-nota e-nota mt-6" aria-hidden="true">sigue bajando, van pasando →</p>
+    <div class="e-galeria__lado">
+      <p class="e-sello-fecha">
+        <span class="e-sello-fecha__texto">Navidad: pedidos hasta el</span>
+        <strong class="e-sello-fecha__dia font-display">{{marca.politicas.fechaNavidad}}</strong>
+      </p>
+      <div class="e-galeria__controles">
+        {{!-- La pista para el dedo: sólo en pantallas chicas. --}}
+        <p class="e-galeria__desliza e-nota" aria-hidden="true">desliza para ver más →</p>
+        {{!-- Las flechas: sólo con JavaScript (las enciende `galeria`). --}}
+        <div class="e-galeria__flechas" data-galeria-target="flechas" hidden>
+          <button type="button" class="e-flecha e-flecha--atras" aria-controls="galeria-tira"
+                  data-galeria-target="atras" data-action="galeria#atras">
+            {{icono "flecha" clase="size-6"}}<span class="sr-only">Ver las piezas anteriores</span>
+          </button>
+          <button type="button" class="e-flecha" aria-controls="galeria-tira"
+                  data-galeria-target="adelante" data-action="galeria#adelante">
+            {{icono "flecha" clase="size-6"}}<span class="sr-only">Ver más piezas</span>
+          </button>
         </div>
+      </div>
+    </div>
+  </div>
 
-        <ul class="e-galeria__tira" role="list" data-controller="carril" data-action="focusin->carril#enfocar">
+        {{!-- La fila: se enfoca (tabindex) para moverla con las flechas del
+            teclado, y `data-lenis-prevent-horizontal` deja el gesto de lado
+            del trackpad al navegador (el scroll con inercia es sólo vertical). --}}
+        <ul id="galeria-tira" class="e-galeria__tira" role="list" tabindex="0" aria-label="Las piezas: desliza de lado para ver más"
+            data-galeria-target="tira" data-lenis-prevent-horizontal
+            data-controller="carril" data-action="focusin->carril#enfocar scroll->galeria#alDeslizar">
           {{#each productos.sets}}
             {{!-- El letrero del set: cuelga de dos pinzas y dice cuántas
                 piezas trae. Sólo los sets de más de una pieza llevan el botón
@@ -85,22 +111,28 @@
                 <span class="e-pinza e-pinza--der" aria-hidden="true"></span>
                 <div class="e-letrero__tela">
                   {{#if this.foto}}
-                    {{!-- Las tres piezas juntas, como Erika las arma. --}}
+                    {{!-- Las tres piezas juntas, como Erika las arma. Se
+                        agranda al tocarla (`zoom`); sin JavaScript, el
+                        enlace abre la foto grande. --}}
                     <div class="e-letrero__foto">
-                      {{imagen this.foto alt=this.alt sizes="(min-width: 1024px) 19rem, 72vw"}}
+                      <a class="e-zoom" href="{{fotoGrande this.foto}}" data-action="zoom#abrir" data-zoom-grupo="temporada">
+                        {{imagen this.foto alt=this.alt sizes="(min-width: 1024px) 19rem, 72vw"}}
+                        <span class="e-zoom__lupa" aria-hidden="true">{{icono "lupa" clase="size-5"}}</span>
+                        <span class="sr-only">(ver en grande)</span>
+                      </a>
                     </div>
                   {{/if}}
-                  <p class="e-letrero__ceja font-mano">{{#if this.precio}}Set de {{this.piezas.length}} piezas{{else if this.proximamente}}Próximamente{{else}}Se piden por unidad{{/if}}</p>
+                  <p class="e-letrero__ceja font-mano">{{#if this.precio}}Set de {{this.piezas.length}} piezas{{else if this.proximamente}}Próximamente{{else}}Por unidad{{/if}}</p>
                   <h3 class="mt-2 font-display text-[clamp(2rem,3vw,2.6rem)] leading-[0.98]">{{this.nombre}}</h3>
                   <p class="e-letrero__desc mt-3 text-[1rem] leading-snug">{{this.descripcion}}</p>
                   {{!-- Sólo un set con precio propio se pide completo: las
                       varitas y las guirnaldas se escogen una por una. --}}
                   {{#if this.precio}}
+                    {{!-- Dos precios y nada más: el del set y el de cada pieza. --}}
                     <p class="e-letrero__precio mt-4">
-                      <strong class="font-display">{{precio this.precio}}</strong>
-                      <span>el set completo</span>
-                      <span class="e-letrero__antes">por separado serían {{precio (sumaPrecios this.piezas)}}</span>
+                      <span>Set de {{this.piezas.length}}:</span> <strong class="font-display">{{precio this.precio}}</strong>
                     </p>
+                    <p class="e-letrero__individual">Individual: {{individual this.piezas}}</p>
                     <ul class="e-letrero__lista mt-4" role="list">
                       {{#each this.piezas}}<li>{{this.nombre}}</li>{{/each}}
                     </ul>
@@ -133,7 +165,11 @@
                   <span class="e-pinza" aria-hidden="true"></span>
                   <div class="e-pieza__foto">
                     {{#if this.foto}}
-                      {{imagen this.foto alt=this.alt sizes="(min-width: 1024px) 26rem, 76vw"}}
+                      <a class="e-zoom" href="{{fotoGrande this.foto}}" data-action="zoom#abrir" data-zoom-grupo="temporada">
+                        {{imagen this.foto alt=this.alt sizes="(min-width: 1024px) 26rem, 76vw"}}
+                        <span class="e-zoom__lupa" aria-hidden="true">{{icono "lupa" clase="size-5"}}</span>
+                        <span class="sr-only">(ver en grande)</span>
+                      </a>
                     {{else}}
                       {{!-- Sin foto todavía: la ranura punteada de la página,
                           que nadie confunde con una foto. --}}
@@ -229,43 +265,34 @@
             {{/each}}
           {{/each}}
         </ul>
-      </div>
-    </div>
 
-    {{!-- El resumen del pedido: sólo con JavaScript (sin él, cada pieza y
-        cada set ya tienen su enlace). Va DENTRO de la caja fijada, para que
-        se vea mientras la fila avanza. `aria-live` sólo en la cuenta y el
-        total: el nombre de cada pieza ya lo dijo su botón. --}}
-    <div class="e-contenedor e-resumen__lugar" data-pedido-target="lugar" hidden>
-      <div class="e-resumen" data-pedido-target="resumen" data-vacio="true" role="region" aria-label="Tu pedido">
-        <div class="min-w-0 flex-1">
-          {{!-- `aria-live` en el renglón entero (cuenta Y total) y atómico: un
-              lector de pantalla dice "3 piezas, $15.00" de una vez, no sólo
-              la cuenta. --}}
-          <p class="e-resumen__cuenta" aria-live="polite" aria-atomic="true">
-            <strong data-pedido-target="cuenta">Tu pedido está vacío</strong>
-            <span class="e-resumen__total" data-pedido-target="total"></span>
-          </p>
-          <p class="e-resumen__lista" data-pedido-target="lista">
-            Toca «Agregar al pedido» en cada pieza, o «Seleccionar el set completo».
-          </p>
-        </div>
-        <div class="e-resumen__acciones">
-          <button type="button" class="e-resumen__vaciar" data-action="pedido#vaciar" data-pedido-target="vaciar" hidden>Vaciar</button>
-          <a class="e-boton e-boton--primario e-boton--chico justify-between" href="{{whatsapp}}" target="_blank" rel="noopener"
-             data-pedido-target="enviar" hidden>
-            <span>Enviar<span class="e-resumen__largo"> por WhatsApp</span></span>
-            <span class="e-boton__isla">{{icono "whatsapp" clase="size-4"}}</span>
-          </a>
-        </div>
-        {{!-- El empujoncito honesto: si las piezas sueltas de un set ya
-            cuestan más que el set entero, se dice, con el botón para
-            cambiarlo. Renglón propio, a todo lo ancho del resumen. --}}
-        <p class="e-resumen__pista" data-pedido-target="pista" hidden></p>
-        <p class="e-resumen__abono">
-          <strong class="e-resumen__abono-monto" data-pedido-target="abono" hidden></strong>
-          Todo pedido se separa con el {{marca.politicas.abonoPorcentaje}} % de abono, que no se devuelve.
+  {{!-- El resumen del pedido: sólo con JavaScript (sin él, cada pieza y
+      cada set ya tienen su enlace). Con algo elegido se pega al borde de
+      abajo mientras se ve la sección (`sticky`), y al final de la fila
+      vuelve a su lugar, debajo de las tarjetas: nunca las tapa para
+      siempre. Vacío no se pega: no hay nada que mostrar encima de las
+      fotos. `aria-live` en la cuenta y el total: el nombre de cada pieza ya
+      lo dijo su botón. "Enviar" pasa por la ventanita del abono (`abono`). --}}
+  <div class="e-contenedor e-resumen__lugar" data-pedido-target="lugar" hidden>
+    <div class="e-resumen" data-pedido-target="resumen" data-vacio="true" role="region" aria-label="Tu pedido">
+      <div class="min-w-0 flex-1">
+        {{!-- `aria-live` en el renglón entero (cuenta Y total) y atómico: un
+            lector de pantalla dice "3 piezas, $15.00" de una vez. --}}
+        <p class="e-resumen__cuenta" aria-live="polite" aria-atomic="true">
+          <strong data-pedido-target="cuenta">Tu pedido está vacío</strong>
+          <span class="e-resumen__total" data-pedido-target="total"></span>
         </p>
+        <p class="e-resumen__lista" data-pedido-target="lista">
+          Toca «Agregar al pedido» en cada pieza, o «Seleccionar el set completo».
+        </p>
+      </div>
+      <div class="e-resumen__acciones">
+        <button type="button" class="e-resumen__vaciar" data-action="pedido#vaciar" data-pedido-target="vaciar" hidden>Vaciar</button>
+        <a class="e-boton e-boton--primario e-boton--chico justify-between" href="{{whatsapp}}" target="_blank" rel="noopener"
+           data-pedido-target="enviar" data-action="abono#confirmar" hidden>
+          <span>Enviar<span class="e-resumen__largo"> por WhatsApp</span></span>
+          <span class="e-boton__isla">{{icono "whatsapp" clase="size-4"}}</span>
+        </a>
       </div>
     </div>
   </div>

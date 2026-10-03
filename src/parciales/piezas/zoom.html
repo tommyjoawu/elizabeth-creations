@@ -1,0 +1,33 @@
+{{!--
+  La foto en grande (02-10-2026: "click zoomeable a los sets").
+
+  Un <dialog> modal: el navegador ya atrapa el foco adentro, lo saca con
+  Esc y deja inerte la página de atrás. El controlador `zoom` (en el <body>)
+  lo abre al tocar cualquier foto con `data-action="zoom#abrir"`, pone la
+  foto más grande del `srcset` (la misma <picture>, con `sizes="100vw"`),
+  pasa a la anterior o la siguiente del mismo grupo (flechas, teclado o
+  deslizando el dedo) y devuelve el foco a la foto que se tocó al cerrar.
+
+  Tocar la foto la agranda al doble para ver la puntada de cerca (y se
+  recorre con el dedo o la rueda); en el teléfono también se puede pellizcar.
+  Sin JavaScript nada de esto existe: cada foto es un enlace a su archivo
+  grande.
+--}}
+<dialog class="e-zoom-dialogo" data-zoom-target="dialogo" aria-labelledby="zoom-pie" data-lenis-prevent
+        data-action="click->zoom#alTocarFondo close->zoom#alCerrar keydown->zoom#tecla">
+  <div class="e-zoom-dialogo__lienzo" data-zoom-target="lienzo"
+       data-action="pointerdown->zoom#empezarGesto pointerup->zoom#terminarGesto"></div>
+  <p id="zoom-pie" class="e-zoom-dialogo__pie">
+    <span data-zoom-target="pie"></span>
+    <span class="e-zoom-dialogo__cuenta" data-zoom-target="cuenta"></span>
+  </p>
+  <button type="button" class="e-zoom-dialogo__boton e-zoom-dialogo__cerrar" data-action="zoom#cerrar">
+    {{icono "cerrar" clase="size-6"}}<span class="sr-only">Cerrar la foto</span>
+  </button>
+  <button type="button" class="e-zoom-dialogo__boton e-zoom-dialogo__anterior" data-zoom-target="anterior" data-action="zoom#anterior">
+    {{icono "flecha" clase="size-6"}}<span class="sr-only">Foto anterior</span>
+  </button>
+  <button type="button" class="e-zoom-dialogo__boton e-zoom-dialogo__siguiente" data-zoom-target="siguiente" data-action="zoom#siguiente">
+    {{icono "flecha" clase="size-6"}}<span class="sr-only">Foto siguiente</span>
+  </button>
+</dialog>

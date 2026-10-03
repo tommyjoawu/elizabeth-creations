@@ -11,7 +11,7 @@ WA = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="
 def cta(texto="Haz tu pedido", clase=""):
     return f'<span class="cta {clase}">{texto}<span class="isla">{WA}</span></span>'
 
-def lock(crema=False, sub="Hecho a mano en La Chorrera"):
+def lock(crema=False, sub="Hecho a mano en Panamá"):
     sello = "sello-crema.svg" if crema else "sello.svg"
     return f'<div class="lock"><img src="../marca/{sello}" alt=""><div><b>Elizabeth<br>Creations</b><span>{sub}</span></div></div>'
 
@@ -92,8 +92,8 @@ pieza("feed-varitas", "Feed · ¿Luna o estrella? Tú escoges", "1080x1350", '''
   <div class="pie">{lock()}{cta("Pide tu varita", "oscuro")}</div>
 ''', fondo="bolitas")
 
-# ── 3. Feed: Hecho a mano en La Chorrera ──────────────────────────────────
-pieza("feed-la-chorrera", "Feed · Hecho a mano en La Chorrera", "1080x1350", '''
+# ── 3. Feed: Envío a todo Panamá ──────────────────────────────────────────
+pieza("feed-envio-panama", "Feed · Envío a todo Panamá", "1080x1350", '''
   .pieza { background: var(--mango); }
   h1 { position: absolute; left: 70px; top: 196px; width: 960px; font-family: var(--disp); font-weight: 400; font-size: 112px; line-height: .94; letter-spacing: -.02em; }
   .polaroid { padding: 14px 14px 58px; width: 280px; height: 340px; }
@@ -103,7 +103,7 @@ pieza("feed-la-chorrera", "Feed · Hecho a mano en La Chorrera", "1080x1350", ''
   .nota { position: absolute; right: 60px; top: 880px; width: 210px; font-family: var(--mano); font-size: 38px; line-height: 1.1; rotate: -6deg; font-weight: 600; }
   .pie { position: absolute; left: 70px; right: 70px; bottom: 54px; display: flex; justify-content: space-between; align-items: center; }
 ''', f'''
-  <h1>Hecho a mano en La Chorrera</h1>
+  <h1>Envío a todo Panamá</h1>
   <figure class="polaroid a"><div class="foto"><img src="{img('adorno-sirenita')}" alt=""></div><figcaption>sirenita</figcaption></figure>
   <figure class="polaroid b"><div class="foto"><img src="{img('adorno-estrella-blanca')}" alt=""></div><figcaption>estrella</figcaption></figure>
   <figure class="polaroid c"><div class="foto"><img src="{img('adorno-cangrejito')}" alt=""></div><figcaption>cangrejito</figcaption></figure>
@@ -133,7 +133,7 @@ MED_CSS = '''
 '''
 pieza("feed-bajo-el-mar", "Feed · Bajo el mar, en fieltro", "1080x1350", MED_CSS + '''
   .pieza { background: var(--turquesa); color: var(--anil); }
-  h1 { position: absolute; left: 70px; top: 196px; width: 960px; font-family: var(--disp); font-weight: 400; font-size: 124px; line-height: .92; letter-spacing: -.02em; }
+  h1 { position: absolute; left: 70px; top: 196px; width: 820px; font-family: var(--disp); font-weight: 400; font-size: 124px; line-height: .92; letter-spacing: -.02em; }
   .cordel { top: 470px; height: 200px; color: var(--anil); }
   .sub { --placa: var(--turquesa); position: absolute; left: 70px; right: 70px; bottom: 210px; font-size: 40px; font-weight: 700; line-height: 1.25; }
   .pie { position: absolute; left: 70px; right: 70px; bottom: 54px; display: flex; justify-content: space-between; align-items: center; }
@@ -160,7 +160,7 @@ pieza("story-como-pedir", "Story · Así haces tu pedido", "1080x1920", '''
   li:nth-child(2) .n { background: var(--hibisco); } li:nth-child(3) .n { background: var(--turquesa); } li:nth-child(4) .n { background: var(--lila); }
   li b { display: block; font-family: var(--disp); font-weight: 400; font-size: 48px; line-height: 1.02; }
   li span { display: block; margin-top: 6px; font-size: 31px; line-height: 1.3; font-weight: 500; }
-  .aviso { position: absolute; left: 70px; right: 70px; top: 1488px; background: var(--mola); color: var(--crema); border-radius: 36px; padding: 24px 32px; font-size: 32px; font-weight: 600; line-height: 1.3; box-shadow: 8px 10px 0 var(--anil); }
+  .aviso { position: absolute; left: 70px; right: 70px; top: 1488px; background: var(--lila); color: var(--anil); box-shadow: 0 0 0 4px var(--anil), 8px 10px 0 var(--anil); border-radius: 36px; padding: 24px 32px; font-size: 32px; font-weight: 600; line-height: 1.3; }
   .aviso b { font-family: var(--disp); font-weight: 400; font-size: 44px; display: block; }
   .pie { position: absolute; left: 70px; right: 70px; bottom: 90px; display: flex; justify-content: center; }
 ''', f'''
@@ -168,11 +168,11 @@ pieza("story-como-pedir", "Story · Así haces tu pedido", "1080x1920", '''
   <figure class="polaroid p1"><span class="cinta"></span><div class="foto"><img src="{img('pieza-varita-luna')}" alt=""></div><figcaption>luna lila</figcaption></figure>
   <ol>
     <li><i class="n">1</i><div><b>Escoges tu pieza</b><span>En las varitas: luna o estrella, y el color.</span></div></li>
-    <li><i class="n">2</i><div><b>Abonas el 30 %</b><span>Para separar cualquier pedido o set. Por Yappy o transferencia.</span></div></li>
-    <li><i class="n">3</i><div><b>3 a 5 días</b><span>Cosida y decorada a mano, una por una.</span></div></li>
-    <li><i class="n">4</i><div><b>Te la entrego</b><span>En La Chorrera o en la Ciudad de Panamá.</span></div></li>
+    <li><i class="n">2</i><div><b>Separas con el 30 %</b><span>Por Yappy o transferencia, para cualquier pedido o set.</span></div></li>
+    <li><i class="n">3</i><div><b>3 a 5 días</b><span>La coso y la decoro a mano, una por una.</span></div></li>
+    <li><i class="n">4</i><div><b>Te la envío</b><span>A todo Panamá. El costo de envío te lo confirmo por WhatsApp según tu zona.</span></div></li>
   </ol>
-  <div class="aviso"><b>El abono no se devuelve</b>Va en todos los pedidos y sets. Si cancelas, ya empecé tu pieza.</div>
+  <div class="aviso"><b>¿Tienes dudas?</b>Escríbeme y te ayudo a escoger la forma y el color.</div>
   <div class="pie">{cta("Haz tu pedido por WhatsApp")}</div>
 ''', fondo="confeti")
 
@@ -193,7 +193,7 @@ pieza("story-navidad", "Story · Pide antes del 15 de noviembre", "1080x1920", M
   {medallon(520, 410, 300, 70, '#12A5A0', 'adorno-estrella-amarilla', -2)}
   {medallon(790, 350, 280, 110, '#F2711C', 'adorno-arbol-blanco', 4)}
   <h1>Pide antes del <em>15 de noviembre</em></h1>
-  <p class="sub placa">Adornos de fieltro cosidos a mano. Cada pieza tarda de 3 a 5 días.</p>
+  <p class="sub placa">Adornos de fieltro que coso a mano. Cada pieza me toma de 3 a 5 días.</p>
   <div class="pie">{cta("Haz tu pedido")}{lock(crema=True)}</div>
 ''', fondo="bombones")
 
@@ -255,7 +255,7 @@ pieza("portada-navidad", "Portada · Navidad hecha a mano", "1080x1350", '''
   <div class="foto"><img src="{img('coleccion-fieltro')}" alt=""></div>
   <div class="velo"></div>
   <div class="cabecera">Elizabeth</div>
-  <div class="num"><span>Edición de Navidad</span><span>La Chorrera · 2026</span></div>
+  <div class="num"><span>Edición de Navidad</span><span>Envío a todo Panamá</span></div>
   <div class="sello-fecha"><small>Pedidos hasta el</small><b>15 de nov.</b></div>
   <div class="titular"><h1>Navidad <em>hecha a mano</em></h1><p>Pedidos hasta el 15 de noviembre</p></div>
   <div class="lineas"><span>Varitas: luna o estrella</span><span>Bajo el mar, en fieltro</span><span>Yappy o transferencia</span></div>
@@ -273,7 +273,7 @@ pieza("og-landing", "OG · Imagen para compartir la página", "1200x630", '''
 ''', f'''
   {lock()}
   <h1>Adornos de fieltro cosidos a mano</h1>
-  <p class="s placa">En La Chorrera. Pedidos de Navidad hasta el 15 de noviembre.</p>
+  <p class="s placa">Envío a todo Panamá. Pedidos de Navidad hasta el 15 de noviembre.</p>
   <figure class="polaroid a"><div class="foto"><img src="{img('adorno-arbol-verde')}" alt=""></div><figcaption>arbolito</figcaption></figure>
   <figure class="polaroid b"><div class="foto"><img src="{img('adorno-sirenita')}" alt=""></div><figcaption>sirenita</figcaption></figure>
   <figure class="polaroid c"><div class="foto"><img src="{img('adorno-varita-luna')}" alt=""></div><figcaption>varita</figcaption></figure>
@@ -294,7 +294,7 @@ pieza("propuesta-logo", "Logo · Propuesta para Elizabeth Creations", "1080x1080
   .nota b { font-weight: 800; }
 ''', '''
   <p class="cab">propuesta de logo · para revisar con Erika</p>
-  <div class="grande"><img src="../../logo/sello-color.svg" alt=""><div><b>Elizabeth<br>Creations</b><span>hecho a mano en La Chorrera</span></div></div>
+  <div class="grande"><img src="../../logo/sello-color.svg" alt=""><div><b>Elizabeth<br>Creations</b><span>Hecho a mano en Panamá</span></div></div>
   <div class="fila">
     <div style="background:#FFF9EF"><img src="../../logo/sello-color.svg" alt=""></div>
     <div style="background:#1E1A3C"><img src="../../logo/sello-crema-sobre-oscuro.svg" alt=""></div>

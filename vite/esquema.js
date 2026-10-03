@@ -106,19 +106,21 @@ export function esquema(root, { fotoMayor }) {
       }
       piezas.push(producto({
         slug: pieza.slug,
-        nombre: `${pieza.nombre} de fieltro`,
-        descripcion: `${pieza.material}. Cosido a mano en ${marca.ciudad}, ${marca.region}.`,
-        material: pieza.material,
+        nombre: pieza.nombre,
+        descripcion: `${pieza.material}. Pieza cosida a mano en ${marca.lugar}.`,
+        // `material` es de qué está hecha (el texto de la tarjeta dice el color
+        // y los detalles, que no son un material).
+        material: "Fieltro y bisutería",
         imagen: foto(pieza.foto),
         ofertas,
-        extra: { category: esVarita ? "Varitas mágicas de fieltro" : set.precio ? "Adornos navideños de fieltro" : "Guirnaldas de fieltro" }
+        extra: { category: esVarita ? "Varitas mágicas" : set.precio ? "Adornos navideños de fieltro" : "Guirnaldas" }
       }))
     }
   }
 
   const sets = productos.sets.filter((s) => typeof s.precio === "number").map((set) => producto({
     slug: `set-${set.slug}`,
-    nombre: `Set ${set.nombre}: ${set.piezas.length} adornos de fieltro`,
+    nombre: `Set ${set.nombre}: ${set.piezas.length} adornos hechos a mano`,
     descripcion: `${set.piezas.map((p) => p.nombre).join(", ")}. ${set.descripcion}`,
     imagen: foto(set.foto),
     ofertas: oferta(set.precio),
@@ -137,8 +139,10 @@ export function esquema(root, { fotoMayor }) {
     slogan: marca.bajada,
     logo: { "@type": "ImageObject", url: `${url}icono-512.png`, width: 512, height: 512 },
     image: [`${url}og.jpg`, ...[...productos.sets.map((s) => foto(s.foto))].filter(Boolean)],
-    address: { "@type": "PostalAddress", addressLocality: marca.ciudad, addressRegion: marca.region, addressCountry: marca.pais },
-    areaServed: (marca.zonaEntrega || []).map((nombre) => ({ "@type": "City", name: nombre })),
+    // Sólo el país: desde el 02-10-2026 el negocio se presenta para todo
+    // Panamá y envía a todo el país (sin ciudad ni provincia que declarar).
+    address: { "@type": "PostalAddress", addressCountry: marca.pais },
+    areaServed: { "@type": "Country", name: marca.lugar },
     paymentAccepted: marca.politicas.pagos.replace(/ o /, ", "),
     currenciesAccepted: "USD",
     ...(hechos.rango && { priceRange: hechos.rango }),
@@ -154,7 +158,7 @@ export function esquema(root, { fotoMayor }) {
   const catalogo = {
     "@type": "OfferCatalog",
     "@id": id("catalogo"),
-    name: `Adornos de fieltro de ${marca.nombre}`,
+    name: `Adornos hechos a mano de ${marca.nombre}`,
     numberOfItems: sets.length + piezas.length,
     itemListElement: [...sets, ...piezas].map((item, i) => ({ "@type": "ListItem", position: i + 1, item }))
   }

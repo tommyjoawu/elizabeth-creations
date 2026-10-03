@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
-import { dinero, totalDe, textoTotal, textoAbono } from "../precios.js"
+import { dinero, totalDe, textoTotal, textoAbono, montoAbono } from "../precios.js"
 
 // El pedido por piezas y por sets (Erika, 01-10-2026: "debe haber una opción
 // para pedir los sets de una vez").
@@ -13,18 +13,19 @@ import { dinero, totalDe, textoTotal, textoAbono } from "../precios.js"
 //     `aria-pressed`, que es lo que es: un interruptor).
 //   · El enlace del set deja de abrir WhatsApp y pasa a agregar el set
 //     entero; tocarlo con el set en el pedido lo quita.
-//   · El resumen dice cuántas piezas van, el total y el abono, y arma el
-//     enlace con la lista. Los precios son los de Erika (01-10-2026):
+//   · El resumen dice cuántas piezas van y el total, y arma el enlace con la
+//     lista. Los precios son los de Erika (01-10-2026):
 //       - todos los sets son de 3 piezas y un set completo se cobra como
 //         set ($15.00), en un solo renglón, no como la suma de sus piezas —
 //         da igual si se tocó "Seleccionar el set completo" o se marcaron
-//         sus tres piezas una por una (entonces se juntan solas en el set);
-//       - si a unas piezas sueltas les falta UNA para ser un set y el set
-//         sale más barato que comprarla aparte, se sugiere el set completo
-//         (la "pista", con su botón);
+//         sus tres piezas una por una (entonces se juntan solas en el set,
+//         sin decir nada: 02-10-2026, "no mencionar el ahorro"; el resumen y
+//         el mensaje ya dicen el precio correcto);
 //       - la guirnalda con nombre es un rango (de $5.00 a $10.00): el total
 //         dice "desde" y el abono se calcula cuando Erika confirme;
 //       - si algún precio fuera null, "por confirmar" (ver src/precios.js).
+//   · "Enviar" no abre WhatsApp directo: pasa por la ventanita del abono
+//     (controlador `abono`), que lee el monto de `data-abono-monto`.
 //   · Lo que se arma en OTRA sección (las varitas: forma, color, unidad o
 //     docena) llega con el evento `pedido:agregar` en `window` y se quita
 //     con `pedido:quitar`. Cada cambio se avisa con `pedido:cambio`, para
@@ -36,8 +37,8 @@ import { dinero, totalDe, textoTotal, textoAbono } from "../precios.js"
 // set: por eso un set no se deduce de las piezas al pintar, sino que se
 // guarda. Cuando las sueltas completan uno o más sets, `juntar()` las pasa
 // a sets: una misma galleta suelta cuenta para UN set, nunca para dos, y si
-// alcanza para varios gana la combinación que más le ahorra a la clienta (a
-// igual ahorro, el set que va primero en productos.json).
+// alcanza para varios gana la combinación con el total más bajo (a igual
+// total, el set que va primero en productos.json).
 //
 // La selección se guarda en `sessionStorage` sólo como comodidad: si se
 // recarga la página no se pierde. Si el navegador no deja guardar, se sigue
@@ -45,7 +46,7 @@ import { dinero, totalDe, textoTotal, textoAbono } from "../precios.js"
 const CLAVE = "elizabeth-pedido"
 
 export default class extends Controller {
-  static targets = ["pieza", "botonSet", "lugar", "resumen", "cuenta", "total", "lista", "pista", "abono",
+  static targets = ["pieza", "botonSet", "lugar", "resumen", "cuenta", "total", "lista",
                     "vaciar", "enviar", "personal"]
   static values = { numero: String, plantilla: String, abono: { type: Number, default: 30 } }
 
@@ -139,12 +140,6 @@ export default class extends Controller {
     this.juntar()
   }
 
-  // El botón de la pista: "Cambiar al set".
-  completarSet(evento) {
-    this.agregarSet(evento.currentTarget.dataset.set)
-    this.pintar(true)
-  }
-
   // Las sueltas que completan un set se juntan en el set. Se prueban todas
   // las combinaciones de sets completables (son pocos: 2^3) que no usen la
   // misma pieza dos veces, y gana la que más ahorra; a igual ahorro, la que
@@ -168,7 +163,8 @@ export default class extends Controller {
     }
   }
 
-  // Lo que se ahorra con el set frente a sus piezas sueltas, en centavos.
+  // Cuánto baja el total al cobrar el set en vez de sus piezas, en centavos
+  // (sólo para escoger la combinación; nunca se muestra).
   ahorroDe(set) {
     const suma = totalDe(set.piezas.map((p) => this.renglonPieza(this.tarjeta(p))))
     return suma.falta ? 0 : Math.round(suma.monto * 100) - Math.round(set.precio * 100)
@@ -307,55 +303,18 @@ export default class extends Controller {
     this.listaTarget.textContent = vacio
       ? "Toca «Agregar al pedido» en cada pieza, o «Seleccionar el set completo»."
       : renglones.map((r) => `${r.texto} — ${this.precioRenglon(r)}`).join(" · ")
-    this.abonoTarget.hidden = vacio
-    this.abonoTarget.textContent = vacio ? "" : `${textoAbono(total, this.abonoValue)}.`
-    this.pintarPista()
     this.vaciarTarget.hidden = vacio
     this.enviarTarget.hidden = vacio
-    if (!vacio) this.enviarTarget.href = this.enlace(renglones, total)
+    if (!vacio) {
+      this.enviarTarget.href = this.enlace(renglones, total)
+      // Para la ventanita del abono: "$4.50", o nada si el total no es
+      // cerrado (entonces la ventanita dice sólo el porcentaje).
+      this.enviarTarget.dataset.abonoMonto = montoAbono(total, this.abonoValue) || ""
+    }
 
     this.guardar()
     this.avisar()
     if (conLatido) this.latir()
-  }
-
-  // El set al que le falta UNA pieza para estar completo, si el set sale
-  // más barato que comprar esa pieza aparte. La primera que aplique, y nada
-  // más: dos a la vez ya es un sermón. Con 2 de 3 piezas de $6.00 ($12.00),
-  // el set cuesta $15.00: la tercera sale en $3.00 en vez de $6.00.
-  pintarPista() {
-    for (const set of this.catalogo) {
-      if (!Number.isFinite(set.precio) || this.sets.has(set.slug)) continue
-      const tiene = set.piezas.filter((p) => this.elegidas.has(p))
-      const faltan = set.piezas.filter((p) => !this.elegidas.has(p))
-      if (tiene.length === 0 || faltan.length !== 1) continue
-      const suma = totalDe(tiene.map((p) => this.renglonPieza(this.tarjeta(p))))
-      const aparte = totalDe(faltan.map((p) => this.renglonPieza(this.tarjeta(p))))
-      if (suma.falta || aparte.falta) continue
-      const mas = (Math.round(set.precio * 100) - Math.round(suma.monto * 100)) / 100
-      if (mas >= aparte.monto) continue
-      const falta = this.tarjeta(faltan[0])?.dataset.nombre.toLowerCase() || faltan[0]
-      this.pistaTarget.innerHTML = ""
-      // Dos largos: el teléfono sólo tiene un renglón para esto.
-      const texto = document.createElement("span")
-      texto.className = "e-resumen__pista-largo"
-      texto.textContent = `Llévate el set ${set.nombre} completo por ${dinero(set.precio)}: la pieza que falta (${falta}) te sale en ${dinero(mas)}.`
-      const corto = document.createElement("span")
-      corto.className = "e-resumen__pista-corto"
-      corto.setAttribute("aria-hidden", "true")
-      corto.textContent = `Set completo: ${dinero(set.precio)} (+${dinero(mas)})`
-      const boton = document.createElement("button")
-      boton.type = "button"
-      boton.className = "e-resumen__pista-boton"
-      boton.dataset.action = "pedido#completarSet"
-      boton.dataset.set = set.slug
-      boton.textContent = "Cambiar al set"
-      this.pistaTarget.append(texto, corto, " ", boton)
-      this.pistaTarget.hidden = false
-      return
-    }
-    this.pistaTarget.hidden = true
-    this.pistaTarget.textContent = ""
   }
 
   precioRenglon(r) {

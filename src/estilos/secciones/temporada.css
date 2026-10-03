@@ -95,16 +95,11 @@
    LAS PIEZAS — la galería colgada (traída de variantes/navidad) y el pedido
    por sets.
 
-   Dos maneras de verse, y las decide el controlador `galeria`:
-     · Sin clase (sin JavaScript o con reduced-motion): la cabeza arriba y,
-       debajo, una fila que se desliza con el dedo, con su cable y sus pinzas.
-     · `.e-galeria--fija`: la sección ocupa la pantalla y se queda fija; la
-       cabeza pasa a ser el primer panel de la fila y la fila entera avanza de
-       lado con el scroll. Así las fotos se quedan con toda la altura.
-
-   El ancho de una pieza sale de la ALTURA disponible cuando la galería está
-   fija: la foto es 4:5 y el resto de la tarjeta mide unos 14rem, así que lo
-   que sobra de alto, por 0.8, es el ancho que cabe sin cortarse.
+   La fila se desliza de lado sola (`overflow-x` + `scroll-snap`) y la página
+   pasa de largo: ya no se fija nada (02-10-2026, la gente intentaba ir a la
+   derecha y se confundía). Arriba, la cabeza con el titular, los dos precios
+   y la fecha; a su derecha, las flechas (las enciende `galeria`); en el
+   celular, la nota "desliza →".
    ========================================================================== */
 @layer components {
   .e-galeria {
@@ -118,12 +113,73 @@
 
   /* ── La cabeza ─────────────────────────────────────────────────────── */
   .e-galeria__cabeza {
+    display: grid;
+    gap: 1.75rem 2rem;
     width: 100%;
     max-width: 88rem;
     margin-inline: auto;
     padding-inline: var(--gutter);
   }
-  .e-galeria__pista-nota { display: none; font-size: 1.15rem; color: #FFC53D; rotate: -3deg; }
+  @media (min-width: 768px) {
+    .e-galeria__cabeza { grid-template-columns: minmax(0, 1fr) auto; align-items: end; }
+  }
+  .e-galeria__lado { display: flex; flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+  .e-galeria__controles { display: flex; align-items: center; justify-content: space-between; gap: 1rem; align-self: stretch; }
+  @media (min-width: 768px) {
+    .e-galeria__lado { align-items: flex-end; }
+    .e-galeria__controles { justify-content: flex-end; }
+  }
+  /* Los dos precios, en dos pastillas: "Set de 3: $15.00" e "Individual:
+     desde $6.00". Nada más que decir. */
+  .e-galeria__tarifa { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .e-galeria__tarifa > span {
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    background: rgb(251 241 225 / 0.1);
+    box-shadow: inset 0 0 0 1.5px rgb(251 241 225 / 0.5);
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+  .e-galeria__tarifa strong { font-weight: 800; color: #FFC53D; }
+  /* En el teléfono, los dos precios en un renglón y el sello más chico: que
+     las tarjetas asomen antes. */
+  @media (max-width: 639.98px) {
+    .e-galeria__tarifa > span { padding: 0.3rem 0.7rem; font-size: 0.9rem; }
+    .e-galeria .e-sello-fecha { padding: 0.6rem 1rem 0.7rem; }
+    .e-galeria .e-sello-fecha__texto { font-size: 0.8rem; }
+    .e-galeria .e-sello-fecha__dia { font-size: 1.6rem; }
+    .e-galeria__lado { gap: 1.1rem; }
+  }
+
+  /* La pista para el dedo, a mano y en mango: sólo donde no hay flechas a
+     la vista de la fila (pantallas chicas). */
+  .e-galeria__desliza { margin: 0; font-size: 1.15rem; color: #FFC53D; rotate: -2deg; }
+  @media (min-width: 1024px) { .e-galeria__desliza { display: none; } }
+
+  /* ── Las flechas ─────────────────────────────────────────────────────
+     Dos botones redondos de papel con filo de tinta: el de atrás es la
+     misma flecha, girada. Apagados en cada punta, sin desaparecer. */
+  .e-galeria__flechas { display: flex; gap: 0.6rem; }
+  .e-galeria__flechas[hidden] { display: none; }
+  .e-flecha {
+    display: grid;
+    place-items: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: 999px;
+    background: #FFF9EF;
+    color: #1E1A3C;
+    box-shadow: inset 0 0 0 1.5px #1E1A3C, 0.2rem 0.25rem 0 #FFC53D;
+    cursor: pointer;
+    transition: transform 0.16s var(--ease-salida), opacity 0.2s var(--ease-salida);
+  }
+  .e-flecha--atras svg { rotate: 180deg; }
+  .e-flecha:active { transform: translate(0.1rem, 0.15rem); box-shadow: inset 0 0 0 1.5px #1E1A3C, 0.1rem 0.1rem 0 #FFC53D; }
+  .e-flecha[aria-disabled="true"] { opacity: 0.4; cursor: default; }
+  .e-flecha:focus-visible { outline: 3px solid #FFC53D; outline-offset: 3px; }
+  @media (hover: hover) and (pointer: fine) {
+    .e-flecha:not([aria-disabled="true"]):hover { background: #FFC53D; }
+  }
 
   /* ── La fila y su cable ────────────────────────────────────────────── */
   .e-galeria__tira {
@@ -131,12 +187,16 @@
     display: flex;
     align-items: flex-start;
     gap: var(--hueco);
-    margin-top: 3.5rem;
+    margin-top: clamp(1.75rem, 4vw, 3rem);
     padding: var(--cable) var(--gutter) 2.25rem;
     overflow-x: auto;
+    overflow-y: hidden;
     overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory;
     scroll-padding-inline: var(--gutter);
+    /* Sólo el gesto de lado es de la fila: el de arriba-abajo sigue siendo
+       de la página. */
+    touch-action: pan-x pan-y pinch-zoom;
     scrollbar-width: thin;
     scrollbar-color: rgb(251 241 225 / 0.4) transparent;
   }
@@ -149,6 +209,10 @@
       linear-gradient(rgb(251 241 225 / 0.6), rgb(251 241 225 / 0.6)) 0 var(--cable) / 100% 3px no-repeat local,
       linear-gradient(rgb(8 6 20 / 0.35), rgb(8 6 20 / 0.35)) 0 calc(var(--cable) + 3px) / 100% 2px no-repeat local;
   }
+
+  /* La fila se enfoca para moverla con el teclado: el anillo va por dentro,
+     sobre la noche. */
+  .e-galeria__tira:focus-visible { outline: 3px solid #FFC53D; outline-offset: -3px; border-radius: 1rem; }
 
   /* ── Las pinzas de madera ──────────────────────────────────────────── */
   .e-pinza {
@@ -443,6 +507,9 @@
     inset: 0;
     border-radius: inherit;
     box-shadow: inset 0 0 0 1.5px #1E1A3C;
+    /* El filo va encima de la foto, pero el toque pasa al enlace de abajo
+       (la foto que se agranda). */
+    pointer-events: none;
   }
   .e-letrero__foto + .e-letrero__ceja { position: relative; z-index: 1; margin-top: -0.95rem; margin-left: 0.4rem; }
   .e-letrero__ceja {
@@ -465,10 +532,35 @@
     font-weight: 600;
   }
   .e-letrero__tela .e-boton { white-space: normal; text-align: left; line-height: 1.15; }
-  /* El precio del set: grande, y debajo lo que costaría por separado. */
-  .e-letrero__precio { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.1rem 0.5rem; font-weight: 700; }
+  /* Los dos precios del set: "Set de 3: $15.00" en grande y, debajo,
+     "Individual: $6.00 c/u". Sin cuentas ni ahorros. */
+  .e-letrero__precio { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.1rem 0.5rem; font-size: 1.1rem; font-weight: 800; }
   .e-letrero__precio strong { font-size: 2rem; font-weight: 400; line-height: 1; }
-  .e-letrero__antes { flex-basis: 100%; font-size: 0.88rem; font-weight: 600; color: #3B3557; }
+  .e-letrero__individual { margin-top: 0.3rem; font-size: 1rem; font-weight: 700; color: #3B3557; }
+
+  /* ── La foto que se agranda ────────────────────────────────────────────
+     El enlace cubre la foto entera (sin JavaScript abre el archivo grande;
+     con él, la ventanita de `zoom`). Una lupa chica en la esquina dice que
+     se puede, y el cursor también. */
+  .e-zoom { position: absolute; inset: 0; display: block; cursor: zoom-in; border-radius: inherit; }
+  .e-zoom:focus-visible { outline: 3px solid #1E1A3C; outline-offset: -5px; }
+  .e-zoom__lupa {
+    position: absolute;
+    left: 0.55rem;
+    bottom: 0.55rem;
+    display: grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 999px;
+    background: rgb(255 249 239 / 0.92);
+    color: #1E1A3C;
+    box-shadow: 0 0 0 1.5px #1E1A3C;
+    transition: scale 0.2s var(--ease-salida);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .e-zoom:hover .e-zoom__lupa { scale: 1.1; }
+  }
   .e-icono-mas { display: none; }
   [data-pedido-listo] .e-letrero .e-icono-wa { display: none; }
   [data-pedido-listo] .e-letrero .e-icono-mas { display: contents; }
@@ -477,14 +569,17 @@
 
   /* ── El resumen del pedido ─────────────────────────────────────────────
      La ficha de la página en chiquito: papel, filo de tinta y sombra dura
-     mango. En la fila deslizable se pega al borde de abajo mientras se ve
-     la sección; con la galería fija, es la base de la pantalla. */
+     mango. Con algo en el pedido se pega al borde de abajo mientras se ve
+     la sección. */
   .e-resumen__lugar {
-    position: sticky;
+    position: relative;
     z-index: 5;
     bottom: max(0.75rem, env(safe-area-inset-bottom));
-    margin-top: 1.5rem;
+    margin-top: 0.5rem;
   }
+  /* Pegado abajo sólo con algo en el pedido. Al final de la sección vuelve a
+     su lugar, debajo de la fila: tapa las tarjetas sólo de pasada. */
+  .e-resumen__lugar:has(.e-resumen[data-vacio="false"]) { position: sticky; }
   .e-resumen {
     --texto: #1E1A3C;
     --linea-fuerte: #1E1A3C;
@@ -528,52 +623,6 @@
     text-underline-offset: 0.2em;
     cursor: pointer;
   }
-  .e-resumen__abono-monto { display: block; font-size: 0.9rem; color: #1E1A3C; }
-  .e-resumen__pista {
-    grid-column: 1 / -1;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0 0.75rem;
-    padding: 0.3rem 0.4rem 0.3rem 0.7rem;
-    border-radius: 0.7rem;
-    background: #FFF1C9;
-    font-size: 0.86rem;
-    font-weight: 600;
-    line-height: 1.3;
-  }
-  .e-resumen__pista-corto { display: none; }
-  .e-resumen__pista-boton {
-    min-height: 2.25rem;
-    padding: 0 0.4rem;
-    font-weight: 800;
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-    cursor: pointer;
-  }
-  .e-resumen__abono {
-    grid-column: 1 / -1;
-    padding-top: 0.35rem;
-    border-top: 1.5px dashed rgb(30 26 60 / 0.3);
-    font-size: 0.8rem;
-    font-weight: 600;
-    line-height: 1.3;
-    color: #3B3557;
-  }
-  /* En pantallas anchas, todo en una fila: la cuenta, la nota del abono y
-     los botones. Deja la altura a las fotos. */
-  @media (min-width: 900px) {
-    .e-resumen { grid-template-columns: minmax(0, 1fr) minmax(0, 17rem) auto; }
-    .e-resumen__abono {
-      grid-column: 2;
-      grid-row: 1;
-      padding: 0.1rem 0 0.1rem 0.9rem;
-      border-top: 0;
-      border-left: 1.5px dashed rgb(30 26 60 / 0.3);
-    }
-    .e-resumen__acciones { grid-column: 3; grid-row: 1; }
-  }
   /* Un latido cuando cambia: confirma que el toque llegó, aunque el resumen
      esté lejos de la pieza que se tocó. */
   @media (prefers-reduced-motion: no-preference) {
@@ -597,60 +646,5 @@
     .e-resumen[data-vacio="false"] .e-resumen__lista { font-size: 0.8rem; }
     .e-resumen__pre, .e-resumen__largo { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
     .e-resumen__cuenta { flex-direction: column; gap: 0; }
-    /* La pista, en un renglón: "Set completo: $15.00 (+$3.00) · Cambiar al set". */
-    .e-resumen__pista { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; padding-block: 0; }
-    .e-resumen__pista-largo { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-    .e-resumen__pista-corto { display: inline; }
-  }
-
-  /* ══ La galería fija ══════════════════════════════════════════════════
-     Sólo con el controlador `galeria` y con movimiento: la sección mide una
-     pantalla y ScrollTrigger la fija; la pista avanza con `x`. */
-  .e-galeria--fija {
-    --ancho-pieza: clamp(13rem, calc((100svh - 32rem) * 0.8), min(80vw, 27rem));
-    --ancho-letrero: min(74vw, 19rem);
-    padding: 0;
-  }
-  .e-galeria--fija .e-luces { --alto: 4.25rem; inset: 0.6rem 0 auto; }
-  /* La caja fijada lleva el fondo de la sección (color y motivo): mientras
-     está fija, la sección de atrás sigue de largo. */
-  .e-galeria--fija .e-galeria__fijo {
-    position: relative;
-    height: 100svh;
-    background: inherit;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    padding-top: 5.25rem;
-    padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
-  }
-  .e-galeria--fija .e-galeria__ventana { display: flex; flex: 1; align-items: center; min-height: 0; }
-  .e-galeria--fija .e-galeria__pista {
-    display: flex;
-    align-items: center;
-    gap: var(--hueco);
-    width: max-content;
-    padding-inline: var(--gutter);
-    will-change: transform;
-  }
-  .e-galeria--fija .e-galeria__cabeza { flex: none; width: min(84vw, 30rem); padding: 0; margin: 0; }
-  .e-galeria--fija .e-galeria__pista-nota { display: block; }
-  .e-galeria--fija .e-galeria__tira { margin-top: 0; padding: var(--cable) 0 1.25rem; overflow: visible; }
-  .e-galeria--fija .e-resumen__lugar { position: relative; bottom: auto; margin-top: 0.25rem; }
-  @media (min-width: 1024px) {
-    .e-galeria--fija { --ancho-pieza: clamp(15rem, calc((100svh - 27.5rem) * 0.8), 28rem); }
-  }
-  /* Con la foto del set, el letrero es lo más alto de la fila: en el
-     teléfono (y en pantallas bajitas) la foto se aplana y la frase cede su
-     lugar, para que el resumen de abajo quepa entero. El nombre, el precio
-     y las tres piezas siguen. */
-  @media (max-width: 639.98px), (max-height: 760px) {
-    .e-galeria--fija .e-letrero__foto { aspect-ratio: 16 / 10; }
-    .e-galeria--fija .e-letrero--foto .e-letrero__desc { display: none; }
-  }
-  /* En pantallas bajitas el párrafo de la cabeza cede su lugar. */
-  @media (max-height: 760px) {
-    .e-galeria--fija .e-galeria__cabeza .text-entrada { display: none; }
-    .e-galeria--fija .e-galeria__cabeza .e-sello-fecha { margin-top: 1rem; }
   }
 }

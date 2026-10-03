@@ -1,7 +1,7 @@
 [
   { "texto": "Las piezas",  "ancla": "#temporada",   "color": "#D3253C" },
   { "texto": "Varitas",     "ancla": "#varitas",     "color": "#B79BE6" },
-  { "texto": "El taller",   "ancla": "#taller",      "color": "#12A5A0" },
+  { "texto": "Mi historia", "ancla": "#historia",    "color": "#F48FB1" },
   { "texto": "Cómo pedir",  "ancla": "#encargos",    "color": "#FFC53D" },
-  { "texto": "Preguntas",   "ancla": "#preguntas",   "color": "#F48FB1" }
+  { "texto": "Preguntas",   "ancla": "#preguntas",   "color": "#12A5A0" }
 ]

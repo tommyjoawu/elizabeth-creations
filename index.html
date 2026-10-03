@@ -15,7 +15,8 @@
     obertura     papel    (Atención: "Bienvenidos a Elizabeth Creations" y el tendedero)
     temporada    noche    (Interés → Deseo: las piezas colgadas, con precio y por sets)
     varitas      lila     (Deseo: la pieza que se personaliza)
-    taller       papel    (Confianza: cómo nace una pieza y su historia)
+    historia     hibisco  (Confianza: Erika, contada por ella)
+    taller       papel    (Confianza: un vistazo a cómo nace una pieza)
     colecciones  arena    (Interés: todo lo que hace)
     encargos     mango    (Acción: cómo pedir, el abono, los tiempos)
     pared        papel    (Prueba: sus fotos, sin testimonios)
@@ -92,8 +93,10 @@
   </head>
 
   {{!-- `suave`: el scroll con inercia. Va en el <body> porque es de la página
-       entera; se apaga solo con `reduced-motion` y en pantallas táctiles. --}}
-  <body class="e-sitio" data-controller="suave">
+       entera; se apaga solo con `reduced-motion` y en pantallas táctiles.
+       `zoom` (la foto en grande) y `abono` (la ventanita antes de enviar un
+       pedido) también: sus botones están repartidos por varias secciones. --}}
+  <body class="e-sitio" data-controller="suave zoom abono">
     <a href="#principal"
        class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-salto focus:rounded-full
               focus:bg-mango focus:px-5 focus:py-3 focus:font-bold focus:text-anil">
@@ -110,6 +113,7 @@
       {{> secciones/obertura}}
       {{> secciones/temporada}}
       {{> secciones/varitas}}
+      {{> secciones/historia}}
       {{> secciones/taller}}
       {{> secciones/colecciones}}
       {{> secciones/encargos}}
@@ -120,5 +124,7 @@
 
     {{> piezas/pie}}
     {{> piezas/pildora}}
+    {{> piezas/zoom}}
+    {{> piezas/abono}}
   </body>
 </html>
