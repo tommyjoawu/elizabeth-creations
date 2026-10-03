@@ -22,11 +22,12 @@
     background: #FFF9EF;
     box-shadow: 0 0 0 1.5px #1E1A3C, 0.45rem 0.5rem 0 #1E1A3C;
   }
-  .e-polaroid--video { grid-column: 1 / span 8; rotate: -3deg; padding-bottom: 2.6rem; }
-  .e-polaroid--foto  { grid-column: 6 / span 7; align-self: end; margin-bottom: -3rem; rotate: 4deg; z-index: 1; }
+  /* El video a la derecha y la varita blanca a la izquierda (Tommy, 02-10-2026). */
+  .e-polaroid--video { grid-column: 5 / span 8; rotate: -3deg; padding-bottom: 2.6rem; }
+  .e-polaroid--foto  { grid-column: 1 / span 7; align-self: end; margin-bottom: -3rem; rotate: 4deg; z-index: 1; }
   @media (min-width: 1024px) {
-    .e-polaroid--video { grid-column: 1 / span 7; }
-    .e-polaroid--foto  { grid-column: 6 / span 7; }
+    .e-polaroid--video { grid-column: 6 / span 7; }
+    .e-polaroid--foto  { grid-column: 1 / span 7; }
   }
 
   /* La cinta que la sostiene: la misma de la pared del taller. */
