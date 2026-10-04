@@ -6,9 +6,10 @@
   "Preguntar"; si ninguno lo tiene, se estira el primero, para que la
   sección nunca quede en cuatro tiras iguales sin nada que leer.
 
-  La tarjeta personalizada y las guirnaldas todavía no tienen foto: su
-  banderín lleva la ranura punteada (`pendiente` en colecciones.json) donde
-  iría. Cada banderín con precios de Erika los dice en una línea corta. Es el acordeón
+  La tarjeta personalizada todavía no tiene foto: su banderín lleva la
+  ranura punteada (`pendiente` en colecciones.json) donde iría. Guirnaldas
+  lleva un video en bucle (`video` + `poster`): el póster es lo que se ve
+  sin JavaScript, con reduced-motion y en el celular (`video-fondo`). Cada banderín con precios de Erika los dice en una línea corta. Es el acordeón
   horizontal de la v2 (las láminas de Programas), con la piel del taller.
 
   Los adornos del hero enlazan a `#coleccion-…`: el banderín apuntado por la
@@ -44,7 +45,12 @@
               </p>
             </div>
 
-            {{#if this.foto}}
+            {{#if this.video}}
+              <div class="e-banderin__foto" data-controller="video-fondo"
+                   data-video-fondo-src-value="{{this.video}}">
+                <img src="{{this.poster}}" alt="{{this.alt}}" width="464" height="832" loading="lazy" decoding="async">
+              </div>
+            {{else if this.foto}}
               <div class="e-banderin__foto">
                 {{imagen this.foto alt=this.alt sizes="(min-width: 1024px) 30rem, 80vw"}}
               </div>

@@ -29,8 +29,8 @@
 # Correr desde la raíz:  bash scripts/procesar-material.sh
 # Sólo un grupo (sin rehacer todo ni los videos):
 #                         bash scripts/procesar-material.sh sets
-#   grupos: piezas, adornos, escenas, sets, historia, productos (= piezas +
-#   escenas + sets), videos
+#   grupos: piezas, adornos, escenas, sets, historia, guirnaldas (foto y
+#   video), productos (= piezas + escenas + sets), videos
 set -euo pipefail
 
 RAIZ="$(cd "$(dirname "$0")/.." && pwd)"
@@ -181,25 +181,44 @@ historia() {
   exportar historia-foami      "$(fotoHistoria ' (1)')" "1200x1500+0+40"    480 960
 }
 
-productos() { piezas; escenas; sets; }
-
-if [[ -n "${1:-}" && "$1" != "videos" ]]; then "$1"; exit 0; fi
-if [[ -z "${1:-}" ]]; then piezas; adornos; escenas; sets; historia; fi
-
-# bucle <slug> <origen> <desde> <dura>
+# bucle <slug> <origen> <desde> <dura> [poster-en]
+#   `poster-en` (segundos dentro del bucle, 0.4 si no se dice) escoge el
+#   fotograma del póster.
 bucle() {
-  local slug="$1" origen="$2" desde="$3" dura="$4"
+  local slug="$1" origen="$2" desde="$3" dura="$4" poster="${5:-0.4}"
   local filtro="[0:v]trim=start=$desde:duration=$dura,setpts=PTS-STARTPTS,eq=brightness=0.03:saturation=1.12,split[a][b];[b]reverse[r];[a][r]concat=n=2:v=1[v]"
   ffmpeg -v error -y -i "$origen" -filter_complex "$filtro" -map "[v]" -an \
     -c:v libx264 -profile:v high -pix_fmt yuv420p -crf 25 -preset slow -movflags +faststart "$VID/$slug.mp4"
   ffmpeg -v error -y -i "$origen" -filter_complex "$filtro" -map "[v]" -an \
     -c:v libvpx-vp9 -b:v 0 -crf 38 -row-mt 1 -deadline good "$VID/$slug.webm"
-  ffmpeg -v error -y -ss 0.4 -i "$VID/$slug.mp4" -frames:v 1 -update 1 "/tmp/elizabeth-poster.png"
+  ffmpeg -v error -y -ss "$poster" -i "$VID/$slug.mp4" -frames:v 1 -update 1 "/tmp/elizabeth-poster.png"
   convert /tmp/elizabeth-poster.png -strip -quality 80 "$VID/$slug-poster.webp"
   convert /tmp/elizabeth-poster.png -strip -quality 80 "$VID/$slug-poster.jpg"
   rm -f /tmp/elizabeth-poster.png
   echo "  ✓ $slug ($(du -h "$VID/$slug.mp4" | cut -f1) mp4, $(du -h "$VID/$slug.webm" | cut -f1) webm)"
 }
+
+# La primera guirnalda de Erika (03-10-2026, docs/material-erika/2026-10-03-guirnaldas/):
+# nubes con perlitas, una nube con rayo, luna, estrella, sol y dos bolitas
+# azules de fieltro en un cordón crema, sobre una cobija. La foto es la de la
+# pieza en "Las piezas" (con marca de agua, 3:4 como las demás): recortada
+# apretada alrededor de la guirnalda (sobra mucha cobija). El recorte mide
+# 960 de ancho, así que sale en 600 y 960 (nunca agrandada). El video es el
+# banderín de Guirnaldas: el paneo de la cámara por las piezas, ida y vuelta.
+fotoGuirnalda() { echo "$MAT/2026-10-03-guirnaldas/WhatsApp Image 2026-10-03 at $1.jpeg"; }
+videoGuirnalda() { echo "$MAT/2026-10-03-guirnaldas/WhatsApp Video 2026-10-03 at $1.mp4"; }
+guirnaldas() {
+  echo "La guirnalda de cielo (foto con marca de agua y su video):"
+  MARCA=1 exportar pieza-guirnalda-clima "$(fotoGuirnalda '6.46.48 PM')" "960x1280+10+150" 600 960
+  # Sólo el paneo por la estrella, la luna y el sol (1.5–5.3 s): el banderín
+  # es ancho y bajito, y el acercamiento a la nube con rayo se ve cortado.
+  bucle guirnalda-clima "$(videoGuirnalda '6.46.49 PM')" 1.5 3.8 2.6
+}
+
+productos() { piezas; escenas; sets; }
+
+if [[ -n "${1:-}" && "$1" != "videos" ]]; then "$1"; exit 0; fi
+if [[ -z "${1:-}" ]]; then piezas; adornos; escenas; sets; historia; guirnaldas; fi
 
 echo "Videos en bucle (mudos, ida y vuelta):"
 bucle varita-luna-gira      "$(video '7.44.04 PM')" 0.5 4.5

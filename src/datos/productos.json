@@ -154,11 +154,12 @@
       "piezas": [
         {
           "slug": "guirnalda",
-          "nombre": "Guirnalda",
+          "nombre": "Guirnalda de cielo",
+          "foto": "pieza-guirnalda-clima",
           "tono": "mango",
           "precio": 5,
-          "material": "Cosida a mano",
-          "pendiente": "La foto de una guirnalda."
+          "material": "Nubes, rayo, luna, estrella y sol de fieltro cosidos a mano",
+          "alt": "Guirnalda de fieltro sobre una cobija crema: dos nubes grises con perlitas, una con un rayo amarillo, una luna azul, una estrella amarilla, un sol naranja y amarillo y dos bolitas azules, unidas por un cordón crema."
         }
       ]
     },

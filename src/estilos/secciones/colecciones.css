@@ -83,7 +83,7 @@
     border-radius: 1rem;
     box-shadow: inset 0 0 0 1.5px var(--linea-fuerte);
   }
-  .e-banderin__foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .e-banderin__foto :is(img, video) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   /* Los precios del banderín: una etiqueta crema, como la de una pieza. */
   .e-banderin__precios {
     display: inline-block;
