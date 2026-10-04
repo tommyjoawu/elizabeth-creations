@@ -12,48 +12,77 @@
     background-size: 100px 100px;
   }
 
-  /* ── Sus manos, en una polaroid ──────────────────────────────────────
+  /* ── El álbum: sus cuatro fotos en polaroids ─────────────────────────
      Papel blanco con margen ancho abajo (ahí va el pie escrito a mano),
-     torcida, con un pedazo de cinta arriba y la sombra dura en añil. */
-  .e-historia__foto {
-    position: relative;
+     cada una torcida a su manera, con un pedazo de cinta arriba y la sombra
+     dura en añil. En 2 × 2 desde el teléfono más chico: una sola columna
+     haría de la historia un rollo de fotos y el texto quedaría lejísimos.
+     La segunda columna baja un poco: se ve pegado a mano, no una grilla. */
+  .e-historia__album {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.6rem 0.9rem;
+    width: min(100%, 30rem);
     justify-self: center;
-    width: min(100%, 22rem);
-    padding: 0.8rem 0.8rem 0;
-    border-radius: 0.5rem;
-    background: #FFF9EF;
-    rotate: -2.5deg;
-    box-shadow: 0 0 0 1.5px #1E1A3C, 0.6rem 0.65rem 0 #1E1A3C;
+    margin: 0;
+    padding: 0.6rem 0.35rem 0.4rem 0;
+    list-style: none;
   }
+  .e-historia__foto:nth-child(even) { translate: 0 1.4rem; }
+  .e-historia__foto figure {
+    position: relative;
+    margin: 0;
+    padding: 0.45rem 0.45rem 0;
+    border-radius: 0.4rem;
+    background: #FFF9EF;
+    rotate: var(--giro, -2.5deg);
+    box-shadow: 0 0 0 1.5px #1E1A3C, 0.4rem 0.45rem 0 #1E1A3C;
+  }
+  .e-historia__foto:nth-child(1) figure { --giro: -3deg; }
+  .e-historia__foto:nth-child(2) figure { --giro: 2.5deg; }
+  .e-historia__foto:nth-child(3) figure { --giro: 1.5deg; }
+  .e-historia__foto:nth-child(4) figure { --giro: -2deg; }
   .e-historia__foto img {
     display: block;
     width: 100%;
     height: auto;
     aspect-ratio: 4 / 5;
     object-fit: cover;
-    object-position: 50% 62%;
-    border-radius: 0.25rem;
+    border-radius: 0.2rem;
   }
   .e-historia__pie {
-    padding: 0.7rem 0.2rem 0.9rem;
-    font-size: 1.2rem;
+    padding: 0.45rem 0.1rem 0.6rem;
+    font-size: 1rem;
+    line-height: 1.15;
     text-align: center;
+    text-wrap: balance;
     color: #1E1A3C;
   }
+  /* La cinta: mango en las impares y lila en las pares, para que el álbum
+     no parezca cortado con molde. */
   .e-historia__cinta {
     position: absolute;
     z-index: 1;
-    top: -0.9rem;
+    top: -0.75rem;
     left: 50%;
-    width: 6.5rem;
-    height: 1.8rem;
-    margin-left: -3.25rem;
+    width: 4.2rem;
+    height: 1.35rem;
+    margin-left: -2.1rem;
     background: rgb(255 197 61 / 0.82);
-    rotate: 3deg;
+    rotate: 4deg;
     box-shadow: 0 0 0 1px rgb(30 26 60 / 0.2);
   }
+  .e-historia__foto:nth-child(even) .e-historia__cinta {
+    background: rgb(205 185 242 / 0.88);
+    rotate: -5deg;
+  }
+  @media (min-width: 640px) {
+    .e-historia__album { gap: 2.2rem 1.4rem; }
+    .e-historia__foto figure { padding: 0.65rem 0.65rem 0; }
+    .e-historia__pie { font-size: 1.15rem; padding: 0.6rem 0.2rem 0.8rem; }
+  }
   @media (min-width: 1024px) {
-    .e-historia__foto { width: 100%; max-width: 24rem; justify-self: start; }
+    .e-historia__album { width: 100%; max-width: 28rem; justify-self: start; }
   }
 
   /* ── La frase de ella ────────────────────────────────────────────────

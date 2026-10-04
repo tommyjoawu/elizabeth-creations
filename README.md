@@ -42,7 +42,7 @@ del 29-09-2026 (`docs/material-erika/transcripcion-audios-2026-09-29.txt`).
 | Archivo | Qué hay | Estado |
 |---|---|---|
 | `marca.json` | nombre, `lugar` (Panamá), políticas (pago, abono, tiempos, envío, fecha de Navidad), mensajes de WhatsApp | **real**: Elizabeth Creations, Panamá (sin ciudad desde el 02-10-2026), Yappy o transferencia (sin efectivo), abono del 30 % sólo en los sets, las piezas individuales y las guirnaldas —**no en las varitas** (03-10-2026)—, no reembolsable (dicho con calma: ventanita al enviar y "¿Cómo se paga?"), 3 a 5 días, envío a todo Panamá, Navidad hasta el 15 de noviembre. **Pendiente** (`pendiente`): número de WhatsApp (hoy +507 6000-0000), Instagram y correo; el **costo y la manera del envío** (la página dice "te lo confirmo por WhatsApp según tu zona"). |
-| `historia.json` | la historia de Erika (sección `historia`): antetítulo, título, tres párrafos, su frase, el cierre, la firma y la foto (el póster de sus manos en la mesa) | **real** (`borrador: false`, 03-10-2026): el texto de Erika con sus palabras y sus emojis (su hija Elizabeth Love, 2023, el fieltro), seguido de dos párrafos del borrador que ella pidió dejar. Fotos nuevas pendientes de Erika. |
+| `historia.json` | la historia de Erika (sección `historia`): antetítulo, título, tres párrafos, su frase, el cierre, la firma y sus cuatro fotos (`fotos`: el cuarto de su hija, la ecografía, el espejo, las princesas de foami) | **real** (`borrador: false`, 03-10-2026): el texto de Erika con sus palabras y sus emojis (su hija Elizabeth Love, 2023, el fieltro), seguido de dos párrafos del borrador que ella pidió dejar. Sus fotos llegaron el 03-10-2026 (`docs/material-erika/2026-10-03-historia/`, `procesar-material.sh historia`); sin la cara de su hija (la mejilla de la bebé del espejo va difuminada). |
 | `productos.json` | las piezas agrupadas en **sets** (Navidad clásica, Navidad nevada, Bajo el mar, Varitas, Guirnaldas) para la galería colgada y el pedido por sets; cada pieza con `precio` y cada set completo con el suyo. **Todos los sets son de 3 piezas, $15.00** (Erika, 01-10-2026), cada uno con la foto de sus tres piezas juntas: Navidad clásica (estrella brillante, arbolito verde, galleta de jengibre; por separado $18.00), Navidad nevada (arbolito de nieve, galleta de jengibre, estrella blanca; $18.00) y Bajo el mar (sirenita, pececito, cangrejito; $20.00). La galleta va en los dos sets de Navidad: está escrita dos veces y la copia lleva `repite` | **real** (fotos de Erika); nombres descriptivos hasta que ella mande los suyos. **Precios reales** (Erika, 01-10-2026, `docs/material-erika/2026-10-01/precios.md`): todo set completo $15.00, sirenita y cangrejito $7.00, el resto $6.00, varitas $2.50, guirnalda $5.00, guirnalda con nombre de $5.00 a $10.00 (`precioHasta`, +$2.50 por color: `colorExtra`). Las **guirnaldas no tienen foto** todavía (ranura "Foto muy pronto"). Si un precio vuelve a ser `null`, la pieza dice "Precio: por confirmar" y el total también |
 | `varitas.json` | luna o estrella (cada una con su foto) + color + `precios` (unidad $2.50, docena $25.00, variada +$1.50 por varita = $43.00) | **real** (audio 3 y precios del 01-10-2026). Ella dijo "el color del papel" pero la luna se ve de fieltro: la página dice "el color" a secas hasta que lo aclare. Las muestras de color son ejemplos. |
 | `colecciones.json` | Navidad, Bajo el mar, Varitas, Guirnaldas, Tarjeta con tu mensaje, con una línea de precios; Navidad y Bajo el mar con la foto de un set | **real**; la tarjeta personalizada y las guirnaldas **no tienen foto** (ranura punteada) |
@@ -75,6 +75,16 @@ en `docs/material-erika/2026-10-01-sets/` (`set-bajo-el-mar`, girada -90°;
 recortadas apaisadas en 600 y 960; `bash scripts/procesar-material.sh sets`
 rehace sólo esas). Para una foto nueva se agrega una línea `exportar` al
 script.
+
+**Marca de agua** (03-10-2026, el mismo proceso que el catálogo de Abastra):
+las fotos de producto (`pieza-*`, `set-*`, `varita-luna-ventana`,
+`coleccion-fieltro`) salen de `procesar-material.sh` con el sello y
+"Elizabeth Creations" en crema con borde añil, al 55 %, abajo a la derecha y
+siempre al 26 % del ancho (un PNG por ancho en `scripts/marca-de-agua/`, de
+`node scripts/marca-de-agua.mjs`). Ninguna foto limpia de producto llega a
+`src/assets/img` ni a `dist`, tampoco la grande del `zoom`. Quedan limpios
+los adornos redondos (`adorno-*`), la historia, los videos y `og.jpg`.
+`bash scripts/procesar-material.sh productos` rehace sólo las de producto.
 
 **Publicidad:** `docs/galeria/` (una carpeta por pieza con su `pieza.html`
 y su `pieza.png`; galería en `docs/galeria/index.html`). Se regenera con
@@ -139,7 +149,7 @@ docs/                       brief, investigación, material de Erika, logo,
   que se desliza de lado sola —dedo, trackpad, teclado o flechas ← →— sin
   fijar la sección; cada pieza se mece como un péndulo al deslizarla),
   el pedido por piezas y por sets (controlador `pedido`), la historia de
-  Erika (capítulo hibisco, con su frase grande y la polaroid de sus manos), la
+  Erika (capítulo hibisco, con su frase grande y un álbum de cuatro polaroids), la
   foto en grande al tocar un set o una pieza (`zoom`, un `<dialog>`), la
   ventanita del abono antes de enviar un pedido (`abono`), el hilo con su
   aguja que se dibuja con el scroll por el margen y termina en el WhatsApp

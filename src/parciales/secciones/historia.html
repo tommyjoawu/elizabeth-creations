@@ -4,15 +4,17 @@
   Pedido del 02-10-2026 (Tommy, tras la reunión con Erika): "contar una
   historia de Erika — artesanal, transmitir sentimiento". Es un relato corto,
   no una lista: sus párrafos en primera persona (como toda la página), una
-  frase grande de ella en Caprasimo, y sus manos en la mesa como única foto.
-  Va justo antes del taller: primero quién, después un vistazo a cómo.
+  frase grande de ella en Caprasimo, y un álbum de cuatro polaroids con sus
+  fotos. Va justo antes del taller: primero quién, después un vistazo a cómo.
 
   Todo el texto vive en historia.json. Desde el 03-10-2026 es el de Erika,
   con sus palabras y aprobado (`borrador: false`); si vuelve a ser borrador,
   en desarrollo se ve la ranura punteada que lo dice.
 
-  La foto es el póster de un video del taller (una foto quieta, `lazy`):
-  ese paso ya no se muestra en el taller, así que no se repite.
+  Las fotos (03-10-2026) son las que mandó Erika para su historia, en el
+  orden del relato: el cuarto de su hija, la ecografía, las dos en el espejo
+  y las princesas de foami de antes del fieltro. Sin marca de agua (no son
+  producto) y sin la cara de la niña (ver historia.json → `_fotos`).
 --}}
 <section id="historia" data-costura="der" class="e-hibisco e-motivo e-motivo--corazones e-feston e-feston--ola e-historia relative isolate overflow-clip"
          style="--feston: #CDB9F2" aria-labelledby="titulo-historia">
@@ -36,17 +38,23 @@
       </div>
     </div>
 
-    {{!-- Sus manos, en una polaroid pegada con cinta. En el celular va entre
-        el relato y la frase: corta el texto en dos y le da aire. --}}
-    <figure class="e-historia__foto e-aparece lg:col-span-4 lg:col-start-1 lg:row-span-2 lg:row-start-1" data-controller="revela">
-      <span class="e-historia__cinta" aria-hidden="true"></span>
-      <picture class="contents">
-        <source type="image/webp" srcset="{{historia.imagen.poster}}.webp">
-        <img src="{{historia.imagen.poster}}.jpg" alt="{{historia.imagen.alt}}"
-             width="{{historia.imagen.ancho}}" height="{{historia.imagen.alto}}" loading="lazy" decoding="async">
-      </picture>
-      <figcaption class="e-historia__pie font-mano">{{historia.imagen.pie}}</figcaption>
-    </figure>
+    {{!-- El álbum: cuatro polaroids pegadas con cinta, cada una torcida a
+        su manera, en una cuadrícula de 2 × 2 (en un teléfono de 360 px cada
+        una mide ~9.5 rem, que todavía se ve). En el celular va entre el
+        relato y la frase: corta el texto en dos y le da aire; en escritorio,
+        a la izquierda, a lo alto de las dos filas. Es una lista: se lee como
+        cuatro fotos, en orden. --}}
+    <ul class="e-historia__album lg:col-span-5 lg:col-start-1 lg:row-span-2 lg:row-start-1" role="list">
+      {{#each historia.fotos}}
+        <li class="e-historia__foto e-aparece" data-controller="revela" style="--retraso: calc({{@index}} * 110ms)">
+          <figure>
+            <span class="e-historia__cinta" aria-hidden="true"></span>
+            {{imagen this.foto alt=this.alt sizes="(min-width: 1024px) 13rem, 46vw"}}
+            <figcaption class="e-historia__pie font-mano">{{this.pie}}</figcaption>
+          </figure>
+        </li>
+      {{/each}}
+    </ul>
 
     <div class="lg:col-span-7 lg:col-start-6 lg:row-start-2">
       {{!-- La frase de ella: lo más grande de la sección, con sus comillas

@@ -1,5 +1,5 @@
 {
-  "_nota": "La historia de Erika, con SUS palabras (03-10-2026): los cuatro primeros párrafos y el cierre son su texto tal cual (sólo puntuación), con sus emojis; los dos últimos párrafos son del borrador anterior, que ella pidió dejar (quitó sólo el primero). El título y la frase grande salen de su texto. Nada inventado: si Erika quiere sumar o cambiar algo, se escribe aquí. Mandará fotos nuevas; mientras, queda la de sus manos en la mesa.",
+  "_nota": "La historia de Erika, con SUS palabras (03-10-2026): los cuatro primeros párrafos y el cierre son su texto tal cual (sólo puntuación), con sus emojis; los dos últimos párrafos son del borrador anterior, que ella pidió dejar (quitó sólo el primero). El título y la frase grande salen de su texto. Nada inventado: si Erika quiere sumar o cambiar algo, se escribe aquí. Sus fotos (03-10-2026, docs/material-erika/2026-10-03-historia/) van en `fotos`: cuatro polaroids en el orden del relato.",
   "_revisar": "Aprobado por Erika (03-10-2026): `borrador: false`. Si se vuelve a poner `true`, en desarrollo (`npm run dev`) se ve la nota punteada que lo dice; publicada, no.",
   "borrador": false,
   "antetitulo": "Mi historia",
@@ -15,12 +15,27 @@
   "cita": "Lo que empezó como un regalo para ella…",
   "cierre": "Gracias por estar aquí y ser parte de este sueño💌",
   "firma": "con mucho amor, Erika",
-  "imagen": {
-    "_que": "El póster de uno de los videos del taller (las manos de Erika cosiendo la bisutería sobre una estrella, en su mesa): una foto quieta, no el proceso. El video de ese paso ya no se muestra en el taller.",
-    "poster": "/video/taller-coser-bisuteria-poster",
-    "ancho": 464,
-    "alto": 832,
-    "alt": "Las manos de Erika en su mesa de trabajo, cosiendo lentejuelas de colores sobre una estrella todavía plana, entre cajitas de perlitas y cintas.",
-    "pie": "mi mesa, un día cualquiera"
-  }
+  "_fotos": "Las cuatro fotos que mandó Erika para su historia (scripts/procesar-material.sh historia → src/assets/img/historia-*). La clienta pidió no mostrar nunca la cara de su hija: en `historia-espejo` la bebé está de espaldas y el borde de su mejilla va difuminado en el script; en `historia-cuarto` está de espaldas. En el `alt` es siempre 'mi hija', sin su nombre. El pie va a mano (Shantell), en primera persona.",
+  "fotos": [
+    {
+      "foto": "historia-cuarto",
+      "pie": "su cuarto, mi primer taller",
+      "alt": "Mi hija de espaldas, con su vestido de princesa celeste, en su cuarto decorado con hojas y copos de nieve de foami que hice para ella."
+    },
+    {
+      "foto": "historia-ecografia",
+      "pie": "esperándola",
+      "alt": "La ecografía de mi hija enmarcada en una cartulina con flores y mariposas de foami escarchado."
+    },
+    {
+      "foto": "historia-espejo",
+      "pie": "nosotras",
+      "alt": "Yo con mi hija en brazos frente al espejo de su cuarto, que decoré con mariposas, flores y arcoíris de foami."
+    },
+    {
+      "foto": "historia-foami",
+      "pie": "antes del fieltro, foami",
+      "alt": "Cuatro princesas de foami escarchado que recorté y armé a mano, antes de descubrir el fieltro."
+    }
+  ]
 }

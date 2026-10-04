@@ -16,10 +16,21 @@
 #   · Los videos van en "ida y vuelta" (adelante + al revés): el giro de la
 #     varita o el paneo sobre la colección vuelven solos al principio y el
 #     bucle no tiene corte.
+#   · Las fotos de PRODUCTO (piezas, varitas, sets y las escenas de la pared)
+#     salen con la marca de agua quemada abajo a la derecha (MARCA=1), igual
+#     que el catálogo de Abastra: la página nunca sirve una foto limpia de una
+#     pieza, ni siquiera la grande que abre el `zoom`. La marca es un PNG por
+#     ancho (scripts/marca-de-agua/marca-<ancho>.png, de
+#     scripts/marca-de-agua.mjs) que mide siempre el 26 % del ancho de la
+#     foto. Quedan limpios los adornos redondos del hero (medallones de
+#     ~7 rem: ahí una marca sería ruido), las fotos de la historia, los
+#     videos y sus pósters.
 #
 # Correr desde la raíz:  bash scripts/procesar-material.sh
-# Sólo las fotos de los sets (sin rehacer todo ni los videos):
+# Sólo un grupo (sin rehacer todo ni los videos):
 #                         bash scripts/procesar-material.sh sets
+#   grupos: piezas, adornos, escenas, sets, historia, productos (= piezas +
+#   escenas + sets), videos
 set -euo pipefail
 
 RAIZ="$(cd "$(dirname "$0")/.." && pwd)"
@@ -40,15 +51,32 @@ video1001() { echo "$MAT/2026-10-01/WhatsApp Video 2026-10-01 at $1.mp4"; }
 
 TONO=(-modulate 104,110 -level 0%,95%)
 
+MARCAS="$RAIZ/scripts/marca-de-agua"
+
 # exportar <slug> <origen> <recorte|-> <ancho1> <ancho2>
 #   recorte: "cx cy lado" (un cuadrado centrado en la pieza), "AxB+X+Y" (un
 #   rectángulo, en píxeles de la foto ya girada) o "-" (la foto entera, 3:4).
 #   GIRO=-90 delante gira la foto antes de recortar (una foto tomada de lado).
+#   MARCA=1 delante le quema la marca de agua a cada ancho exportado.
+#   DIFUMINAR="cx cy rx ry" delante difumina una elipse (en píxeles de la
+#   foto original, antes de recortar): la clienta pidió no mostrar nunca la
+#   cara de su hija. El original de docs/ queda intacto.
 exportar() {
   local slug="$1" origen="$2" recorte="$3"; shift 3
   local base="/tmp/elizabeth-$slug.png"
   local giro=(-auto-orient)
   [[ -n "${GIRO:-}" ]] && giro+=(-rotate "$GIRO" +repage)
+  if [[ -n "${DIFUMINAR:-}" ]]; then
+    # La foto, una copia muy borrosa y una máscara con la elipse de bordes
+    # suaves: sólo esa zona toma la copia borrosa, sin un recuadro que se note.
+    local cx cy rx ry limpia="/tmp/elizabeth-$slug-difuminada.png"
+    read -r cx cy rx ry <<<"$DIFUMINAR"
+    convert "$origen" -auto-orient \
+      \( +clone -blur 0x16 \) \
+      \( +clone -fill black -colorize 100 -fill white -draw "ellipse $cx,$cy $rx,$ry 0,360" -blur 0x6 \) \
+      -composite "$limpia"
+    origen="$limpia"
+  fi
   if [[ "$recorte" == "-" ]]; then
     convert "$origen" "${giro[@]}" "${TONO[@]}" "$base"
   elif [[ "$recorte" == *x*+*+* ]]; then
@@ -58,12 +86,22 @@ exportar() {
     convert "$origen" "${giro[@]}" -crop "${lado}x${lado}+$((cx - lado / 2))+$((cy - lado / 2))" +repage "${TONO[@]}" "$base"
   fi
   for ancho in "$@"; do
-    convert "$base" -resize "${ancho}x" -strip -quality 80 "$IMG/$slug-$ancho.webp"
-    convert "$base" -resize "${ancho}x" -strip -quality 55 "$IMG/$slug-$ancho.avif"
-    convert "$base" -resize "${ancho}x" -strip -sampling-factor 4:2:0 -interlace JPEG -quality 80 "$IMG/$slug-$ancho.jpg"
+    local medida="/tmp/elizabeth-$slug-$ancho.png"
+    convert "$base" -resize "${ancho}x" "$medida"
+    if [[ -n "${MARCA:-}" ]]; then
+      # Abajo a la derecha, separada del borde lo mismo en proporción que
+      # en Abastra (14 px en 600): 2.3 % del ancho.
+      local marca="$MARCAS/marca-$ancho.png" margen=$(( (ancho * 233 + 5000) / 10000 ))
+      [[ -f "$marca" ]] || { echo "Falta $marca: corre node scripts/marca-de-agua.mjs (y agrega $ancho a ANCHOS)" >&2; exit 1; }
+      convert "$medida" "$marca" -gravity SouthEast -geometry "+$margen+$margen" -composite "$medida"
+    fi
+    convert "$medida" -strip -quality 80 "$IMG/$slug-$ancho.webp"
+    convert "$medida" -strip -quality 55 "$IMG/$slug-$ancho.avif"
+    convert "$medida" -strip -sampling-factor 4:2:0 -interlace JPEG -quality 80 "$IMG/$slug-$ancho.jpg"
+    rm -f "$medida"
   done
-  rm -f "$base"
-  echo "  ✓ $slug"
+  rm -f "$base" "/tmp/elizabeth-$slug-difuminada.png"
+  echo "  ✓ $slug${MARCA:+ (con marca de agua)}"
 }
 
 # Los sets: el letrero de cada set en "Las piezas" y el banderín de la
@@ -75,31 +113,33 @@ sets() {
   echo "Los sets, las tres piezas juntas sobre la cobija:"
   # Bajo el mar llegó acostada (1280×960, la sirenita de lado): se gira
   # -90° para que las tres caritas queden derechas.
-  GIRO=-90 exportar set-bajo-el-mar     "$(fotoSet '1.58.16 PM')" "960x720+0+330"     600 960
-  exportar set-navidad-nevada           "$(fotoSet '1.58.26 PM')" "960x760+0+310"     600 960
+  GIRO=-90 MARCA=1 exportar set-bajo-el-mar     "$(fotoSet '1.58.16 PM')" "960x720+0+330"     600 960
+  MARCA=1 exportar set-navidad-nevada           "$(fotoSet '1.58.26 PM')" "960x760+0+310"     600 960
   # Las tres en fila (mucha cobija vacía arriba y abajo): bien apretada.
   # Es la del banderín de Navidad, que es ancho y bajito.
-  exportar set-navidad-clasica          "$(fotoSet '2.05.09 PM')" "1000x750+100+430"  600 960
+  MARCA=1 exportar set-navidad-clasica          "$(fotoSet '2.05.09 PM')" "1000x750+100+430"  600 960
   # Las tres agrupadas, más de cerca: la del letrero del set.
-  exportar set-navidad-clasica-cerca    "$(fotoSet '2.05.10 PM')" "1200x900+0+350"    600 960
+  MARCA=1 exportar set-navidad-clasica-cerca    "$(fotoSet '2.05.10 PM')" "1200x900+0+350"    600 960
 }
-if [[ "${1:-}" == "sets" ]]; then sets; exit 0; fi
 
-echo "Piezas en la mano, con la luz de la ventana (las etiquetas):"
-exportar pieza-arbol-verde        "$(foto '7.44.24 PM (6)')" - 600 1200
-exportar pieza-arbol-blanco       "$(foto '7.44.24 PM (3)')" - 600 1200
-exportar pieza-estrella-amarilla  "$(foto '7.44.25 PM')"     - 600 1200
-exportar pieza-estrella-blanca    "$(foto '7.44.24 PM (4)')" - 600 1200
-exportar pieza-galleta-jengibre   "$(foto '7.44.24 PM (5)')" - 600 1200
-exportar pieza-sirenita           "$(foto '7.44.24 PM')"     - 600 1200
-exportar pieza-pececito           "$(foto '7.44.24 PM (2)')" - 600 1200
-exportar pieza-cangrejito         "$(foto '7.44.24 PM (1)')" - 600 1200
-exportar pieza-varita-luna        "$(foto '7.44.25 PM (1)')" - 600 1200
+piezas() {
+echo "Piezas en la mano, con la luz de la ventana (las etiquetas), con marca de agua:"
+MARCA=1 exportar pieza-arbol-verde        "$(foto '7.44.24 PM (6)')" - 600 1200
+MARCA=1 exportar pieza-arbol-blanco       "$(foto '7.44.24 PM (3)')" - 600 1200
+MARCA=1 exportar pieza-estrella-amarilla  "$(foto '7.44.25 PM')"     - 600 1200
+MARCA=1 exportar pieza-estrella-blanca    "$(foto '7.44.24 PM (4)')" - 600 1200
+MARCA=1 exportar pieza-galleta-jengibre   "$(foto '7.44.24 PM (5)')" - 600 1200
+MARCA=1 exportar pieza-sirenita           "$(foto '7.44.24 PM')"     - 600 1200
+MARCA=1 exportar pieza-pececito           "$(foto '7.44.24 PM (2)')" - 600 1200
+MARCA=1 exportar pieza-cangrejito         "$(foto '7.44.24 PM (1)')" - 600 1200
+MARCA=1 exportar pieza-varita-luna        "$(foto '7.44.25 PM (1)')" - 600 1200
 # La varita de estrella terminada (01-10-2026): fieltro blanco con carita,
 # lentejuelas, cinta rosada y cascabel. Ya viene en 3:4 (1200×1600).
-exportar pieza-varita-estrella    "$(foto1001 '1.28.30 PM')" - 600 1200
+MARCA=1 exportar pieza-varita-estrella    "$(foto1001 '1.28.30 PM')" - 600 1200
+}
 
-echo "Adornos colgados, recortados en cuadrado (medallones del tendedero y la pared):"
+adornos() {
+echo "Adornos colgados, recortados en cuadrado (medallones del tendedero y la pared), sin marca:"
 exportar adorno-estrella-amarilla "$(foto '7.44.12 PM (4)')" "555 825 620"   400 800
 exportar adorno-sirenita          "$(foto '7.44.12 PM (7)')" "562 837 720"   400 800
 exportar adorno-galleta-jengibre  "$(foto '7.44.12 PM (3)')" "530 862 660"   400 800
@@ -109,14 +149,42 @@ exportar adorno-pececito          "$(foto '7.44.13 PM (1)')" "567 925 700"   400
 exportar adorno-estrella-blanca   "$(foto '7.44.12 PM (2)')" "575 950 740"   400 800
 exportar adorno-arbol-blanco      "$(foto '7.44.12 PM (1)')" "595 900 680"   400 800
 exportar adorno-varita-luna       "$(foto '7.44.19 PM')"     "555 650 760"   400 800
+}
 
-echo "Escenas (la varita en uso, la colección junta):"
+escenas() {
+echo "Escenas (la varita en uso, la colección junta), con marca de agua:"
 # Las fotos 7.44.11 PM y 7.44.12 PM (una niña con la varita) NO se exportan:
 # la clienta pidió quitarla. Se usan las fotos de la varita sola.
-exportar varita-luna-ventana       "$(foto '7.43.59 PM')"     - 600 1200
-exportar coleccion-fieltro         "$(foto '7.44.13 PM (2)')" - 600 1200
+# También llevan marca: son fotos de producto en 1200 (la pared, el banderín
+# de Varitas), y una limpia ahí sería la copia que se puede llevar cualquiera.
+MARCA=1 exportar varita-luna-ventana       "$(foto '7.43.59 PM')"     - 600 1200
+MARCA=1 exportar coleccion-fieltro         "$(foto '7.44.13 PM (2)')" - 600 1200
+}
 
-sets
+# La historia de Erika (03-10-2026, docs/material-erika/2026-10-03-historia/):
+# cuatro fotos para las polaroids de "Mi historia", en 4:5 y sin marca (no
+# son producto). Miden 1200×1600; salen en 480 y 960 (la polaroid más ancha
+# mide ~15 rem).
+fotoHistoria() { echo "$MAT/2026-10-03-historia/WhatsApp Image 2026-10-03 at 6.31.31 PM$1.jpeg"; }
+historia() {
+  echo "La historia de Erika (polaroids):"
+  # Su hija de espaldas, con su vestido de princesa, en el cuarto decorado
+  # con hojas y copos de foami. No se le ve la cara: va sin difuminar.
+  exportar historia-cuarto     "$(fotoHistoria '')"     "1040x1300+80+120"  480 960
+  # La ecografía enmarcada con flores y mariposas de foami.
+  exportar historia-ecografia  "$(fotoHistoria ' (2)')" "1200x1500+0+100"   480 960
+  # Erika con la bebé en brazos frente al espejo que decoró. La bebé está de
+  # espaldas, pero asoma el borde de su mejilla junto a la oreja: se difumina
+  # esa zona (la cara de Erika la tapa el celular).
+  DIFUMINAR="620 752 30 44" exportar historia-espejo "$(fotoHistoria ' (3)')" "800x1000+250+520" 480 960
+  # Las princesas de foami que hacía antes de descubrir el fieltro.
+  exportar historia-foami      "$(fotoHistoria ' (1)')" "1200x1500+0+40"    480 960
+}
+
+productos() { piezas; escenas; sets; }
+
+if [[ -n "${1:-}" && "$1" != "videos" ]]; then "$1"; exit 0; fi
+if [[ -z "${1:-}" ]]; then piezas; adornos; escenas; sets; historia; fi
 
 # bucle <slug> <origen> <desde> <dura>
 bucle() {

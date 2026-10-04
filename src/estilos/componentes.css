@@ -557,6 +557,9 @@
   .e-zoom-dialogo[open] { display: grid; grid-template-rows: minmax(0, 1fr) auto; }
   .e-zoom-dialogo__lienzo {
     display: grid;
+    /* Una sola celda con alto definido: así el max-height: 100% de la foto
+       se mide contra el lienzo y la foto entera cabe en la pantalla. */
+    grid-template: minmax(0, 1fr) / minmax(0, 1fr);
     place-items: center;
     min-height: 0;
     padding: 4.5rem 1rem 0.5rem;
@@ -574,6 +577,14 @@
     user-select: none;
     -webkit-user-drag: none;
   }
+  /* El <picture> copiado es la celda del lienzo, a todo su alto: así el
+     max-height: 100% de la foto se mide contra algo con alto y la foto
+     entera cabe en la pantalla (si no, en escritorio la foto ancha se salía
+     por abajo y cortaba la marca de agua). */
+  .e-zoom-dialogo__lienzo > picture {
+    display: flex; align-items: center; justify-content: center;
+    width: 100%; height: 100%; min-height: 0;
+  }
   /* Agrandada: el doble de ancho y el lienzo se recorre. */
   .e-zoom-dialogo__lienzo[data-ampliada] {
     display: block;
@@ -582,6 +593,7 @@
     overscroll-behavior: contain;
     touch-action: pan-x pan-y pinch-zoom;
   }
+  .e-zoom-dialogo__lienzo[data-ampliada] > picture { display: block; height: auto; }
   .e-zoom-dialogo__lienzo[data-ampliada] .e-zoom-dialogo__foto {
     width: 200%;
     max-width: none;
