@@ -13,7 +13,12 @@ import { gsap } from "gsap"
 //   1. Los botones ← →: mueven la fila casi una pantalla, y se apagan
 //      (`aria-disabled`, no `disabled`, para no perder el foco) en cada
 //      punta.
-//   2. El vaivén, sólo con movimiento (`prefers-reduced-motion:
+//   2. Arrastrar con el mouse: el overflow nativo sólo responde al dedo, al
+//      trackpad y a Mayús + rueda, y con un mouse no había cómo moverla
+//      (04-10-2026). Sólo `pointerType === "mouse"`: el dedo ya lo hace el
+//      navegador. Un arrastre de más de 6 px se come el clic que viene detrás,
+//      para no abrir el zoom o agregar una pieza sin querer.
+//   3. El vaivén, sólo con movimiento (`prefers-reduced-motion:
 //      no-preference`): cada pieza es un péndulo con resorte y amortiguación
 //      (Euler semi-implícito). Al asomar llega colgando, y al deslizar la
 //      fila se queda atrás y se mece con la velocidad del deslizamiento; al
@@ -36,6 +41,7 @@ export default class extends Controller {
     this.medidor.observe(this.tiraTarget)
 
     if (this.suave.matches) this.crearPendulos()
+    this.permitirArrastre()
 
     // Las fotos de la fila son `lazy`, y las que están a la derecha, fuera
     // de la fila visible, el navegador las pide recién al deslizar: se veía
@@ -50,6 +56,7 @@ export default class extends Controller {
   }
 
   disconnect() {
+    this.quitarArrastre?.()
     this.medidor?.disconnect()
     this.cerca?.disconnect()
     this.io?.disconnect()
@@ -155,5 +162,55 @@ export default class extends Controller {
     if (!velocidad) return
     const dw = gsap.utils.clamp(-0.12, 0.12, velocidad * -0.0001)
     for (const p of this.pendulos) if (p.visible) this.empujar(p, dw)
+  }
+
+  permitirArrastre() {
+    const tira = this.tiraTarget
+    let inicioX = 0, inicioScroll = 0, apretado = false, arrastrando = false
+
+    const bajar = (e) => {
+      if (e.pointerType !== "mouse" || e.button !== 0) return
+      apretado = true
+      arrastrando = false
+      inicioX = e.clientX
+      inicioScroll = tira.scrollLeft
+    }
+    const mover = (e) => {
+      if (!apretado) return
+      const dx = e.clientX - inicioX
+      if (!arrastrando) {
+        if (Math.abs(dx) < 6) return
+        arrastrando = true
+        // Sin snap mientras se arrastra: si no, la fila salta de tarjeta en
+        // tarjeta debajo del mouse.
+        tira.classList.add("e-galeria__tira--arrastrando")
+        tira.setPointerCapture?.(e.pointerId)
+      }
+      tira.scrollLeft = inicioScroll - dx
+    }
+    const soltar = () => {
+      if (!apretado) return
+      apretado = false
+      if (!arrastrando) return
+      tira.classList.remove("e-galeria__tira--arrastrando")
+      // El clic que llega al soltar no debe abrir nada.
+      tira.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation() }, { capture: true, once: true })
+      setTimeout(() => { arrastrando = false }, 0)
+    }
+    // Las fotos y los enlaces se arrastran solos (como archivo) por defecto.
+    const sinArrastreNativo = (e) => e.preventDefault()
+
+    tira.addEventListener("pointerdown", bajar)
+    tira.addEventListener("pointermove", mover)
+    tira.addEventListener("pointerup", soltar)
+    tira.addEventListener("pointercancel", soltar)
+    tira.addEventListener("dragstart", sinArrastreNativo)
+    this.quitarArrastre = () => {
+      tira.removeEventListener("pointerdown", bajar)
+      tira.removeEventListener("pointermove", mover)
+      tira.removeEventListener("pointerup", soltar)
+      tira.removeEventListener("pointercancel", soltar)
+      tira.removeEventListener("dragstart", sinArrastreNativo)
+    }
   }
 }

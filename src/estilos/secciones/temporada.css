@@ -212,6 +212,12 @@
 
   /* La fila se enfoca para moverla con el teclado: el anillo va por dentro,
      sobre la noche. */
+  /* Con mouse la fila se arrastra (galeria_controller): la mano lo dice. */
+  @media (pointer: fine) {
+    .e-galeria__tira { cursor: grab; }
+    .e-galeria__tira--arrastrando { cursor: grabbing; user-select: none; }
+  }
+  .e-galeria__tira--arrastrando { scroll-snap-type: none; scroll-behavior: auto; }
   .e-galeria__tira:focus-visible { outline: 3px solid #FFC53D; outline-offset: -3px; border-radius: 1rem; }
 
   /* ── Las pinzas de madera ──────────────────────────────────────────── */
