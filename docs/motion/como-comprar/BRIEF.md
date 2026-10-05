@@ -14,3 +14,4 @@ Spec completo: ../como-comprar-prompt.md. Una sola toma continua, sin cortes ni 
 - Capturas reales: `node scripts/capturar.cjs` (sitio publicado, 390×844 @3x) → assets/cap/.
 - Composición: `python3 generar.py` escribe index.html, cuadrado/index.html y assets/{vertical,cuadrado}.css; el movimiento está en assets/tutorial.js.
 - Render: `npx hyperframes render --no-browser-gpu -o ../como-comprar-9x16.mp4` (y desde cuadrado/ → ../../como-comprar-1x1.mp4).
+- Corto para la página (corto/, 1080×1350, 15.8 s, en bucle, sin gancho ni cierre; movimiento en assets/corto.js): desde corto/ → `npx hyperframes render --no-browser-gpu -o ../../como-comprar-corto.mp4`; la versión web va a public/video/como-pedir.{mp4,webm} + póster (720×900).

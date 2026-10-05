@@ -1,0 +1,127 @@
+
+@font-face { font-family: "Caprasimo"; src: url("fuentes/caprasimo-latin.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Figtree"; src: url("fuentes/figtree-latin-variable.woff2") format("woff2"); font-weight: 300 900; font-display: block; }
+@font-face { font-family: "Shantell Sans"; src: url("fuentes/shantell-sans-latin-variable.woff2") format("woff2"); font-weight: 300 800; font-display: block; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { margin: 0; width: 1080px; height: 1350px; overflow: hidden; background: #F7E7CF; }
+#root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: "Figtree", sans-serif; color: #1E1A3C; }
+#escena { position: absolute; inset: 0; overflow: hidden; }
+.disp { font-family: "Caprasimo", Georgia, serif; font-weight: 400; letter-spacing: -0.01em; }
+.mano { font-family: "Shantell Sans", sans-serif; font-weight: 600; }
+
+/* Fondo: crema con bolitas y florecitas blancas, nunca liso. */
+#fondo { position: absolute; left: -20%; top: -20%; width: 140%; height: 140%; background-color: #F7E7CF;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cg fill='%23FFFFFF' fill-opacity='.9'%3E%3Cg transform='translate(48 52)'%3E%3Ccircle cx='0' cy='-9' r='7'/%3E%3Ccircle cx='8.6' cy='-2.8' r='7'/%3E%3Ccircle cx='5.3' cy='7.3' r='7'/%3E%3Ccircle cx='-5.3' cy='7.3' r='7'/%3E%3Ccircle cx='-8.6' cy='-2.8' r='7'/%3E%3C/g%3E%3Cg transform='translate(160 150) scale(.7)'%3E%3Ccircle cx='0' cy='-9' r='7'/%3E%3Ccircle cx='8.6' cy='-2.8' r='7'/%3E%3Ccircle cx='5.3' cy='7.3' r='7'/%3E%3Ccircle cx='-5.3' cy='7.3' r='7'/%3E%3Ccircle cx='-8.6' cy='-2.8' r='7'/%3E%3C/g%3E%3Ccircle cx='140' cy='40' r='6'/%3E%3Ccircle cx='60' cy='170' r='5'/%3E%3Ccircle cx='200' cy='96' r='4'/%3E%3Ccircle cx='110' cy='110' r='3.5'/%3E%3C/g%3E%3Cg fill='%23FFC53D'%3E%3Ccircle cx='48' cy='52' r='3.4'/%3E%3Ccircle cx='160' cy='150' r='2.6'/%3E%3C/g%3E%3C/svg%3E"),
+    radial-gradient(circle, rgba(255,255,255,.75) 3px, transparent 3.6px);
+  background-size: 220px 220px, 56px 56px; background-position: 0 0, 18px 30px; }
+
+#camara { position: absolute; left: 0; top: 0; width: 1080px; height: 1350px; transform-origin: 0 0; }
+#cable { position: absolute; left: 0; width: 1080px; height: 6px; top: 0; background: #A29A9F; border-radius: 3px; transform-origin: 50% 50%; opacity: 0; }
+
+/* El teléfono */
+#telefono { position: absolute; left: 284px; top: 212px; width: 490px; height: 1094.39px; border-radius: 54px; background: #1E1A3C;
+  box-shadow: 0 0 0 3px #1E1A3C, 22px 26px 0 #D3253C, 22px 26px 0 3px #1E1A3C; transform-origin: 50% 50%; }
+#pantalla { position: absolute; left: 13px; top: 13px; width: 464.00px; height: 1068.39px; border-radius: 41px; overflow: hidden; background: #FBF1E1; }
+#lienzo { position: absolute; left: 0; top: 0; width: 390px; height: 898px; transform: scale(1.18974); transform-origin: 0 0; }
+#cromo { position: absolute; left: 0; top: 0; width: 390px; height: 54px; background: #FBF1E1; border-bottom: 1px solid rgba(30,26,60,.12); }
+#cromo .hora { position: absolute; left: 22px; top: 6px; font-size: 11px; font-weight: 700; }
+#cromo .bat { position: absolute; right: 22px; top: 8px; width: 20px; height: 9px; border: 1.5px solid #1E1A3C; border-radius: 3px; }
+#cromo .bat::after { content: ""; position: absolute; left: 1.5px; top: 1.5px; width: 11px; height: 3px; background: #1E1A3C; border-radius: 1px; }
+#url { position: absolute; left: 16px; right: 16px; top: 22px; height: 26px; border-radius: 13px; background: #EFE0C6; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 13px; font-weight: 600; color: #1E1A3C; }
+#url .candado { width: 9px; height: 8px; border-radius: 2px; background: #1E1A3C; position: relative; top: 1px; }
+#url .candado::before { content: ""; position: absolute; left: 1.5px; top: -5px; width: 6px; height: 6px; border: 1.5px solid #1E1A3C; border-bottom: 0; border-radius: 4px 4px 0 0; box-sizing: border-box; }
+#url .letras { display: block; white-space: nowrap; overflow: hidden; width: 0; }
+#url .cursor { width: 1.5px; height: 14px; background: #D3253C; }
+
+#vista { position: absolute; left: 0; top: 54px; width: 390px; height: 844px; overflow: hidden; background: #CDB9F2; }
+#pagina { position: absolute; left: 0; top: 0; width: 390px; height: 4500px; }
+#pagina > img, .capa { position: absolute; display: block; }
+#tira { position: absolute; left: 0; width: 2000px; height: 720px; }
+.colgada { position: absolute; }
+.colgada img { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; }
+#isla { position: absolute; left: 0; top: 0; width: 390px; height: 72px; }
+
+/* Lo que se le dibuja encima a la página */
+.ovalo { position: absolute; overflow: visible; }
+.ovalo path, .puntada path, .puntada rect { fill: none; stroke: #D3253C; stroke-width: 3; stroke-linecap: round; stroke-dasharray: 0.1 9; }
+.puntada { position: absolute; overflow: visible; }
+.etiqueta { position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 8px; padding: 6px 14px 6px 10px; border-radius: 10px; background: #FFC53D; color: #1E1A3C;
+  box-shadow: 0 0 0 2px #1E1A3C, 4px 5px 0 #1E1A3C; font-size: 26px; white-space: nowrap; opacity: 0; }
+.etiqueta i { width: 9px; height: 9px; border-radius: 50%; background: #FBF1E1; box-shadow: 0 0 0 2px #1E1A3C; }
+#contador { position: absolute; left: 0; top: 0; padding: 6px 12px 7px; border-radius: 12px; background: #FBF1E1; box-shadow: 0 0 0 2px #1E1A3C, 4px 5px 0 #D3253C; opacity: 0; white-space: nowrap; }
+#contador small { display: block; font-family: "Shantell Sans", sans-serif; font-weight: 600; font-size: 12px; color: #D3253C; }
+#contador b { font-family: "Caprasimo", serif; font-weight: 400; font-size: 30px; line-height: 1; }
+.check { position: absolute; width: 74px; height: 74px; overflow: visible; }
+#puntada { clip-path: inset(0% 0% 100% 0%); }
+#puntada rect { stroke-width: 4; stroke-dasharray: 0.1 10; }
+#gancho .renglon, #gancho-nota, #cierre .pide, #cierre .web, #cierre .ig { opacity: 0; }
+#cierre .web, #cierre .pide { white-space: nowrap; }
+
+/* El dedo: un círculo suave con su onda */
+#dedo { position: absolute; left: -23px; top: -23px; width: 46px; height: 46px; opacity: 0; }
+#dedo .yema { position: absolute; inset: 0; border-radius: 50%; background: rgba(255,255,255,.45); box-shadow: inset 0 0 0 3px rgba(30,26,60,.55), 0 8px 18px rgba(30,26,60,.28); }
+#dedo .onda { position: absolute; inset: -4px; border-radius: 50%; border: 3px solid #FFC53D; opacity: 0; }
+
+/* La ventanita del abono */
+#velo { position: absolute; inset: 0; background: rgba(30,26,60,.55); opacity: 0; }
+#caja { opacity: 0; transform-origin: 50% 50%; }
+
+/* WhatsApp (maqueta) */
+#chat { position: absolute; left: 0; top: 0; width: 390px; height: 898px; pointer-events: none; }
+#wa-fondo { position: absolute; inset: 0; background-color: #EFE7DD; opacity: 0;
+  background-image: radial-gradient(circle, rgba(30,26,60,.07) 1.6px, transparent 2px), radial-gradient(circle, rgba(18,165,160,.08) 2.4px, transparent 3px);
+  background-size: 26px 26px, 61px 61px; background-position: 0 0, 13px 20px; }
+#wa-cab { position: absolute; left: 0; top: 0; width: 390px; height: 112px; background: #0B6E5F; color: #fff; }
+#wa-cab .hora { position: absolute; left: 22px; top: 6px; font-size: 11px; font-weight: 700; }
+#wa-cab .atras { position: absolute; left: 12px; top: 70px; width: 12px; height: 12px; border-left: 2.5px solid #fff; border-bottom: 2.5px solid #fff; transform: rotate(45deg); }
+#wa-cab .avatar { position: absolute; left: 34px; top: 56px; width: 42px; height: 42px; border-radius: 50%; background: #FBF1E1; display: grid; place-items: center; }
+#wa-cab .avatar svg { width: 34px; height: 34px; }
+#wa-cab .nombre { position: absolute; left: 86px; top: 62px; font-size: 17px; font-weight: 700; }
+#wa-cab .sub { position: absolute; left: 86px; top: 83px; font-size: 12px; }
+#wa-pie { position: absolute; left: 0; bottom: 0; width: 390px; height: 64px; display: flex; align-items: center; gap: 8px; padding: 0 10px 8px; }
+#wa-pie .campo { flex: 1; height: 44px; border-radius: 22px; background: #fff; box-shadow: 0 1px 1px rgba(0,0,0,.12); padding: 0 18px; display: flex; align-items: center; color: #5F5B69; font-size: 15px; }
+#wa-pie .enviar { width: 44px; height: 44px; border-radius: 50%; background: #0B6E5F; display: grid; place-items: center; }
+#wa-pie .enviar i { width: 0; height: 0; border-left: 15px solid #fff; border-top: 9px solid transparent; border-bottom: 9px solid transparent; margin-left: 4px; }
+#wa-fecha { position: absolute; left: 50%; top: 124px; width: 64px; margin-left: -32px; text-align: center; padding: 4px 0; border-radius: 8px; background: #FFFFFF; font-size: 11px; font-weight: 600; color: #54656F; box-shadow: 0 1px 1px rgba(0,0,0,.1); opacity: 0; }
+#burbuja { position: absolute; left: 0; top: 0; width: 100px; height: 100px; border-radius: 24px; background: #FFF9EF; opacity: 0;
+  box-shadow: 0 0 0 1.5px #1E1A3C, 7px 8px 0 #FFC53D, 7px 8px 0 1.5px #1E1A3C; overflow: hidden; }
+#texto { position: absolute; left: 0; top: 0; width: 300px; padding: 9px 11px 22px; font-size: 14.2px; line-height: 1.36; color: #111B21; }
+#texto p { opacity: 0; }
+#texto p + p { margin-top: 3px; }
+#texto p.aire { margin-top: 12px; }
+#texto .marca { position: absolute; right: 9px; bottom: 6px; font-size: 10.5px; color: #3F4D55; display: flex; gap: 4px; align-items: center; opacity: 0; }
+#texto .marca b { color: #0B6290; font-weight: 800; letter-spacing: -3px; font-size: 12px; }
+
+/* La estrella que cuelga (gancho y cierre) */
+#colgante { position: absolute; left: 0; top: 0; transform-origin: 50% 0; }
+#colgante .hilo { position: absolute; left: 50%; top: 0; width: 0; border-left: 6px dotted #D3253C; transform-origin: 50% 0; }
+#estrella { position: absolute; left: 0; transform-origin: 50% 9%; }
+#estrella .sello { display: block; width: 100%; height: 100%; }
+
+/* Textos sobre la cámara */
+.titular { position: absolute; left: 0; width: 100%; text-align: center; color: #1E1A3C; line-height: 0.98; }
+.titular .rojo { color: #D3253C; }
+.renglon { display: block; }
+#gancho-nota { position: absolute; left: 0; width: 100%; text-align: center; font-size: 12px; color: #D3253C; }
+
+#paso { position: absolute; display: flex; align-items: center; gap: 18px; padding: 14px 30px 14px 14px; border-radius: 999px; background: #FBF1E1;
+  box-shadow: 0 0 0 3px #1E1A3C, 8px 9px 0 #1E1A3C; opacity: 0; transform-origin: 50% 50%; }
+#paso .num { position: relative; overflow: hidden; flex: none; width: 88px; height: 88px; border-radius: 50%; background: #D3253C; color: #FBF1E1; display: grid; place-items: center; font-size: 52px; line-height: 1; }
+#paso .num span { position: absolute; inset: 0; display: grid; place-items: center; padding-bottom: 4px; }
+#paso .txt { position: relative; overflow: hidden; height: 65px; flex: 1; }
+#paso .txt span { position: absolute; left: 0; top: 0; white-space: nowrap; font-weight: 800; font-size: 50px; line-height: 65px; letter-spacing: -0.01em; }
+#paso .costura { position: absolute; inset: 6px; border-radius: 999px; border: 3px dashed #D3253C; opacity: .85; clip-path: inset(0 100% 0 0); }
+
+#nota { position: absolute; left: 50%; padding: 18px 30px 20px; border-radius: 26px; background: #FBF1E1; text-align: center; opacity: 0;
+  box-shadow: 0 0 0 3px #1E1A3C, 8px 9px 0 #FFC53D, 8px 9px 0 3px #1E1A3C; }
+#nota .l1 { display: block; white-space: nowrap; font-size: 30px; line-height: 1.12; }
+#nota .l2 { display: block; margin-top: 6px; font-size: 28px; color: #D3253C; }
+
+#cierre { position: absolute; left: 0; width: 100%; text-align: center; }
+#cierre .pide { display: block; font-size: 25px; color: #D3253C; }
+#cierre .web { display: block; font-size: 40px; line-height: 1.05; margin-top: 6px; }
+#cierre .ig { display: inline-block; margin-top: 26px; padding: 12px 30px 14px; border-radius: 999px; background: #1E1A3C; color: #FBF1E1; font-weight: 800; font-size: 22px; box-shadow: 6px 7px 0 #FFC53D; }
+
+/* Corto: sin gancho, nota ni cierre; el cordel tampoco cruza el cuadro. */
+#colgante, #gancho, #gancho-nota, #nota, #cierre, #cable { display: none; }

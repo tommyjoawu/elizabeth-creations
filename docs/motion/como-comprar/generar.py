@@ -33,7 +33,34 @@ FORMATOS = {
         gancho=dict(estrella=250, estrellaY=40, hilo=60, textoTop=470, fs=118),
         cierre=dict(estrella=170, hilo=40, textoTop=330, fs=46, cam=[0.62, 262, 620], giro=-8, cx=330, ancho=600),
     ),
+    # El corto para la página (sección "Así haces tu pedido"): 4:5, sin gancho
+    # ni cierre (la página ya tiene la marca), los 4 pasos y vuelta al inicio
+    # para que el bucle no se note. Sólo el set (sin la varita): el mensaje
+    # de WhatsApp es el que arma la página con ese pedido. Movimiento en
+    # assets/corto.js; el gancho, la nota y el cierre no se dibujan.
+    "corto": dict(
+        W=1080, H=1350, K=1.0, DUR=15.8, js="corto.js", carpeta="corto", sinVarita=True,
+        PX=284, PY=212, PW=490, BZ=13,
+        foco=[540, 770], fill=0.7, focoBarra=[540, 800], focoChat=[540, 850], fillChat=0.56,
+        paso=dict(top=46, left=None, ancho=None, fs=50),
+        nota=dict(top=1100, fs=30),
+        gancho=dict(estrella=100, estrellaY=0, hilo=0, textoTop=0, fs=40),
+        cierre=dict(estrella=100, hilo=0, textoTop=0, fs=40, cam=[1, 0, 0], giro=0),
+    ),
 }
+
+CSS_CORTO = r'''
+/* Corto: sin gancho, nota ni cierre; el cordel tampoco cruza el cuadro. */
+#colgante, #gancho, #gancho-nota, #nota, #cierre, #cable { display: none; }
+'''
+
+
+def mensaje_de(F):
+    # Sin la varita, el pedido es sólo el set: el total baja a $15.00 (el abono
+    # del 30 % sigue siendo $4.50, porque la varita no lleva).
+    if not F.get("sinVarita"):
+        return mensaje
+    return [("Total: $15.00" if p.startswith("Total:") else p) for p in mensaje if "varita" not in p]
 
 CSS = r'''
 @font-face { font-family: "Caprasimo"; src: url("assets/fuentes/caprasimo-latin.woff2") format("woff2"); font-display: block; }
@@ -247,8 +274,9 @@ def html(nombre, F, base):
     PH = SH + 2 * F["BZ"]
 
     g, c = F["gancho"], F["cierre"]
-    textos = "".join('<p%s data-layout-allow-overlap data-layout-allow-occlusion>%s</p>' % (' class="aire"' if (i > 0 and mensaje[i - 1] == "") else "", p)
-                     for i, p in enumerate(mensaje) if p != "")
+    msj = mensaje_de(F)
+    textos = "".join('<p%s data-layout-allow-overlap data-layout-allow-occlusion>%s</p>' % (' class="aire"' if (i > 0 and msj[i - 1] == "") else "", p)
+                     for i, p in enumerate(msj) if p != "")
     # Datos para el JS (geometría capturada + formato).
     cfg = dict(F, S=S, PH=PH, SW=SW, SH=SH, datos={k: D[k] for k in [
         "tira", "tarifa", "varitas", "rects", "botonSet", "totalRect", "enviarRect", "entendidoRect",
@@ -319,7 +347,7 @@ def html(nombre, F, base):
     <script>
     window.CFG = {json.dumps(cfg)};
     </script>
-    <script src="assets/tutorial.js"></script>
+    <script src="assets/{F.get("js", "tutorial.js")}"></script>
     <script>
       // Se arma cuando cargan las fuentes (mide textos) y sólo entonces se registra.
       document.fonts.ready.then(() => {{ window.__timelines["main"] = window.construirTutorial(); }});
@@ -332,11 +360,11 @@ def html(nombre, F, base):
 for nombre, F in FORMATOS.items():
     # Cada formato es su propio proyecto (un solo index.html por proyecto);
     # el cuadrado vive en cuadrado/ y comparte assets/ por enlace.
-    carpeta = R if nombre == "index.html" else os.path.join(R, "cuadrado")
-    base = "vertical" if nombre == "index.html" else "cuadrado"
+    carpeta = R if nombre == "index.html" else os.path.join(R, F.get("carpeta", "cuadrado"))
+    base = "vertical" if nombre == "index.html" else F.get("carpeta", "cuadrado")
     os.makedirs(carpeta, exist_ok=True)
     open(os.path.join(carpeta, "index.html"), "w").write(html(nombre, F, base))
-    open(os.path.join(R, "assets", base + ".css"), "w").write(css_de(F))
+    open(os.path.join(R, "assets", base + ".css"), "w").write(css_de(F) + (CSS_CORTO if F.get("carpeta") == "corto" else ""))
     if carpeta != R:
         enlace = os.path.join(carpeta, "assets")
         if not os.path.exists(enlace):

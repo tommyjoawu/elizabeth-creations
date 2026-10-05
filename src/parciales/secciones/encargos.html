@@ -46,6 +46,28 @@
         {{/each}}
       </ol>
 
+      {{!-- El tutorial corto (docs/motion/como-comprar/corto, 4:5, ~16 s):
+          los cuatro pasos en el teléfono, en bucle y sin sonido, en una
+          polaroid con su cinta. `video-fondo` lo crea sólo al entrar en
+          pantalla (también en el celular: aquí el video ES la explicación);
+          con reduced-motion o sin JavaScript queda el póster, que ya muestra
+          el paso 1. El video va `aria-hidden`: lo que muestra lo dice el
+          `aria-label` del marco. --}}
+      <div class="e-aparece e-encargo-video" data-controller="revela" style="--retraso: 520ms">
+        <figure class="e-polaroid">
+          <div class="e-polaroid__foto" role="img"
+               aria-label="Video de cómo pedir en cuatro pasos desde el celular: 1, entra a elizabethcreation.com; 2, escoge tu set o tu pieza; 3, revisa tu pedido; 4, envíalo por WhatsApp y listo."
+               data-controller="video-fondo"
+               data-video-fondo-src-value="/video/como-pedir" data-video-fondo-movil-value="true">
+            <picture>
+              <source srcset="/video/como-pedir-poster.webp" type="image/webp">
+              <img src="/video/como-pedir-poster.jpg" alt="" width="720" height="900" loading="lazy" decoding="async">
+            </picture>
+          </div>
+          <figcaption class="e-polaroid__pie font-mano" aria-hidden="true">así de fácil</figcaption>
+        </figure>
+      </div>
+
     </div>
 
     <div class="lg:col-span-6 lg:col-start-7">

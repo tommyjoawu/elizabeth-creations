@@ -34,6 +34,22 @@
     box-shadow: 0 0 0 1.5px #1E1A3C, 0.18rem 0.2rem 0 #1E1A3C;
   }
 
+  /* ── El tutorial en video ──────────────────────────────────────────────
+     Debajo de los pasos, la misma polaroid de las varitas (marco crema,
+     sombra dura, cinta y vaivén), con la cinta rosada para que no se pierda
+     sobre el mango. El video es 4:5. En el escritorio se alinea con el
+     texto de los pasos, no con sus números. */
+  .e-encargo-video {
+    width: min(100% - 1rem, 20rem);
+    margin: 3.25rem auto 0;
+  }
+  .e-encargo-video .e-polaroid { rotate: -2deg; }
+  .e-encargo-video .e-polaroid::before { background: rgb(244 143 177 / 0.88); rotate: 3deg; }
+  .e-encargo-video .e-polaroid__foto { aspect-ratio: 4 / 5; background: #F7E7CF; }
+  @media (min-width: 1024px) {
+    .e-encargo-video { width: min(100% - 3.5rem, 21rem); margin-left: 3.5rem; }
+  }
+
   /* ── La ficha ──────────────────────────────────────────────────────────
      Papel rayado con el margen rojo de un cuaderno, borde de tinta y la
      sombra dura de un papel apoyado sobre otro. Adentro valen los colores
