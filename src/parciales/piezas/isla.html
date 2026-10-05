@@ -9,13 +9,16 @@
   misma razón: el menú tiene que abrir aunque el bundle no cargue.
 --}}
 <header class="pointer-events-none fixed inset-x-0 top-0 z-isla flex justify-center px-3 pt-3 sm:px-5 sm:pt-5">
-  <div class="e-isla pointer-events-auto flex w-full max-w-5xl items-center justify-between gap-2 p-1.5 lg:w-max lg:gap-9"
+  <div class="e-isla pointer-events-auto flex w-full max-w-5xl items-center justify-between gap-2 p-1.5 lg:w-max lg:max-w-full lg:gap-9"
        data-controller="isla" data-action="focusin->isla#mostrar">
     {{!-- Sin `aria-label`: el nombre accesible es el texto que se ve
         ("Elizabeth Creations, hecho a mano en Panamá") más ", inicio".
         Un nombre distinto del que se lee confunde a quien maneja la página
         por voz (dice lo que ve y no pasa nada). --}}
-    <a href="#principal" class="group flex min-w-0 items-center gap-3 rounded-full py-0.5 pr-2 pl-0.5">
+    {{!-- En escritorio el nombre no se recorta nunca (lg:shrink-0): con seis
+        secciones en el menú, la isla crece hasta lo que haga falta en vez de
+        cortar "Elizabeth Creations" (04-10-2026). --}}
+    <a href="#principal" class="group flex min-w-0 items-center gap-3 rounded-full py-0.5 pr-2 pl-0.5 lg:shrink-0">
       {{!-- El sello: la estrella de fieltro de Elizabeth (piezas/logo, una
           propuesta). Es la única pieza de color de la isla, y al pasar el
           puntero se mece desde su lazo. --}}
