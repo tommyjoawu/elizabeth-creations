@@ -1,0 +1,76 @@
+/* ============================================================================
+   LAS GUIRNALDAS — el capítulo turquesa, hermano de las varitas
+   Las polaroids, el contador, la cuenta y "Ya en tu pedido" son los de
+   varitas.css; aquí sólo lo propio: el orden, el espejo y las dos fichas.
+   ========================================================================== */
+@layer components {
+  /* En el celular: titular, fotos, precio y botones, uno debajo del otro.
+     En pantallas anchas, el texto a la izquierda y las fotos a la derecha
+     (al revés que las varitas, para que los dos capítulos no se calquen). */
+  .e-guirnaldas {
+    display: grid;
+    gap: 3.5rem;
+  }
+  @media (min-width: 1024px) {
+    .e-guirnaldas {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      grid-template-rows: auto 1fr;
+      column-gap: 2.5rem;
+      row-gap: 0;
+      align-items: start;
+    }
+    .e-guirnaldas__intro  { grid-column: 1 / span 5; grid-row: 1; }
+    .e-guirnaldas__compra { grid-column: 1 / span 5; grid-row: 2; margin-top: 2.5rem; }
+    .e-guirnaldas__fotos  { grid-column: 7 / span 6; grid-row: 1 / span 2; align-self: center; }
+  }
+
+  .e-guirnaldas__fotos { width: 100%; max-width: 34rem; margin-inline: auto; }
+
+  /* Las polaroids al espejo: el video a la izquierda, la foto montada
+     sobre su esquina derecha; las cintas, hibisco y mango. */
+  .e-polaroids--espejo .e-polaroid--video { grid-column: 1 / span 8; rotate: 3deg; }
+  .e-polaroids--espejo .e-polaroid--foto  { grid-column: 6 / span 7; rotate: -4deg; }
+  .e-polaroids--espejo .e-polaroid--video::before { background: rgb(244 143 177 / 0.85); rotate: 3deg; }
+  .e-polaroids--espejo .e-polaroid--foto::before  { background: rgb(255 197 61 / 0.85); rotate: -5deg; }
+
+  /* ── La ficha de la pieza: nombre, precio y de qué está hecha ───────── */
+  .e-guirnaldas__ficha {
+    max-width: 30rem;
+    padding: 1rem 1.15rem 1.1rem;
+    border-radius: 1.1rem;
+    background: #FFF9EF;
+    color: #1E1A3C;
+    box-shadow: 0 0 0 1.5px #1E1A3C, 0.25rem 0.3rem 0 #1E1A3C;
+  }
+  .e-guirnaldas__fila {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.3rem 1rem;
+  }
+  .e-guirnaldas__precio { font-size: 2rem; line-height: 1; white-space: nowrap; }
+
+  /* ── El adelanto: la guirnalda con nombre ──────────────────────────────
+     Punteada como las ranuras de "muy pronto": se ve, pero no se pide. */
+  .e-guirnaldas__pronto {
+    position: relative;
+    max-width: 30rem;
+    padding: 1.1rem 1.15rem 1rem;
+    border: 2px dashed #1E1A3C;
+    border-radius: 1.1rem;
+    background: rgb(255 249 239 / 0.55);
+  }
+  .e-guirnaldas__sello {
+    position: absolute;
+    top: -0.95rem;
+    right: 1rem;
+    padding: 0.15rem 0.75rem 0.25rem;
+    border-radius: 999px;
+    background: #F48FB1;
+    font-size: 1.05rem;
+    line-height: 1.2;
+    rotate: 3deg;
+    box-shadow: 0 0 0 1.5px #1E1A3C;
+  }
+}

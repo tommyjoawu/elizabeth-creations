@@ -24,6 +24,7 @@ import PedidoController from "./controladores/pedido_controller.js"
 import GaleriaController from "./controladores/galeria_controller.js"
 import CosturaController from "./controladores/costura_controller.js"
 import VaritasController from "./controladores/varitas_controller.js"
+import GuirnaldasController from "./controladores/guirnaldas_controller.js"
 import ZoomController from "./controladores/zoom_controller.js"
 import AbonoController from "./controladores/abono_controller.js"
 
@@ -40,6 +41,7 @@ application.register("pildora", PildoraController)
 application.register("carril", CarrilController)
 application.register("pedido", PedidoController)
 application.register("varitas", VaritasController)
+application.register("guirnaldas", GuirnaldasController)
 application.register("encargo", EncargoController)
 application.register("video-fondo", VideoFondoController)
 application.register("zoom", ZoomController)

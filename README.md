@@ -123,7 +123,7 @@ src/main.js                 casi nada: pide src/aplicacion.js DESPUÉS del prime
 src/aplicacion.js           Stimulus + GSAP; las escenas de scroll se registran una por tarea
 src/controladores/          Stimulus: revela, suave, isla, lectura, tendedero,
                             taller, encargo, pildora, video-fondo, carril,
-                            galeria, pedido, costura, varitas, zoom, abono
+                            galeria, pedido, costura, varitas, guirnaldas, zoom, abono
 src/precios.js              formato "$6.00", total, "desde" y abono: lo usan
                             pedido, varitas y encargo
 src/estilos/motivos.css     los motivos de fondo (ningún capítulo es liso)

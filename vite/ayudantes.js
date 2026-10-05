@@ -271,6 +271,12 @@ export function ayudantes(hb) {
   hb.registerHelper("docenaVariada", (p) =>
     (Math.round(p.docena * 100) + p.porDocena * Math.round(p.variadaPorVarita * 100)) / 100)
 
+  // (pieza "guirnalda") → la pieza de productos.json con ese slug, para una
+  // sección que cuenta UNA pieza (las guirnaldas) sin copiar su nombre, su
+  // precio ni su foto en la plantilla.
+  hb.registerHelper("pieza", (slug, opciones) =>
+    opciones.data.root.productos.sets.flatMap((s) => s.piezas).find((p) => p.slug === slug))
+
   hb.registerHelper("mayor", (a, b) => Number(a) > Number(b))
   hb.registerHelper("concat", (...partes) => partes.slice(0, -1).join(""))
   hb.registerHelper("eq", (a, b) => a === b)

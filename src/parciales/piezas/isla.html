@@ -28,9 +28,9 @@
       </span>
     </a>
 
-    <nav class="hidden items-center gap-7 lg:flex" aria-label="Secciones">
+    <nav class="hidden items-center gap-4 lg:flex xl:gap-7" aria-label="Secciones">
       {{#each navegacion}}
-        <a href="{{this.ancla}}" class="text-[0.95rem] font-semibold text-texto/90 transition-colors duration-300 hover:text-texto">{{this.texto}}</a>
+        <a href="{{this.ancla}}" class="whitespace-nowrap text-[0.95rem] font-semibold text-texto/90 transition-colors duration-300 hover:text-texto">{{this.texto}}</a>
       {{/each}}
     </nav>
 

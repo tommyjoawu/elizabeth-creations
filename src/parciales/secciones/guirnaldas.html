@@ -1,0 +1,126 @@
+{{!--
+  Las guirnaldas: capítulo propio, como las varitas (Erika, 03-10-2026:
+  "Faltan las fotos de las guirnaldas y que tenga también su sección como
+  las varitas").
+
+  Del turquesa con florecitas blancas (entre el lila de las varitas y el
+  hibisco de la historia; nunca dos capítulos seguidos del mismo color), y
+  al revés que las varitas: el texto a la izquierda y las dos polaroids a la
+  derecha. En el celular, primero el titular, después las fotos y al final
+  el precio y los botones.
+
+  Las polaroids son las mismas de las varitas (varitas.css): la foto de la
+  guirnalda (con marca de agua) y el video del paneo por sus piezas, que
+  corre también en el celular (`movil`: aquí el video ES el producto).
+
+  La pieza sale de productos.json con el ayudante `pieza`: nombre, precio,
+  foto y material no se escriben aquí. La "Guirnalda con nombre" es un
+  adelanto, sin botón (está en "Muy pronto").
+
+  Sin JavaScript: "Pedir por WhatsApp" con el mensaje de la pieza. Con el
+  controlador `guirnaldas`: la cantidad, "Agregar al pedido" (evento
+  `pedido:agregar`, el mismo de las varitas, con `grupo: "guirnaldas"`: SÍ
+  lleva abono) y "Pedir sólo esto", que pasa por la ventanita del abono
+  (`abono#confirmar`) como cualquier pedido que no es de varitas.
+--}}
+{{#with (pieza "guirnalda") as |g|}}
+<section id="guirnaldas" data-costura="izq" class="e-turquesa e-motivo e-motivo--florecitas e-feston relative isolate overflow-clip" style="--feston: #CDB9F2"
+         aria-labelledby="titulo-guirnaldas">
+  <div class="e-contenedor e-capitulo e-guirnaldas">
+
+    <div class="e-guirnaldas__intro">
+      <h2 id="titulo-guirnaldas" class="e-aparece font-display text-columna" data-controller="revela">
+        <span class="e-antetitulo">Guirnaldas, cosidas a mano</span><span class="sr-only">: </span>Un pedacito de cielo para colgar.
+      </h2>
+      <p class="e-aparece mt-6 max-w-[42ch] text-entrada" data-controller="revela" style="--retraso: 100ms">
+        Nubes con perlitas, un rayo, la luna, una estrella y el sol: los coso uno por uno
+        y los uno en un cordón. Cuélgala en su cuarto, en la puerta o en la fiesta, y verás
+        cómo alegra todo.
+      </p>
+    </div>
+
+    <div class="e-polaroids e-polaroids--espejo e-guirnaldas__fotos" data-controller="revela">
+      <figure class="e-polaroid e-polaroid--video" aria-hidden="true">
+        <div class="e-polaroid__foto" data-controller="video-fondo"
+             data-video-fondo-src-value="/video/guirnalda-clima" data-video-fondo-movil-value="true">
+          <img src="/video/guirnalda-clima-poster.webp" alt="" width="464" height="832" loading="lazy" decoding="async">
+        </div>
+      </figure>
+      <figure class="e-polaroid e-polaroid--foto">
+        <div class="e-polaroid__foto">
+          {{imagen g.foto alt=g.alt sizes="(min-width: 1024px) 18rem, 52vw"}}
+        </div>
+        <figcaption class="e-polaroid__pie font-mano">mi primera guirnalda</figcaption>
+      </figure>
+    </div>
+
+    <div class="e-guirnaldas__compra">
+      <div class="e-aparece e-guirnaldas__ficha" data-controller="revela" style="--retraso: 140ms">
+        <div class="e-guirnaldas__fila">
+          <h3 class="font-display text-[1.6rem] leading-none">{{g.nombre}}</h3>
+          <p class="e-guirnaldas__precio font-display"><span class="sr-only">Precio: </span>{{precio g.precio}}</p>
+        </div>
+        <p class="mt-2 text-[1rem] leading-snug">{{g.material}}.</p>
+      </div>
+
+      <div data-controller="guirnaldas"
+           data-guirnaldas-precio-value="{{g.precio}}"
+           data-guirnaldas-nombre-value="{{g.nombre}}"
+           data-guirnaldas-numero-value="{{whatsappBase}}"
+           data-guirnaldas-plantilla-value="{{@root.marca.mensajePedido}}"
+           data-guirnaldas-abono-value="{{@root.marca.politicas.abonoPorcentaje}}"
+           data-guirnaldas-nota-value="{{@root.marca.mensajeAbono}}"
+           data-action="pedido:cambio@window->guirnaldas#alCambiarPedido">
+
+        {{!-- Sin JavaScript: el chat con la pieza ya nombrada. --}}
+        <p class="mt-6" data-guirnaldas-target="sinJs">
+          {{> piezas/boton texto="Pedir por WhatsApp" glifo="whatsapp" chico=true externo=true href=(whatsappPieza g.nombre)}}
+        </p>
+
+        {{!-- El armado: sólo con JavaScript. --}}
+        <div class="e-armado mt-6" data-guirnaldas-target="armado" hidden>
+          <div class="e-armado__fila">
+            <span class="e-armado__rotulo" id="guirnaldas-cantidad-rotulo">Cantidad</span>
+            <div class="e-contador" role="group" aria-labelledby="guirnaldas-cantidad-rotulo">
+              <button type="button" class="e-contador__boton" data-action="guirnaldas#menos" aria-label="Una menos">−</button>
+              <output class="e-contador__valor" data-guirnaldas-target="cantidad" aria-live="polite">1</output>
+              <button type="button" class="e-contador__boton" data-action="guirnaldas#mas" aria-label="Una más">+</button>
+            </div>
+          </div>
+
+          <p class="e-armado__cuenta mt-4" data-guirnaldas-target="cuenta" aria-live="polite"></p>
+
+          <div class="mt-4 flex flex-wrap items-center gap-3">
+            <button type="button" class="e-boton e-boton--primario e-boton--chico justify-between" data-action="guirnaldas#agregar">
+              <span>Agregar al pedido</span>
+              <span class="e-boton__isla">{{icono "mas" clase="size-4"}}</span>
+            </button>
+            <a class="e-armado__solo" href="{{whatsappPieza g.nombre}}" target="_blank" rel="noopener"
+               data-guirnaldas-target="solo" data-action="abono#confirmar">
+              {{icono "whatsapp" clase="size-5"}}<span>Pedir sólo esto</span>
+            </a>
+          </div>
+
+          {{!-- Lo de esta sección que ya está en el pedido, con su "Quitar". --}}
+          <div class="e-armado__pedido mt-6" data-guirnaldas-target="enPedido" hidden>
+            <p class="e-armado__rotulo">Ya en tu pedido</p>
+            <ul class="mt-2 space-y-2" role="list" data-guirnaldas-target="lista"></ul>
+            <p class="mt-3">
+              <a class="e-armado__ver" href="#temporada">Ver el pedido completo y enviarlo</a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {{!-- El adelanto: se ve, no se pide (sin precio ni botón). --}}
+      {{#with (pieza "guirnalda-con-nombre") as |n|}}
+        <div class="e-aparece e-guirnaldas__pronto mt-8" data-controller="revela" style="--retraso: 200ms">
+          <p class="e-guirnaldas__sello font-mano">muy pronto</p>
+          <p class="font-display text-[1.35rem] leading-tight">{{n.nombre}}</p>
+          <p class="mt-1 text-[0.98rem] leading-snug">La estoy cosiendo, con el nombre que tú escojas.</p>
+        </div>
+      {{/with}}
+    </div>
+  </div>
+</section>
+{{/with}}

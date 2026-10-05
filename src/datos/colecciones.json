@@ -1,5 +1,5 @@
 {
-  "_nota": "Lo que Erika hace, agrupado como lo muestran sus fotos: todo es fieltro cosido a mano con bisutería. La tarjeta personalizada no tiene foto todavía: el banderín lleva la ranura punteada en vez de foto (`pendiente`; `huecoTitulo` cambia su título, p. ej. 'Foto muy pronto'). `precios` es la línea corta de precios de Erika (01-10-2026); sin ella, el banderín no dice precio. El `slug` arma el ancla (#coleccion-…) a la que enlazan los adornos del hero. Navidad y Bajo el mar llevan la foto de un set (las tres piezas juntas, 01-10-2026). Guirnaldas lleva un video en bucle (`video`, ruta sin extensión: WebM + MP4) con su `poster`, la primera guirnalda de Erika (03-10-2026).",
+  "_nota": "Lo que Erika hace, agrupado como lo muestran sus fotos: todo es fieltro cosido a mano con bisutería. La tarjeta personalizada no tiene foto todavía: el banderín lleva la ranura punteada en vez de foto (`pendiente`; `huecoTitulo` cambia su título, p. ej. 'Foto muy pronto'). `precios` es la línea corta de precios de Erika (01-10-2026); sin ella, el banderín no dice precio. El `slug` arma el ancla (#coleccion-…) a la que enlazan los adornos del hero. Navidad y Bajo el mar llevan la foto de un set (las tres piezas juntas, 01-10-2026). Guirnaldas lleva un video en bucle (`video`, ruta sin extensión: WebM + MP4) con su `poster`, la primera guirnalda de Erika (03-10-2026). `seccion` (+ `seccionTexto`) suma un enlace a la sección propia de esa colección (#guirnaldas).",
   "lista": [
     {
       "slug": "navidad",
@@ -31,6 +31,8 @@
     {
       "slug": "guirnaldas",
       "nombre": "Guirnaldas",
+      "seccion": "guirnaldas",
+      "seccionTexto": "Ver las guirnaldas",
       "tono": "papaya",
       "video": "/video/guirnalda-clima",
       "poster": "/video/guirnalda-clima-poster.webp",

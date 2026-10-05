@@ -43,6 +43,10 @@
                 {{> piezas/boton texto=(concat "Preguntar por " this.nombre) glifo="whatsapp" chico=true externo=true
                                  href=(whatsappPieza this.nombre plantilla="mensajeColeccion")}}
               </p>
+              {{!-- Las colecciones con sección propia (`seccion`) llevan hasta ella. --}}
+              {{#if this.seccion}}
+                <p class="mt-3">{{> piezas/enlace texto=this.seccionTexto href=(concat "#" this.seccion)}}</p>
+              {{/if}}
             </div>
 
             {{#if this.video}}

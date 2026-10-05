@@ -71,4 +71,12 @@
     background-size: 44px 44px, 44px 44px;
     background-position: 0 0, 22px 22px;
   }
+
+  /* Las florecitas blancas del turquesa de las guirnaldas (03-10-2026):
+     flores de cinco pétalos con el centro mango o hibisco y bolitas
+     blancas, más juntas que las de las preguntas (estrellitas). */
+  .e-motivo--florecitas {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='84' height='84' viewBox='0 0 84 84'%3E%3Cg transform='translate(20 22)' fill='%23FFFFFF' opacity='0.7'%3E%3Cellipse cx='0' cy='-3.2' rx='1.95' ry='3.0' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-3.2' rx='1.95' ry='3.0' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-3.2' rx='1.95' ry='3.0' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-3.2' rx='1.95' ry='3.0' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-3.2' rx='1.95' ry='3.0' transform='rotate(288)'/%3E%3Ccircle r='1.35' fill='%23FFC53D'/%3E%3C/g%3E%3Cg transform='translate(62 63)' fill='%23FFFFFF' opacity='0.7'%3E%3Cellipse cx='0' cy='-2.4' rx='1.5' ry='2.25' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-2.4' rx='1.5' ry='2.25' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-2.4' rx='1.5' ry='2.25' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-2.4' rx='1.5' ry='2.25' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-2.4' rx='1.5' ry='2.25' transform='rotate(288)'/%3E%3Ccircle r='1.0' fill='%23F48FB1'/%3E%3C/g%3E%3Ccircle cx='62' cy='19' r='2' fill='%23FFFFFF' opacity='0.6'/%3E%3Ccircle cx='19' cy='63' r='1.6' fill='%23FFFFFF' opacity='0.6'/%3E%3Ccircle cx='41' cy='42' r='1.1' fill='%23FFFFFF' opacity='0.5'/%3E%3C/svg%3E");
+    background-size: 84px 84px;
+  }
 }

@@ -24,7 +24,9 @@
   dos veces: las dos son la MISMA pieza para el pedido (mismo `data-slug`), y
   el `id` lleva el set para no repetirse.
   Las varitas no se agregan sueltas desde aquí: su forma y su color se
-  escogen en la sección de las varitas, y su tarjeta lleva hasta allá.
+  escogen en la sección de las varitas, y su tarjeta lleva hasta allá. La
+  guirnalda igual (`seccion` en productos.json): su tarjeta lleva a la
+  sección de las guirnaldas, donde se pide con su cantidad.
 
   Las fotos de los sets y de las piezas se agrandan al tocarlas (controlador
   `zoom`, en el <body>); sin JavaScript son un enlace a la foto grande.
@@ -157,7 +159,7 @@
             {{#each this.piezas}}
               {{!-- Lo de "Muy pronto" (`proximamente` en el grupo) se ve pero no se
                   pide: sin precio, sin botones y fuera del pedido armable. --}}
-              <li class="e-pieza{{#unless this.foto}} e-pieza--sin-foto{{/unless}}{{#if ../proximamente}} e-pieza--pronto{{/if}}" data-tono="{{this.tono}}" {{#unless ../proximamente}}data-pedido-target="pieza"{{/unless}}
+              <li class="e-pieza{{#unless this.foto}} e-pieza--sin-foto{{/unless}}{{#if ../proximamente}} e-pieza--pronto{{/if}}" data-tono="{{this.tono}}" {{#unless (or ../proximamente this.seccion)}}data-pedido-target="pieza"{{/unless}}
                   data-slug="{{this.slug}}" data-set="{{../slug}}" data-set-nombre="{{../nombre}}" data-nombre="{{this.nombre}}"
                   {{#if ../precio}}data-precio-set="{{../precio}}"{{/if}}
                   {{#if (precio this.precio)}}data-precio="{{this.precio}}"{{/if}}
@@ -245,6 +247,14 @@
                             la forma ya escogida. Funciona sin JavaScript. --}}
                         <a class="e-agregar e-agregar--ir" href="#varitas" data-action="pedido#irAVaritas" data-forma="{{this.forma}}">
                           <span>Escoger color<span class="e-agregar__mas"> y cantidad</span></span>
+                          {{icono "flecha" clase="size-4"}}
+                          <span class="sr-only">: {{this.nombre}}</span>
+                        </a>
+                      {{else if this.seccion}}
+                        {{!-- La guirnalda también tiene su sección (03-10-2026):
+                            se pide allá, con su cantidad. Funciona sin JavaScript. --}}
+                        <a class="e-agregar e-agregar--ir" href="#{{this.seccion}}">
+                          <span>Ver la guirnalda<span class="e-agregar__mas"> y pedirla</span></span>
                           {{icono "flecha" clase="size-4"}}
                           <span class="sr-only">: {{this.nombre}}</span>
                         </a>
