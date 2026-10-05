@@ -10,7 +10,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 const NS = "http://www.w3.org/2000/svg"
 const quieto = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-const WA = "https://wa.me/50760000000?text="
+const WA = "https://wa.me/50768885029?text="
 
 // ------------------------------------------------------------------
 // Constructor de varitas: la forma y el color ya cambian con CSS (:has),

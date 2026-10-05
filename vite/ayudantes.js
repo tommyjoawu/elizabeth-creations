@@ -120,7 +120,7 @@ export function ayudantes(hb) {
   // datos propios, como las lucecitas.
   hb.registerHelper("rango", (n) => Array.from({ length: Number(n) }, (_, i) => i))
 
-  // {{telefono marca.whatsapp}} → +50760000000, para `tel:`. Se quita todo
+  // {{telefono marca.whatsapp}} → +50768885029, para `tel:`. Se quita todo
   // menos cifras y el `+`: sin el `+`, el número marca a otro país.
   hb.registerHelper("telefono", (numero) => String(numero).replace(/[^\d+]/g, ""))
 

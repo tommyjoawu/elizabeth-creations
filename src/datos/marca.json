@@ -15,11 +15,11 @@
   "_lugar": "Ya no se nombra una ciudad (02-10-2026: 'quitar Chorrera'). `lugar` es lo que dice la página ('Hecho a mano en Panamá'); `pais` va al JSON-LD (addressCountry y areaServed).",
   "lugar": "Panamá",
   "pais": "PA",
-  "whatsapp": "+507 6000-0000",
+  "whatsapp": "+507 6888-5029",
   "instagram": "elizabeth_creationspty",
   "correo": "hola@example.com",
   "pendiente": {
-    "whatsapp": true,
+    "whatsapp": false,
     "instagram": false,
     "correo": true,
     "_que": "El número de WhatsApp de Erika, el usuario de Instagram y el correo: ella los va a crear y mandar. Mientras tanto el número es de marcador (los botones abren un chat con nadie) y no se publica en el JSON-LD."
